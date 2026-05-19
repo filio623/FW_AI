@@ -1,0 +1,4 @@
+interface:
+  display_name: "ComfyUI VFX"
+  short_description: "Build and troubleshoot ComfyUI video/VFX workflows."
+  default_prompt: "Use this skill when working on project-specific ComfyUI workflows, nodes, models, and video element generation for the AI short film."

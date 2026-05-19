@@ -1,0 +1,24 @@
+* text=auto
+
+# Production/media formats are binary.
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.pdf binary
+*.mov binary
+*.mp4 binary
+*.m4v binary
+*.avi binary
+*.mkv binary
+*.webm binary
+*.exr binary
+*.dpx binary
+*.tif binary
+*.tiff binary
+*.psd binary
+*.psb binary
+*.wav binary
+*.aif binary
+*.aiff binary
+*.mp3 binary

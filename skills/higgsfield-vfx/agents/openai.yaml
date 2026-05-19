@@ -1,0 +1,4 @@
+interface:
+  display_name: "Higgsfield VFX"
+  short_description: "Use Higgsfield for AI video references and production tests."
+  default_prompt: "Use this skill when using the Higgsfield CLI for AI video generation, model comparison, cost checks, and VFX reference renders for the AI short film."

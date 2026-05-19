@@ -1,0 +1,4 @@
+interface:
+  display_name: "Supermemory VFX"
+  short_description: "Persist VFX project memory."
+  default_prompt: "Use this skill when saving or recalling durable Supermemory context for the AI video/VFX workspace."

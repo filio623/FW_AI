@@ -1,0 +1,63 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Local caches and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+node_modules/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+
+# Generated review/output artifacts
+outputs/
+memories/responses/
+
+# Local plate/test media. Durable metadata belongs in docs/assets notes.
+FW_test/
+
+# Inbox is a staging area; keep only its README tracked.
+assets/inbox/*
+!assets/inbox/README.md
+
+# Large production media should live in the workspace, not source control.
+*.mov
+*.mp4
+*.m4v
+*.avi
+*.mkv
+*.webm
+*.exr
+*.dpx
+*.tif
+*.tiff
+*.psd
+*.psb
+*.aep
+*.prproj
+*.wav
+*.aif
+*.aiff
+*.mp3
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
