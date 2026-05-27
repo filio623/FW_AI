@@ -17,6 +17,8 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
+.venv-*/
+.uv-cache/
 venv/
 node_modules/
 
@@ -29,6 +31,7 @@ node_modules/
 # Generated review/output artifacts
 outputs/
 memories/responses/
+ComfyUI_temp_*.png
 
 # Local plate/test media. Durable metadata belongs in docs/assets notes.
 FW_test/

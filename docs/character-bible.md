@@ -196,7 +196,7 @@ Add approved stills, clips, and notes here as they are selected.
 
 - Jerry: see `assets/characters/jerry/approved/` and `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md`.
 - Sally:
-- Tom:
+- Tom: draft only; see `docs/tom-character-bible_v001.md` and `references/manifests/tom_external-drive_reference_inventory_v001.md`. Do not promote references until Robbie review is complete.
 - Wind:
 
 ## Prompt Seeds

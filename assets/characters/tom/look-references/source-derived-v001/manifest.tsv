@@ -1,0 +1,11 @@
+id	role	path	source_review_id	source	frame	status	notes
+TB3-001	primary-body	primary-body/TB3-001_shot8a-tom-firev02_f0007_primary-body.jpg	TB3-001	/Volumes/Rob's 4tb FAST FW/04 VFX/3D shotblast/Proxy/Shot_8A_tom_firev02.mov	7	working-reference	Usable fuller Tom source still.
+TB3-002	primary-body	primary-body/TB3-002_shot8a-tom-firev02_f0014_primary-body.jpg	TB3-002	/Volumes/Rob's 4tb FAST FW/04 VFX/3D shotblast/Proxy/Shot_8A_tom_firev02.mov	14	working-reference	Usable fuller Tom source still with lateral/beckoning shape.
+TB3-005	primary-body	primary-body/TB3-005_shot8a-tom-firev02_f0035_primary-body.jpg	TB3-005	/Volumes/Rob's 4tb FAST FW/04 VFX/3D shotblast/Proxy/Shot_8A_tom_firev02.mov	35	working-reference	Possible primary body/look anchor after later approval.
+TB3-006	primary-body	primary-body/TB3-006_shot8a-tom-firev02_f0049_primary-body.jpg	TB3-006	/Volumes/Rob's 4tb FAST FW/04 VFX/3D shotblast/Proxy/Shot_8A_tom_firev02.mov	49	working-reference	Usable upright/full-body read.
+TB3-007	primary-body	primary-body/TB3-007_shot8a-tom-firev02_f0063_primary-body.jpg	TB3-007	/Volumes/Rob's 4tb FAST FW/04 VFX/3D shotblast/Proxy/Shot_8A_tom_firev02.mov	63	working-reference	Usable upright/full-body read.
+TB3-003	motion-pose	motion-poses/TB3-003_shot8a-tom-firev02_f0021_motion-pose.jpg	TB3-003	/Volumes/Rob's 4tb FAST FW/04 VFX/3D shotblast/Proxy/Shot_8A_tom_firev02.mov	21	working-reference	Usable action silhouette.
+TB3-004	motion-pose	motion-poses/TB3-004_shot8a-tom-firev02_f0028_motion-pose.jpg	TB3-004	/Volumes/Rob's 4tb FAST FW/04 VFX/3D shotblast/Proxy/Shot_8A_tom_firev02.mov	28	working-reference	Usable broad/aggressive action shape.
+TB3-008	material	material/TB3-008_shot6-tomgreentips_f0020_material.jpg	TB3-008	/Volumes/Rob's 4tb FAST FW/04 VFX/VFX Footage/Shot_6/tomgreentips/tom_greentips_shot6_v2.0020.exr	20	working-reference	Material support only.
+TB3-009	material	material/TB3-009_shot6-tomgreentips_f0050_material.jpg	TB3-009	/Volumes/Rob's 4tb FAST FW/04 VFX/VFX Footage/Shot_6/tomgreentips/tom_greentips_shot6_v2.0050.exr	50	working-reference	Material support only.
+TB3-010	material	material/TB3-010_shot6-tomgreentips_f0080_material.jpg	TB3-010	/Volumes/Rob's 4tb FAST FW/04 VFX/VFX Footage/Shot_6/tomgreentips/tom_greentips_shot6_v2.0080.exr	80	working-reference	Material support only.

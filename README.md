@@ -11,6 +11,8 @@ Start here:
 - `docs/workspace-map.md`: where things go.
 - `docs/pipeline-strategy.md`: current production strategy.
 - `docs/environment.md`: local ComfyUI and Higgsfield setup notes.
+- `assets/characters/jerry/character-bible-v001/`: current assembled Jerry reference set.
+- `prompts/handoffs/`: copy/paste prompts for focused new sessions.
 - `assets/`: scripts, storyboards, plates, VFX elements, character references, audio, and editorial source files.
 - `mcp/`: MCP status and setup notes.
 - `skills/`: project-local Codex skills.

@@ -6,6 +6,9 @@ Jerry is the small flame main character.
 
 - `source-cgi/`: existing CGI renders and extracted stills of Jerry.
 - `higgsfield-candidates/`: Higgsfield-generated stills or videos under review.
+- `look-references/`: curated external or generated references that define Jerry's body look, silhouette, material, and movement language.
+- `approval-review/`: curated review packs for Robbie's final approval before promoting images into the bible.
+- `character-bible-v001/`: assembled first-pass bible reference set after Robbie review.
 - `approved/`: selected Jerry visual anchors.
 - `expressions/`: emotion and face references.
 - `actions/`: pose and motion references.

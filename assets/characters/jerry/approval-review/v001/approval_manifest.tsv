@@ -1,0 +1,31 @@
+id	status	final_bucket	role	file	reviewer_note
+JB-001	approved	primary-body	base-look	../../look-references/external-v001/jerry_external-look_v001_01_upright-compact-idle.png	Approved.
+JB-002	approved	primary-body	base-look	../../look-references/external-v001/jerry_external-look_v001_02_upright-leaning-idle.png	Approved.
+JB-003	approved	primary-body	base-look	../../look-references/external-v001/jerry_external-look_v001_03_upright-bright-core.png	Approved.
+JB-004	approved	motion-poses	motion-pose	../../look-references/external-v001/jerry_external-look_v001_04_fast-right-comet.png	Approved.
+JB-005	approved	motion-poses	motion-pose	../../look-references/external-v001/jerry_external-look_v001_05_low-left-comet.png	Approved.
+JB-006	approved	primary-body	base-look	../../look-references/external-v001/jerry_external-look_v001_06_upright-soft-idle.png	Approved.
+JB-007	secondary	secondary-training	motion-pose	../../look-references/external-v001/jerry_external-look_v001_07_curling-ring-turn.png	Do not use as primary. Good as secondary source/training reference and for Scene 12 when Jerry comes back to life.
+JB-008	secondary	secondary-training	motion-pose	../../look-references/external-v001/jerry_external-look_v001_08_drooping-downward-pose.png	Interesting angle. Do not make Jerry normally upside down like this, but useful as AI training/reference variety.
+JB-009	approved	primary-body	base-look	../../look-references/external-v001/jerry_external-look_v001_09_small-upright-idle.png	Approved.
+JB-010	approved	primary-body	base-look	../../look-references/external-v001/jerry_external-look_v001_10_round-idle-glow.png	Approved.
+JB-011	approved	motion-poses	motion-pose	../../look-references/external-v001/jerry_external-look_v001_11_fast-left-streak.png	Approved.
+JB-012	approved	material	material-look	../../look-references/external-v001/jerry_external-look_v001_12_upright-wild-flicker.png	Good material reference.
+JB-013	approved	motion-poses	motion-pose	../../look-references/external-v001/jerry_external-look_v001_13_low-roll-comet.png	Approved.
+JB-014	rejected	excluded	motion-pose	../../look-references/external-v001/jerry_external-look_v001_14_large-fast-right-comet.png	Remove as reference. The ball is less teardrop-shaped.
+JB-015	rejected	excluded	material-support	../../higgsfield-candidates/run004/jerry_higgsfield_nano-banana-pro_no-face-body_4k_run004.png	Texture not quite right.
+JB-016	rejected	excluded	material-support	../../higgsfield-candidates/run005/jerry_higgsfield_nano-banana-pro_final-look-candidate_run005.png	Texture not quite right.
+JB-017	rejected	excluded	material-support	../../higgsfield-candidates/run002/jerry_higgsfield_nano-banana-pro_no-face-body_run002.png	Too blurry.
+JB-018	source-ref-only	source-ref-only	source-cgi-material	../../training-candidates/source-derived-v001/cgi-renders/shot12u_jerry5_f0095_jerry-focused.png	Source reference only.
+JB-019	source-ref-only	source-ref-only	source-cgi-material	../../training-candidates/source-derived-v001/cgi-renders/shot12u_jerry5_f0122_jerry-focused.png	Source reference only.
+JB-020	source-ref-only	source-ref-only	source-cgi-material	../../training-candidates/source-derived-v001/cgi-renders/shot4_small_fire_extracted_f0084_jerry-focused.png	Source reference only.
+JB-021	source-ref-only	source-ref-only	source-cgi-material	../../training-candidates/source-derived-v001/cgi-renders/shot4_ren_small_fire6_f0086_jerry-focused.png	Source reference only.
+JB-022	performance-ref-only	performance-2d-ref-only	performance-only	../../training-candidates/source-derived-v001/sheets/x_sheet_jerry01_expression-sheet.png	2D animation reference only.
+JB-023	performance-ref-only	performance-2d-ref-only	performance-only	../../training-candidates/source-derived-v001/sheets/x_sheet_jerry02_expression-sheet.png	2D animation reference only.
+JB-024	performance-ref-only	performance-2d-ref-only	performance-only	../../training-candidates/source-derived-v001/storyboards/storyboard_priority_01_priority_01_130a_close-fear.jpg	2D animation reference only.
+JB-025	performance-ref-only	performance-2d-ref-only	performance-only	../../training-candidates/source-derived-v001/storyboards/storyboard_priority_02_priority_02_131a_close-sad.jpg	2D animation reference only.
+JB-026	performance-ref-only	performance-2d-ref-only	performance-only	../../training-candidates/source-derived-v001/storyboards/storyboard_priority_03_priority_03_132a_close-worried.jpg	2D animation reference only.
+JB-027	performance-ref-only	performance-2d-ref-only	performance-only	../../training-candidates/source-derived-v001/storyboards/storyboard_priority_04_priority_04_133a_close-resolve.jpg	2D animation reference only.
+JB-028	performance-ref-only	performance-2d-ref-only	performance-body	../../training-candidates/source-derived-v001/storyboards/storyboard_priority_05_priority_05_15A_close-bold.jpg	2D animation reference only.
+JB-029	performance-ref-only	performance-2d-ref-only	performance-body	../../training-candidates/source-derived-v001/storyboards/storyboard_priority_06_priority_06_21_clean-cute.jpg	2D animation reference only.
+JB-030	performance-ref-only	performance-2d-ref-only	performance-pose	../../training-candidates/source-derived-v001/storyboards/storyboard_priority_12_priority_12_14_flight-profile.jpg	2D animation reference only.

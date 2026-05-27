@@ -1,0 +1,15 @@
+file	role	notes
+jerry_external-look_v001_01_upright-compact-idle.png	idle_body	Strong compact upright Jerry body candidate; rounded base, small scale, readable flame silhouette.
+jerry_external-look_v001_02_upright-leaning-idle.png	idle_body	Upright body with slight lean and longer tip; useful for curious/attentive posture.
+jerry_external-look_v001_03_upright-bright-core.png	idle_body	Bright upright body with clear inner core; useful color/material reference.
+jerry_external-look_v001_04_fast-right-comet.png	motion_pose	Right-moving comet pose; useful for jump, dash, or fast lateral movement.
+jerry_external-look_v001_05_low-left-comet.png	motion_pose	Low left-moving comet pose; useful for low arc, fall, or landing transition.
+jerry_external-look_v001_06_upright-soft-idle.png	idle_body	Soft upright idle shape; good bridge between cute body and real fire material.
+jerry_external-look_v001_07_curling-ring-turn.png	motion_pose	Curling/turning pose; useful for spin, recoil, or turning in air.
+jerry_external-look_v001_08_drooping-downward-pose.png	motion_pose	Downward/drooping pose; useful for vulnerable, falling, or tired body language.
+jerry_external-look_v001_09_small-upright-idle.png	idle_body	Smaller upright idle shape; useful for scale and simple silhouette.
+jerry_external-look_v001_10_round-idle-glow.png	idle_body	Rounded glowing body; useful for soft, cute, contained Jerry shape.
+jerry_external-look_v001_11_fast-left-streak.png	motion_pose	Left-moving streak pose; useful for fast jump or wind-carried motion.
+jerry_external-look_v001_12_upright-wild-flicker.png	idle_body	More energetic upright flame; useful for excited or flaring body language.
+jerry_external-look_v001_13_low-roll-comet.png	motion_pose	Low rolling/comet pose; useful for tumbling or landing motion.
+jerry_external-look_v001_14_large-fast-right-comet.png	motion_pose	Larger right-moving comet pose; useful for stronger action or acceleration reference.

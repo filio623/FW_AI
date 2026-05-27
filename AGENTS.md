@@ -32,6 +32,16 @@ This directory is a Git repository. Use concise imperative commit messages such 
 
 For Jerry and the other elemental characters, base body renders should not include embedded eyes, mouths, brows, noses, smiles, or drawn-on facial features. Treat storyboard panels and temp facial animation as personality, timing, and performance references only. Facial animation is a separate layer; body-generation prompts should emphasize silhouette, posture, material, glow, motion language, and compositing needs.
 
+## Comfy Cloud Access
+
+Comfy Cloud MCP is configured through `scripts/comfy-cloud-mcp.sh`, but the account currently receives a 403 rollout message from the MCP endpoint. Use the regular Comfy Cloud API and official CLI fallback until MCP is enabled for the account.
+
+- Use `scripts/comfy-cloud-cli.sh generate list` and `scripts/comfy-cloud-cli.sh generate schema <model>` for hosted partner-node discovery.
+- Use `scripts/comfy-cloud-cli.sh generate <model> ... --download outputs/<name>` for Flux, Seedance, Kling, Luma, Nano Banana, Ideogram, Runway, Recraft, Stability, and similar one-shot partner jobs.
+- Use `scripts/comfy-cloud-api.py user`, `system-stats`, and `submit <workflow.json>` for account checks and API-format workflow execution against `https://cloud.comfy.org/api`.
+- Keep `COMFY_API_KEY` only in `.env`; never copy it into commands, docs, memories, or committed files.
+- Load the `comfy-cloud-vfx` skill for Comfy Cloud work and the `comfyui-vfx` skill for local ComfyUI workflow work.
+
 ## Security & Configuration Tips
 
 Keep secrets in `.env` and commit only `.env.example`. Large media and generated outputs are intentionally ignored; track durable metadata in Markdown instead of committing heavy production files.

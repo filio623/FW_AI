@@ -1,0 +1,165 @@
+{
+  "10": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "wan2.2_ti2v_5B_fp16.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "11": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+      "type": "wan",
+      "device": "default"
+    }
+  },
+  "12": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "wan2.2_vae.safetensors"
+    }
+  },
+  "13": {
+    "class_type": "ModelSamplingSD3",
+    "inputs": {
+      "model": [
+        "10",
+        0
+      ],
+      "shift": 8
+    }
+  },
+  "14": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "11",
+        0
+      ],
+      "text": "Jerry is a small face-free living flame character, compact teardrop fire body, rounded lower body, warm yellow-white core, amber orange flame body, ember red rim, lively contained flicker, squash and stretch motion, jumping along the provided fire reference path, isolated VFX element on dark neutral background, no face, no eyes, no mouth, no brows, no nose, no smile, no text, no logo"
+    }
+  },
+  "15": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "11",
+        0
+      ],
+      "text": "face, eyes, mouth, brows, nose, smile, facial marks, water droplet, extra character, human, monster, campfire logs, photoreal person, blurry, smeared, low contrast, damaged silhouette, noisy background, text, logo"
+    }
+  },
+  "17": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "13",
+        0
+      ],
+      "positive": [
+        "24",
+        0
+      ],
+      "negative": [
+        "24",
+        1
+      ],
+      "latent_image": [
+        "24",
+        2
+      ],
+      "seed": 2026051901,
+      "steps": 22,
+      "cfg": 4.5,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1
+    }
+  },
+  "18": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "17",
+        0
+      ],
+      "vae": [
+        "12",
+        0
+      ]
+    }
+  },
+  "19": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "18",
+        0
+      ],
+      "fps": 24
+    }
+  },
+  "20": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "19",
+        0
+      ],
+      "filename_prefix": "shot004/jerry_wan22_funcontrol_element_v001",
+      "format": "mp4",
+      "codec": "h264"
+    }
+  },
+  "21": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "jerry_JB-001_upright-compact-idle.png"
+    }
+  },
+  "22": {
+    "class_type": "LoadVideo",
+    "inputs": {
+      "file": "shot004_ren-small-fire6_control_832x448_81f_v001.mp4"
+    }
+  },
+  "23": {
+    "class_type": "GetVideoComponents",
+    "inputs": {
+      "video": [
+        "22",
+        0
+      ]
+    }
+  },
+  "24": {
+    "class_type": "Wan22FunControlToVideo",
+    "inputs": {
+      "positive": [
+        "14",
+        0
+      ],
+      "negative": [
+        "15",
+        0
+      ],
+      "vae": [
+        "12",
+        0
+      ],
+      "width": 832,
+      "height": 448,
+      "length": 81,
+      "batch_size": 1,
+      "ref_image": [
+        "21",
+        0
+      ],
+      "control_video": [
+        "23",
+        0
+      ]
+    }
+  }
+}

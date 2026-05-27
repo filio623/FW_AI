@@ -178,3 +178,29 @@ The test workflow is successful if:
 ## Notes Log
 
 - 2026-05-18: Created as the first workflow test plan for developing the film's AI-assisted VFX pipeline.
+- 2026-05-19: Confirmed current source paths:
+  - Plate: `FW_test/Scene 4/FW_test_scene.mov`
+  - Rough VFX/motion reference: `FW_test/Scene 4/Shot4 V031-1.mp4`
+  - Fire motion/control reference: `FW_test/Scene 4/ren_small_fire6..mov`
+- 2026-05-19: Metadata check:
+  - `FW_test_scene.mov`: 4096x2160, HEVC Main 10, BT.709, 24 fps, 84 frames, 3.5 seconds.
+  - `Shot4 V031-1.mp4`: 1920x1080 H.264, BT.709, 24 fps, 84 frames, 3.5 seconds.
+  - `ren_small_fire6..mov`: 1920x1080 H.264, 24 fps, about 3.63 seconds; use as a motion/silhouette reference, not final character quality.
+- 2026-05-19: ComfyUI inspection:
+  - Runtime: ComfyUI 0.21.1, Apple MPS, large shared memory pool.
+  - Installed local model path has SD 1.5 and Wan2.2 assets, including `wan2.2_ti2v_5B_fp16.safetensors`.
+  - No ControlNet model files are currently installed.
+  - IPAdapter and ControlNet node surfaces exist, but the required adapter/control model files still need to be installed or verified.
+- 2026-05-19: Created first local ComfyUI Branch A workflow:
+  - Workflow: `workflows/comfyui/shot004_jerry-wan22-funcontrol-element_v001.json`
+  - Note: `workflows/comfyui/shot004_jerry-wan22-funcontrol-element_v001.md`
+  - Purpose: use `Wan22FunControlToVideo` with `JB-001` as Jerry look reference and `ren_small_fire6..mov` as control video.
+  - Prepared proxy: `outputs/comfyui/scene4_firewater_test_v001/source_proxies/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
+  - Validation: workflow validated successfully in ComfyUI.
+- 2026-05-19: Ran Branch A Run 001 successfully.
+  - Prompt ID: `22c9b551-6789-4d19-80ec-37a037f885c8`
+  - Runtime: 358.73 seconds
+  - Element output: `outputs/comfyui/scene4_firewater_test_v001/renders/jerry_wan22_funcontrol_element_v001_run001.mp4`
+  - Preview comp: `outputs/comfyui/scene4_firewater_test_v001/renders/jerry_wan22_funcontrol_plate-key-preview_v001_run001.mp4`
+  - Technical result: local Wan2.2 FunControl path runs and creates a clean face-free flame element.
+  - Creative result: not final; motion is still too simple, several frames are cropped, and matte/alpha extraction needs a dedicated branch.

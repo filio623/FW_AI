@@ -11,6 +11,7 @@ This repo is the shared working area for the AI short-film VFX pipeline.
   - `assets/plates/`: source plates, shot-organized plates, proxies, stills, and mattes.
   - `assets/elements/`: generated or rendered fire, water, smoke, steam, splash, scorch, contact, and matte elements.
   - `assets/characters/`: character reference, approved stills, action sheets, and training candidates.
+    - `assets/characters/jerry/character-bible-v001/`: current assembled Jerry reference set for generation and review.
   - `assets/references/`: visual, motion, and style references.
   - `assets/audio/`: music, dialogue, sound effects, and temp audio.
   - `assets/editorial/`: EDL/XML files, reference exports, and edit-facing material.
@@ -18,7 +19,7 @@ This repo is the shared working area for the AI short-film VFX pipeline.
 - `FW_test/`: current test plates and CGI fire/water renders supplied for exploration.
 - `mcp/`: MCP setup notes and server plans.
 - `outputs/`: generated renders, composites, thumbnails, and review artifacts.
-- `prompts/`: reusable prompt blocks and prompt experiments.
+- `prompts/`: reusable prompt blocks, character language, and handoff prompts.
 - `references/`: external docs, copied snippets, model notes, and research summaries.
 - `scripts/`: project automation that is not specific to a single skill.
 - `shots/`: shot-by-shot plans, run logs, and compositing notes.
