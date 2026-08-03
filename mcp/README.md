@@ -4,6 +4,7 @@
 
 - ComfyUI MCP tools are available in this Codex session.
 - Comfy Cloud MCP setup notes are in `comfy-cloud.md`.
+- RunPod infrastructure MCP and remote ComfyUI setup notes are in `runpod.md`.
 - Higgsfield is currently available through its CLI, not through a confirmed MCP server.
 - Supermemory MCP setup notes are in `supermemory.md`.
 
@@ -18,6 +19,10 @@ Track practical usage in `comfyui.md`.
 ## Comfy Cloud MCP
 
 Track remote Comfy Cloud setup in `comfy-cloud.md`.
+
+## RunPod MCP
+
+Track RunPod Pod management, authentication, and remote ComfyUI API usage in `runpod.md`.
 
 ## Higgsfield MCP
 

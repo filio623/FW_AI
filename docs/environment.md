@@ -17,6 +17,21 @@ Date started: 2026-05-17
 - Output directory: `/Users/robbiefilios/Documents/ComfyUI/output`
 - User library: `/Users/robbiefilios/Documents/ComfyUI/user`
 
+These paths describe the previously observed local setup and do not match the
+current cloned workspace at `/Users/jamesfilios/Software_Projects/FW_AI`.
+
+## RunPod
+
+- RunPod setup reconstructed on 2026-08-02 and provisioned on 2026-08-03.
+- Official Codex plugin, RunPod documentation MCP, `runpodctl`, and `flash` are installed.
+- Durable setup and remote ComfyUI instructions: `mcp/runpod.md`.
+- Persistent storage: 100 GB `fw-ai-comfyui` network volume in `US-IL-1`,
+  mounted at `/workspace` when a Pod is created.
+- Recommended starter: official CUDA 12.8 ComfyUI template on a Secure Cloud
+  RTX A5000 with only `8188/http` and `22/tcp` exposed.
+- No Pod is currently running; the Illinois A5000 pool was supply-constrained
+  during the latest launch attempts.
+
 ## Higgsfield
 
 - CLI installed and authenticated.
