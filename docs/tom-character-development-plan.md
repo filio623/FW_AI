@@ -1,6 +1,6 @@
 **Created:** 2026-05-21
-**Modified:** 2026-05-21
-**Version:** 1.0
+**Modified:** 2026-08-16
+**Version:** 1.1
 
 # Tom Character Development Plan
 
@@ -163,7 +163,7 @@ Only after Robbie approval:
 - Assemble `assets/characters/tom/character-bible-v001/`.
 - Update `docs/tom-character-bible_v001.md` with approved IDs.
 - Update `docs/character-bible.md` under Approved References.
-- Save the review decision to Supermemory.
+- Record the review decision in this plan and in `docs/findings.md`.
 
 ## First Deliverable
 
@@ -181,3 +181,4 @@ The first Tom milestone is:
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-21 | Initial Tom Character Development Plan. |
+| 1.1     | 2026-08-16 | Removed Supermemory references after its retirement; project memory now lives in the repository. |

@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-05-18
-**Version:** 1.0
+**Modified:** 2026-08-16
+**Version:** 1.1
 
 # Jerry Character Development Plan
 
@@ -178,7 +178,7 @@ Current practical recommendation:
 
 ## MCP / Agent Support
 
-This Codex session currently has Supermemory and ComfyUI MCP tools available, but not a Higgsfield MCP tool.
+This Codex session currently has ComfyUI MCP tools available, but not a Higgsfield MCP tool.
 
 I can still help with Higgsfield by:
 
@@ -210,3 +210,4 @@ Do not start LoRA training until this milestone is complete.
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Jerry Character Development Plan. |
+| 1.1     | 2026-08-16 | Removed Supermemory references after its retirement; project memory now lives in the repository. |

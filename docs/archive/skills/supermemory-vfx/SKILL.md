@@ -1,13 +1,29 @@
 ---
 name: supermemory-vfx
-description: "Use when saving, recalling, or seeding persistent Supermemory context for this AI short-film VFX workspace, including project decisions, shot notes, ComfyUI/Higgsfield findings, workflow recipes, prompt patterns, and handoff summaries. Use MCP when available; otherwise use the local API scripts with `.env`."
+description: "RETIRED 2026-08-16 — do not use. Supermemory is no longer part of this project and its scripts have been deleted. Durable project memory lives in the repository; see AGENTS.md."
 ---
 
 **Created:** 2026-05-18
 **Modified:** 2026-08-16
-**Version:** 1.1
+**Version:** 1.2
+**Archived:** 2026-08-16
+**Original path:** `skills/supermemory-vfx/SKILL.md`
 
-# Supermemory VFX
+# [ARCHIVED] Supermemory VFX
+
+> **Retired 2026-08-16.** Supermemory is no longer used by this project. The repository
+> is the single source of truth for project memory; see the `Document Lifecycle & Versioning`
+> section of `AGENTS.md`.
+>
+> Before retirement the account was exported and reviewed. It held 56 documents, of which
+> only two concerned this project — both LLM summaries of the same 2026-08-02 session, and
+> both stale on RunPod details that `mcp/runpod.md` records correctly. The two durable facts
+> worth keeping (the $5 network-volume credit minimum and the data-center volume-support
+> constraint) were merged into `mcp/runpod.md` v1.1.
+>
+> The launcher, upload script, and Codex MCP installer were deleted. This file is kept as a
+> record of the setup that existed.
+
 
 ## Core Rule
 
@@ -73,3 +89,4 @@ The script reads `.env`, sends the file to `https://api.supermemory.ai/v3/docume
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Supermemory VFX. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
+| 1.2     | 2026-08-16 | Retired alongside `mcp/supermemory.md`; frontmatter description marked RETIRED so the skill is not invoked. |

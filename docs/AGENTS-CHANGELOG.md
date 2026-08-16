@@ -11,3 +11,5 @@ This file is a revision history, so it is exempt from the metadata-and-changelog
 | 1.0     | 2026-05-18 | Initial contributor guide creation. |
 | 1.1     | 2026-08-16 | Added document lifecycle, versioning, and archiving strategy; separated media filename versioning from in-file document versioning. |
 | 1.2     | 2026-08-16 | Corrected the media-archive example to use the real `approved/` folder name. |
+| 1.3     | 2026-08-16 | Retired Supermemory: removed its commands and testing/commit references, and added a Project Memory section naming the repository as the single source of truth. |
+| 1.4     | 2026-08-16 | Retired documents now move into `docs/archive/` mirroring their original path, instead of staying in place; clarified how that differs from a superseded frozen edition. |

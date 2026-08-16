@@ -1,6 +1,6 @@
 **Created:** 2026-05-17
 **Modified:** 2026-08-16
-**Version:** 2.0
+**Version:** 2.3
 
 # Environment
 
@@ -33,20 +33,30 @@ Summary: the official Codex plugin, RunPod documentation MCP, `runpodctl`, and `
 
 ## Higgsfield
 
-- CLI installed and authenticated.
+The `higgsfield` CLI is **not installed on this machine** — it is not on `PATH`. It must be installed and authenticated before any Higgsfield workflow or run log can be reproduced.
+
+Observations below are from the previous machine and are unverified here:
+
 - CLI version previously observed: `higgsfield 0.1.40`.
 - Account previously observed: `robfilios@gmail.com`, plan `ultra`.
 - Credits previously observed: `385.45`.
 
 Re-check cloud model availability, parameters, and credits before expensive generations. Setup detail lives in `mcp/higgsfield.md`.
 
-## Supermemory
+## Comfy Cloud
 
-- `SUPERMEMORY_API_KEY` in the ignored `.env`.
-- Default project/container scope: `ai-video-workflows`.
-- Setup detail: `mcp/supermemory.md`.
+`COMFY_API_KEY` in `.env` is required. Two access paths:
 
-Upload responses are written to `memories/responses/`, which is ignored by Git and created on first use.
+- `scripts/comfy-cloud-api.py` — standard library only, works as soon as the key is set.
+- `scripts/comfy-cloud-cli.sh` — additionally needs the `comfy` CLI at `.venv-comfy-cli/bin/comfy`, which is **not installed here**. The install command is in the script's error message.
+
+MCP is configured but the account still receives a 403 rollout message; see `mcp/comfy-cloud.md`.
+
+## Project Memory
+
+The repository is the source of truth. There is no external memory service.
+
+Supermemory was retired on 2026-08-16 and its key, scripts, and MCP launcher were removed. The record of that setup is kept at `docs/archive/mcp/supermemory.md`.
 
 ## FFmpeg
 
@@ -68,3 +78,6 @@ The `FW_test/` working folder described in earlier notes is not present in this 
 |---------|------------|-------------|
 | 1.0     | 2026-05-17 | Initial Environment. |
 | 2.0     | 2026-08-16 | Archived v1.0 and rewrote for the current machine: removed local ComfyUI paths that no longer resolve, delegated RunPod detail to `mcp/runpod.md`, and recorded external-drive and media availability. |
+| 2.1     | 2026-08-16 | Corrected the Higgsfield CLI status to not-installed after verifying `PATH`, and recorded Comfy Cloud access paths and their prerequisites. |
+| 2.2     | 2026-08-16 | Replaced the Supermemory section with a Project Memory note after Supermemory was retired. |
+| 2.3     | 2026-08-16 | Repointed the Supermemory record at its new archive path. |

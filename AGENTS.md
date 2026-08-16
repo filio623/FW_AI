@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-08-16
-**Version:** 1.2
+**Version:** 1.4
 
 # Repository Guidelines
 
@@ -12,11 +12,20 @@ This repository is a working area for an AI-assisted short-film VFX pipeline. Us
 
 There is no application build step in this repository. Useful project commands are:
 
-- `bash scripts/supermemory-mcp.sh`: starts the Supermemory MCP bridge using `.env`.
-- `python3 scripts/supermemory_add_document.py docs/findings.md --custom-id findings`: uploads a markdown/text file to Supermemory and saves the API response under `memories/responses/`.
 - `rg "shot004"`: searches notes, workflows, and documentation quickly.
+- `python3 scripts/comfy-cloud-api.py user`: checks the Comfy Cloud account using `.env`.
+- `scripts/runpod-with-auth.sh runpodctl gpu list`: checks RunPod GPU availability.
 
-Networked commands require valid `.env` values, especially `SUPERMEMORY_API_KEY`.
+Networked commands require valid `.env` values, especially `COMFY_API_KEY`.
+
+## Project Memory
+
+This repository is the single source of truth for project memory. Durable facts belong in
+the governed documents described below, not in an external memory service. Record decisions
+in the relevant `docs/` file, dated observations in `docs/findings.md`, and run detail in the
+matching `shots/` or `workflows/` log.
+
+Supermemory was retired on 2026-08-16; see `docs/archive/mcp/supermemory.md` for that record.
 
 ## Coding Style & Naming Conventions
 
@@ -93,7 +102,11 @@ A frozen edition stays at its original path when a newer edition lands, because 
 
 ### Retired Documents
 
-A document retired with no successor keeps its path. Prepend `[ARCHIVED]` to its title, add `**Archived:** YYYY-MM-DD`, and record why in its changelog. Do not delete it and do not move it.
+A document retired with no successor moves into `docs/archive/`, mirroring its original path underneath: `mcp/supermemory.md` becomes `docs/archive/mcp/supermemory.md`. Prepend `[ARCHIVED]` to its title, add `**Archived:** YYYY-MM-DD` and `**Original path:**`, record why in its changelog, and update any document that still links to it.
+
+Moving it is the point. A retired document left in place keeps being found by search, keeps being read as current, and — for a retired skill — keeps being loaded and invoked. `docs/archive/` is the one place where nothing is live.
+
+This is the opposite of a superseded frozen edition, which never moves. The difference is whether anything still resolves the path: approved work references a frozen edition by exact path, while a retired document has no successor and nothing should be pointing at it.
 
 ### Superseded Media And Assets
 
@@ -111,11 +124,11 @@ Bulk production media lives on the external production drive, not in this reposi
 
 ## Testing Guidelines
 
-No formal test suite is present. Validate changes by running the specific script or workflow you touched, checking links and paths in Markdown, and confirming generated Supermemory responses appear in `memories/responses/` when relevant. For shot work, update the associated file in `shots/` with the latest run, asset paths, and review notes.
+No formal test suite is present. Validate changes by running the specific script or workflow you touched and checking that links and paths in Markdown resolve. For shot work, update the associated file in `shots/` with the latest run, asset paths, and review notes.
 
 ## Commit & Pull Request Guidelines
 
-This directory is a Git repository. Use concise imperative commit messages such as `Add Jerry character bible notes` or `Update Supermemory upload script`. Keep commits focused by workflow or shot when practical. Do not commit `.env`, generated `outputs/`, local test media, or large source media; commit durable metadata, docs, prompts, scripts, workflow notes, and small curated references when useful. Pull requests should summarize changed docs/workflows, list affected shots or assets, mention any required `.env` settings, and include thumbnails or review links for visual output when applicable.
+This directory is a Git repository. Use concise imperative commit messages such as `Add Jerry character bible notes` or `Update RunPod setup notes`. Keep commits focused by workflow or shot when practical. Do not commit `.env`, generated `outputs/`, local test media, or large source media; commit durable metadata, docs, prompts, scripts, workflow notes, and small curated references when useful. Pull requests should summarize changed docs/workflows, list affected shots or assets, mention any required `.env` settings, and include thumbnails or review links for visual output when applicable.
 
 ## Character Generation Notes
 

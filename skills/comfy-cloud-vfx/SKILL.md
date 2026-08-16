@@ -5,7 +5,7 @@ description: "Use when running or preparing Comfy Cloud jobs for this AI short-f
 
 **Created:** 2026-05-27
 **Modified:** 2026-08-16
-**Version:** 1.1
+**Version:** 1.2
 
 # Comfy Cloud VFX
 
@@ -73,7 +73,7 @@ scripts/comfy-cloud-api.py submit workflows/comfyui/example_api_workflow.json
 - Save run notes, prompt changes, job IDs, and review notes in the relevant `shots/` file.
 - Download generated assets into `outputs/` or a shot-specific output folder; do not commit generated media.
 - For VFX shots, prefer outputs that are compositing-friendly: clean silhouette, separable RGB/alpha or matte, glow, shadow, contact light, smoke, steam, scorch, splash, and reference passes.
-- If a Cloud API or CLI finding took time to discover, update `mcp/comfy-cloud.md`, `docs/findings.md`, or Supermemory.
+- If a Cloud API or CLI finding took time to discover, update `mcp/comfy-cloud.md` or `docs/findings.md`.
 
 ---
 
@@ -83,3 +83,4 @@ scripts/comfy-cloud-api.py submit workflows/comfyui/example_api_workflow.json
 |---------|------------|-------------|
 | 1.0     | 2026-05-27 | Initial Comfy Cloud VFX. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
+| 1.2     | 2026-08-16 | Removed Supermemory references after its retirement; project memory now lives in the repository. |

@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-08-16
-**Version:** 1.1
+**Version:** 1.2
 
 # Workspace Map
 
@@ -20,7 +20,7 @@ This repo is the shared working area for the AI short-film VFX pipeline.
   - `assets/audio/`: music, dialogue, sound effects, and temp audio.
   - `assets/editorial/`: EDL/XML files, reference exports, and edit-facing material.
 - `docs/`: durable decisions, setup notes, findings, and pipeline strategy.
-  - `docs/archive/`: immutable document snapshots taken at a major revision.
+  - `docs/archive/`: immutable records. Major-revision snapshots sit flat with a `-vNNN` suffix; retired documents sit under a subfolder mirroring their original path. Nothing here is live.
 - `FW_test/`: current test plates and CGI fire/water renders supplied for exploration.
 - `mcp/`: MCP setup notes and server plans.
 - `outputs/`: generated renders, composites, thumbnails, and review artifacts.
@@ -53,7 +53,7 @@ Use subject-first names for reusable character or reference assets:
 
 Media always carries a `_vNNN` suffix and is never overwritten. Most Markdown documents keep a stable filename and carry their version in a metadata block inside the file; only frozen editions such as character bibles and shot test plans keep `_vNNN` in the name.
 
-Superseded media moves to an `_archive/` subfolder beside the asset it replaced and is recorded in `docs/asset-inventory.md`. Superseded document versions go to `docs/archive/`. Nothing approved, delivered, or referenced by a comp is ever deleted.
+Superseded media moves to an `_archive/` subfolder beside the asset it replaced and is recorded in `docs/asset-inventory.md`. Superseded document versions and retired documents both go to `docs/archive/`. Superseded frozen editions are the exception and stay at their original paths, because approved work resolves them directly. Nothing approved, delivered, or referenced by a comp is ever deleted.
 
 See the `Document Lifecycle & Versioning` and `Archiving Strategy` sections of `AGENTS.md` for the full rules.
 
@@ -77,3 +77,4 @@ Keep the original plate untouched. Generate separable elements and interaction p
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Workspace Map. |
 | 1.1     | 2026-08-16 | Documented the document archive, media `_archive/` convention, and versioning split between media and Markdown. |
+| 1.2     | 2026-08-16 | Recorded that `docs/archive/` also holds retired documents under mirrored paths, and that superseded frozen editions stay put. |

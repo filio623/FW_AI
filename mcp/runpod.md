@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
-**Modified:** 2026-08-02
-**Version:** 1.0
+**Modified:** 2026-08-16
+**Version:** 1.1
 
 # RunPod + ComfyUI
 
@@ -50,6 +50,19 @@ read it at runtime, so the key does not need to be copied into Git, Codex config
 or shell history. Alternatively, set `RUNPOD_API_KEY` in the ignored `.env` file.
 
 Never commit `.env`, `~/.runpod/config.toml`, or an API key.
+
+## Account And Region Constraints
+
+Two constraints learned during the 2026-08-02 setup session. Both cost time to
+discover, so check them before planning a Pod.
+
+- **Network volumes require at least $5 in account credit.** A first attempt at
+  volume creation was blocked by a $2.14 balance. Top up before provisioning
+  storage, not after.
+- **Not every data center supports network volumes.** Montreal was ruled out for
+  this reason before `US-IL-1` was selected. Confirm volume support for a region
+  with `runpodctl datacenter list` before committing to it, because a volume is
+  pinned to its data center and moving regions means rebuilding storage.
 
 ## Recommended ComfyUI Shape
 
@@ -181,3 +194,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-08-02 | Initial RunPod + ComfyUI. |
+| 1.1     | 2026-08-16 | Recorded the $5 credit minimum for network volumes and the data-center volume-support constraint, merged from Supermemory before its retirement. |

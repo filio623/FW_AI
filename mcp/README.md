@@ -6,7 +6,7 @@
 - Comfy Cloud MCP setup notes are in `comfy-cloud.md`.
 - RunPod infrastructure MCP and remote ComfyUI setup notes are in `runpod.md`.
 - Higgsfield is currently available through its CLI, not through a confirmed MCP server.
-- Supermemory MCP setup notes are in `supermemory.md`.
+- Supermemory was retired on 2026-08-16 and moved to `docs/archive/mcp/supermemory.md`.
 
 ## Goal
 
@@ -28,6 +28,7 @@ Track RunPod Pod management, authentication, and remote ComfyUI API usage in `ru
 
 Track CLI behavior and possible MCP server design in `higgsfield.md`. If an official or community Higgsfield MCP server is identified, document install steps and config here before enabling it.
 
-## Supermemory MCP
+## Supermemory MCP (retired)
 
-Track persistent memory setup in `supermemory.md`.
+Retired on 2026-08-16 and moved to `docs/archive/mcp/supermemory.md`. The
+repository is the source of truth for project memory.

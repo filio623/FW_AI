@@ -1,13 +1,13 @@
 **Created:** 2026-05-27
 **Modified:** 2026-08-16
-**Version:** 1.1
+**Version:** 1.2
 
 # Handoff Prompt: Scene 4 Jerry Fire Video Test v001
 
 Copy/paste this prompt into a fresh Codex session.
 
 ```text
-Please read `AGENTS.md`, `docs/jerry-character-bible_v001.md`, `assets/characters/jerry/character-bible-v001/README.md`, `assets/characters/jerry/character-bible-v001/selection_manifest.tsv`, `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md`, and use the `higgsfield-generate`, `higgsfield-vfx`, and `supermemory-vfx` skills.
+Please read `AGENTS.md`, `docs/jerry-character-bible_v001.md`, `assets/characters/jerry/character-bible-v001/README.md`, `assets/characters/jerry/character-bible-v001/selection_manifest.tsv`, `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md`, and use the `higgsfield-generate` and `higgsfield-vfx` skills.
 
 Goal: run the first Higgsfield video-generation test for Scene 4 using the newly assembled Jerry character-bible references.
 
@@ -83,7 +83,7 @@ Save outputs and notes:
   `workflows/higgsfield/scene4/scene4_jerry-fire-video-test_log_v001.md`
 - Record model, command, input media, reference images, duration, resolution, output URL, local output path if downloaded, and whether the result is usable as:
   `reference-only`, `baked-preview`, `temp-comp candidate`, or `production candidate`.
-- Save a concise Supermemory note under project/container `ai-video-workflows`.
+- If a finding is durable and applies beyond this shot, append a dated entry to `docs/findings.md`.
 
 Evaluation criteria:
 
@@ -104,3 +104,4 @@ Evaluation criteria:
 |---------|------------|-------------|
 | 1.0     | 2026-05-27 | Initial Handoff Prompt: Scene 4 Jerry Fire Video Test v001. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
+| 1.2     | 2026-08-16 | Removed the Supermemory save step and skill reference; run notes now go to the shot log and `docs/findings.md`. |
