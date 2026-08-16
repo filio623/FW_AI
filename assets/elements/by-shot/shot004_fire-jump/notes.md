@@ -13,8 +13,8 @@ Current source/test renders are still preserved in `FW_test/Scene 4/`.
 
 ## Known Source Candidates
 
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/ren_grassfire_cpu..mov`
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/ren_small_fire6..mov`
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/ren_small_waterCHAR8..mov`
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/ren_small_waterSplash..mov`
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/ren_steam..mov`
+- `FW_test/Scene 4/ren_grassfire_cpu..mov`
+- `FW_test/Scene 4/ren_small_fire6..mov`
+- `FW_test/Scene 4/ren_small_waterCHAR8..mov`
+- `FW_test/Scene 4/ren_small_waterSplash..mov`
+- `FW_test/Scene 4/ren_steam..mov`

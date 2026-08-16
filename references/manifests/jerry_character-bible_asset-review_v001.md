@@ -1,14 +1,27 @@
-# Jerry Character Bible Asset Review
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 1.1
 
-Date: 2026-05-18
+# Jerry Character Bible Asset Review
 
 Source inventory:
 
 - `references/manifests/jerry_external-drive_reference_inventory_v001.md`
 
-Review artifacts:
+Review artifacts: `outputs/review/jerry_asset-triage_v001/` — **expired.**
 
-- `outputs/review/jerry_asset-triage_v001/`
+> `outputs/` is ephemeral. Every `outputs/review/jerry_asset-triage_v001/…` path below
+> has since been cleared and no longer resolves. This document is kept because the
+> external-drive source paths in the right-hand columns are durable and are the only
+> record of where each review artifact came from.
+>
+> The selections that survived this review were promoted into
+> `assets/characters/jerry/character-bible-v001/references/` under stable `JB-###` IDs
+> and are tracked in Git. Use those for any current work; use the tables below to trace
+> a promoted reference back to its original on `/Volumes/Rob's 4tb FAST FW`.
+>
+> To regenerate the review artifacts, remount the drive and re-run the contact-sheet
+> pass from the source paths listed here.
 
 ## Purpose
 
@@ -158,3 +171,12 @@ Those stills should become the first reviewed candidates for:
 - `assets/storyboards/jerry/`
 
 Do that only after explicitly deciding to copy/curate selected material into `assets/`.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Jerry Character Bible Asset Review. |
+| 1.1     | 2026-08-16 | Recorded that the `outputs/review/` artifacts expired and pointed current work at the promoted `character-bible-v001/references/` set. |

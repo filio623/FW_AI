@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Higgsfield Model Notes
 
 ## Current Project Findings
@@ -33,3 +37,11 @@ Always re-check available models and parameters before a serious run because clo
 `https://d8j0ntlcm91z4.cloudfront.net/user_3Crp6ySH4DZAPmxwygCFUAodsOa/hf_20260517_200503_27504c7a-cf03-483c-b2ac-9d57c69a2cf5.mp4`
 
 Use this as evidence that Higgsfield is useful for quality benchmarking and ideation.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Higgsfield Model Notes. |

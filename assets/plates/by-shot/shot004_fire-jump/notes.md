@@ -11,6 +11,6 @@ Current source/test media is still preserved in `FW_test/Scene 4/`.
 
 ## Known Source Candidates
 
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/4 base plate.mov`
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/FW_test_scene.mov`
-- `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/Shot4 V031-1.mp4`
+- `FW_test/Scene 4/4 base plate.mov`
+- `FW_test/Scene 4/FW_test_scene.mov`
+- `FW_test/Scene 4/Shot4 V031-1.mp4`

@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # ComfyUI MCP
 
 ## Available Capabilities
@@ -17,3 +21,11 @@ Prefer MCP for ComfyUI operations instead of manual API calls when the tool exis
 ## Project Workflow Storage
 
 Keep durable project copies in `workflows/comfyui/`, even when a workflow is also saved to the ComfyUI user library.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial ComfyUI MCP. |

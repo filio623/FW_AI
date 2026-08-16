@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 1.1
+
 # Supermemory MCP
 
 ## Current Status
@@ -26,7 +30,7 @@ Add this to `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.supermemory]
-command = "/Users/robbiefilios/Documents/FW_AI_Workflow/scripts/supermemory-mcp.sh"
+command = "/Users/jamesfilios/Software_Projects/FW_AI/scripts/supermemory-mcp.sh"
 startup_timeout_sec = 30
 tool_timeout_sec = 60
 ```
@@ -46,3 +50,12 @@ Per current Supermemory docs:
 ## Project Usage
 
 Use `ai-video-workflows` as the project/container scope for this film workspace unless a shot-specific or user-specific scope is needed.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Supermemory MCP. |
+| 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |

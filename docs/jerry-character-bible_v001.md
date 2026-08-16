@@ -1,8 +1,12 @@
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 1.2
+
 # Jerry Character Bible v001
 
-Date: 2026-05-18
-
 Status: working bible for first generation tests.
+
+This is the frozen edition of Jerry's specification. Shared style direction, production rules that apply to every character, and character relationships live in `docs/character-bible.md`.
 
 ## Purpose
 
@@ -42,13 +46,18 @@ Jerry should feel:
 
 ## Current Source References
 
-Use these review sources before promoting anything into final assets:
+The original review pass ran out of `outputs/review/jerry_asset-triage_v001/`, which is
+ephemeral and has since expired. Its surviving selections were promoted into the tracked
+bible set, so use these paths instead:
 
-- `assets/characters/jerry/look-references/external-v001/`
-- `outputs/review/jerry_asset-triage_v001/single-images/storyboard-priority/`
-- `outputs/review/jerry_asset-triage_v001/single-images/exr-black-stills/`
-- `outputs/review/jerry_asset-triage_v001/single-images/composite-footage-stills/`
-- `outputs/review/jerry_asset-triage_v001/contact-sheets/storyboards/storyboards_jerry-priority-crops_contact.jpg`
+- `assets/characters/jerry/look-references/external-v001/` — external look references.
+- `assets/characters/jerry/character-bible-v001/references/primary-body/` — promoted body references (`JB-001`, `JB-002`, `JB-003`, `JB-006`, `JB-009`, `JB-010`).
+- `assets/characters/jerry/character-bible-v001/references/material/` — promoted material reference (`JB-012`).
+- `assets/characters/jerry/character-bible-v001/references/source-ref-only/` — EXR black stills and composite footage stills (`JB-018`–`JB-021`).
+- `assets/characters/jerry/character-bible-v001/references/performance-2d-ref-only/` — storyboard and x-sheet crops (`JB-022`–`JB-030`).
+
+The external-drive originals behind that review pass are recorded in
+`references/manifests/jerry_character-bible_asset-review_v001.md`.
 
 Reference roles:
 
@@ -222,3 +231,13 @@ Generation note:
 ## Final-Look Prompt Seed
 
 Create a production-ready no-face Jerry base-body reference for an animated short film. Jerry is a small living flame character with no embedded facial features: no eyes, no mouth, no brows, no nose, no smile, no face, no facial marks. Express personality only through body shape, posture, glow, and flame motion. Compact rounded lower body, soft teardrop silhouette, warm yellow-white inner core, amber/orange flame body, subtle ember-red rim, transparent wispy flame edges, contained but lively flicker, cute vulnerable brave body language. Full body visible with negative space around the flame, isolated on pure black background, high-resolution real fire material, no logs, no grass, no dirt, no scene, no text, no logo.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Jerry Character Bible v001. |
+| 1.1     | 2026-08-16 | Repointed Current Source References from the expired `outputs/review/` pass to the promoted `assets/characters/jerry/character-bible-v001/references/` set. |
+| 1.2     | 2026-08-16 | Noted that shared style rules and relationships live in `docs/character-bible.md`. |

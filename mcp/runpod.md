@@ -1,3 +1,7 @@
+**Created:** 2026-08-02
+**Modified:** 2026-08-02
+**Version:** 1.0
+
 # RunPod + ComfyUI
 
 Date reconstructed: 2026-08-02
@@ -169,3 +173,11 @@ scripts/runpod-with-auth.sh runpodctl pod create \
 After creation, save the returned Pod ID in the ignored `.env`, poll
 `scripts/runpod-comfy-api.sh status`, verify SSH and `nvidia-smi`, and confirm
 that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-08-02 | Initial RunPod + ComfyUI. |

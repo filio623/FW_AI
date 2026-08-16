@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Asset Intake
 
 Use this checklist when uploading film assets into the workspace.
@@ -45,3 +49,11 @@ When a file belongs to a shot, link it from the shot note:
 - Required character assets.
 - VFX element paths.
 - Latest composite or review export.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Asset Intake. |

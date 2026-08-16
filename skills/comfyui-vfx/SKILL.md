@@ -3,6 +3,10 @@ name: comfyui-vfx
 description: "Use when working on project-specific ComfyUI workflows for the AI short film: image/video generation, VFX element generation, alpha/matte workflows, ControlNet/IPAdapter/LoRA experiments, Wan/LTX/Hunyuan video tests, model setup on Apple MPS, ComfyUI MCP operations, workflow debugging, and reusable templates for fire/water character shots."
 ---
 
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 1.1
+
 # ComfyUI VFX
 
 ## Core Rule
@@ -13,10 +17,10 @@ Treat ComfyUI as a controllable VFX element lab, not as the default final-shot g
 
 - Local ComfyUI is expected at `http://127.0.0.1:8000`.
 - Apple MPS is the target local backend. Avoid FP8 diffusion weights on MPS unless a compatible path is proven.
-- Project root: `/Users/robbiefilios/Documents/FW_AI_Workflow`.
-- Base ComfyUI paths are documented in `/Users/robbiefilios/Documents/FW_AI_Workflow/docs/environment.md`.
-- Project workflows live in `/Users/robbiefilios/Documents/FW_AI_Workflow/workflows/comfyui/`.
-- Shot notes live in `/Users/robbiefilios/Documents/FW_AI_Workflow/shots/`.
+- Project root: `/Users/jamesfilios/Software_Projects/FW_AI`.
+- Base ComfyUI paths are documented in `docs/environment.md`.
+- Project workflows live in `workflows/comfyui/`.
+- Shot notes live in `shots/`.
 
 ## Workflow Selection
 
@@ -63,7 +67,7 @@ Check in this order:
 5. Broken VAE/text encoder/model pairing.
 6. Sampler or scheduler settings that are inappropriate for the model family.
 
-Record durable findings in `/Users/robbiefilios/Documents/FW_AI_Workflow/docs/findings.md` or the relevant shot note.
+Record durable findings in `docs/findings.md` or the relevant shot note.
 
 ## References
 
@@ -71,3 +75,12 @@ Read these only when needed:
 
 - `references/model-notes.md`: local model compatibility and known project findings.
 - `references/comfyui-mcp.md`: MCP usage notes and common tool patterns.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial ComfyUI VFX. |
+| 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |

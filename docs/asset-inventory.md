@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 1.1
+
 # Asset Inventory
 
 Use this file as the human-readable index for active assets. Raw uploads may sit in `assets/inbox/` briefly, but anything used for production should be listed here or in the relevant shot note.
@@ -14,9 +18,19 @@ Use this file as the human-readable index for active assets. Raw uploads may sit
 - `assets/audio/`: music, dialogue, and sound effects.
 - `assets/editorial/`: EDL/XML files and reference exports.
 
-## FW_test
+## FW_test (historical, not present in this checkout)
 
-Current test folder:
+`FW_test/` is not in this checkout and is ignored by Git. The section below is the
+2026-05-18 survey of that folder, kept because it is the only durable record of the
+Scene 4 source media and its technical metadata. Treat every path here as a
+description of material to be restored from the external production drive, not as a
+path that currently resolves.
+
+To restore: locate the sources through `references/manifests/external-drive_inventory_v001.md`
+and promote anything needed into `assets/plates/by-shot/` or `assets/elements/`
+under proper `_vNNN` names, recording the promotion in this file.
+
+Surveyed contents:
 
 - `FW_test/Scene 4/4 base plate.mov`: base environmental plate.
 - `FW_test/Scene 4/FW_test_scene.mov`: likely existing scene composite or reference.
@@ -27,7 +41,9 @@ Current test folder:
 - `FW_test/Scene 4/ren_small_waterSplash..mov`: water splash render.
 - `FW_test/Scene 4/ren_steam..mov`: steam render.
 
-These files have not been moved yet. Treat `FW_test/Scene 4/` as the preserved incoming source/test folder until shot004 is fully organized under `assets/plates/by-shot/` and `assets/elements/`.
+As of 2026-05-18 these files had not been moved into `assets/`. They are absent from
+the current checkout, so shot004 organization under `assets/plates/by-shot/` and
+`assets/elements/` remains outstanding.
 
 ### Technical Metadata
 
@@ -44,6 +60,18 @@ Checked with `ffprobe` on 2026-05-18:
 
 Alpha note: the H.264 element/reference renders use `yuv420p`, so they do not contain an embedded alpha channel. Treat them as motion, timing, scale, and visual references unless matte extraction is performed separately.
 
+## Tracked Character Assets
+
+These are committed to the repository and resolve in any checkout.
+
+- `assets/characters/jerry/character-bible-v001/references/`: the promoted Jerry bible set, 27 images under stable `JB-###` IDs, split into `primary-body/`, `motion-poses/`, `material/`, `secondary-training/`, `source-ref-only/`, and `performance-2d-ref-only/`. Indexed by `reference_gallery.md` and `selection_manifest.tsv`. This is the durable replacement for the expired `outputs/review/jerry_asset-triage_v001/` review pass.
+- `assets/characters/jerry/look-references/external-v001/`: 14 external look references defining the current no-face Jerry body direction.
+- `assets/characters/jerry/higgsfield-candidates/run001`–`run005`: casting-run stills, assessed in `docs/jerry-character-bible_v001.md`.
+- `assets/characters/jerry/approval-review/v001/`: Jerry approval review pack.
+- `assets/characters/tom/approval-review/v001`–`v003/`: Tom review rounds, v003 current.
+
+Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `source-cgi/`, `training-candidates/`) exist for both characters and are held open with `.gitkeep`. Nothing is approved into `approved/` yet for either character.
+
 ## Active Shot Asset Logs
 
 - `shots/shot004_fire-jump_workflow-test-plan_v001.md`: current shot004 planning note.
@@ -56,3 +84,12 @@ Alpha note: the H.264 element/reference renders use `yuv420p`, so they do not co
 ## Notes
 
 `ffmpeg` and `ffprobe` are now installed. Use them for detailed inspection and reference-frame extraction.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Asset Inventory. |
+| 1.1     | 2026-08-16 | Marked the `FW_test` survey as historical and not present in this checkout, and indexed the tracked Jerry and Tom character assets. |

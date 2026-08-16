@@ -3,6 +3,10 @@ name: comfy-cloud-vfx
 description: "Use when running or preparing Comfy Cloud jobs for this AI short-film VFX workspace, including hosted partner-node generations through comfy-cli, direct Comfy Cloud API workflow execution, cloud queue/status/history checks, and deciding between local ComfyUI MCP, Comfy Cloud API, and Comfy Cloud MCP."
 ---
 
+**Created:** 2026-05-27
+**Modified:** 2026-08-16
+**Version:** 1.1
+
 # Comfy Cloud VFX
 
 ## Core Rule
@@ -11,7 +15,7 @@ Use Comfy Cloud as the remote execution path when local Apple MPS is too slow, m
 
 ## Current Setup
 
-- Project root: `/Users/robbiefilios/Documents/FW_AI_Workflow`
+- Project root: `/Users/jamesfilios/Software_Projects/FW_AI`
 - Local secret: `.env` contains `COMFY_API_KEY`.
 - MCP notes: `mcp/comfy-cloud.md`
 - CLI wrapper: `scripts/comfy-cloud-cli.sh`
@@ -70,3 +74,12 @@ scripts/comfy-cloud-api.py submit workflows/comfyui/example_api_workflow.json
 - Download generated assets into `outputs/` or a shot-specific output folder; do not commit generated media.
 - For VFX shots, prefer outputs that are compositing-friendly: clean silhouette, separable RGB/alpha or matte, glow, shadow, contact light, smoke, steam, scorch, splash, and reference passes.
 - If a Cloud API or CLI finding took time to discover, update `mcp/comfy-cloud.md`, `docs/findings.md`, or Supermemory.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-27 | Initial Comfy Cloud VFX. |
+| 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |

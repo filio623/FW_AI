@@ -1,6 +1,8 @@
-# ComfyUI VFX Learning Path v001
+**Created:** 2026-08-02
+**Modified:** 2026-08-02
+**Version:** 1.0
 
-Date: 2026-08-02
+# ComfyUI VFX Learning Path
 
 ## Project Goal
 
@@ -15,7 +17,7 @@ This is not simply a workflow for generating a video of fire. It is a controlled
 
 This matches the approach already documented in:
 
-- `docs/comfyui-vfx-workflow-strategy_v001.md`
+- `docs/comfyui-vfx-workflow-strategy.md`
 - `shots/shot004_fire-jump_workflow-test-plan_v001.md`
 
 ## Recommended Learning Path
@@ -86,3 +88,11 @@ It uses Beeble Canvas rather than ComfyUI, and running the supplied project cons
 7. Only after Jerry works, add grass ignition, contact glow, smoke, and scorch as separate branches.
 
 This provides a real ComfyUI learning exercise while advancing the actual shot. It also avoids spending cloud GPU time on generic text-to-video experiments that do not teach the controls this project needs.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-08-02 | Initial ComfyUI VFX Learning Path. |

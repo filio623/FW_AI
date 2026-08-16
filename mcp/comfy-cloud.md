@@ -1,3 +1,7 @@
+**Created:** 2026-05-27
+**Modified:** 2026-08-16
+**Version:** 1.1
+
 # Comfy Cloud MCP
 
 ## Current Status
@@ -71,7 +75,7 @@ Add this to `~/.codex/config.toml`:
 
 ```toml
 [mcp_servers.comfy_cloud]
-command = "/Users/robbiefilios/Documents/FW_AI_Workflow/scripts/comfy-cloud-mcp.sh"
+command = "/Users/jamesfilios/Software_Projects/FW_AI/scripts/comfy-cloud-mcp.sh"
 startup_timeout_sec = 30
 tool_timeout_sec = 60
 ```
@@ -87,3 +91,12 @@ COMFY_API_KEY=comfyui_your_key_here
 ```
 
 Do not commit `.env`.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-27 | Initial Comfy Cloud MCP. |
+| 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |

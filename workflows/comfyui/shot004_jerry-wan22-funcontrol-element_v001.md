@@ -1,6 +1,8 @@
-# Shot004 Jerry Wan2.2 FunControl Element v001
+**Created:** 2026-05-19
+**Modified:** 2026-05-19
+**Version:** 1.0
 
-Date: 2026-05-19
+# Shot004 Jerry Wan2.2 FunControl Element v001
 
 ## Purpose
 
@@ -87,3 +89,11 @@ Review notes:
 - Install/test ControlNet models for canny/depth/scribble control.
 - Install/test IPAdapter or equivalent reference conditioning for stronger Jerry identity.
 - Test ComfyUI API video nodes such as Wan 2.7 Video Edit or Kling 3.0 Omni Video-to-Video as cloud comparison branches, while treating them as preview/reference unless they can produce clean separable elements.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-19 | Initial Shot004 Jerry Wan2.2 FunControl Element v001. |

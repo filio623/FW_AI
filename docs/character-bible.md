@@ -1,18 +1,27 @@
-# Character Bible
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 2.0
 
-Date: 2026-05-18
+# Character Bible
 
 ## Purpose
 
 Define stable identities for the film's main elemental characters so AI-generated assets remain consistent across shots, tools, prompts, and compositing workflows.
 
-This document should guide:
+This document owns what is **shared** across characters: global style direction, production rules, relationships, and the index of per-character bibles. It also holds the full specs for Sally and the wind character, which do not have their own bibles yet.
 
-- Prompt language.
-- Reference image selection.
-- LoRA or reference-conditioning decisions.
-- Shot-specific action planning.
-- Matte, alpha, and compositing requirements.
+Characters with their own frozen edition are specified there, not here. Do not restate a character's visual rules, avoid-list, or prompt seed in this file — one spec per character.
+
+## Character Index
+
+| Character | Role | Specification |
+|---|---|---|
+| Jerry | Small flame, lead | `docs/jerry-character-bible_v001.md` |
+| Sally | Small water droplet, lead | This document, below |
+| Tom | Large fire, villain | `docs/tom-character-bible_v001.md` |
+| Wind | Supporting helper | This document, below |
+
+Development plans, which cover process rather than identity, live in `docs/jerry-character-development-plan.md` and `docs/tom-character-development-plan.md`.
 
 ## Global Style Direction
 
@@ -34,46 +43,11 @@ Important facial-animation rule: base elemental body renders should not include 
 - Avoid baked backgrounds unless the output is only for reference.
 - Record approved prompt language, reference frames, and failed prompt patterns.
 
-## Jerry
-
-### Role
-
-Jerry is the small flame and one of the two main characters.
-
-### Story Function
-
-Jerry should feel vulnerable, energetic, brave, and emotionally open. He needs to be charming enough to carry a love story with Sally, while still physically reading as fire.
-
-### Visual Direction
-
-- Small sentient flame character.
-- Bright inner core.
-- Orange, yellow, and subtle ember-red edges.
-- Clean flame silhouette.
-- No embedded face in base flame-body renders.
-- Warm glow that can affect nearby plate elements.
-- Body shape can squash, stretch, flicker, and flare.
-
-### Motion Direction
-
-- Quick flickers and soft breathing motion even when still.
-- Jumps should feel buoyant and flame-like, not heavy.
-- Emotional changes can show through flame height, brightness, edge turbulence, and ember sparks.
-- Contact with grass or dry material can motivate separate ignition passes.
-
-### Avoid
-
-- Monster-like fire demon.
-- Full humanoid body unless specifically needed.
-- Overly smoky silhouette that hides expression.
-- Random facial features embedded into the flame body.
-- Baked grass, dirt, or background when Jerry needs to be composited.
-
 ## Sally
 
 ### Role
 
-Sally is the small water droplet and the other main character.
+Sally is the small water droplet and one of the two main characters.
 
 ### Story Function
 
@@ -104,38 +78,11 @@ Sally should feel gentle, curious, emotionally intelligent, and visually distinc
 - Excessive internal detail that makes separate facial animation hard to read.
 - Baked background when Sally needs to be composited.
 
-## Tom
+### Prompt Seed
 
-### Role
+Draft only. Promote working prompts to `prompts/` after testing.
 
-Tom is the much bigger fire and the main villain.
-
-### Story Function
-
-Tom should feel dangerous, dominant, and intimidating compared with Jerry. He is fire at a larger, more threatening scale.
-
-### Visual Direction
-
-- Large sentient fire character.
-- More aggressive flame shape than Jerry.
-- Deeper reds, hotter whites, darker smoke accents, and harsher edge turbulence.
-- Stronger glow and environmental impact.
-- No embedded face in base fire-body renders.
-- Scale difference from Jerry must be obvious.
-
-### Motion Direction
-
-- Slower, heavier, more forceful flame movement.
-- Larger flare-ups and bursts.
-- Can drive smoke, heat distortion, scorch, and spreading fire passes.
-- Should feel like a threat to the environment and to Jerry/Sally.
-
-### Avoid
-
-- Looking like just a scaled-up Jerry.
-- Random horror-monster detail that breaks the film's emotional tone.
-- Complex flames that would make separate facial animation hard to read.
-- Over-baking villain effects into a plate when separate passes are needed.
+Small sentient water droplet character named Sally, transparent blue liquid body, no facial features, glossy surface, soft internal caustics, clean silhouette, emotionally expressive through shape and motion, squash and stretch motion, isolated element, no background.
 
 ## Wind Character
 
@@ -168,11 +115,17 @@ This character should feel helpful, quick, light, and possibly playful. The char
 - Being too invisible to track emotionally.
 - Overcomplicated wisps that cannot be matted cleanly.
 
+### Prompt Seed
+
+Draft only. Promote working prompts to `prompts/` after testing.
+
+Small helpful gust of wind character, semi-transparent curling wisps, light playful motion, friendly personality through shape and motion, no facial features, distinct from smoke or steam, clean silhouette, isolated element, no background.
+
 ## Character Relationship Notes
 
 - Jerry and Sally are the emotional center.
 - Jerry and Sally should contrast materially while sharing enough shape-language warmth to feel like they belong in the same film.
-- Tom should be recognizably related to fire but visually and behaviorally distinct from Jerry.
+- Tom should be recognizably related to fire but visually and behaviorally distinct from Jerry. The scale difference from Jerry must be obvious.
 - The wind character should support Jerry without competing for attention.
 
 ## Initial Workflow Implications
@@ -181,7 +134,16 @@ This character should feel helpful, quick, light, and possibly playful. The char
 - Use Tom as a separate identity, not a variant of Jerry.
 - Treat the wind character as a later secondary design unless a test shot requires it.
 - For the first fire/grass workflow test, focus on Jerry identity, Jerry motion, grass ignition, and separate interaction passes.
-- Keep Sally in the bible now, but avoid blocking the first fire workflow on her final design.
+- Keep Sally in this bible now, but avoid blocking the first fire workflow on her final design.
+
+## Approved References
+
+Nothing is approved into an `approved/` folder for any character yet.
+
+- Jerry: current reference set is `assets/characters/jerry/character-bible-v001/`, with casting history in `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md`. Approved anchors would land in `assets/characters/jerry/approved/`.
+- Sally: no references collected yet.
+- Tom: draft only. See `docs/tom-character-bible_v001.md` and `references/manifests/tom_external-drive_reference_inventory_v001.md`. Do not promote references until Robbie review is complete.
+- Wind: no references collected yet.
 
 ## Open Questions
 
@@ -190,31 +152,11 @@ This character should feel helpful, quick, light, and possibly playful. The char
 - How stylized should the characters be relative to realistic plates?
 - Are the current CGI renders meant to define final proportions, or only motion and placement?
 
-## Approved References
+---
 
-Add approved stills, clips, and notes here as they are selected.
+## Changelog
 
-- Jerry: see `assets/characters/jerry/approved/` and `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md`.
-- Sally:
-- Tom: draft only; see `docs/tom-character-bible_v001.md` and `references/manifests/tom_external-drive_reference_inventory_v001.md`. Do not promote references until Robbie review is complete.
-- Wind:
-
-## Prompt Seeds
-
-These are draft seeds only. Promote working prompts to `prompts/` after testing.
-
-### Jerry
-
-Small sentient flame character named Jerry, expressive body language through flame shape only, no facial features, bright warm inner core, orange and yellow flame body with subtle ember edges, clean silhouette, charming and brave, soft animated-feature appeal, casts warm light, isolated element, no background.
-
-### Sally
-
-Small sentient water droplet character named Sally, transparent blue liquid body, no facial features, glossy surface, soft internal caustics, clean silhouette, emotionally expressive through shape and motion, squash and stretch motion, isolated element, no background.
-
-### Tom
-
-Large sentient fire villain named Tom, towering flame body, no facial features, aggressive flame silhouette, hot white core with orange red edges, darker smoke accents, powerful glow, threatening but still emotionally readable through shape and motion, isolated element, no background.
-
-### Wind
-
-Small helpful gust of wind character, semi-transparent curling wisps, light playful motion, friendly personality through shape and motion, no facial features, distinct from smoke or steam, clean silhouette, isolated element, no background.
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Character Bible. |
+| 2.0     | 2026-08-16 | Archived v1.0 and restructured as the shared-rules document and character index: Jerry and Tom now point at their frozen editions, Sally and Wind keep full specs here, and the approved-reference list was corrected against what exists. |

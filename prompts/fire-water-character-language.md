@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Fire / Water Character Language
 
 Use this file to converge on stable character descriptions.
@@ -53,3 +57,11 @@ Avoid:
 - Looking like steam from water.
 - Being too invisible to read as a character.
 - Baked background when an element is needed.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Fire / Water Character Language. |

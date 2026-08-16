@@ -1,56 +1,70 @@
+**Created:** 2026-05-17
+**Modified:** 2026-08-16
+**Version:** 2.0
+
 # Environment
 
-Date started: 2026-05-17
+Setup notes for the machine this repository is currently checked out on. Anything describing a remote or hosted service is summarized here and owned in detail by the matching file in `mcp/`.
+
+Secrets live in the ignored `.env`; only `.env.example` is committed.
 
 ## Local Machine
 
-- macOS.
-- Apple MPS backend.
-- Workspace: `/Users/robbiefilios/Documents/FW_AI_Workflow`
+- macOS, Apple Silicon with the MPS backend.
+- Workspace: `/Users/jamesfilios/Software_Projects/FW_AI`.
 
 ## ComfyUI
 
-- URL: `http://127.0.0.1:8000`
-- Version previously observed: `0.21.1`
-- Base models directory: `/Users/robbiefilios/Documents/ComfyUI/models`
-- Input directory: `/Users/robbiefilios/Documents/ComfyUI/input`
-- Output directory: `/Users/robbiefilios/Documents/ComfyUI/output`
-- User library: `/Users/robbiefilios/Documents/ComfyUI/user`
+Local ComfyUI is not installed in this checkout. The local install described in `docs/archive/environment-v1.0.md` belonged to a different machine, and none of its paths resolve here.
 
-These paths describe the previously observed local setup and do not match the
-current cloned workspace at `/Users/jamesfilios/Software_Projects/FW_AI`.
+Current options for running workflows, in order of preference:
+
+- **RunPod GPU Pod** — the intended path for Wan 2.2 and other heavy graphs. See `mcp/runpod.md`.
+- **Comfy Cloud** — hosted partner nodes and one-shot jobs. See `mcp/comfy-cloud.md` and the `comfy-cloud-vfx` skill.
+- **Local install** — if one is set up again, record its ComfyUI root, `models/`, `input/`, `output/`, and `user/` paths here and update `mcp/comfyui.md`.
+
+Saved workflows live in `workflows/comfyui/`. The Shot 004 graph expects model files and video inputs that are not tracked in Git; its workflow note lists them.
 
 ## RunPod
 
-- RunPod setup reconstructed on 2026-08-02 and provisioned on 2026-08-03.
-- Official Codex plugin, RunPod documentation MCP, `runpodctl`, and `flash` are installed.
-- Durable setup and remote ComfyUI instructions: `mcp/runpod.md`.
-- Persistent storage: 100 GB `fw-ai-comfyui` network volume in `US-IL-1`,
-  mounted at `/workspace` when a Pod is created.
-- Recommended starter: official CUDA 12.8 ComfyUI template on a Secure Cloud
-  RTX A5000 with only `8188/http` and `22/tcp` exposed.
-- No Pod is currently running; the Illinois A5000 pool was supply-constrained
-  during the latest launch attempts.
+Provisioned and authenticated. `mcp/runpod.md` is the authoritative record of Pod state, template IDs, network volumes, GPU selection, and the current resume point — do not duplicate those values here.
+
+Summary: the official Codex plugin, RunPod documentation MCP, `runpodctl`, and `flash` are installed, and a persistent network volume backs `/workspace` so models and custom nodes survive Pod replacement.
 
 ## Higgsfield
 
 - CLI installed and authenticated.
-- CLI version previously observed: `higgsfield 0.1.40`
-- Account previously observed: `robfilios@gmail.com`
-- Plan previously observed: `ultra`
-- Credits previously observed: `385.45`
+- CLI version previously observed: `higgsfield 0.1.40`.
+- Account previously observed: `robfilios@gmail.com`, plan `ultra`.
+- Credits previously observed: `385.45`.
 
-Re-check cloud model availability, parameters, and credits before expensive generations.
+Re-check cloud model availability, parameters, and credits before expensive generations. Setup detail lives in `mcp/higgsfield.md`.
 
 ## Supermemory
 
-- Local `.env` contains `SUPERMEMORY_API_KEY`.
+- `SUPERMEMORY_API_KEY` in the ignored `.env`.
 - Default project/container scope: `ai-video-workflows`.
-- MCP notes: `mcp/supermemory.md`.
+- Setup detail: `mcp/supermemory.md`.
+
+Upload responses are written to `memories/responses/`, which is ignored by Git and created on first use.
 
 ## FFmpeg
 
 - Installed with Homebrew on 2026-05-18.
-- Version observed: `ffmpeg 8.1.1`.
-- `ffprobe` is available.
-- Use for video metadata inspection, reference frame extraction, proxy creation, alpha checks, transcoding, and thumbnail generation.
+- Version observed: `ffmpeg 8.1.1`; `ffprobe` available.
+- Use for video metadata inspection, reference-frame extraction, proxy creation, alpha checks, transcoding, and thumbnail generation.
+
+## Production Media
+
+Bulk production media is not in this repository. It lives on the external production drive `/Volumes/Rob's 4tb FAST FW`, indexed by the manifests in `references/manifests/`. The drive is not mounted by default, so check before assuming a source path resolves.
+
+The `FW_test/` working folder described in earlier notes is not present in this checkout. `outputs/` is ephemeral and is created on demand.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-17 | Initial Environment. |
+| 2.0     | 2026-08-16 | Archived v1.0 and rewrote for the current machine: removed local ComfyUI paths that no longer resolve, delegated RunPod detail to `mcp/runpod.md`, and recorded external-drive and media availability. |

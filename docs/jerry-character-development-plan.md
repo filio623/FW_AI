@@ -1,6 +1,8 @@
-# Jerry Character Development Plan
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
 
-Date: 2026-05-18
+# Jerry Character Development Plan
 
 ## Purpose
 
@@ -200,3 +202,11 @@ The first Jerry milestone is:
 - One short motion-reference test after approval.
 
 Do not start LoRA training until this milestone is complete.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Jerry Character Development Plan. |

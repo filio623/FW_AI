@@ -1,3 +1,7 @@
+**Created:** 2026-05-27
+**Modified:** 2026-08-16
+**Version:** 1.1
+
 # Handoff Prompt: Scene 4 Jerry Fire Video Test v001
 
 Copy/paste this prompt into a fresh Codex session.
@@ -18,30 +22,30 @@ Task:
 Source media:
 
 - Base footage / plate to generate on top of:
-  `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/FW_test_scene.mov`
+  `/Users/jamesfilios/Software_Projects/FW_AI/FW_test/Scene 4/FW_test_scene.mov`
 - Existing rough comp / motion reference:
-  `/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/Shot4 V031-1.mp4`
+  `/Users/jamesfilios/Software_Projects/FW_AI/FW_test/Scene 4/Shot4 V031-1.mp4`
 
 Relevant Jerry references:
 
 - Main assembled reference folder:
-  `/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/`
+  `/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/`
 - Primary body references:
-  `/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/primary-body/`
+  `/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/primary-body/`
 - Motion references:
-  `/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/motion-poses/`
+  `/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/motion-poses/`
 - Material reference:
-  `/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/material/JB-012_upright-wild-flicker_material-ref.png`
+  `/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/material/JB-012_upright-wild-flicker_material-ref.png`
 - Source grounding only:
-  `/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/source-ref-only/`
+  `/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/source-ref-only/`
 
 Suggested first reference images:
 
-- `references/primary-body/JB-001_upright-compact-idle.png`
-- `references/primary-body/JB-009_small-upright-idle.png`
-- `references/primary-body/JB-010_round-idle-glow.png`
-- `references/motion-poses/JB-004_fast-right-comet.png`
-- `references/material/JB-012_upright-wild-flicker_material-ref.png`
+- `assets/characters/jerry/character-bible-v001/references/primary-body/JB-001_upright-compact-idle.png`
+- `assets/characters/jerry/character-bible-v001/references/primary-body/JB-009_small-upright-idle.png`
+- `assets/characters/jerry/character-bible-v001/references/primary-body/JB-010_round-idle-glow.png`
+- `assets/characters/jerry/character-bible-v001/references/motion-poses/JB-004_fast-right-comet.png`
+- `assets/characters/jerry/character-bible-v001/references/material/JB-012_upright-wild-flicker_material-ref.png`
 
 Clip facts already checked:
 
@@ -63,11 +67,11 @@ Generate a baked preview of Jerry, a small face-free living flame character, com
 
 Suggested first command shape, after validating media flags:
 
-`higgsfield generate create seedance_2_0 --prompt "<prompt seed above>" --video "/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/FW_test_scene.mov" --image "/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/primary-body/JB-001_upright-compact-idle.png" --image "/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/primary-body/JB-010_round-idle-glow.png" --image "/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/motion-poses/JB-004_fast-right-comet.png" --image "/Users/robbiefilios/Documents/FW_AI_Workflow/assets/characters/jerry/character-bible-v001/references/material/JB-012_upright-wild-flicker_material-ref.png" --aspect_ratio 16:9 --resolution 1080p --duration 5 --mode std --wait --wait-timeout 30m --wait-interval 10s`
+`higgsfield generate create seedance_2_0 --prompt "<prompt seed above>" --video "/Users/jamesfilios/Software_Projects/FW_AI/FW_test/Scene 4/FW_test_scene.mov" --image "/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/primary-body/JB-001_upright-compact-idle.png" --image "/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/primary-body/JB-010_round-idle-glow.png" --image "/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/motion-poses/JB-004_fast-right-comet.png" --image "/Users/jamesfilios/Software_Projects/FW_AI/assets/characters/jerry/character-bible-v001/references/material/JB-012_upright-wild-flicker_material-ref.png" --aspect_ratio 16:9 --resolution 1080p --duration 5 --mode std --wait --wait-timeout 30m --wait-interval 10s`
 
 If the CLI allows the rough reference as a second video media input, include:
 
-`--video "/Users/robbiefilios/Documents/FW_AI_Workflow/FW_test/Scene 4/Shot4 V031-1.mp4"`
+`--video "/Users/jamesfilios/Software_Projects/FW_AI/FW_test/Scene 4/Shot4 V031-1.mp4"`
 
 If multiple `--video` inputs are not accepted, do not fight the CLI. Run one base-plate test and then one reference-video test, and compare.
 
@@ -91,3 +95,12 @@ Evaluation criteria:
 - Plate/background is not damaged too badly.
 - Note whether Higgsfield is suitable for temp preview only or could inform a later ComfyUI/custom element workflow.
 ```
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-27 | Initial Handoff Prompt: Scene 4 Jerry Fire Video Test v001. |
+| 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |

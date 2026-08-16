@@ -1,6 +1,8 @@
-# External Drive Inventory
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
 
-Date: 2026-05-18
+# External Drive Inventory
 
 External source:
 
@@ -184,3 +186,11 @@ For Jerry casting, start from:
 - `07 Animation/Story boards/` panels that show Jerry's design, poses, or emotional beats.
 
 These should provide a practical first character-bible source set without importing the entire archive.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial External Drive Inventory. |

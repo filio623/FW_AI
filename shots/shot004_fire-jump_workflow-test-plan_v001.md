@@ -1,6 +1,8 @@
-# Shot004 Fire Jump Workflow Test Plan
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
 
-Date: 2026-05-18
+# Shot004 Fire Jump Workflow Test Plan
 
 ## Shot
 
@@ -204,3 +206,11 @@ The test workflow is successful if:
   - Preview comp: `outputs/comfyui/scene4_firewater_test_v001/renders/jerry_wan22_funcontrol_plate-key-preview_v001_run001.mp4`
   - Technical result: local Wan2.2 FunControl path runs and creates a clean face-free flame element.
   - Creative result: not final; motion is still too simple, several frames are cropped, and matte/alpha extraction needs a dedicated branch.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Shot004 Fire Jump Workflow Test Plan. |

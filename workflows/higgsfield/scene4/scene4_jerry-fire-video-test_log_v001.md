@@ -1,3 +1,7 @@
+**Created:** 2026-05-19
+**Modified:** 2026-05-19
+**Version:** 1.0
+
 # Scene 4 Jerry Fire Video Test Log v001
 
 Date started: 2026-05-19

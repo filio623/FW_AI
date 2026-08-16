@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Robot/Bunny Higgsfield Benchmark
 
 ## Run
@@ -20,3 +24,11 @@ Small white ceramic service robot gently pets a calm gray bunny on a clean sunli
 ## Finding
 
 Higgsfield produced a useful high-quality benchmark. Local ComfyUI Wan2.2 5B text-to-video did not produce comparable production-quality output in the initial tests.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Robot/Bunny Higgsfield Benchmark. |

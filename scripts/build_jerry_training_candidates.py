@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 
 
-ROOT = Path("/Users/robbiefilios/Documents/FW_AI_Workflow")
+ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets/characters/jerry/training-candidates/source-derived-v001"
 MANIFEST = OUT / "manifest.tsv"
 TMP = Path("/private/tmp/jerry_training_candidates")

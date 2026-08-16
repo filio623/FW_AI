@@ -1,6 +1,8 @@
-# ComfyUI VFX Workflow Strategy v001
+**Created:** 2026-05-19
+**Modified:** 2026-05-19
+**Version:** 1.0
 
-Date: 2026-05-19
+# ComfyUI VFX Workflow Strategy
 
 ## Goal
 
@@ -126,3 +128,11 @@ The first useful workflow does not need to look final. It needs to prove:
 - A matte can be extracted or generated.
 - The plate remains available as a clean comp base.
 - The workflow exposes enough knobs to test one variable at a time.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-19 | Initial ComfyUI VFX Workflow Strategy. |

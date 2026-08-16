@@ -1,6 +1,8 @@
-# Jerry External Drive Reference Inventory
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
 
-Date: 2026-05-18
+# Jerry External Drive Reference Inventory
 
 Source drive:
 
@@ -152,3 +154,11 @@ Use this order for the next triage pass:
 - For the next pass, generate review contact sheets or selected stills only from the high-priority clips after explicit approval.
 - Store curated copies later under `assets/characters/jerry/source-cgi/`, `assets/characters/jerry/actions/`, `assets/characters/jerry/expressions/`, or `assets/storyboards/jerry/` according to the Jerry development plan.
 - Treat H.264 proxy movies as reference only. They do not preserve alpha.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Jerry External Drive Reference Inventory. |

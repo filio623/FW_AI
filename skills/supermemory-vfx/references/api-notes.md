@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Supermemory API Notes
 
 ## Current Endpoints
@@ -28,3 +32,11 @@ Expected MCP tools:
 - `memory`
 - `recall`
 - `whoAmI`
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Supermemory API Notes. |

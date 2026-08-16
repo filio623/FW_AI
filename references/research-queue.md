@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Research Queue
 
 ## ComfyUI / Local
@@ -20,3 +24,11 @@
 - Alpha extraction and matting from AI video.
 - AI-generated elements over neutral backgrounds.
 - Plate interaction passes: glow, shadow, scorch, wetness, splash, steam, smoke, heat distortion.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Research Queue. |

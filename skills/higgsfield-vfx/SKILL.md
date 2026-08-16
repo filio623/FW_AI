@@ -3,6 +3,10 @@ name: higgsfield-vfx
 description: "Use when generating, benchmarking, or documenting Higgsfield AI video outputs for the AI short film: CLI model discovery, cost estimation, prompt testing, image-to-video/reference video generation, comparing cloud models against ComfyUI, and recording output URLs, settings, and credits."
 ---
 
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 1.1
+
 # Higgsfield VFX
 
 ## Core Rule
@@ -12,9 +16,9 @@ Use Higgsfield as a high-quality cloud renderer and benchmark source. Do not ass
 ## Project Context
 
 - Higgsfield CLI is installed and authenticated.
-- Project root: `/Users/robbiefilios/Documents/FW_AI_Workflow`.
-- Account, model, and credit findings are documented in `/Users/robbiefilios/Documents/FW_AI_Workflow/docs/environment.md`.
-- Higgsfield outputs and test logs should be recorded in `/Users/robbiefilios/Documents/FW_AI_Workflow/workflows/higgsfield/` or the relevant shot note under `/Users/robbiefilios/Documents/FW_AI_Workflow/shots/`.
+- Project root: `/Users/jamesfilios/Software_Projects/FW_AI`.
+- Account, model, and credit findings are documented in `docs/environment.md`.
+- Higgsfield outputs and test logs should be recorded in `workflows/higgsfield/` or the relevant shot note under `shots/`.
 
 ## Workflow
 
@@ -64,3 +68,12 @@ Read these only when needed:
 
 - `references/model-notes.md`: current Higgsfield project findings.
 - `references/run-log-template.md`: compact logging format for generations.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Higgsfield VFX. |
+| 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |

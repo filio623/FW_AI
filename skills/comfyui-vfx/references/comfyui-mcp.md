@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # ComfyUI MCP Notes
 
 ## Preferred MCP Flow
@@ -15,3 +19,11 @@
 Project copies should live in `workflows/comfyui/`.
 
 ComfyUI user-library copies may also exist under the ComfyUI user folder. Keep project copies current when a workflow becomes important.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial ComfyUI MCP Notes. |

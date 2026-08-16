@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Higgsfield MCP
 
 ## Current Status
@@ -22,3 +26,11 @@ A useful Higgsfield MCP should support:
 ## Next Step
 
 When links or documentation are available, add them here and decide whether to configure an existing MCP server or build a small wrapper around the CLI.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Higgsfield MCP. |

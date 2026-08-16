@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # Pipeline Strategy
 
 ## Goal
@@ -56,3 +60,11 @@ Use After Effects, Nuke, Fusion, or Resolve for final assembly:
 - Pure text-to-video as the default final-shot method.
 - Baked outputs when a shot needs revisions by layer.
 - Training LoRAs before the visual target and dataset requirements are clear.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial Pipeline Strategy. |

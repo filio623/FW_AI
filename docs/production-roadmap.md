@@ -1,6 +1,8 @@
-# AI VFX Production Roadmap
+**Created:** 2026-05-18
+**Modified:** 2026-08-16
+**Version:** 1.1
 
-Date: 2026-05-18
+# AI VFX Production Roadmap
 
 ## Purpose
 
@@ -59,10 +61,10 @@ Goal: define stable character identities before doing expensive generation.
 
 Tasks:
 
-- Maintain `docs/character-bible.md` as the durable character identity source.
+- Maintain `docs/character-bible.md` as the shared style/rules source and character index.
+- Maintain each character's own bible as the durable identity source: `docs/jerry-character-bible_v001.md`, `docs/tom-character-bible_v001.md`, and Sally/Wind inside the shared bible until they earn their own.
 - Create approved fire character stills.
 - Create approved water character stills.
-- Define Jerry, Sally, Tom, and the wind character separately.
 - Define scale, silhouette, face readability, material behavior, and personality.
 - Build action states: idle, jump, land, flare, extinguish, splash, react.
 - Update `prompts/fire-water-character-language.md` with accepted prompt wording and failure modes.
@@ -163,3 +165,12 @@ The most likely production path is:
 5. Composite in a real compositing app.
 
 Pure text-to-video should remain an exploration tool, not the final production backbone.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial AI VFX Production Roadmap. |
+| 1.1     | 2026-08-16 | Updated Phase 2 for the split between the shared character bible and the per-character frozen editions. |

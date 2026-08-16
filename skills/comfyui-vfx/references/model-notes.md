@@ -1,3 +1,7 @@
+**Created:** 2026-05-18
+**Modified:** 2026-05-18
+**Version:** 1.0
+
 # ComfyUI Model Notes
 
 ## Current Project Findings
@@ -19,3 +23,11 @@ For the short film, use local ComfyUI primarily for:
 - Interaction passes that can be composited.
 
 Do not assume local text-to-video from noise will provide final-quality, art-directable shot elements.
+
+---
+
+## Changelog
+
+| Version | Date       | Description |
+|---------|------------|-------------|
+| 1.0     | 2026-05-18 | Initial ComfyUI Model Notes. |
