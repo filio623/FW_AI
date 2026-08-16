@@ -20,26 +20,33 @@ else
   exit 1
 fi
 
+# The RunPod proxy sits behind Cloudflare, which rejects default curl/urllib
+# user-agents with "error code: 1010". A browser User-Agent is required.
+UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+rp_curl() {
+  curl -fsS -H "User-Agent: $UA" "$@"
+}
+
 COMMAND="${1:-}"
 case "$COMMAND" in
   url)
     printf '%s\n' "$COMFYUI_URL"
     ;;
   status)
-    curl -fsS "$COMFYUI_URL/system_stats" | jq .
+    rp_curl "$COMFYUI_URL/system_stats" | jq .
     ;;
   queue)
-    curl -fsS "$COMFYUI_URL/queue" | jq .
+    rp_curl "$COMFYUI_URL/queue" | jq .
     ;;
   object-info)
-    curl -fsS "$COMFYUI_URL/object_info" | jq .
+    rp_curl "$COMFYUI_URL/object_info" | jq .
     ;;
   history)
     PROMPT_ID="${2:-}"
     if [[ -n "$PROMPT_ID" ]]; then
-      curl -fsS "$COMFYUI_URL/history/$PROMPT_ID" | jq .
+      rp_curl "$COMFYUI_URL/history/$PROMPT_ID" | jq .
     else
-      curl -fsS "$COMFYUI_URL/history" | jq .
+      rp_curl "$COMFYUI_URL/history" | jq .
     fi
     ;;
   upload)
@@ -48,7 +55,7 @@ case "$COMMAND" in
       echo "Usage: scripts/runpod-comfy-api.sh upload <file>" >&2
       exit 2
     fi
-    curl -fsS -X POST "$COMFYUI_URL/upload/image" \
+    rp_curl -X POST "$COMFYUI_URL/upload/image" \
       -F "image=@$FILE" \
       -F "overwrite=true" | jq .
     ;;
@@ -59,7 +66,7 @@ case "$COMMAND" in
       exit 2
     fi
     jq -n --slurpfile prompt "$WORKFLOW" '{prompt: $prompt[0]}' \
-      | curl -fsS -X POST "$COMFYUI_URL/prompt" \
+      | rp_curl -X POST "$COMFYUI_URL/prompt" \
           -H 'Content-Type: application/json' \
           --data-binary @- \
       | jq .

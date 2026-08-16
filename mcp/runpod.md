@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-08-16
-**Version:** 1.1
+**Version:** 1.2
 
 # RunPod + ComfyUI
 
@@ -83,9 +83,10 @@ The official template also supports FileBrowser on `8080` and JupyterLab on
 credentials. Enable JupyterLab only when needed and set a strong
 `JUPYTER_PASSWORD` outside Git.
 
-Add a short `--terminate-after` cost guard to every development Pod. The ComfyUI
-proxy URL is public to anyone who has it, so do not share it. Use Secure Cloud
-for unreleased plates and project assets.
+Add a short `--terminate-after` cost guard to every development Pod. Do not share
+the ComfyUI proxy URL; see `The Proxy Is Behind Cloudflare` below for what that
+filtering does and does not protect. Use Secure Cloud for unreleased plates and
+project assets.
 
 Discover the current official template and GPU availability at deployment time:
 
@@ -142,9 +143,77 @@ control-video input are present and `/object_info` confirms every node type.
 9. Submit the workflow and poll its history.
 10. Download outputs, record the run, and terminate the Pod when finished.
 
+## Starting And Stopping
+
+Two helper scripts wrap the whole cycle. Everything valuable lives on the network
+volume, so terminating a Pod loses nothing and is the normal way to stop working.
+
+```bash
+scripts/runpod-pod-up.sh      # create, wait for ComfyUI, record RUNPOD_POD_ID in .env
+scripts/runpod-pod-down.sh    # terminate and clear the id; the volume is untouched
+```
+
+`runpod-pod-up.sh` accepts overrides for when the default GPU is out of stock:
+
+```bash
+HOURS=4 scripts/runpod-pod-up.sh
+GPU="NVIDIA RTX A6000" DC=US-TX-1 VOLUME= scripts/runpod-pod-up.sh
+```
+
+Do not use `runpodctl pod stop`. The container disk holds about 16 MB — ComfyUI and
+every model live on the network volume — so a stopped Pod preserves nothing worth
+paying for.
+
+Observed cold start on 2026-08-16: about four minutes from `pod create` to ComfyUI
+answering. The "up to 30 minutes" figure in RunPod's tutorial applies to a first-ever
+deploy that has to install ComfyUI; the volume already has it.
+
+## The Proxy Is Behind Cloudflare
+
+`https://<POD_ID>-8188.proxy.runpod.net` rejects default `curl` and Python
+user-agents with `error code: 1010`. This is browser-signature filtering, not
+authentication, so an API key does not help. Browsers work normally.
+
+`scripts/runpod-comfy-api.sh` sends a browser `User-Agent` for this reason. Any new
+tooling that talks to the proxy must do the same.
+
+Treat this as bot filtering, not access control. A browser with the URL still
+reaches ComfyUI, so the URL is still sensitive and should not be shared.
+
 ## Current Resume Point
 
-On 2026-08-03, authentication and storage were verified again. Current state:
+On 2026-08-16 a working Pod was created and the Shot 004 model set was installed.
+Current state:
+
+- **Network volume `fw-ai-comfyui` (`ccv3wj09mn`)**, 100 GB in `US-IL-1`, ~$7.10/month.
+  Verified: it persisted across a two-week gap and a GPU change.
+- **ComfyUI 0.30.0** installed at `/workspace/runpod-slim/ComfyUI` on the volume.
+  Note this is the real path; RunPod's tutorial says `/workspace/madapps/...`, which
+  is wrong for this template.
+- **Shot 004 models installed on the volume (18 GB total):**
+  - `models/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors` (9.4 GB)
+  - `models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors` (6.3 GB)
+  - `models/vae/wan2.2_vae.safetensors` (1.4 GB)
+- **All 13 node types** required by `shot004_jerry-wan22-funcontrol-element_v001.json`
+  resolve through `/object_info`, including `Wan22FunControlToVideo`.
+- **GPU substitution:** the RTX A5000 has been out of stock in `US-IL-1` since at
+  least 2026-08-03. The RTX 4090 (24 GB, $0.74/hr) was used instead and works.
+- **Still blocking a real Shot 004 run:** the control video
+  `shot004_ren-small-fire6_control_832x448_81f_v001.mp4` and its source
+  `FW_test/Scene 4/ren_small_fire6..mov` are not in this checkout. Restore from the
+  external drive via `references/manifests/external-drive_inventory_v001.md`.
+
+### Upgrade Path
+
+24 GB fits Wan 2.2 TI2V 5B and Fun Control 14B fp8, but not VACE-14B (~32 GB).
+Bigger VRAM is not more expensive per hour — A40 48 GB is $0.44 and RTX A6000 48 GB
+is $0.53, both below the 4090's $0.74. The cost is that neither is offered in
+`US-IL-1`, so a 48 GB card means a new volume in another region and re-downloading
+the models. A40 stock is best in `EU-SE-1`; A6000 in `US-KS-2` and `US-TX-1`.
+
+### Historical Note
+
+The state below was recorded on 2026-08-03 and is kept for context.
 
 - No Pod is currently running, so current compute spend is zero.
 - Persistent network volume `fw-ai-comfyui` (`ccv3wj09mn`) now exists in
@@ -195,3 +264,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 |---------|------------|-------------|
 | 1.0     | 2026-08-02 | Initial RunPod + ComfyUI. |
 | 1.1     | 2026-08-16 | Recorded the $5 credit minimum for network volumes and the data-center volume-support constraint, merged from Supermemory before its retirement. |
+| 1.2     | 2026-08-16 | Recorded the first working Pod and installed Shot 004 model set, the up/down helper scripts, the Cloudflare proxy user-agent requirement, the RTX 4090 substitution for the unavailable A5000, and the VRAM upgrade path. |
