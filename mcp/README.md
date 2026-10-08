@@ -2,10 +2,10 @@
 
 ## Current Status
 
-- ComfyUI MCP tools are available in this Codex session.
-- Comfy Cloud MCP setup notes are in `comfy-cloud.md`.
-- RunPod infrastructure MCP and remote ComfyUI setup notes are in `runpod.md`.
-- Higgsfield is currently available through its CLI, not through a confirmed MCP server.
+- No local ComfyUI installation or ComfyUI MCP is assumed on this machine; use a running Pod's API as documented in `runpod.md`.
+- Comfy Cloud MCP returns a 403 rollout response for this account; the direct API remains the fallback in `comfy-cloud.md`.
+- RunPod Pod management and remote ComfyUI setup are documented in `runpod.md`.
+- The Higgsfield CLI is not installed on this machine; see `higgsfield.md` and `docs/environment.md` before planning an authenticated run.
 - Supermemory was retired on 2026-08-16 and moved to `docs/archive/mcp/supermemory.md`.
 
 ## Goal

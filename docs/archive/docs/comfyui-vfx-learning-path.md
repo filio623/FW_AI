@@ -1,8 +1,12 @@
 **Created:** 2026-08-02
-**Modified:** 2026-08-16
-**Version:** 2.0
+**Modified:** 2026-10-08
+**Version:** 2.6
+**Archived:** 2026-10-08
+**Original path:** docs/comfyui-vfx-learning-path.md
 
-# ComfyUI VFX Learning Path
+# [ARCHIVED] ComfyUI VFX Learning Path
+
+This 2026 learning syllabus and its Pod/volume instructions are historical. The active guided VACE graph review is in `shots/shot004_fire-jump_workflow-test-plan_v001.md`; current infrastructure is in `mcp/runpod.md`. Do not resume from the "Current next step" below.
 
 ## Project Goal
 
@@ -24,7 +28,7 @@ This matches the approach already documented in:
 
 Work happens on a RunPod GPU Pod, not locally. Setup, Pod IDs, and the current resume point live in `mcp/runpod.md`.
 
-The current development Pod is an **RTX 4090, 24 GB VRAM, at $0.74/hour**, with a persistent network volume mounted at `/workspace`. ComfyUI and all downloaded models live on that volume at `/workspace/runpod-slim/ComfyUI`, so they survive Pod termination and GPU changes.
+The up-script default is an **RTX 4090, 24 GB VRAM, at $0.74/hour**. If that SKU is out of stock in `US-IL-1`, attach the same volume to whatever GPU is actually available there (2026-08-29: RTX 6000 Ada, 48 GB, $0.84/hour). ComfyUI and all downloaded models live on the volume at `/workspace/runpod-slim/ComfyUI`, so they survive Pod termination and GPU changes. Current volume inventory is in `mcp/runpod.md`.
 
 Two habits that matter because the Pod bills by the hour:
 
@@ -52,16 +56,16 @@ The requirement that drives this choice is control, not raw video quality. This 
 
 Revisit this section if an API provider ships true alpha output or per-layer export.
 
-## Before You Start: Media You Must Restore
+## Before You Start: Restored Shot004 Media
 
-The practice assignment below needs two files that are **not in this checkout**:
+The practice assignment uses these restored files:
 
-- `FW_test/Scene 4/ren_small_fire6..mov` — the fire render used as the motion control source.
-- `shot004_ren-small-fire6_control_832x448_81f_v001.mp4` — the prepared 832x448, 81-frame control proxy. This lived in `outputs/`, which is ephemeral, and has expired.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov` — 1920x1080, 24 fps, 87-frame fire render. Production filename copy: `ren_small_fire6..mov` in the same folder.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4` — rebuilt 832x448, 24 fps, 81-frame control proxy.
 
-Both trace back to the external production drive through `references/manifests/external-drive_inventory_v001.md`. Restore the source, regenerate the proxy with `ffmpeg`, and promote the proxy into `assets/` under a proper `_vNNN` name so it stops living in ephemeral storage.
+Restored 2026-08-18 from `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST/04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/ren_small_fire6/Proxy/ren_small_fire6..mov`. The old `outputs/` proxy was never on the production drive; this copy is pad-to-fit so the fire is not cropped.
 
-Until then, run the tutorials on their own sample footage.
+The plate and other Scene 4 passes are still only on the backup. Run official tutorials on their own sample footage until a Pod is needed.
 
 ## Recommended Learning Path
 
@@ -92,6 +96,8 @@ Same node family, different weights: the tutorial uses the 14B Fun Control pair,
 
 Run the official example first on its own sample material, then move to the project workflow.
 
+**Done for learning, 2026-09-07.** Official sample, Lightning LoRA, and Jerry still + fire-jump control were all run on the 14B Fun Control graph. Findings: control video is structure, not a motion slider (Canny/full CGI fills the old body; a tiny centroid dot is too weak and idles; a fat streak is usable). There is no control-strength widget. Fine-tuning can wait; the next hands-on chapter is VACE, not more Fun Control seeds.
+
 ### 3. Learn the Speed Trick Early
 
 The official tutorial benchmarks an RTX 4090 with 24 GB at 640x640 and 81 frames:
@@ -105,7 +111,9 @@ For reference, Shot 004 Run 001 took 358 seconds at 832x448 and 81 frames on App
 
 ### 4. Work Through the Free Mickmumpitz VFX Workflow
 
-The March 2026 guide [Generate EPIC VFX Shots with AI](https://mickmumpitz.ai/posts/free-guide-epic-154092216) is one of the closest complete free tutorials to the intended Jerry workflow.
+Session handoff for a fresh chat: `docs/mickmumpitz-vfx-setup.md`.
+
+**Current next step.** Companion YouTube (watch with the Pod off): [I Built a FREE VFX Pipeline with Local AI (2026 Masterclass)](https://www.youtube.com/watch?v=_n0ir5V5tX4) (~19 min). Written guide and free Simple graph: [Generate EPIC VFX Shots with AI](https://mickmumpitz.ai/posts/free-guide-epic-154092216).
 
 It combines:
 
@@ -122,7 +130,7 @@ The mask-plus-driving-video-plus-references combination here is the single close
 
 ### 5. Watch the Recent ActionVFX Reference-Frame Tutorial
 
-ActionVFX's June 12, 2026 tutorial, [Restyle Videos in ComfyUI with Wan 2.2](https://www.actionvfx.com/blog/restyle-videos-in-comfyui-with-wan-2-2), is valuable for understanding the VFX workflow: create one approved target frame, then propagate that treatment through the footage.
+ActionVFX's June 2026 tutorial, [Restyle Videos in ComfyUI with Wan 2.2](https://www.actionvfx.com/blog/restyle-videos-in-comfyui-with-wan-2-2) — YouTube: [Restyle Any Video in ComfyUI — Sky, Weather & Full Set Changes (Wan 2.2)](https://www.youtube.com/watch?v=pzbLO4dybIc) (~29 min). Watch for the VFX workflow: create one approved target frame, then propagate that treatment through the footage.
 
 It also explains practical constraints such as keeping the source, reference frame, and generation dimensions synchronized. The video is free, but the downloadable graph and deeper object-insertion material are part of their paid course. Watch it for the technique rather than using it as the primary hands-on lesson.
 
@@ -184,15 +192,17 @@ It uses Beeble Canvas rather than ComfyUI, and running the supplied project cons
 
 ## Best First Practice Assignment
 
-1. Run the official Fun Control example unchanged, on its own sample footage.
-2. Add the 4-step LoRA and confirm the speed difference for yourself.
-3. Restore the Scene 4 fire render and rebuild the 832x448 control proxy.
-4. Load the existing Jerry workflow.
-5. Fix the proxy's cropping by padding and scaling the control element.
-6. Test only 17-33 frames while adjusting control strength and reference conditioning.
-7. Generate Jerry against a controlled dark or neutral background.
-8. Extract a matte and composite it over the untouched plate.
+1. Run the official Fun Control example unchanged, on its own sample footage. **Done 2026-09-07.**
+2. Add the 4-step LoRA and confirm the speed difference for yourself. **Done.**
+3. Restore the Scene 4 fire render and rebuild the 832x448 control proxy. **Done 2026-08-18** — source, pad-to-fit proxy, trajectory-dot, streak, and 40%-shrunk controls live in `assets/elements/by-shot/shot004_fire-jump/fire/`.
+4. Load the existing Jerry workflow. **Deferred.** Jerry tests used the official 14B Fun Control template with `JB-001` + fire control, not the Shot 004 5B JSON. Revisit that JSON after VACE if Fun Control is still in the kit.
+5. Fix the proxy's cropping by padding and scaling the control element. **Done** (pad-to-fit proxy).
+6. Test only 17-33 frames while adjusting control strength and reference conditioning. **Done for learning.** Fun Control has no strength slider; path vs body is authored in the control movie (streak usable, full CGI too much shape, tiny dot too weak).
+7. Generate Jerry against a controlled dark or neutral background. **Started** — dark-bg 14B runs exist on the volume. Not a hero take.
+8. Extract a matte and composite it over the untouched plate. **Not started** — after VACE / a path-following body.
 9. Only after Jerry works, add grass ignition, contact glow, smoke, and scorch as separate branches.
+
+**Next:** Superhero Simple — plate as driving (`060_Superhero_PLATE.mp4`) to kill the 180° flip. Details in `docs/mickmumpitz-vfx-setup.md`.
 
 This provides a real ComfyUI learning exercise while advancing the actual shot. It also avoids spending cloud GPU time on generic text-to-video experiments that do not teach the controls this project needs.
 
@@ -206,3 +216,9 @@ Record durable findings in `docs/findings.md` and run detail in the relevant wor
 |---------|------------|-------------|
 | 1.0     | 2026-08-02 | Initial ComfyUI VFX Learning Path. |
 | 2.0     | 2026-08-16 | Archived v1.0 and expanded for the RunPod execution environment: added Pod/cost guidance, a model-family comparison covering VACE, LTX-2.3, and API models, the Fun Control model mismatch, the 4-step LoRA speed benchmark, matte extraction, ControlNet/IPAdapter, comp hand-off, and the media that must be restored first. |
+| 2.1     | 2026-08-18 | Recorded the restored shot004 fire source and rebuilt 832x448 control proxy. |
+| 2.2     | 2026-08-30 | Noted Fun Control tutorial models on the volume (run not queued) and the Illinois GPU fallback. |
+| 2.3     | 2026-09-07 | Marked Fun Control complete for learning; recorded path-vs-body control findings; pointed next work at Mickmumpitz YouTube + VACE; added ActionVFX YouTube URL. |
+| 2.4     | 2026-09-07 | Pointed at `docs/mickmumpitz-vfx-setup.md` for a clean session handoff. |
+| 2.5     | 2026-09-18 | Superhero VACE: suit works, pose-drive 180° flip; next is plate as driving. |
+| 2.6     | 2026-10-08 | Retired the completed learning syllabus after its Illinois/Mickmumpitz next steps became obsolete; active shot review lives in the shot004 plan. |

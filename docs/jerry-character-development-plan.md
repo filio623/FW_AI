@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # Jerry Character Development Plan
 
@@ -170,26 +170,13 @@ Use the CLI or agent workflow when:
 
 Current practical recommendation:
 
-- Start in the Higgsfield UI for Jerry casting if that feels faster.
-- Save or download promising outputs.
-- Put candidates in `assets/characters/jerry/higgsfield-candidates/`.
-- Record the prompt/model/output URL in `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md`.
-- Once we know what looks promising, use the CLI for more controlled repeatable runs.
+- Review the existing five Higgsfield casting runs and assembled Jerry reference set before generating more; no body anchor is approved yet.
+- If more candidates are needed, log settings and output paths in `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md` and keep them under `assets/characters/jerry/higgsfield-candidates/`.
+- Use an authenticated Higgsfield UI or CLI environment as appropriate; the CLI is not installed on this checkout (see `docs/environment.md`).
 
-## MCP / Agent Support
+## Tool Availability
 
-This Codex session currently has ComfyUI MCP tools available, but not a Higgsfield MCP tool.
-
-I can still help with Higgsfield by:
-
-- Writing prompts.
-- Creating run plans.
-- Reading and organizing downloaded outputs.
-- Logging UI results.
-- Running the installed Higgsfield CLI if network/auth access is available in the shell.
-- Comparing results and deciding what becomes approved reference.
-
-If Higgsfield MCP is added to Codex later, we can move more of the generation loop directly into the agent.
+Tooling is machine-specific. `docs/environment.md` records the current CLI status; the `higgsfield-vfx` skill contains task guidance but does not imply that the CLI or an MCP server is installed. Confirm authentication and model availability before any paid generation.
 
 ## First Deliverable
 
@@ -211,3 +198,4 @@ Do not start LoRA training until this milestone is complete.
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Jerry Character Development Plan. |
 | 1.1     | 2026-08-16 | Removed Supermemory references after its retirement; project memory now lives in the repository. |
+| 1.2     | 2026-10-08 | Replaced session-specific MCP/CLI claims with current tool prerequisites and made review of existing unapproved Jerry candidates the next casting step. |

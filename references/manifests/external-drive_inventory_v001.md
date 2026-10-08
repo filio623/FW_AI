@@ -1,12 +1,18 @@
 **Created:** 2026-05-18
-**Modified:** 2026-05-18
-**Version:** 1.0
+**Modified:** 2026-08-18
+**Version:** 1.1
 
 # External Drive Inventory
 
-External source:
+External source (original inventory path):
 
 `/Volumes/Rob's 4tb FAST FW`
+
+Current mounted restore copy (NAS backup of that drive):
+
+`/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`
+
+Paths below were recorded against the original volume name. On the backup, replace `/Volumes/Rob's 4tb FAST FW` with the restore-copy prefix above. Folder layout under `01 Projects/` through `zUnorganized/` matches.
 
 ## Summary
 
@@ -194,3 +200,4 @@ These should provide a practical first character-bible source set without import
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial External Drive Inventory. |
+| 1.1     | 2026-08-18 | Recorded the current NAS restore copy at `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`. |

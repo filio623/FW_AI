@@ -1,6 +1,6 @@
 **Created:** 2026-05-19
-**Modified:** 2026-05-19
-**Version:** 1.0
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # Shot004 Jerry Wan2.2 FunControl Element v001
 
@@ -10,18 +10,20 @@ First local ComfyUI test for Scene 4 / `firewater_test`.
 
 This workflow tests whether the existing fire animation render can drive Jerry's motion while the approved Jerry bible still controls the character look. Treat the output as a fire-character element candidate, not a final comp.
 
+Historical local 5B Run 001 record. There is no local ComfyUI install in this checkout, and the later official 14B Fun Control and split VACE tests are separate workflows. The follow-up ideas below are not the current queue; see `shots/shot004_fire-jump_workflow-test-plan_v001.md` for the guided VACE review.
+
 ## Source Inputs
 
 - Background plate, for comp context only: `FW_test/Scene 4/FW_test_scene.mov`
 - Rough VFX reference: `FW_test/Scene 4/Shot4 V031-1.mp4`
-- Motion/control source: `FW_test/Scene 4/ren_small_fire6..mov`
+- Motion/control source: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`
 - Jerry look reference: `assets/characters/jerry/character-bible-v001/references/primary-body/JB-001_upright-compact-idle.png`
 
 ## Prepared ComfyUI Inputs
 
 - Uploaded image: `jerry_JB-001_upright-compact-idle.png`
 - Uploaded control video: `shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
-- Local project proxy copy: `outputs/comfyui/scene4_firewater_test_v001/source_proxies/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
+- Local project proxy copy: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
 
 The control video is 832x448, 24 fps, 81 frames. The shot source is 84 frames, but Wan-style video lengths commonly use `4n+1`; 81 frames keeps the run close to 3.5 seconds while matching the node's expected stepping.
 
@@ -75,14 +77,14 @@ Review notes:
 - Motion control is present but not yet strong enough for final shot timing.
 - The dark-background output can be keyed well enough for a quick preview comp, but this is not a final matte/alpha solution.
 
-## Current Limitations
+## Run 001 Limitations
 
 - No ControlNet model files are installed yet.
 - IPAdapter nodes exist, but required adapter model files still need to be confirmed or installed.
 - This workflow does not preserve the plate because it is element-first.
 - Alpha is not native; matte extraction or a later RGBA/alpha workflow is still required.
 
-## Next Branches
+## Follow-up Ideas Recorded With Run 001
 
 - Add matte extraction from the generated element.
 - Build a preview comp over `FW_test_scene.mov`.
@@ -97,3 +99,5 @@ Review notes:
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-19 | Initial Shot004 Jerry Wan2.2 FunControl Element v001. |
+| 1.1     | 2026-08-18 | Repointed the motion source and control proxy at the restored files under `assets/elements/by-shot/shot004_fire-jump/fire/`. |
+| 1.2     | 2026-10-08 | Marked this frozen local 5B run as historical rather than the active shot004 queue; preserved its original result and follow-up ideas. |

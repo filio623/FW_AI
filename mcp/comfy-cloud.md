@@ -1,6 +1,6 @@
 **Created:** 2026-05-27
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # Comfy Cloud MCP
 
@@ -45,11 +45,7 @@ Official `comfy-cli` is another option for direct partner-node generation throug
 
 ## Local Tools
 
-Installed locally:
-
-- `.venv-comfy-cli/`: Python 3.12 venv with current `comfy-cli` from `Comfy-Org/comfy-cli` GitHub `main`.
-- `.venv/`: initial Python 3.9 utility venv, retained because it contains `uv`.
-- `.uv-cache/`: local uv cache for managed Python/dependencies.
+The `.venv-comfy-cli/` environment and `comfy` executable are not installed in this checkout as of 2026-10-08. `scripts/comfy-cloud-cli.sh` requires an installed CLI and the API key in `.env`; the direct `scripts/comfy-cloud-api.py` fallback does not require the CLI. The old `.venv/` and `.uv-cache/` directories are also absent here. Create a Python virtual environment before using the wrapper.
 
 Use the repo wrapper for the official CLI:
 
@@ -64,7 +60,7 @@ Use the direct API helper for full workflow JSON execution and account checks:
 ```bash
 scripts/comfy-cloud-api.py user
 scripts/comfy-cloud-api.py system-stats
-scripts/comfy-cloud-api.py submit workflows/comfyui/example_api_workflow.json
+scripts/comfy-cloud-api.py submit workflows/comfyui/your_api_workflow.json
 ```
 
 Use `comfy-cli` for partner-node one-shots and simple model-specific jobs. Use direct Cloud API calls for saved ComfyUI API-format workflows, job polling, queue/history checks, and output retrieval.
@@ -100,3 +96,4 @@ Do not commit `.env`.
 |---------|------------|-------------|
 | 1.0     | 2026-05-27 | Initial Comfy Cloud MCP. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
+| 1.2     | 2026-10-08 | Corrected the local `comfy-cli`/virtual-environment inventory; keep the direct API as the installed-free fallback. |

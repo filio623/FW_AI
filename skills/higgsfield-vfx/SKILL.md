@@ -4,8 +4,8 @@ description: "Use when generating, benchmarking, or documenting Higgsfield AI vi
 ---
 
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # Higgsfield VFX
 
@@ -15,7 +15,7 @@ Use Higgsfield as a high-quality cloud renderer and benchmark source. Do not ass
 
 ## Project Context
 
-- Higgsfield CLI is installed and authenticated.
+- Higgsfield CLI is not installed on this machine as of 2026-10-08. Install and authenticate it, or use another supported interface, before attempting the CLI patterns below.
 - Project root: `/Users/jamesfilios/Software_Projects/FW_AI`.
 - Account, model, and credit findings are documented in `docs/environment.md`.
 - Higgsfield outputs and test logs should be recorded in `workflows/higgsfield/` or the relevant shot note under `shots/`.
@@ -30,7 +30,7 @@ Use Higgsfield as a high-quality cloud renderer and benchmark source. Do not ass
 
 ## CLI Patterns
 
-Use the local CLI help and model parameter inspection before assuming options.
+When the CLI is installed and authenticated, inspect local help and model parameters before assuming options.
 
 Known useful command shape:
 
@@ -77,3 +77,4 @@ Read these only when needed:
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Higgsfield VFX. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
+| 1.2     | 2026-10-08 | Corrected the host-specific CLI availability claim and made CLI command patterns conditional on installation. |

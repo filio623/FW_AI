@@ -1,14 +1,12 @@
 **Created:** 2026-05-18
-**Modified:** 2026-05-18
-**Version:** 1.0
+**Modified:** 2026-10-08
+**Version:** 1.1
 
 # Higgsfield MCP
 
 ## Current Status
 
-No Higgsfield MCP server is currently configured in this workspace.
-
-Higgsfield is available through the authenticated CLI. Use the `higgsfield-vfx` skill for run planning and logging.
+No Higgsfield MCP server is configured in this workspace. The `higgsfield` CLI is also not installed on this machine as of 2026-10-08. The `higgsfield-vfx` skill supplies workflow guidance, not the CLI binary; check `docs/environment.md` and install/authenticate a supported interface before generating.
 
 ## MCP Candidate Requirements
 
@@ -25,7 +23,7 @@ A useful Higgsfield MCP should support:
 
 ## Next Step
 
-When links or documentation are available, add them here and decide whether to configure an existing MCP server or build a small wrapper around the CLI.
+If a supported Higgsfield MCP server becomes available, document its installation and authentication here. For CLI use, first install the binary and verify the account rather than assuming an older machine's setup.
 
 ---
 
@@ -34,3 +32,4 @@ When links or documentation are available, add them here and decide whether to c
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Higgsfield MCP. |
+| 1.1     | 2026-10-08 | Corrected the host-specific Higgsfield CLI availability claim; the skill does not install or authenticate the CLI. |

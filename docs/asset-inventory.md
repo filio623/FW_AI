@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Modified:** 2026-10-08
+**Version:** 1.5
 
 # Asset Inventory
 
@@ -41,9 +41,30 @@ Surveyed contents:
 - `FW_test/Scene 4/ren_small_waterSplash..mov`: water splash render.
 - `FW_test/Scene 4/ren_steam..mov`: steam render.
 
-As of 2026-05-18 these files had not been moved into `assets/`. They are absent from
-the current checkout, so shot004 organization under `assets/plates/by-shot/` and
-`assets/elements/` remains outstanding.
+As of 2026-05-18 these files had not been moved into `assets/`. The original
+`FW_test/` paths remain absent; a fire source was restored on 2026-08-18 and
+a separate Scene 4 test reference was staged later (indexed below). The
+original `4 base plate.mov` has not been restored into this checkout.
+
+## Restored Shot004 Fire Element
+
+Copied from the NAS backup of the production drive, not from `FW_test/`:
+
+`/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST/04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/ren_small_fire6/Proxy/ren_small_fire6..mov`
+
+- `assets/elements/by-shot/shot004_fire-jump/fire/ren_small_fire6..mov`: preserved production filename.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`: same bytes, project-named. H.264, 1920x1080, 24 fps, 87 frames, 3.625s, `yuv420p`.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`: rebuilt 832x448, 24 fps, 81-frame control proxy (pad-to-fit, first 81 frames). The expired `outputs/` copy was never on the production drive.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_trajectory-dot_832x448_81f_v001.mp4`: path-only control. Weighted luma centroid of the 832x448 proxy as a ~56px warm dot on black, 24 fps, 81 frames. Built 2026-09-03 to test Fun Control following jump timing without filling the CGI silhouette.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_trajectory-streak_832x448_81f_v001.mp4`: stronger path control. Same centroid with a ~72px head and 10-frame fading trail.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control-shrunk40_832x448_81f_v001.mp4`: original fire silhouette scaled 40% around its centroid on black. Middle ground between full CGI body and path-only.
+
+## Shot004 VACE Test Reference
+
+- `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`: staged 4096x2160, 24 fps, 84-frame Scene 4 reference used for the VACE test; provenance relative to the surveyed `.mov` is unverified. This is not the original `4 base plate.mov`.
+- `assets/elements/by-shot/shot004_fire-jump/plates/shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`: 1280x672, 24 fps, first 49 frames of the staged MP4, Lanczos-scaled and H.264 CRF 18; used as the low-memory finishing/composite input on the A40 Pod. It is a test proxy, not a full-resolution delivery plate.
+
+Media files are gitignored. The original base plate, grass fire, steam, and water passes are still only on the backup.
 
 ### Technical Metadata
 
@@ -93,3 +114,7 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `source-cgi/`, 
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Asset Inventory. |
 | 1.1     | 2026-08-16 | Marked the `FW_test` survey as historical and not present in this checkout, and indexed the tracked Jerry and Tom character assets. |
+| 1.2     | 2026-08-18 | Restored the shot004 small-fire motion source from `/Volumes/FW_Backup` and rebuilt the 832x448 control proxy into `assets/elements/by-shot/shot004_fire-jump/fire/`. |
+| 1.3     | 2026-09-03 | Added the shot004 fire trajectory-dot control proxy for path-only Fun Control tests. |
+| 1.4     | 2026-09-03 | Added streak and 40%-shrunk fire control proxies after the tiny dot proved too weak. |
+| 1.5     | 2026-10-08 | Indexed the staged Scene 4 reference and 49-frame proxy used for low-memory VACE finishing; clarified which original plates remain off-repo. |

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Create the FW_AI ComfyUI development Pod, wait for it, and record the Pod ID.
 #
-#   scripts/runpod-pod-up.sh              # RTX 4090, 2-hour termination guard
+#   scripts/runpod-pod-up.sh              # A40, CA-MTL-1 persistent volume, 2-hour guard
 #   HOURS=4 scripts/runpod-pod-up.sh      # longer guard
-#   GPU="NVIDIA RTX A6000" DC=US-TX-1 VOLUME= scripts/runpod-pod-up.sh
+#   GPU="NVIDIA RTX A6000" DC=US-TX-1 VOLUME= scripts/runpod-pod-up.sh  # explicit throwaway Pod
 #
 # Models and the ComfyUI install live on the network volume, so a terminated Pod
 # loses nothing. See mcp/runpod.md.
@@ -12,19 +12,20 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_FILE="$ROOT_DIR/.env"
 
-GPU="${GPU:-NVIDIA GeForce RTX 4090}"
+GPU="${GPU:-NVIDIA A40}"
 TEMPLATE="${TEMPLATE:-cw3nka7d08}"          # official ComfyUI - CUDA 12.8
-DC="${DC:-US-IL-1}"
-VOLUME="${VOLUME-ccv3wj09mn}"               # fw-ai-comfyui, 100GB, pinned to US-IL-1
+DC="${DC:-CA-MTL-1}"
+VOLUME="${VOLUME-avw5iclb48}"                # FW_AI persistent VACE volume; VOLUME= opts out
 PORTS="${PORTS:-8188/http,22/tcp}"
 HOURS="${HOURS:-2}"
 NAME="${NAME:-fw-ai-comfyui-dev}"
-
+DISK="${DISK:-}"
 TERM_AT="$(date -u -v+"${HOURS}"H +%Y-%m-%dT%H:%M:%SZ)"
 echo "GPU:              $GPU"
 echo "Data center:      $DC"
 echo "Network volume:   ${VOLUME:-<none>}"
 echo "Auto-terminate:   $TERM_AT (${HOURS}h)"
+[[ -n "$DISK" ]] && echo "Container disk:   ${DISK}GB"
 echo
 
 args=(
@@ -37,7 +38,7 @@ args=(
   --terminate-after "$TERM_AT"
 )
 [[ -n "$VOLUME" ]] && args+=(--network-volume-id "$VOLUME")
-
+[[ -n "$DISK" ]] && args+=(--container-disk-in-gb "$DISK")
 created="$("$ROOT_DIR/scripts/runpod-with-auth.sh" runpodctl pod create "${args[@]}")"
 POD_ID="$(printf '%s' "$created" | python3 -c 'import json,sys; print(json.load(sys.stdin)["id"])')"
 COST="$(printf '%s' "$created" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("costPerHr","?"))')"

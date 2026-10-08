@@ -1,10 +1,12 @@
 **Created:** 2026-05-27
-**Modified:** 2026-08-16
-**Version:** 1.2
+**Modified:** 2026-10-08
+**Version:** 1.3
+**Archived:** 2026-10-08
+**Original path:** prompts/handoffs/scene4_jerry-fire-video-test_handoff_v001.md
 
-# Handoff Prompt: Scene 4 Jerry Fire Video Test v001
+# [ARCHIVED] Handoff Prompt: Scene 4 Jerry Fire Video Test v001
 
-Copy/paste this prompt into a fresh Codex session.
+Historical first Higgsfield test prompt, already executed. Its original `FW_test/` media paths do not resolve in this checkout; do not copy/paste for a new run. See `workflows/higgsfield/scene4/scene4_jerry-fire-video-test_log_v001.md` for the result.
 
 ```text
 Please read `AGENTS.md`, `docs/jerry-character-bible_v001.md`, `assets/characters/jerry/character-bible-v001/README.md`, `assets/characters/jerry/character-bible-v001/selection_manifest.tsv`, `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md`, and use the `higgsfield-generate` and `higgsfield-vfx` skills.
@@ -105,3 +107,4 @@ Evaluation criteria:
 | 1.0     | 2026-05-27 | Initial Handoff Prompt: Scene 4 Jerry Fire Video Test v001. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
 | 1.2     | 2026-08-16 | Removed the Supermemory save step and skill reference; run notes now go to the shot log and `docs/findings.md`. |
+| 1.3     | 2026-10-08 | Retired the completed first-test handoff with unavailable `FW_test/` input paths; kept the original prompt as an archived record. |

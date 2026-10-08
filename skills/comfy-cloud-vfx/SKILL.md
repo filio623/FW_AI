@@ -4,8 +4,8 @@ description: "Use when running or preparing Comfy Cloud jobs for this AI short-f
 ---
 
 **Created:** 2026-05-27
-**Modified:** 2026-08-16
-**Version:** 1.2
+**Modified:** 2026-10-08
+**Version:** 1.3
 
 # Comfy Cloud VFX
 
@@ -20,16 +20,16 @@ Use Comfy Cloud as the remote execution path when local Apple MPS is too slow, m
 - MCP notes: `mcp/comfy-cloud.md`
 - CLI wrapper: `scripts/comfy-cloud-cli.sh`
 - Direct API helper: `scripts/comfy-cloud-api.py`
-- Official CLI venv: `.venv-comfy-cli/`
+- Optional official CLI venv: `.venv-comfy-cli/` (not installed in this checkout as of 2026-10-08).
 - Comfy Cloud MCP launcher: `scripts/comfy-cloud-mcp.sh`
 
 As of 2026-05-27, the regular Comfy Cloud API works for this account, but Comfy Cloud MCP returns 403 because MCP is not yet enabled for the account.
 
 ## Which Tool To Use
 
-Use local ComfyUI MCP for local server inspection, local workflow execution, node/model management, and local output retrieval.
+Use local ComfyUI MCP only if a local server and MCP connection are actually configured. The current heavy-workflow path is RunPod; see `mcp/runpod.md`.
 
-Use `scripts/comfy-cloud-cli.sh` for hosted partner-node one-shots and model-specific jobs such as Flux, Seedance, Kling, Luma, Nano Banana, Ideogram, Runway, Recraft, Stability, and similar `comfy generate` tasks.
+Use `scripts/comfy-cloud-cli.sh` for hosted partner-node one-shots only after installing the CLI. It is absent on this machine; the direct API helper below is available for API-format workflows.
 
 Use `scripts/comfy-cloud-api.py` or direct HTTPS calls to `https://cloud.comfy.org/api/...` for full ComfyUI API-format workflow JSON execution, account checks, queue/status/history, and output download plumbing.
 
@@ -44,7 +44,7 @@ scripts/comfy-cloud-api.py user
 scripts/comfy-cloud-api.py system-stats
 ```
 
-Partner-node discovery:
+Partner-node discovery (requires the optional CLI venv; see `mcp/comfy-cloud.md`):
 
 ```bash
 scripts/comfy-cloud-cli.sh generate list
@@ -64,7 +64,7 @@ scripts/comfy-cloud-cli.sh generate flux-pro \
 Workflow submission:
 
 ```bash
-scripts/comfy-cloud-api.py submit workflows/comfyui/example_api_workflow.json
+scripts/comfy-cloud-api.py submit workflows/comfyui/your_api_workflow.json
 ```
 
 ## Workflow Discipline
@@ -84,3 +84,4 @@ scripts/comfy-cloud-api.py submit workflows/comfyui/example_api_workflow.json
 | 1.0     | 2026-05-27 | Initial Comfy Cloud VFX. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
 | 1.2     | 2026-08-16 | Removed Supermemory references after its retirement; project memory now lives in the repository. |
+| 1.3     | 2026-10-08 | Marked the CLI virtual environment absent on this host, made MCP use conditional, and clarified placeholder workflow paths. |

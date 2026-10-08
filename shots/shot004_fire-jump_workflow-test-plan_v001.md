@@ -1,20 +1,22 @@
 **Created:** 2026-05-18
-**Modified:** 2026-05-18
-**Version:** 1.0
+**Modified:** 2026-10-08
+**Version:** 1.6
 
 # Shot004 Fire Jump Workflow Test Plan
 
 ## Shot
 
 - ID: `shot004_fire-jump`
-- Plate: `FW_test/Scene 4/4 base plate.mov`
-- Existing references:
+- Original base plate (not restored in this checkout): `FW_test/Scene 4/4 base plate.mov`
+- Historical `FW_test/` reference paths (also absent here unless separately staged):
   - `FW_test/Scene 4/FW_test_scene.mov`
   - `FW_test/Scene 4/Shot4 V031-1.mp4`
   - `FW_test/Scene 4/ren_small_fire6..mov`
   - `FW_test/Scene 4/ren_grassfire_cpu..mov`
   - `FW_test/Scene 4/ren_steam..mov`
-- Status: planning
+- Current VACE test reference: `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`; the 49-frame 1280x672 proxy is indexed in `docs/asset-inventory.md`.
+- Restored fire motion source: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`.
+- Status: technical VACE split-run proof complete; the proxy composite was rejected creatively. Next: guided graph review before further sampling.
 
 ## Creative Intent
 
@@ -206,6 +208,87 @@ The test workflow is successful if:
   - Preview comp: `outputs/comfyui/scene4_firewater_test_v001/renders/jerry_wan22_funcontrol_plate-key-preview_v001_run001.mp4`
   - Technical result: local Wan2.2 FunControl path runs and creates a clean face-free flame element.
   - Creative result: not final; motion is still too simple, several frames are cropped, and matte/alpha extraction needs a dedicated branch.
+- 2026-08-18: Restored fire motion source from `/Volumes/FW_Backup` and rebuilt the control proxy:
+  - Source: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`
+  - Original filename copy: `assets/elements/by-shot/shot004_fire-jump/fire/ren_small_fire6..mov`
+  - Control proxy: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
+  - Proxy rebuild is pad-to-fit at 832x448, first 81 frames, so the fire is not cropped.
+
+- 2026-10-08: A RunPod A40 VACE 14B attempt at 1280×672 and 49 frames
+  finished all 26 sampler steps in about 31 minutes, but the untiled
+  `VAEDecode` exhausted the Pod's 50 GB RAM limit. ComfyUI exited before
+  saving video; no generated shot artifact was retained.
+  The local `FW_Test_Workflow_Vace_Ready.json` in `~/Downloads/` now uses
+  `VAEDecodeTiled` (512-pixel tiles, 64-pixel spatial overlap,
+  16-frame temporal chunks, 4-frame temporal overlap). A separate
+  full-size 49-frame synthetic-latent decode succeeded, but the complete
+  VACE workflow has not yet been rerun or reviewed.
+
+- 2026-10-08: The second full 26-step A40 VACE attempt also finished
+  sampling before ComfyUI was OOM-killed at the 50 GB container limit.
+  Neither attempt saved a latent or a video; sampler output is unrecoverable.
+  The previously saved all-in-one workflows had untiled `VAEDecode`;
+  the submitted graph disappeared with the process, so the decoder used
+  on retry is unknown. A separate finishing-only smoke using the staged
+  4096x2160, 84-frame Scene 4 reference and 4K composite also OOM-killed
+  the server, even with tiled decode.
+- Recovery is split into `workflows/comfyui/shot004_fire-vace14b_sample-latent_v001.json`
+  (VACE sampling through `TrimVideoLatent` and `SaveLatent`, no decode) and
+  `workflows/comfyui/shot004_fire-vace14b_decode-latent_v001.json`
+  (load the saved latent, tiled VAE decode, and 1280x672 proxy composite).
+  The finishing workflow reads
+  `assets/elements/by-shot/shot004_fire-jump/plates/shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`
+  staged on the Pod as `ComfyUI/input/shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`.
+  Select the actual `shot004_vace_latent_*.latent [output]` filename from the
+  first workflow before queuing the second if its counter differs.
+  A 49-frame synthetic-latent end-to-end finishing smoke produced a
+  1280x672/24 fps MP4, with 7.82 GB peak container RAM and no OOM.
+  At the time of this smoke, the real VACE sampler and two-stage sequence
+  had not yet been run together; it proved finishing mechanics, not quality.
+
+- 2026-10-08: The user ran the split sampling workflow successfully.
+  ComfyUI logged completion in 31:28 and saved
+  `ComfyUI/output/shot004_vace_latent_00001_.latent` (11,205,224 bytes).
+  The separate proxy finishing workflow then completed as prompt
+  `6f56566d-9c3e-4940-895e-0655e95509a8`, saving
+  `ComfyUI/output/FW_fire_comp_proxy_00001_.mp4` (49 frames, 1280x672,
+  24 fps, 2.042 s). No OOM event occurred on the successful split run.
+  Local ignored review copy:
+  `outputs/comfyui/shot004_fire-jump/shot004_fire-vace14b_proxy-comp_v001.mp4`.
+  Early, middle, and late frame review shows an orange fire shape/glow on
+  the ground, but conspicuous green/magenta image artifacts and no
+  approved character look. This is a technical proof, not a deliverable.
+
+## Next Session: Guided VACE Workflow Review
+
+The user reviewed `shot004_fire-vace14b_proxy-comp_v001.mp4` and judged the
+result unacceptable as a finished product. Do not promote this proxy as an
+approved look or queue another expensive run without first walking through
+the graph together. The successful latent and rejected export are baselines,
+not creative approvals. No workflow parameters were changed after this review.
+
+1. Agree on the intended shot using the plate, original fire motion,
+   storyboard/character references, and specific frames of the rejected
+   export. Establish desired silhouette, trajectory, scale, timing, and
+   integration before diagnosing the model.
+2. Trace the sampling inputs: `JB-001_upright-compact-idle.png`,
+   `JB-010_round-idle-glow.png`, the 832x448 fire-motion control, and the
+   staged `FW_test_scene.mp4` reference. Inspect how the scaling/cropping,
+   batched reference frames, circular mask, blur, and screen blend condition
+   `WanVaceToVideo`; verify each is the intended source and position.
+3. Read the positive and negative text prompts together. Review the current
+   VACE settings (1280x672, 49 frames, strength 0.5), then the fixed-seed
+   sampler (seed 42, 26 steps, CFG 6, `uni_pc`/`simple`). Decide which
+   controls to keep only after identifying the first visible failure.
+4. Decode the **saved** latent separately and compare raw generated frames
+   with the composite. Trace the finishing chain: tiled VAE, 49-frame
+   Scene 4 proxy, red-channel-derived mask, circular blur/resize, and
+   `ImageCompositeMasked`. Determine whether the green/magenta artifacts,
+   fire shape, and motion problems precede or arise during compositing.
+5. Make one controlled change at a time in a new version of the workflow,
+   keep this latent and export intact, and compare the same early/middle/late
+   frames before approving any further full sampling run. The current
+   1280x672 proxy and its staged Scene 4 reference are not a 4K final plate.
 
 ---
 
@@ -214,3 +297,9 @@ The test workflow is successful if:
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Shot004 Fire Jump Workflow Test Plan. |
+| 1.1     | 2026-08-18 | Recorded the restored fire source and rebuilt 832x448 control proxy under `assets/elements/by-shot/shot004_fire-jump/fire/`. |
+| 1.2     | 2026-10-08 | Recorded the VACE sampler completion, post-sampling decode OOM, and validated tiled-decode mitigation without claiming a finished render. |
+| 1.3     | 2026-10-08 | Recorded the second post-sampler OOM, the separate 4K composite OOM, split latent workflows, and successful 1280x672 finishing smoke. |
+| 1.4     | 2026-10-08 | Logged the first successful split VACE latent and proxy composite, with technical output and visual-review limitations. |
+| 1.5     | 2026-10-08 | Recorded the user's rejection of the proxy result and the specific next-session walkthrough before further generation. |
+| 1.6     | 2026-10-08 | Clarified unrestored historical input paths, identified the staged test media, and updated shot status from planning to guided review. |

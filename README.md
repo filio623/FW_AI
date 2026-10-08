@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # AI Video Workflows
 
@@ -26,10 +26,9 @@ Doing the work:
 - `docs/asset-intake.md`: how to upload, classify, name, and track incoming film assets.
 - `docs/asset-inventory.md`: index of tracked assets and restorable source media.
 - `docs/comfyui-vfx-workflow-strategy.md`: layer strategy and the Scene 4 branch plan.
-- `docs/comfyui-vfx-learning-path.md`: what to learn, in order, to run those workflows.
+- `shots/shot004_fire-jump_workflow-test-plan_v001.md`: current VACE run record and guided next-session graph review.
 - `docs/findings.md`: running log of what worked and what did not.
 - `mcp/runpod.md`: RunPod GPU setup and the current resume point.
-- `prompts/handoffs/`: copy/paste prompts for focused new sessions.
 
 Directories:
 
@@ -51,3 +50,4 @@ Core principle: keep plates untouched and generate separable character/effect el
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial AI Video Workflows. |
 | 1.1     | 2026-08-16 | Grouped the Start here list and added AGENTS.md, the per-character bibles, both ComfyUI VFX docs, findings, RunPod, references, and outputs. |
+| 1.2     | 2026-10-08 | Replaced links to retired learning and handoff documents with the active shot004 review plan. |

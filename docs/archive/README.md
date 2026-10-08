@@ -25,6 +25,8 @@ so `mcp/supermemory.md` becomes `docs/archive/mcp/supermemory.md`. Each carries 
 
 - `mcp/supermemory.md`
 - `skills/supermemory-vfx/`
+- `docs/comfyui-vfx-learning-path.md` and `docs/mickmumpitz-vfx-setup.md`: retired learning syllabus and Illinois-volume setup handoff.
+- `prompts/handoffs/scene4_jerry-fire-video-test_handoff_v001.md`: completed first-test prompt whose original inputs are unavailable.
 
 Moving is deliberate. A retired document left at its original path keeps turning up in
 search, keeps reading as current, and — for a retired skill — keeps being loaded and

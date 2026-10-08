@@ -1,0 +1,846 @@
+{
+  "id": "611086db-d02b-4479-aacf-f411c5139235",
+  "revision": 0,
+  "last_node_id": 900000000000003,
+  "last_link_id": 900000000000004,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "LoadVideo",
+      "pos": [
+        -1800,
+        1000
+      ],
+      "size": [
+        282.798828125,
+        223.13219451904297
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            1026051308154947
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadVideo"
+      },
+      "widgets_values": [
+        "shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4",
+        "image"
+      ],
+      "widgets_values_named": {
+        "file": "shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 773631023626829,
+      "type": "VAELoader",
+      "pos": [
+        -350,
+        350
+      ],
+      "size": [
+        270,
+        94
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            452585246091023
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "wan_2.1_vae.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "wan_2.1_vae.safetensors"
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 254340916587738,
+      "type": "VAEDecodeTiled",
+      "pos": [
+        0,
+        100
+      ],
+      "size": [
+        270,
+        190
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 900000000000004
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 452585246091023
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1247984924911191
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecodeTiled"
+      },
+      "widgets_values": [
+        512,
+        64,
+        16,
+        4
+      ],
+      "widgets_values_named": {
+        "tile_size": 512,
+        "overlap": 64,
+        "temporal_size": 16,
+        "temporal_overlap": 4
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 3091311296083841,
+      "type": "GetVideoComponents",
+      "pos": [
+        -1500,
+        1000
+      ],
+      "size": [
+        207.9,
+        142
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 1026051308154947
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            1809211158759148
+          ]
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": []
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "name": "bit_depth",
+          "type": "COMBO",
+          "links": []
+        },
+        {
+          "name": "color_space",
+          "type": "COMBO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "GetVideoComponents"
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 4136035895651863,
+      "type": "ImageScale",
+      "pos": [
+        350,
+        100
+      ],
+      "size": [
+        270,
+        166
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1247984924911191
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1721819528002097
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScale"
+      },
+      "widgets_values": [
+        "lanczos",
+        1280,
+        672,
+        "disabled"
+      ],
+      "widgets_values_named": {
+        "upscale_method": "lanczos",
+        "width": 1280,
+        "height": 672,
+        "crop": "disabled"
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 597154029641449,
+      "type": "CreateVideo",
+      "pos": [
+        1150,
+        500
+      ],
+      "size": [
+        270,
+        186
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2563707442722586
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            2206925163700392
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        24,
+        8
+      ],
+      "widgets_values_named": {
+        "fps": 24,
+        "bit_depth": 8
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 4333257941611439,
+      "type": "SaveVideo",
+      "pos": [
+        1450,
+        500
+      ],
+      "size": [
+        791.4104129392072,
+        805.8056678298019
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 2206925163700392
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": []
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "FW_fire_comp_proxy",
+        "auto",
+        "auto",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "FW_fire_comp_proxy",
+        "format": "auto",
+        "format.codec": "auto",
+        "codec": "auto"
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 2090732270444817,
+      "type": "ImageFromBatch",
+      "pos": [
+        -1150,
+        1000
+      ],
+      "size": [
+        270,
+        118
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1809211158759148
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2137187076542130
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageFromBatch"
+      },
+      "widgets_values": [
+        0,
+        49
+      ],
+      "widgets_values_named": {
+        "batch_index": 0,
+        "length": 49
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 1846262975871491,
+      "type": "CreateShapeMask",
+      "pos": [
+        -1150,
+        250
+      ],
+      "size": [
+        270,
+        306
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [
+            3830096287400944
+          ]
+        },
+        {
+          "name": "mask_inverted",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateShapeMask"
+      },
+      "widgets_values": [
+        "circle",
+        49,
+        640,
+        460,
+        20,
+        1280,
+        672,
+        800,
+        380
+      ],
+      "widgets_values_named": {
+        "shape": "circle",
+        "frames": 49,
+        "location_x": 640,
+        "location_y": 460,
+        "grow": 20,
+        "frame_width": 1280,
+        "frame_height": 672,
+        "shape_width": 800,
+        "shape_height": 380
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 4181477497084969,
+      "type": "BlurMaskFast",
+      "pos": [
+        -800,
+        500
+      ],
+      "size": [
+        270,
+        118
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "masks",
+          "type": "MASK",
+          "link": 3830096287400944
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            1758750479887650
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BlurMaskFast"
+      },
+      "widgets_values": [
+        40,
+        40
+      ],
+      "widgets_values_named": {
+        "radius_x": 40,
+        "radius_y": 40
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 2844821760170566,
+      "type": "MaskToImage",
+      "pos": [
+        -450,
+        800
+      ],
+      "size": [
+        216.3,
+        62
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 1758750479887650
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1681557619499852
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 1761294245723785,
+      "type": "ImageScale",
+      "pos": [
+        -100,
+        800
+      ],
+      "size": [
+        270,
+        166
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1681557619499852
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            43039776943442
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScale"
+      },
+      "widgets_values": [
+        "bilinear",
+        1280,
+        672,
+        "disabled"
+      ],
+      "widgets_values_named": {
+        "upscale_method": "bilinear",
+        "width": 1280,
+        "height": 672,
+        "crop": "disabled"
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 4078779835151305,
+      "type": "ImageToMask",
+      "pos": [
+        250,
+        800
+      ],
+      "size": [
+        270,
+        94
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 43039776943442
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            1586917696236287
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageToMask"
+      },
+      "widgets_values": [
+        "red"
+      ],
+      "widgets_values_named": {
+        "channel": "red"
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 3254442449422320,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        750,
+        500
+      ],
+      "size": [
+        270,
+        182
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 2137187076542130
+        },
+        {
+          "name": "source",
+          "type": "IMAGE",
+          "link": 1721819528002097
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 1586917696236287
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2563707442722586
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ],
+      "widgets_values_named": {
+        "x": 0,
+        "y": 0,
+        "resize_source": false
+      },
+      "__incarnation": "0",
+      "extensions": {
+        "__incarnation": "0"
+      }
+    },
+    {
+      "id": 900000000000003,
+      "type": "LoadLatent",
+      "pos": [
+        -350,
+        100
+      ],
+      "size": [
+        260,
+        100
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            900000000000004
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadLatent"
+      },
+      "widgets_values": [
+        "shot004_vace_latent_00001_.latent [output]"
+      ],
+      "widgets_values_named": {
+        "latent": "shot004_vace_latent_00001_.latent [output]"
+      }
+    }
+  ],
+  "links": [
+    [
+      452585246091023,
+      773631023626829,
+      0,
+      254340916587738,
+      1,
+      "VAE"
+    ],
+    [
+      1026051308154947,
+      6,
+      0,
+      3091311296083841,
+      0,
+      "VIDEO"
+    ],
+    [
+      1247984924911191,
+      254340916587738,
+      0,
+      4136035895651863,
+      0,
+      "IMAGE"
+    ],
+    [
+      1809211158759148,
+      3091311296083841,
+      0,
+      2090732270444817,
+      0,
+      "IMAGE"
+    ],
+    [
+      3830096287400944,
+      1846262975871491,
+      0,
+      4181477497084969,
+      0,
+      "MASK"
+    ],
+    [
+      1758750479887650,
+      4181477497084969,
+      0,
+      2844821760170566,
+      0,
+      "MASK"
+    ],
+    [
+      1681557619499852,
+      2844821760170566,
+      0,
+      1761294245723785,
+      0,
+      "IMAGE"
+    ],
+    [
+      43039776943442,
+      1761294245723785,
+      0,
+      4078779835151305,
+      0,
+      "IMAGE"
+    ],
+    [
+      1586917696236287,
+      4078779835151305,
+      0,
+      3254442449422320,
+      2,
+      "MASK"
+    ],
+    [
+      2137187076542130,
+      2090732270444817,
+      0,
+      3254442449422320,
+      0,
+      "IMAGE"
+    ],
+    [
+      1721819528002097,
+      4136035895651863,
+      0,
+      3254442449422320,
+      1,
+      "IMAGE"
+    ],
+    [
+      2563707442722586,
+      3254442449422320,
+      0,
+      597154029641449,
+      0,
+      "IMAGE"
+    ],
+    [
+      2206925163700392,
+      597154029641449,
+      0,
+      4333257941611439,
+      0,
+      "VIDEO"
+    ],
+    [
+      900000000000004,
+      900000000000003,
+      0,
+      254340916587738,
+      0,
+      "LATENT"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6,
+      "offset": [
+        400,
+        100
+      ]
+    },
+    "frontendVersion": "1.55.17"
+  },
+  "version": 0.4
+}

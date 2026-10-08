@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # AI VFX Production Roadmap
 
@@ -44,8 +44,8 @@ Goal: know exactly what is in the current plates and CGI reference renders.
 
 Tasks:
 
-- Verify codec, duration, resolution, frame rate, and alpha status for every `FW_test/Scene 4/` video.
-- Extract representative stills from the base plate and CGI renders.
+- Verify metadata and alpha only for Scene 4 media actually restored into `assets/`; the historical `FW_test/Scene 4/` folder is absent here. Use `docs/asset-inventory.md` and external-drive manifests for the remaining sources.
+- Extract representative stills from restored CGI sources; defer original base-plate stills until that plate is available.
 - Identify which CGI renders are character reference, motion reference, or interaction reference.
 - Store shot-specific notes in `shots/`.
 - Store reusable stills or curated references in `assets/` or `references/`.
@@ -143,16 +143,12 @@ For each new shot:
 - Log generation settings, failures, and final comp notes.
 - Promote reusable discoveries back into docs, prompts, workflows, and skills.
 
-## Near-Term Checklist
+## Current Shot004 Position (2026-10-08)
 
-- Verify `FW_test/Scene 4/` video metadata and alpha status.
-- Create the shot004 fire-jump plan.
-- Extract still references from plate and CGI renders.
-- Run one proxy/CGI-to-AI-polish test.
-- Run one alpha-native fire element test.
-- Run one cloud reference generation test.
-- Composite a rough layered proof of concept.
-- Decide which branch becomes the first reusable workflow template.
+- The shot004 plan exists; the original `FW_test/` folder and base plate are not restored in this checkout. Some fire/reference media and a test proxy are indexed in `docs/asset-inventory.md`.
+- Fun Control and VACE branches have produced technical tests. The split VACE-14B latent and proxy composite succeeded, but the user rejected the result as a creative target. No branch has an approved Jerry element or matte.
+- Next: walk through the actual sampling and finishing graphs with the user, compare raw generation to the rejected composite, and agree on a visual target before spending GPU time again. See `shots/shot004_fire-jump_workflow-test-plan_v001.md`.
+- Alpha-native element tests, independently controllable interaction passes, and a layered proof of concept remain pending. Do not call a branch a reusable production template until it meets the success criteria above.
 
 ## Current Bias
 
@@ -174,3 +170,4 @@ Pure text-to-video should remain an exploration tool, not the final production b
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial AI VFX Production Roadmap. |
 | 1.1     | 2026-08-16 | Updated Phase 2 for the split between the shared character bible and the per-character frozen editions. |
+| 1.2     | 2026-10-08 | Replaced the stale initial checklist with current shot004 VACE review status and acknowledged unavailable `FW_test/` media. |

@@ -4,8 +4,8 @@ description: "Use when working on project-specific ComfyUI workflows for the AI 
 ---
 
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # ComfyUI VFX
 
@@ -15,8 +15,8 @@ Treat ComfyUI as a controllable VFX element lab, not as the default final-shot g
 
 ## Project Context
 
-- Local ComfyUI is expected at `http://127.0.0.1:8000`.
-- Apple MPS is the target local backend. Avoid FP8 diffusion weights on MPS unless a compatible path is proven.
+- No local ComfyUI install is present in this checkout. Run heavy VACE graphs on a Pod attached to the current volume; see `mcp/runpod.md`. A local `http://127.0.0.1:8000` server is only applicable if separately installed and started.
+- Apple MPS guidance below applies to a future local install; avoid FP8 diffusion weights on MPS unless a compatible path is proven.
 - Project root: `/Users/jamesfilios/Software_Projects/FW_AI`.
 - Base ComfyUI paths are documented in `docs/environment.md`.
 - Project workflows live in `workflows/comfyui/`.
@@ -44,6 +44,8 @@ Use the ComfyUI MCP tools first when available:
 - `list_local_models` to confirm checkpoints, diffusion models, VAEs, LoRAs, ControlNets, and text encoders.
 - `list_workflows`, `analyze_workflow`, `get_workflow`, and `validate_workflow` for existing workflows.
 - `get_queue`, `get_job_status`, `get_history`, and `get_logs` for failed or running jobs.
+
+If ComfyUI MCP is unavailable, the running RunPod server can be inspected with `scripts/runpod-comfy-api.sh status`, `queue`, and `history [prompt-id]` after a new Pod ID is recorded in the ignored `.env`.
 
 ### Build Workflows
 
@@ -84,3 +86,4 @@ Read these only when needed:
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial ComfyUI VFX. |
 | 1.1     | 2026-08-16 | Replaced stale `/Users/robbiefilios/Documents/FW_AI_Workflow` paths with repo-relative paths and the current workspace root. |
+| 1.2     | 2026-10-08 | Clarified that ComfyUI is not installed locally in this checkout and pointed Pod inspection to the current RunPod API helper. |

@@ -1,6 +1,6 @@
 **Created:** 2026-05-19
-**Modified:** 2026-05-19
-**Version:** 1.0
+**Modified:** 2026-10-08
+**Version:** 1.2
 
 # ComfyUI VFX Workflow Strategy
 
@@ -12,12 +12,14 @@ The workflow should prioritize controllability, separation, and iteration speed 
 
 ## Scene 4 Test Target
 
-- Plate: `FW_test/Scene 4/FW_test_scene.mov`
-- Rough comp / motion reference: `FW_test/Scene 4/Shot4 V031-1.mp4`
-- Jerry motion source: `FW_test/Scene 4/ren_small_fire6..mov`
-- Jerry approved references: `assets/characters/jerry/character-bible-v001/`
+- Historical Scene 4 reference (not present at that path): `FW_test/Scene 4/FW_test_scene.mov`. The VACE test uses a staged MP4/proxy indexed in `docs/asset-inventory.md`; the original base plate is not restored.
+- Historical rough comp / motion reference (not restored here): `FW_test/Scene 4/Shot4 V031-1.mp4`
+- Jerry motion source: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`
+- Jerry reference set (not an approved final render): `assets/characters/jerry/character-bible-v001/`
 
-The first test should recreate Jerry jumping into the grass and triggering ignition, while preserving the base plate for comp.
+The test target remains Jerry jumping into the grass and triggering ignition while preserving the base plate for compositing.
+
+As of 2026-10-08, Fun Control and split VACE-14B tests have run, but the VACE proxy composite was rejected for image quality and no independent character matte or approved take exists. The next action is a guided review of the actual VACE input, generation, decode, and composite stages in `shots/shot004_fire-jump_workflow-test-plan_v001.md`, not another blind full run.
 
 ## Layer Strategy
 
@@ -35,17 +37,17 @@ Use separate passes:
 
 For Resolve/Fusion handoff, prefer PNG sequences or ProRes/DNxHR intermediates plus separate matte passes. For later After Effects handoff, the same elements still work; avoid workflows that depend on one compositor-only feature.
 
-## Branch Order
+## Candidate Branches
 
 ### Branch A: Proxy-Controlled Jerry Element
 
 Use the existing CGI/fire render as motion control and Jerry bible stills as look references.
 
-Current implementation:
+Historical starter graph (the later Fun Control learning tests used the official 14B template, not this 5B graph):
 
 - `workflows/comfyui/shot004_jerry-wan22-funcontrol-element_v001.json`
 - `Wan22FunControlToVideo`
-- control video: `ren_small_fire6..mov` proxy
+- control video: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
 - reference image: `JB-001_upright-compact-idle.png`
 
 This branch answers whether local Wan2.2 can follow the existing motion strongly enough to become an element source.
@@ -79,7 +81,7 @@ Install model files for control and reference conditioning, then test:
 - IPAdapter or equivalent for Jerry look consistency
 - LoRA only after the reference set is stable and simple conditioning is not enough
 
-Current blocker: ControlNet model files are not installed locally.
+Current blocker: local ComfyUI is not installed in this checkout; this ControlNet/IPAdapter branch remains untested here.
 
 ### Branch E: Interaction Passes
 
@@ -93,7 +95,7 @@ Build grass ignition separately from Jerry:
 
 ### Local
 
-- Use installed Wan2.2 TI2V 5B FP16 first because it is already available and supports local iteration.
+- If local ComfyUI is installed again, use the 5B TI2V model for small MPS experiments; the active VACE-14B shot workflow runs on RunPod. See `docs/environment.md` and `mcp/runpod.md`.
 - Avoid FP8 diffusion weights on Apple MPS unless a compatible route is proven.
 - Consider LTX-2/LTX-2.3 next for faster iteration and image-to-video work. Official LTX docs describe ComfyUI image-to-video as useful for maintaining identity and composition from a source frame, with lower-resolution quick iterations and higher-quality final passes.
 - Consider HunyuanVideo 1.5 only after setup review; its technical report describes an 8.3B open-source model for text-to-video and image-to-video with consumer-GPU-oriented efficiency, but local Comfy setup/model compatibility still needs to be verified.
@@ -136,3 +138,5 @@ The first useful workflow does not need to look final. It needs to prove:
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-19 | Initial ComfyUI VFX Workflow Strategy. |
+| 1.1     | 2026-08-18 | Repointed the Jerry motion source and Fun Control proxy at the restored shot004 files. |
+| 1.2     | 2026-10-08 | Distinguished historical Fun Control starter work from the rejected VACE proxy result and made guided graph review the current next step. |

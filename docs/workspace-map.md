@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.2
+**Modified:** 2026-10-08
+**Version:** 1.3
 
 # Workspace Map
 
@@ -21,7 +21,7 @@ This repo is the shared working area for the AI short-film VFX pipeline.
   - `assets/editorial/`: EDL/XML files, reference exports, and edit-facing material.
 - `docs/`: durable decisions, setup notes, findings, and pipeline strategy.
   - `docs/archive/`: immutable records. Major-revision snapshots sit flat with a `-vNNN` suffix; retired documents sit under a subfolder mirroring their original path. Nothing here is live.
-- `FW_test/`: current test plates and CGI fire/water renders supplied for exploration.
+- `FW_test/`: historical survey path, absent in this checkout. See `docs/asset-inventory.md` for restored files and external-drive manifests.
 - `mcp/`: MCP setup notes and server plans.
 - `outputs/`: generated renders, composites, thumbnails, and review artifacts.
 - `prompts/`: reusable prompt blocks, character language, and handoff prompts.
@@ -78,3 +78,4 @@ Keep the original plate untouched. Generate separable elements and interaction p
 | 1.0     | 2026-05-18 | Initial Workspace Map. |
 | 1.1     | 2026-08-16 | Documented the document archive, media `_archive/` convention, and versioning split between media and Markdown. |
 | 1.2     | 2026-08-16 | Recorded that `docs/archive/` also holds retired documents under mirrored paths, and that superseded frozen editions stay put. |
+| 1.3     | 2026-10-08 | Clarified that the original `FW_test/` directory is absent from this checkout. |

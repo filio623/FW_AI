@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.4
+**Modified:** 2026-10-08
+**Version:** 1.5
 
 # Repository Guidelines
 
@@ -136,13 +136,13 @@ For Jerry and the other elemental characters, base body renders should not inclu
 
 ## Comfy Cloud Access
 
-Comfy Cloud MCP is configured through `scripts/comfy-cloud-mcp.sh`, but the account currently receives a 403 rollout message from the MCP endpoint. Use the regular Comfy Cloud API and official CLI fallback until MCP is enabled for the account.
+Comfy Cloud MCP is configured through `scripts/comfy-cloud-mcp.sh`, but the account currently receives a 403 rollout message from the MCP endpoint. Use the regular Comfy Cloud API; the official CLI is optional and is not installed in this checkout as of 2026-10-08 (see `mcp/comfy-cloud.md`).
 
-- Use `scripts/comfy-cloud-cli.sh generate list` and `scripts/comfy-cloud-cli.sh generate schema <model>` for hosted partner-node discovery.
-- Use `scripts/comfy-cloud-cli.sh generate <model> ... --download outputs/<name>` for Flux, Seedance, Kling, Luma, Nano Banana, Ideogram, Runway, Recraft, Stability, and similar one-shot partner jobs.
+- After installing the optional CLI, use `scripts/comfy-cloud-cli.sh generate list` and `scripts/comfy-cloud-cli.sh generate schema <model>` for hosted partner-node discovery.
+- After installing the optional CLI, use `scripts/comfy-cloud-cli.sh generate <model> ... --download outputs/<name>` for Flux, Seedance, Kling, Luma, Nano Banana, Ideogram, Runway, Recraft, Stability, and similar one-shot partner jobs.
 - Use `scripts/comfy-cloud-api.py user`, `system-stats`, and `submit <workflow.json>` for account checks and API-format workflow execution against `https://cloud.comfy.org/api`.
 - Keep `COMFY_API_KEY` only in `.env`; never copy it into commands, docs, memories, or committed files.
-- Load the `comfy-cloud-vfx` skill for Comfy Cloud work and the `comfyui-vfx` skill for local ComfyUI workflow work.
+- Load the `comfy-cloud-vfx` skill for Comfy Cloud work and the `comfyui-vfx` skill for ComfyUI workflow work, whether local or RunPod-hosted.
 
 ## Security & Configuration Tips
 

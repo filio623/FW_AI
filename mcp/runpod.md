@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
-**Modified:** 2026-08-16
-**Version:** 1.2
+**Modified:** 2026-10-08
+**Version:** 2.6
 
 # RunPod + ComfyUI
 
@@ -21,8 +21,9 @@ It expects:
 - `jerry_JB-001_upright-compact-idle.png`
 - `shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
 
-The Jerry reference is tracked in the repository. The control video and large
-models are not tracked and must be restored or downloaded separately.
+The Jerry reference is tracked in the repository. The control video is restored
+locally at `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
+and still needs to be uploaded to a Pod. Large models stay on the network volume.
 
 ## Installed Local Integration
 
@@ -59,10 +60,10 @@ discover, so check them before planning a Pod.
 - **Network volumes require at least $5 in account credit.** A first attempt at
   volume creation was blocked by a $2.14 balance. Top up before provisioning
   storage, not after.
-- **Not every data center supports network volumes.** Montreal was ruled out for
-  this reason before `US-IL-1` was selected. Confirm volume support for a region
-  with `runpodctl datacenter list` before committing to it, because a volume is
-  pinned to its data center and moving regions means rebuilding storage.
+- **Network-volume support varies by data center and date.** The 2026-08-02
+  setup could not use Montreal, but `CA-MTL-1` supported the replacement volume
+  created on 2026-10-07. Confirm support with `runpodctl datacenter list`
+  before provisioning; a volume is pinned to its data center.
 
 ## Recommended ComfyUI Shape
 
@@ -153,12 +154,20 @@ scripts/runpod-pod-up.sh      # create, wait for ComfyUI, record RUNPOD_POD_ID i
 scripts/runpod-pod-down.sh    # terminate and clear the id; the volume is untouched
 ```
 
+As of 2026-10-08 the up-script defaults are A40 in `CA-MTL-1` with network
+volume `avw5iclb48` and a two-hour termination guard. Check GPU availability
+and the current volume before launch; never create a replacement Pod without
+attaching the persistent volume that holds ComfyUI and the saved VACE latent.
+
 `runpod-pod-up.sh` accepts overrides for when the default GPU is out of stock:
 
 ```bash
 HOURS=4 scripts/runpod-pod-up.sh
 GPU="NVIDIA RTX A6000" DC=US-TX-1 VOLUME= scripts/runpod-pod-up.sh
 ```
+
+Explicit `VOLUME=` disables the default mount for an intentionally disposable
+Pod; do not use that override when resuming shot004.
 
 Do not use `runpodctl pod stop`. The container disk holds about 16 MB — ComfyUI and
 every model live on the network volume — so a stopped Pod preserves nothing worth
@@ -182,34 +191,111 @@ reaches ComfyUI, so the URL is still sensitive and should not be shared.
 
 ## Current Resume Point
 
-On 2026-08-16 a working Pod was created and the Shot 004 model set was installed.
-Current state:
+The active VACE setup uses network volume `fw-ai-comfyui-vace` (`avw5iclb48`),
+100 GB in `CA-MTL-1`, created 2026-10-07. ComfyUI 0.30.0 lives at
+`/workspace/runpod-slim/ComfyUI`. On 2026-10-08, Pod `fy1zreijb81w9a` used
+an NVIDIA A40 (48 GB, $0.59/hour); Pod IDs, prices, and availability are
+ephemeral. Check the current Pod before connecting.
 
-- **Network volume `fw-ai-comfyui` (`ccv3wj09mn`)**, 100 GB in `US-IL-1`, ~$7.10/month.
-  Verified: it persisted across a two-week gap and a GPU change.
-- **ComfyUI 0.30.0** installed at `/workspace/runpod-slim/ComfyUI` on the volume.
-  Note this is the real path; RunPod's tutorial says `/workspace/madapps/...`, which
-  is wrong for this template.
-- **Shot 004 models installed on the volume (18 GB total):**
-  - `models/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors` (9.4 GB)
-  - `models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors` (6.3 GB)
-  - `models/vae/wan2.2_vae.safetensors` (1.4 GB)
-- **All 13 node types** required by `shot004_jerry-wan22-funcontrol-element_v001.json`
-  resolve through `/object_info`, including `Wan22FunControlToVideo`.
-- **GPU substitution:** the RTX A5000 has been out of stock in `US-IL-1` since at
-  least 2026-08-03. The RTX 4090 (24 GB, $0.74/hr) was used instead and works.
-- **Still blocking a real Shot 004 run:** the control video
-  `shot004_ren-small-fire6_control_832x448_81f_v001.mp4` and its source
-  `FW_test/Scene 4/ren_small_fire6..mov` are not in this checkout. Restore from the
-  external drive via `references/manifests/external-drive_inventory_v001.md`.
+On 2026-10-08, `fy1zreijb81w9a` was terminated with
+`scripts/runpod-pod-down.sh`, the ignored `.env` Pod ID was cleared, and
+`runpodctl pod list` returned no Pods. `runpodctl network-volume list`
+still showed `avw5iclb48` (100 GB, `CA-MTL-1`); volume storage charges
+continue, but this Pod's compute billing has stopped. Before termination,
+the saved latent, rejected video, both split workflow JSON files, and the
+49-frame proxy were verified under the network-mounted `/workspace`.
+The ignored local review MP4 remains under `outputs/comfyui/shot004_fire-jump/`.
+Next session, attach this same volume to a new compatible Pod in `CA-MTL-1`
+and use its new ID/URL. First review the graph and rejected result together
+per `shots/shot004_fire-jump_workflow-test-plan_v001.md`; do not queue a
+new sampling run as part of resuming infrastructure.
 
-### Upgrade Path
+### VACE Model Files
 
-24 GB fits Wan 2.2 TI2V 5B and Fun Control 14B fp8, but not VACE-14B (~32 GB).
-Bigger VRAM is not more expensive per hour — A40 48 GB is $0.44 and RTX A6000 48 GB
-is $0.53, both below the 4090's $0.74. The cost is that neither is offered in
-`US-IL-1`, so a 48 GB card means a new volume in another region and re-downloading
-the models. A40 stock is best in `EU-SE-1`; A6000 in `US-KS-2` and `US-TX-1`.
+- `models/unet/wan2.1_vace_14B_fp16.safetensors`: official Comfy-Org complete
+  14B VACE diffusion model, 34,675,323,640 bytes. SHA-256:
+  `f202a5c59b8a91ada1862c46a038214f1f7f216c61ec8350d25f69b919da4307`.
+- `models/unet/Wan2_1-VACE_module_14B_bf16.safetensors`: Kijai's 6.1 GB
+  VACE **module only**, preserved under its original name. It is not a
+  substitute for the complete model in a `UNETLoader`.
+- `models/vae/wan_2.1_vae.safetensors`: Kijai BF16 Wan 2.1 VAE, loaded by
+  `VAELoader`.
+- `models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors`: official
+  Comfy-Org scaled FP8 UMT5 encoder, 6,735,906,897 bytes.
+
+The first encoder load logged missing CLIP weights and selected `SD1ClipModel`
+despite the submitted `CLIPLoader(type=wan)`. ComfyUI cached that bad loader
+result; replacing the file alone did not clear the cache, and `CLIPTextEncode`
+still failed with `Cannot copy out of meta tensor; no data!`.
+A fresh Wan text-encode succeeded, then a Pod restart cleared the stale cache.
+After restart, a minimal `CLIPLoader(type=wan, device=default)` →
+`CLIPTextEncode` run and a separate
+`UNETLoader(weight_dtype=fp8_e4m3fn)` run both completed successfully.
+The full 1280×672, 49-frame VACE video graph has **not** been rendered or
+verified end to end; do not equate these loader checks with a finished shot.
+
+### 2026-10-08 VACE Decode OOM
+
+The first 1280×672, 49-frame, 26-step VACE attempt finished sampling,
+then the Pod's 50 GB RAM cgroup recorded an OOM kill at `VAEDecode`. The
+ComfyUI process exited without a saved video; the Pod stayed running but its
+HTTP proxy returned 502. Restarting the Pod restored ComfyUI.
+
+`/Users/jamesfilios/Downloads/FW_Test_Workflow_Vace_Ready.json` now uses
+`VAEDecodeTiled` with `tile_size=512`, `overlap=64`,
+`temporal_size=16`, and `temporal_overlap=4`. A separate 49-frame
+1280×672 synthetic-latent decode completed, produced 49 preview frames,
+and used 2.39 GB peak container RAM without an OOM. This validates the
+decode path only, not the entire graph with the sampler, cached models,
+and control inputs in memory. Reload this updated JSON into the canvas
+before retrying; an already-open browser workflow retains the old node.
+
+### 2026-10-08 Two-Stage VACE Recovery
+
+A second 26-step run also completed sampling and then OOM-killed ComfyUI
+at the 50 GB container limit. Both sampler results were lost. The older
+server-saved all-in-one workflows still contain untiled `VAEDecode`, although
+the submitted retry graph is unavailable after the crash. Do not queue
+either old all-in-one graph. Even a finishing-only synthetic-latent run
+with the staged 4096x2160, 84-frame Scene 4 reference and 4K composite
+OOM-killed this Pod. Tiled VAE decode alone does not make the old chain safe.
+
+Use these separate, importable canvas workflows instead:
+
+1. `workflows/comfyui/shot004_fire-vace14b_sample-latent_v001.json` ends at
+   `SaveLatent` after `TrimVideoLatent`, with no VAE decode. Queue it once and
+   confirm `ComfyUI/output/shot004_vace_latent_*.latent` exists before moving on.
+2. `workflows/comfyui/shot004_fire-vace14b_decode-latent_v001.json` reads
+   the saved output via `LoadLatent`'s `[output]` path annotation. Its default
+   is `shot004_vace_latent_00001_.latent [output]`; select/edit the actual
+   generated filename if the counter differs. It uses tiled Wan VAE decode
+   (512/64 spatial, 16/4 temporal), 1280x672 scales and mask, and the
+   49-frame proxy staged in `ComfyUI/input/`:
+   `shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`. The durable
+   local source is under `assets/elements/by-shot/shot004_fire-jump/plates/`.
+   Output prefix is `FW_fire_comp_proxy`; this is not a 4K delivery.
+
+Both JSON files are also saved on the persistent volume at
+`ComfyUI/user/default/workflows/FW/` for selection in the ComfyUI workflow
+browser. Import one at a time; an already-open old graph is not replaced.
+
+A synthetic latent was saved and loaded directly from `[output]`. Running the
+complete finishing canvas against it created a 49-frame 1280x672, 24 fps MP4
+with 7,819,919,360 bytes peak container RAM and zero OOM events. This verifies
+the finishing workflow on test data; it did not prove a full VACE result.
+Do final-resolution assembly/upscaling in a streaming compositor rather than
+reloading the 4K plate and 84 frames into this 50 GB ComfyUI container.
+
+The user then completed the real 26-step sampler and saved
+`ComfyUI/output/shot004_vace_latent_00001_.latent`. Decoding and compositing
+that latent through the proxy workflow produced
+`ComfyUI/output/FW_fire_comp_proxy_00001_.mp4` (49 frames, 1280x672,
+24 fps) without OOM. The preview shows orange fire/glow but visible
+green/magenta artifacts; see the shot004 workflow test plan for the run log.
+Keep the saved latent for non-destructive finishing experiments.
+
+Use a GPU in `CA-MTL-1` to attach this network volume. Refresh Pod status and
+GPU prices before launch; historical `US-IL-1` volume IDs below were retired.
 
 ### Historical Note
 
@@ -233,8 +319,8 @@ The state below was recorded on 2026-08-03 and is kept for context.
 - An earlier two-minute allocation used to inspect host RAM was stopped and
   deleted. Its persistent network volume was not deleted.
 
-Resume by refreshing inventory and launching only when the Illinois A5000 is
-actually schedulable:
+The launch command below is historical: volume `ccv3wj09mn` was deleted.
+Do not reuse it. For the current volume and Pod, see `Current Resume Point`.
 
 ```bash
 scripts/runpod-with-auth.sh runpodctl gpu list
@@ -265,3 +351,17 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 1.0     | 2026-08-02 | Initial RunPod + ComfyUI. |
 | 1.1     | 2026-08-16 | Recorded the $5 credit minimum for network volumes and the data-center volume-support constraint, merged from Supermemory before its retirement. |
 | 1.2     | 2026-08-16 | Recorded the first working Pod and installed Shot 004 model set, the up/down helper scripts, the Cloudflare proxy user-agent requirement, the RTX 4090 substitution for the unavailable A5000, and the VRAM upgrade path. |
+| 1.3     | 2026-08-18 | Recorded the restored local shot004 control video; a Pod run still needs that file uploaded. |
+| 1.4     | 2026-08-30 | Recorded the official Fun Control 14B models, LoRAs, wan_2.1 VAE, and sample inputs on the volume; the 2026-08-29 RTX 6000 Ada substitution when the Illinois 4090 was out of stock; ~48 GB used of 100 GB; and that the tutorial graph has not been queued. |
+| 1.5     | 2026-09-07 | Fun Control learning closed; listed Jerry still and fire path-control inputs on the volume; next chapter VACE / Mickmumpitz. |
+| 1.6     | 2026-09-07 | Pod `ijzpkfsy5sqmt6` up: Illinois RTX 4090, official template, volume `ccv3wj09mn`; Mickmumpitz merge download started. |
+| 1.7     | 2026-09-08 | Terminated `ijzpkfsy5sqmt6`; relaunched `v3chqyqw2kowkx` on Illinois 4090 with the same volume (~78 GB used). |
+| 1.8     | 2026-09-08 | Pod `1a2lj3lfp7wnju` up; Superhero and Office Flood example inputs uploaded to `input/mick/`. |
+| 1.9     | 2026-09-08 | Terminated `1a2lj3lfp7wnju`; volume keeps merge, nodes, and `input/mick/` examples. |
+| 2.0     | 2026-10-07 | Deleted old IL volume; created new CA-MTL-1 volume (avw5iclb48) for VACE 14B workflow. |
+| 2.1     | 2026-10-08 | Corrected the current VACE Pod/model inventory, documented the stale encoder cache and verified loader-only recovery, and flagged the retired Illinois launch command. |
+| 2.2     | 2026-10-08 | Diagnosed the 50 GB RAM OOM at post-sampling VAE decode, recorded the tiled workflow correction and the separate full-size decode smoke result. |
+| 2.3     | 2026-10-08 | Recorded the second OOM and 4K composite OOM, introduced split latent/sample workflows and a 49-frame proxy finishing path verified below 8 GB container RAM. |
+| 2.4     | 2026-10-08 | Recorded successful real VACE latent save and separate proxy composite; flagged visible color artifacts and preserved the latent for finishing iterations. |
+| 2.5     | 2026-10-08 | Recorded safe A40 Pod termination, preserved CA-MTL-1 network volume and VACE artifacts, and the guided workflow-review resume point. |
+| 2.6     | 2026-10-08 | Aligned Pod-up defaults and launch guidance with the surviving CA-MTL-1 VACE volume, preventing an unattached replacement Pod. |

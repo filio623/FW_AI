@@ -1,6 +1,6 @@
 **Created:** 2026-05-17
-**Modified:** 2026-08-16
-**Version:** 2.3
+**Modified:** 2026-10-08
+**Version:** 2.5
 
 # Environment
 
@@ -23,7 +23,7 @@ Current options for running workflows, in order of preference:
 - **Comfy Cloud** — hosted partner nodes and one-shot jobs. See `mcp/comfy-cloud.md` and the `comfy-cloud-vfx` skill.
 - **Local install** — if one is set up again, record its ComfyUI root, `models/`, `input/`, `output/`, and `user/` paths here and update `mcp/comfyui.md`.
 
-Saved workflows live in `workflows/comfyui/`. The Shot 004 graph expects model files and video inputs that are not tracked in Git; its workflow note lists them.
+Saved graphs live in `workflows/comfyui/`; the current split shot004 VACE workflow and its non-Git media dependencies are indexed in `shots/shot004_fire-jump_workflow-test-plan_v001.md` and `mcp/runpod.md`.
 
 ## RunPod
 
@@ -60,15 +60,15 @@ Supermemory was retired on 2026-08-16 and its key, scripts, and MCP launcher wer
 
 ## FFmpeg
 
-- Installed with Homebrew on 2026-05-18.
-- Version observed: `ffmpeg 8.1.1`; `ffprobe` available.
+- Installed with Homebrew. Reinstalled 2026-08-18 after the previous binary was missing from `PATH`.
+- Version observed: `ffmpeg 9.0.1`; `ffprobe` available at `/opt/homebrew/bin/ffmpeg`.
 - Use for video metadata inspection, reference-frame extraction, proxy creation, alpha checks, transcoding, and thumbnail generation.
 
 ## Production Media
 
-Bulk production media is not in this repository. It lives on the external production drive `/Volumes/Rob's 4tb FAST FW`, indexed by the manifests in `references/manifests/`. The drive is not mounted by default, so check before assuming a source path resolves.
+Bulk production media is not in this repository. The original inventory path is `/Volumes/Rob's 4tb FAST FW`. The copy currently mounted is the NAS backup `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`. Indexed by the manifests in `references/manifests/`.
 
-The `FW_test/` working folder described in earlier notes is not present in this checkout. `outputs/` is ephemeral and is created on demand.
+The original `FW_test/` working folder is not present in this checkout. `outputs/` is ephemeral. The shot004 fire source and control proxy were restored under `assets/elements/by-shot/shot004_fire-jump/fire/`; a separate Scene 4 test reference MP4 and 49-frame proxy are indexed under `assets/elements/by-shot/shot004_fire-jump/plates/`. The original `4 base plate.mov` has not been restored here.
 
 ---
 
@@ -81,3 +81,5 @@ The `FW_test/` working folder described in earlier notes is not present in this 
 | 2.1     | 2026-08-16 | Corrected the Higgsfield CLI status to not-installed after verifying `PATH`, and recorded Comfy Cloud access paths and their prerequisites. |
 | 2.2     | 2026-08-16 | Replaced the Supermemory section with a Project Memory note after Supermemory was retired. |
 | 2.3     | 2026-08-16 | Repointed the Supermemory record at its new archive path. |
+| 2.4     | 2026-08-18 | Recorded the reinstalled `ffmpeg 9.0.1`, the `/Volumes/FW_Backup` restore copy, and the restored shot004 fire media. |
+| 2.5     | 2026-10-08 | Linked the current split VACE shot record and clarified staged Scene 4 reference media versus the unrestored original base plate. |

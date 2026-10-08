@@ -6,7 +6,7 @@ ENV_FILE="$ROOT_DIR/.env"
 COMFY_BIN="${COMFY_BIN:-$ROOT_DIR/.venv-comfy-cli/bin/comfy}"
 
 if [[ ! -x "$COMFY_BIN" ]]; then
-  echo "Missing comfy CLI at $COMFY_BIN. Install with: UV_CACHE_DIR=.uv-cache .venv/bin/uv venv .venv-comfy-cli --python 3.12 && .venv-comfy-cli/bin/python -m pip install git+https://github.com/Comfy-Org/comfy-cli.git" >&2
+  echo "Missing comfy CLI at $COMFY_BIN. Install Python 3.12, then run: python3.12 -m venv .venv-comfy-cli && .venv-comfy-cli/bin/python -m pip install git+https://github.com/Comfy-Org/comfy-cli.git" >&2
   exit 1
 fi
 
