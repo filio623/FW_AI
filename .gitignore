@@ -27,6 +27,9 @@ node_modules/
 *.tmp
 *.temp
 *.bak
+*.blend[0-9]
+# Mantaflow writes its 24 MB noise tile to the working directory on upres bakes/renders
+waveletNoiseTile.bin
 
 # Generated review/output artifacts
 outputs/

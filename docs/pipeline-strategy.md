@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-05-18
-**Version:** 1.0
+**Modified:** 2026-10-17
+**Version:** 1.1
 
 # Pipeline Strategy
 
@@ -43,6 +43,12 @@ Use for high-quality cloud generation:
 - Temp baked shots.
 - Candidate element-generation tests when separability is not required or can be extracted.
 
+### Blender
+
+Under evaluation, not adopted. A Jerry fire rig exists at `assets/characters/jerry/source-cgi/jerry_fire-rig_v001.blend`. Setup is in `mcp/blender.md`. The run log is `workflows/blender/jerry/jerry_fire-rig_log_v001.md`. r09 is not an approved look.
+
+Its job, if the pose and dash tests pass, would be rigged simulated elements rendered to multilayer EXR for compositing. It is not the shot 004 motion driver. That driver stays the Houdini fire proxy until a scored benchmark row replaces it.
+
 ### Compositing App
 
 Use After Effects, Nuke, Fusion, or Resolve for final assembly:
@@ -68,3 +74,4 @@ Use After Effects, Nuke, Fusion, or Resolve for final assembly:
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Pipeline Strategy. |
+| 1.1     | 2026-10-17 | Added Blender as an unevaluated CG track and kept it off the shot 004 motion driver. |
