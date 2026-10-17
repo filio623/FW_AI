@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.5
+**Modified:** 2026-10-17
+**Version:** 1.7
 
 # Asset Inventory
 
@@ -64,6 +64,12 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 - `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`: staged 4096x2160, 24 fps, 84-frame Scene 4 reference used for the VACE test; provenance relative to the surveyed `.mov` is unverified. This is not the original `4 base plate.mov`.
 - `assets/elements/by-shot/shot004_fire-jump/plates/shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`: 1280x672, 24 fps, first 49 frames of the staged MP4, Lanczos-scaled and H.264 CRF 18; used as the low-memory finishing/composite input on the A40 Pod. It is a test proxy, not a full-resolution delivery plate.
 
+### Benchmark clips
+
+Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `workflows/comfyui/shot004-benchmark/`. The index and the keeping rule are in `docs/vfx-element-benchmark.md`.
+
+- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, and the ComfyUI Seedance 2.0 reference test.
+
 Media files are gitignored. The original base plate, grass fire, steam, and water passes are still only on the backup.
 
 ### Technical Metadata
@@ -90,8 +96,10 @@ These are committed to the repository and resolve in any checkout.
 - `assets/characters/jerry/higgsfield-candidates/run001`–`run005`: casting-run stills, assessed in `docs/jerry-character-bible_v001.md`.
 - `assets/characters/jerry/approval-review/v001/`: Jerry approval review pack.
 - `assets/characters/tom/approval-review/v001`–`v003/`: Tom review rounds, v003 current.
+- `assets/characters/jerry/source-cgi/jerry_fire-rig_v001.blend`: Blender 5.2.1 Jerry fire rig (rigged emitter body, core-glow volume, Mantaflow fire, embers, idle cycle). The fluid cache is not tracked; rebake into `outputs/jerry_fire-rig_v001/cache_fluid/`. Run log: `workflows/blender/jerry/jerry_fire-rig_log_v001.md`.
+- `assets/characters/jerry/source-cgi/jerry_fire-rig_idle-test-r09_f0064_v001.png`: 960x540 r09 test still from that rig. Not approved.
 
-Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `source-cgi/`, `training-candidates/`) exist for both characters and are held open with `.gitkeep`. Nothing is approved into `approved/` yet for either character.
+Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candidates/`) exist for both characters and are held open with `.gitkeep`, as does Tom's `source-cgi/`. Nothing is approved into `approved/` yet for either character.
 
 ## Active Shot Asset Logs
 
@@ -118,3 +126,5 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `source-cgi/`, 
 | 1.3     | 2026-09-03 | Added the shot004 fire trajectory-dot control proxy for path-only Fun Control tests. |
 | 1.4     | 2026-09-03 | Added streak and 40%-shrunk fire control proxies after the tiny dot proved too weak. |
 | 1.5     | 2026-10-08 | Indexed the staged Scene 4 reference and 49-frame proxy used for low-memory VACE finishing; clarified which original plates remain off-repo. |
+| 1.6     | 2026-10-17 | Indexed the Jerry Blender fire rig `.blend` and its r09 test still in `source-cgi/`. |
+| 1.7     | 2026-10-17 | Indexed the local shot004 benchmark clips copied off the RunPod volume. |

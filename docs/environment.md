@@ -1,6 +1,6 @@
 **Created:** 2026-05-17
-**Modified:** 2026-10-08
-**Version:** 2.5
+**Modified:** 2026-10-17
+**Version:** 2.7
 
 # Environment
 
@@ -33,15 +33,11 @@ Summary: the official Codex plugin, RunPod documentation MCP, `runpodctl`, and `
 
 ## Higgsfield
 
-The `higgsfield` CLI is **not installed on this machine** — it is not on `PATH`. It must be installed and authenticated before any Higgsfield workflow or run log can be reproduced.
+Verified 2026-10-11: `higgsfield` CLI 1.1.26 is installed globally through npm (`~/.nvm/versions/node/v24.21.0/bin/higgsfield`) and authenticated as `jamesfilios@gmail.com`, plan `plus` (trial), 110 credits.
 
-Observations below are from the previous machine and are unverified here:
+The trial blocks generation through the CLI/API (`only_mcp_usage_on_trial_is_available`); catalog, cost, and upload commands still work. Generation goes through the official MCP server configured in `.omp/mcp.json`. Setup and auth steps live in `mcp/higgsfield.md`.
 
-- CLI version previously observed: `higgsfield 0.1.40`.
-- Account previously observed: `robfilios@gmail.com`, plan `ultra`.
-- Credits previously observed: `385.45`.
-
-Re-check cloud model availability, parameters, and credits before expensive generations. Setup detail lives in `mcp/higgsfield.md`.
+Re-check cloud model availability, parameters, and credits before expensive generations.
 
 ## Comfy Cloud
 
@@ -51,6 +47,10 @@ Re-check cloud model availability, parameters, and credits before expensive gene
 - `scripts/comfy-cloud-cli.sh` — additionally needs the `comfy` CLI at `.venv-comfy-cli/bin/comfy`, which is **not installed here**. The install command is in the script's error message.
 
 MCP is configured but the account still receives a 403 rollout message; see `mcp/comfy-cloud.md`.
+
+## Blender
+
+Blender 5.2.1 LTS is at `/Applications/Blender.app`. The official Blender Lab MCP add-on and server, both 1.0.3, are installed, and OMP connects through the `blender` entry in `.omp/mcp.json`. The server runs model-written Python without guards. Setup, upgrade, and tool notes are in `mcp/blender.md`.
 
 ## Project Memory
 
@@ -83,3 +83,5 @@ The original `FW_test/` working folder is not present in this checkout. `outputs
 | 2.3     | 2026-08-16 | Repointed the Supermemory record at its new archive path. |
 | 2.4     | 2026-08-18 | Recorded the reinstalled `ffmpeg 9.0.1`, the `/Volumes/FW_Backup` restore copy, and the restored shot004 fire media. |
 | 2.5     | 2026-10-08 | Linked the current split VACE shot record and clarified staged Scene 4 reference media versus the unrestored original base plate. |
+| 2.6     | 2026-10-11 | Replaced the stale previous-machine Higgsfield notes with the verified CLI install, trial account, and MCP-only generation path. |
+| 2.7     | 2026-10-17 | Recorded Blender 5.2.1 and the official Blender Lab MCP add-on and server setup. |
