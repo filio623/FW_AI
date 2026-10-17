@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.6
+**Modified:** 2026-10-17
+**Version:** 1.11
 
 # Shot004 Fire Jump Workflow Test Plan
 
@@ -16,7 +16,7 @@
   - `FW_test/Scene 4/ren_steam..mov`
 - Current VACE test reference: `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`; the 49-frame 1280x672 proxy is indexed in `docs/asset-inventory.md`.
 - Restored fire motion source: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`.
-- Status: technical VACE split-run proof complete; the proxy composite was rejected creatively. Next: guided graph review before further sampling.
+- Status: stock VACE Pass A is scored and closed. Path can lock; the still's look does not transfer. Next test is Wan 2.7 Video Edit. Score sheet: `docs/vfx-element-benchmark.md`.
 
 ## Creative Intent
 
@@ -259,38 +259,55 @@ The test workflow is successful if:
   the ground, but conspicuous green/magenta image artifacts and no
   approved character look. This is a technical proof, not a deliverable.
 
-## Next Session: Guided VACE Workflow Review
+- 2026-10-09: Pod `03vbr9yofvf2z4` (A40, `CA-MTL-1`, volume `avw5iclb48`)
+  resumed the same latent. A decode-only prompt
+  `7886d760-9025-4124-92e9-ebcb5e04db04` (15.2 s) wrote
+  `ComfyUI/output/shot004_raw_tiled_f000_00001_.png`,
+  `shot004_raw_tiled_f024_00001_.png`, and
+  `shot004_raw_tiled_f048_00001_.png` from
+  `VAEDecodeTiled` with the same 512/64, 16/4 settings. No new sample.
+  The raw frames already contain the green/magenta blobs. Inside the
+  composite mask, raw vs rejected proxy differs by about 5 levels, which
+  is h264 error. Plate, fire-control, and both Jerry stills are clean.
+  Latent `shot004_vace_latent_00001_.latent` is `(1, 16, 13, 84, 160)`
+  float32, no NaN/Inf, range about -9.6 to 8.9. The inactive region
+  decodes as the plate, so tiled VAE decode is not the color failure.
+  Causes in the sampling graph, confirmed against ComfyUI 0.30.0
+  `WanVaceToVideo`: the positive prompt describes grass ignition, not a
+  jumping character; the control mask is a static 800×380 ellipse while
+  the CGI fire covers 1–3% of the frame; `reference_image[:1]` drops
+  `JB-010`; the control video is a 0.55 screen blend of plate and fire;
+  strength 0.5 and CFG 6 let the model invent chroma garbage inside that
+  large mask. By frame 48, 27% of the CGI fire has left the ellipse, and
+  the raw frame shows a green ghost where a character should be.
+- 2026-10-11: Branch D Higgsfield run 001, through the official MCP
+  (the trial account blocks CLI/API generation). Motion:
+  `outputs/shot004_houdini-motion_1280x720_96f.mp4`, made from
+  `shot004_fire-jump_ren-small-fire6_source_v001.mov` (87 frames)
+  scaled to 1280×720 with 9 black frames added (96 frames, 4.0s). Look:
+  `JB-001`, `JB-010`, `JB-004`. Prompt: replace the fire shape with a
+  faceless flame creature, keep path/timing/size, pure black, no scene.
+  `kling_video_edit` std (job `acf90fd4-82df-4b6d-a8dd-ffce0d4386be`)
+  failed with no reason given; its 6 credits were refunded.
+  `seedance_2_5` `video_edit` 480p, no audio (job
+  `989f837b-f97a-461d-a0d2-ab83caa6dd69`, 14 credits) completed:
+  `outputs/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4`,
+  854×480, 24 fps, 89 frames. Look holds (JB-style core and comet tail,
+  no face, background black at ≤2/255). Not path-locked: brightness
+  centroid within ~4–8% of frame width through frame 24, then 16–19%
+  of frame width left of the Houdini landing from frame 30 on. About
+  3–4× the Houdini fire's area. Jerry hard-cuts to black at frame 82;
+  the source fire runs to 86. Usable as a look/reference clip, not as
+  a locked element.
+- 2026-10-11: Pass A VACE 14B Run 001 (`shot004_fire-vace14b_sample-latent_v001_pass_A.json`, prompt `ce04c4d6-b605-46c0-a3d4-1ac1a8e83107`) ran 17 frames on black at 1280×672 (`strength=1.0`, `cfg=3.0`, `JB-001` reference, Houdini fire-on-black control video, red-channel mask expanded by 20px and blurred by 8px) and saved `ComfyUI/output/shot004_vace_latent_00003_.latent`. Decoded video (`FW_fire_comp_proxy_00003_.mp4` / `00004_.mp4`) followed the Houdini jump trajectory on black cleanly, but `strength=1.0` copied the rough Houdini flame texture rather than transferring `JB-001`'s look.
+- 2026-10-13: Tested ComfyUI `KlingMotionControl` (Node ID `4463629993286452`) on Pod `qgdedf20w84gnp`. First attempt failed with `Unauthorized: Please login first to use this node`; second attempt after login failed at Kling's server pre-check (`task_id: 939111787268550684`, 0 credits charged): `Image recognition failed. Please make sure your image meets the requirements. Error: No complete upper body detected in the image; ensure the upper body is clearly visible.` `KlingMotionControl` requires a human upper-body skeleton and cannot be used for non-humanoid fire elements.
 
-The user reviewed `shot004_fire-vace14b_proxy-comp_v001.mp4` and judged the
-result unacceptable as a finished product. Do not promote this proxy as an
-approved look or queue another expensive run without first walking through
-the graph together. The successful latent and rejected export are baselines,
-not creative approvals. No workflow parameters were changed after this review.
+## Current Test Status
 
-1. Agree on the intended shot using the plate, original fire motion,
-   storyboard/character references, and specific frames of the rejected
-   export. Establish desired silhouette, trajectory, scale, timing, and
-   integration before diagnosing the model.
-2. Trace the sampling inputs: `JB-001_upright-compact-idle.png`,
-   `JB-010_round-idle-glow.png`, the 832x448 fire-motion control, and the
-   staged `FW_test_scene.mp4` reference. Inspect how the scaling/cropping,
-   batched reference frames, circular mask, blur, and screen blend condition
-   `WanVaceToVideo`; verify each is the intended source and position.
-3. Read the positive and negative text prompts together. Review the current
-   VACE settings (1280x672, 49 frames, strength 0.5), then the fixed-seed
-   sampler (seed 42, 26 steps, CFG 6, `uni_pc`/`simple`). Decide which
-   controls to keep only after identifying the first visible failure.
-4. Decode the **saved** latent separately and compare raw generated frames
-   with the composite. Trace the finishing chain: tiled VAE, 49-frame
-   Scene 4 proxy, red-channel-derived mask, circular blur/resize, and
-   `ImageCompositeMasked`. Determine whether the green/magenta artifacts,
-   fire shape, and motion problems precede or arise during compositing.
-5. Make one controlled change at a time in a new version of the workflow,
-   keep this latent and export intact, and compare the same early/middle/late
-   frames before approving any further full sampling run. The current
-   1280x672 proxy and its staged Scene 4 reference are not a 4K final plate.
+Working queue and scores: `docs/vfx-element-benchmark.md`. Do not keep a second queue here.
 
----
+As of 2026-10-17, local `WanVaceToVideo` knobs are closed. Strength `1` copied the Houdini fire. Strength `0.5` smeared it. A white-mask control video was drawn as gray smoke and did not become `JB-001`. Kling Motion Control cannot take a non-human still. Kling Omni Edit ramps the look in late. Next test is Wan 2.7 Video Edit, then Runway Aleph only if that fails. Pass B waits for a Pass A winner.
+
 
 ## Changelog
 
@@ -303,3 +320,8 @@ not creative approvals. No workflow parameters were changed after this review.
 | 1.4     | 2026-10-08 | Logged the first successful split VACE latent and proxy composite, with technical output and visual-review limitations. |
 | 1.5     | 2026-10-08 | Recorded the user's rejection of the proxy result and the specific next-session walkthrough before further generation. |
 | 1.6     | 2026-10-08 | Clarified unrestored historical input paths, identified the staged test media, and updated shot status from planning to guided review. |
+| 1.7     | 2026-10-09 | Diagnosed green/magenta as sample conditioning, not composite or tiled VAE decode; recorded the raw latent frames and the next conditioning change. |
+| 1.8     | 2026-10-11 | Logged Branch D Higgsfield run 001: Kling Omni Edit failed (refunded), Seedance 2.5 video_edit result with measured path drift. |
+| 1.9     | 2026-10-13 | Logged Pass A VACE Run 001 (`00003_.latent`), `KlingMotionControl` human-upper-body rejection, and the structured Phase 1–3 VFX testing roadmap. |
+| 1.10    | 2026-10-13 | Pointed the Pass A roadmap at `docs/vfx-element-benchmark.md` as the working score sheet. |
+| 1.11    | 2026-10-17 | Replaced the open strength/silhouette queue with the closed VACE result and pointed current work at the benchmark. |

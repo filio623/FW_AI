@@ -1,6 +1,6 @@
 **Created:** 2026-05-19
-**Modified:** 2026-10-08
-**Version:** 1.2
+**Modified:** 2026-10-17
+**Version:** 1.4
 
 # ComfyUI VFX Workflow Strategy
 
@@ -19,7 +19,7 @@ The workflow should prioritize controllability, separation, and iteration speed 
 
 The test target remains Jerry jumping into the grass and triggering ignition while preserving the base plate for compositing.
 
-As of 2026-10-08, Fun Control and split VACE-14B tests have run, but the VACE proxy composite was rejected for image quality and no independent character matte or approved take exists. The next action is a guided review of the actual VACE input, generation, decode, and composite stages in `shots/shot004_fire-jump_workflow-test-plan_v001.md`, not another blind full run.
+As of 2026-10-17, the working comparison is `docs/vfx-element-benchmark.md`. Local stock-VACE knobs are closed. The next test is Wan 2.7 Video Edit, not another slider on the current graph.
 
 ## Layer Strategy
 
@@ -140,3 +140,5 @@ The first useful workflow does not need to look final. It needs to prove:
 | 1.0     | 2026-05-19 | Initial ComfyUI VFX Workflow Strategy. |
 | 1.1     | 2026-08-18 | Repointed the Jerry motion source and Fun Control proxy at the restored shot004 files. |
 | 1.2     | 2026-10-08 | Distinguished historical Fun Control starter work from the rejected VACE proxy result and made guided graph review the current next step. |
+| 1.3     | 2026-10-13 | Pointed current work at the VFX element benchmark instead of another unscoped model survey. |
+| 1.4     | 2026-10-17 | Recorded that local VACE knob tests are closed and the next test is Wan 2.7 Video Edit. |

@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
-**Modified:** 2026-10-08
-**Version:** 2.6
+**Modified:** 2026-10-17
+**Version:** 2.19
 
 # RunPod + ComfyUI
 
@@ -191,24 +191,13 @@ reaches ComfyUI, so the URL is still sensitive and should not be shared.
 
 ## Current Resume Point
 
-The active VACE setup uses network volume `fw-ai-comfyui-vace` (`avw5iclb48`),
-100 GB in `CA-MTL-1`, created 2026-10-07. ComfyUI 0.30.0 lives at
-`/workspace/runpod-slim/ComfyUI`. On 2026-10-08, Pod `fy1zreijb81w9a` used
-an NVIDIA A40 (48 GB, $0.59/hour); Pod IDs, prices, and availability are
-ephemeral. Check the current Pod before connecting.
+No Pod is running. `c0u0flqd84rlen` was terminated 2026-10-17 and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`) is untouched.
 
-On 2026-10-08, `fy1zreijb81w9a` was terminated with
-`scripts/runpod-pod-down.sh`, the ignored `.env` Pod ID was cleared, and
-`runpodctl pod list` returned no Pods. `runpodctl network-volume list`
-still showed `avw5iclb48` (100 GB, `CA-MTL-1`); volume storage charges
-continue, but this Pod's compute billing has stopped. Before termination,
-the saved latent, rejected video, both split workflow JSON files, and the
-49-frame proxy were verified under the network-mounted `/workspace`.
-The ignored local review MP4 remains under `outputs/comfyui/shot004_fire-jump/`.
-Next session, attach this same volume to a new compatible Pod in `CA-MTL-1`
-and use its new ID/URL. First review the graph and rejected result together
-per `shots/shot004_fire-jump_workflow-test-plan_v001.md`; do not queue a
-new sampling run as part of resuming infrastructure.
+Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, and Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
+
+Stock VACE knobs are closed. Do not queue another strength or mask tweak. Next test is Wan 2.7 Video Edit. That test does not need this GPU. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+
+Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` only if the next test needs the local 14B model. The volume stays attached by that script's default.
 
 ### VACE Model Files
 
@@ -365,3 +354,16 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.4     | 2026-10-08 | Recorded successful real VACE latent save and separate proxy composite; flagged visible color artifacts and preserved the latent for finishing iterations. |
 | 2.5     | 2026-10-08 | Recorded safe A40 Pod termination, preserved CA-MTL-1 network volume and VACE artifacts, and the guided workflow-review resume point. |
 | 2.6     | 2026-10-08 | Aligned Pod-up defaults and launch guidance with the surviving CA-MTL-1 VACE volume, preventing an unattached replacement Pod. |
+| 2.7     | 2026-10-09 | Recorded resumed A40 Pod `03vbr9yofvf2z4` on the CA-MTL-1 VACE volume and the decode-only finding that the color artifacts are in the saved latent. |
+| 2.8     | 2026-10-09 | Terminated A40 Pod `03vbr9yofvf2z4` and cleared the Pod ID. The CA-MTL-1 VACE volume remains. |
+| 2.9     | 2026-10-09 | Replaced the stale running-Pod terminate instruction after `03vbr9yofvf2z4` was already shut down. |
+| 2.10    | 2026-10-10 | Recorded resumed A40 Pod `l6ifya67dcq486` on the CA-MTL-1 VACE volume and the Seedance test file that survived the previous termination. |
+| 2.11    | 2026-10-10 | Terminated A40 Pod `l6ifya67dcq486`. Recorded the second VACE latent and the agreed Pass A resume point. |
+| 2.12    | 2026-10-11 | Recorded resumed A40 Pod `2q273z4gzxff6n` on the CA-MTL-1 VACE volume. |
+| 2.13    | 2026-10-11 | Terminated A40 Pod `2q273z4gzxff6n`. Recorded Pass A latent `00003` and the strength-0.5 resume point. |
+| 2.14    | 2026-10-13 | Recorded resumed A40 Pod `qgdedf20w84gnp` on the CA-MTL-1 VACE volume. |
+| 2.15    | 2026-10-13 | Terminated A40 Pod `qgdedf20w84gnp` after verifying `KlingMotionControl` human-upper-body rejection. |
+| 2.16    | 2026-10-13 | Terminated A40 Pod `7imyoqxk5n7w7o` after the Kling Omni Edit tests. |
+| 2.17    | 2026-10-17 | Recorded resumed A40 Pod `c0u0flqd84rlen` after CA-MTL-1 A40 stock returned. |
+| 2.18    | 2026-10-17 | Corrected the resume point: strength 0.5 and silhouette runs are scored, and the next test is not another local VACE knob. |
+| 2.19    | 2026-10-17 | Terminated A40 Pod `c0u0flqd84rlen` and cleared the Pod ID. Next session starts at the benchmark; Wan 2.7 does not need the GPU. |

@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.2
+**Modified:** 2026-10-17
+**Version:** 1.3
 
 # AI VFX Production Roadmap
 
@@ -143,12 +143,12 @@ For each new shot:
 - Log generation settings, failures, and final comp notes.
 - Promote reusable discoveries back into docs, prompts, workflows, and skills.
 
-## Current Shot004 Position (2026-10-08)
+## Current Shot004 Position (2026-10-17)
 
-- The shot004 plan exists; the original `FW_test/` folder and base plate are not restored in this checkout. Some fire/reference media and a test proxy are indexed in `docs/asset-inventory.md`.
-- Fun Control and VACE branches have produced technical tests. The split VACE-14B latent and proxy composite succeeded, but the user rejected the result as a creative target. No branch has an approved Jerry element or matte.
-- Next: walk through the actual sampling and finishing graphs with the user, compare raw generation to the rejected composite, and agree on a visual target before spending GPU time again. See `shots/shot004_fire-jump_workflow-test-plan_v001.md`.
-- Alpha-native element tests, independently controllable interaction passes, and a layered proof of concept remain pending. Do not call a branch a reusable production template until it meets the success criteria above.
+- The shot plan is `shots/shot004_fire-jump_workflow-test-plan_v001.md`. Scores and the next test live in `docs/vfx-element-benchmark.md`. Do not treat this roadmap as the queue.
+- Stock VACE can lock the Houdini path and cannot take the look from `JB-001`. That knob sweep is closed. No approved Jerry element or matte exists yet.
+- Next test is Wan 2.7 Video Edit. Pass B and a full-length comp wait for a Pass A winner.
+- Alpha-native element tests and a layered proof of concept remain pending. Do not call a branch a reusable production template until it meets the success criteria above.
 
 ## Current Bias
 
@@ -171,3 +171,4 @@ Pure text-to-video should remain an exploration tool, not the final production b
 | 1.0     | 2026-05-18 | Initial AI VFX Production Roadmap. |
 | 1.1     | 2026-08-16 | Updated Phase 2 for the split between the shared character bible and the per-character frozen editions. |
 | 1.2     | 2026-10-08 | Replaced the stale initial checklist with current shot004 VACE review status and acknowledged unavailable `FW_test/` media. |
+| 1.3     | 2026-10-17 | Replaced the October 8 graph-walkthrough next step with the closed VACE result and the benchmark queue. |
