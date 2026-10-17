@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
 **Modified:** 2026-10-17
-**Version:** 1.6
+**Version:** 1.8
 
 # VFX Element Benchmark
 
@@ -69,6 +69,8 @@ A run can pass trajectory and fail look. That is a useful result. Do not
 | Kling Omni Edit, 2026-10-13 | `KlingOmniProEditVideoNode`, seeds 436 and 602 | Held the source clip, then restyled late | Fail. Starts as the Houdini fire and becomes the still only toward the end | Not measured | Do not keep prompting this node for a frame-1 swap. Next local knob is VACE strength 0.5. Then Wan 2.7 Video Edit. |
 | Pass A strength 0.5, 2026-10-17 | VACE, same mask and still | Fire moves up-right but splits and smears | Fail. Soft blobs, not `JB-001` | Pass | Strength sweep closed. Next is silhouette control, not 0.35 or 0.7. |
 | Pass A silhouette, 2026-10-17 | VACE, white mask as `control_video`, strength left at 0.5 | Small blob plus a gray ghost of the mask | Fail. Not `JB-001`. The white shape was drawn as gray smoke | Pass | Stock VACE cannot carry the still. Local knob tests are done. |
+| Wan 2.7 Video Edit, 2026-10-17 | `Wan2VideoEditApi` on the Pod, 720P, seed 42, `JB-001` as `image1` | Pass. ≤2.3% of frame width off the Houdini centroid at every tenth of the clip; landing 1.1% | Partial, scored Fail. A teardrop with a hot white core from frame 1, no late ramp. But it is a clean, glossy candle-drop, not `JB-001`'s soft, wispy fireball | Pass. Background ≤2/255 after frame 0 | First run to hold path and a Jerry-like shape together. The look still misses the still. |
+| Wan 2.7 Video Edit, 2026-10-17, run 2 | Same graph and prompt, queued by hand from the Pod canvas; only the seed changed (`2126129005`, randomized) | Pass. ≤5.5% of frame width off mid-jump; landing 0.3%. Grows after landing like the Houdini fire | Pass, soft. Reads as `JB-001`: smoky edge, sparks, pale glowing core, a tip that leans with the motion. Peachier and less saturated than the still. Softer than the still: the flame is 150–400 px tall against `JB-001`'s ~1350, and at equal height it keeps ~70–75% of the still's Laplacian detail. The file is ~0.7 Mbps | Pass. The only non-black pixels away from the flame are its own smoke and sparks, up to 17/255 over 0.2% of the frame. No ground or box | First run to pass all three checks. Seed alone moved the look from generic to `JB-001`. Sharpness is the open problem. |
 
 ## Queue
 
@@ -79,8 +81,11 @@ another mask tweak on `WanVaceToVideo`.
 
 Next, one cloud edit, same motion clip and same still:
 
-1. `Wan2VideoEditApi` (Wan 2.7 Video Edit). Shut the Pod down first if the only work is this API call.
-2. `RunwayAleph2VideoToVideoNode` only if Wan 2.7 fails path or look.
+1. ~~`Wan2VideoEditApi` (Wan 2.7 Video Edit).~~ Seed 42 failed look. Seed `2126129005`, same prompt, passed path, look, and black but is soft. This is the Pass A candidate.
+2. Sharpness on the candidate, one knob per run: `1080P` with seed `2126129005` first (~$1.01 per run), then the source cropped to the jump region and scaled back in comp. The crop changes the frozen motion input, so score it as a variant.
+3. `RunwayAleph2VideoToVideoNode` is on hold while the Wan 2.7 candidate holds up. It is a comfy.org partner node too; `scripts/runpod-comfy-api.sh submit` sends `COMFY_API_KEY`.
+
+Wan 2.7 output varies a lot by seed. Before calling a Wan 2.7 setting dead, run more than one seed.
 
 Kling Omni Edit and Kling Motion Control are already scored. Do not retry them for this job.
 
@@ -127,6 +132,8 @@ Scored clips are the research set. The mp4 holds the picture and the canvas that
 | `.../shot004_fire-jump_kling-omni-edit_seed436_v001.mp4` | `.../shot004_fire-jump_kling-omni-edit_seed436_v001.workflow.json` | Kling Omni Edit seed 436. |
 | `.../shot004_fire-jump_kling-omni-edit_seed602_v001.mp4` | `.../shot004_fire-jump_kling-omni-edit_seed602_v001.workflow.json` | Kling Omni Edit seed 602. |
 | `.../shot004_fire-jump_seedance20-ref_v001.mp4` | `.../shot004_fire-jump_seedance20-ref_v001.workflow.json` | ComfyUI Seedance 2.0 Fast reference test, seed 825222339. Not the Higgsfield Seedance 2.5 run. |
+| `.../shot004_fire-jump_wan27-videoedit_seed42_v001.mp4` | `.../shot004_fire-jump_wan27-videoedit_seed42_v001.prompt.json` | Wan 2.7 Video Edit, seed 42, 720P. API-submitted, so prompt only; the runnable source is `workflows/comfyui/shot004_fire-jump_wan27-videoedit_api_v001.json`. |
+| `.../shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4` | `.../shot004_fire-jump_wan27-videoedit_seed2126129005_v001.workflow.json` | Wan 2.7 Video Edit, seed 2126129005, 720P. Queued by hand from the canvas; the extract is that canvas. The Pass A candidate. |
 
 The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still points at `outputs/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4`.
 
@@ -140,6 +147,8 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 2026-10-13 | Kling Omni Edit 00005 / 00006 | `kling-v3-omni` 720p | prompt asked for still look, video for scale and motion | full clip, scaled to 1338×720 class | Comfy credits | Held, not measured | Fail. Look ramps in late | Not measured | `output/video/ComfyUI_00005_.mp4` seed 436, `ComfyUI_00006_.mp4` seed 602 | VACE strength 0.5, then Wan 2.7 Video Edit |
 | 2026-10-17 | Pass A strength 0.5 | VACE 14B | strength 0.5 only | 17 | Pod time | Partial. Splits | Fail | Pass | `FW_fire_comp_proxy_00005_.mp4` | silhouette as control video |
 | 2026-10-17 | Pass A silhouette | VACE 14B | control video = MaskToImage of the fire mask; strength stayed 0.5 | 17 | Pod time | Partial. Gray ghost of the mask | Fail | Pass | `FW_fire_comp_proxy_00006_.mp4` | stop local VACE knobs |
+| 2026-10-17 | Wan 2.7 Video Edit | `Wan2VideoEditApi` 720P, 16:9, duration auto | new tool; seed 42, `JB-001` as reference image | 81 in, 101 out (30 fps, 1280×720) | $0.68 Comfy credits | Pass | Fail. Generic teardrop, not the still | Pass | `shot004_fire-jump_wan27-videoedit_seed42_v001.mp4` | Runway Aleph |
+| 2026-10-17 | Wan 2.7 Video Edit run 2 | `Wan2VideoEditApi` 720P, 16:9, duration auto | seed `2126129005` only | 81 in, 101 out (30 fps, 1280×720) | $0.676 Comfy credits | Pass | Pass, soft | Pass, own smoke ≤17/255 | `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4` | 1080P same seed for sharpness |
 
 ---
 
@@ -154,3 +163,5 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 1.4 | 2026-10-17 | Closed the local VACE queue after the silhouette run. Next test is Wan 2.7 Video Edit. |
 | 1.5 | 2026-10-17 | Added the scored-run file rule and indexed the clips copied off the volume. |
 | 1.6 | 2026-10-17 | Kept the Blender Jerry rig off the shot 004 motion driver until a scored row replaces the Houdini clip. |
+| 1.7 | 2026-10-17 | Scored Wan 2.7 Video Edit: path and black pass, look fails as a generic teardrop. Indexed the clip and moved the queue to Runway Aleph. |
+| 1.8 | 2026-10-17 | Scored Wan 2.7 run 2 (seed 2126129005) as the first pass on all three checks, soft. Made it the Pass A candidate, queued sharpness tests, and put Runway Aleph on hold. |

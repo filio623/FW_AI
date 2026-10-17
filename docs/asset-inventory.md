@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-10-17
-**Version:** 1.7
+**Version:** 1.8
 
 # Asset Inventory
 
@@ -68,7 +68,7 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 
 Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `workflows/comfyui/shot004-benchmark/`. The index and the keeping rule are in `docs/vfx-element-benchmark.md`.
 
-- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, and the ComfyUI Seedance 2.0 reference test.
+- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, and two Wan 2.7 Video Edit runs (seed 42, and seed 2126129005, the current Pass A candidate).
 
 Media files are gitignored. The original base plate, grass fire, steam, and water passes are still only on the backup.
 
@@ -128,3 +128,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.5     | 2026-10-08 | Indexed the staged Scene 4 reference and 49-frame proxy used for low-memory VACE finishing; clarified which original plates remain off-repo. |
 | 1.6     | 2026-10-17 | Indexed the Jerry Blender fire rig `.blend` and its r09 test still in `source-cgi/`. |
 | 1.7     | 2026-10-17 | Indexed the local shot004 benchmark clips copied off the RunPod volume. |
+| 1.8     | 2026-10-17 | Indexed the two Wan 2.7 Video Edit benchmark clips. |

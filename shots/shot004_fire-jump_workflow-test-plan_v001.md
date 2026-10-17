@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-10-17
-**Version:** 1.11
+**Version:** 1.13
 
 # Shot004 Fire Jump Workflow Test Plan
 
@@ -301,6 +301,8 @@ The test workflow is successful if:
   a locked element.
 - 2026-10-11: Pass A VACE 14B Run 001 (`shot004_fire-vace14b_sample-latent_v001_pass_A.json`, prompt `ce04c4d6-b605-46c0-a3d4-1ac1a8e83107`) ran 17 frames on black at 1280×672 (`strength=1.0`, `cfg=3.0`, `JB-001` reference, Houdini fire-on-black control video, red-channel mask expanded by 20px and blurred by 8px) and saved `ComfyUI/output/shot004_vace_latent_00003_.latent`. Decoded video (`FW_fire_comp_proxy_00003_.mp4` / `00004_.mp4`) followed the Houdini jump trajectory on black cleanly, but `strength=1.0` copied the rough Houdini flame texture rather than transferring `JB-001`'s look.
 - 2026-10-13: Tested ComfyUI `KlingMotionControl` (Node ID `4463629993286452`) on Pod `qgdedf20w84gnp`. First attempt failed with `Unauthorized: Please login first to use this node`; second attempt after login failed at Kling's server pre-check (`task_id: 939111787268550684`, 0 credits charged): `Image recognition failed. Please make sure your image meets the requirements. Error: No complete upper body detected in the image; ensure the upper body is clearly visible.` `KlingMotionControl` requires a human upper-body skeleton and cannot be used for non-humanoid fire elements.
+- 2026-10-17: Wan 2.7 Video Edit (`Wan2VideoEditApi`) on Pod `qblvqx3v4pjho8`, prompt `1a2d2bf9-982f-444c-b53d-3f2068eeed7c`, graph `workflows/comfyui/shot004_fire-jump_wan27-videoedit_api_v001.json`: Houdini control clip (81f, 24 fps, 832×448) + `JB-001` as `image1`, 720P, 16:9, duration auto, seed 42, $0.68. Output 101 frames at 30 fps 1280×720 with generated audio, kept as `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_wan27-videoedit_seed42_v001.mp4`. Trajectory pass (≤2.3% of frame width centroid drift), black pass, no face. Look fail: a clean, glossy teardrop with a white core from frame 1, not `JB-001`'s wispy fireball. An unauthenticated dry submit (`3e7b7f4b-…`) failed with `Please login first` at no cost.
+- 2026-10-17: Wan 2.7 Video Edit run 2 on Pod `ep5rr963ctx22t`, queued by hand from the canvas (prompt `464e0967-23df-4c19-b817-f50990c4595e`). Same graph, prompt, inputs, and 720P settings as run 1; seed `2126129005` (randomized), $0.676. Kept as `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4`. Passes trajectory (≤5.5% centroid drift, landing 0.3%), look (reads as `JB-001`, slightly peachier), and black (only its own smoke, ≤17/255). Soft compared with the still, so this is the Pass A candidate pending sharpness work. An earlier attempt (`7418a0d9-…`) failed with `Please login first` before sign-in, at no cost.
 
 ## Current Test Status
 
@@ -325,3 +327,5 @@ As of 2026-10-17, local `WanVaceToVideo` knobs are closed. Strength `1` copied t
 | 1.9     | 2026-10-13 | Logged Pass A VACE Run 001 (`00003_.latent`), `KlingMotionControl` human-upper-body rejection, and the structured Phase 1–3 VFX testing roadmap. |
 | 1.10    | 2026-10-13 | Pointed the Pass A roadmap at `docs/vfx-element-benchmark.md` as the working score sheet. |
 | 1.11    | 2026-10-17 | Replaced the open strength/silhouette queue with the closed VACE result and pointed current work at the benchmark. |
+| 1.12    | 2026-10-17 | Logged the Wan 2.7 Video Edit run: path and black pass, look fails. |
+| 1.13    | 2026-10-17 | Logged Wan 2.7 run 2 (seed 2126129005) as the first Pass A candidate. |

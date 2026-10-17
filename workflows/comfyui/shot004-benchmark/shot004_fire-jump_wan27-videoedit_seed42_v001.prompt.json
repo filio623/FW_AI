@@ -1,0 +1,53 @@
+{
+  "1": {
+    "class_type": "LoadVideo",
+    "inputs": {
+      "file": "shot004_ren-small-fire6_control_832x448_81f_v001.mp4"
+    },
+    "is_changed": [
+      1791482461.5659657
+    ]
+  },
+  "2": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "JB-001_upright-compact-idle.png"
+    },
+    "is_changed": [
+      "d58f85256343ac552a6a01b8c2011dd16abea50c65308c9aa48b27d0b95e7656"
+    ]
+  },
+  "3": {
+    "class_type": "Wan2VideoEditApi",
+    "inputs": {
+      "model": "wan2.7-videoedit",
+      "model.prompt": "Replace the fire in the video with the fire character from the reference image. Keep the exact motion path, position, size, and timing of the original fire: it starts on the ground, jumps, and lands in the same place. The character is a living flame with the teardrop silhouette, colors, and glowing core of the reference image. No eyes, no mouth, no face. Pure black background everywhere; no ground, no grass, no smoke, no environment.",
+      "model.resolution": "720P",
+      "model.ratio": "16:9",
+      "model.duration": "auto",
+      "model.reference_images.image1": [
+        "2",
+        0
+      ],
+      "video": [
+        "1",
+        0
+      ],
+      "seed": 42,
+      "audio_setting": "auto",
+      "watermark": false
+    }
+  },
+  "4": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "3",
+        0
+      ],
+      "filename_prefix": "video/shot004_wan27-videoedit",
+      "format": "auto",
+      "codec": "auto"
+    }
+  }
+}

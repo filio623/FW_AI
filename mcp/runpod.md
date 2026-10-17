@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-10-17
-**Version:** 2.19
+**Version:** 2.24
 
 # RunPod + ComfyUI
 
@@ -189,15 +189,19 @@ tooling that talks to the proxy must do the same.
 Treat this as bot filtering, not access control. A browser with the URL still
 reaches ComfyUI, so the URL is still sensitive and should not be shared.
 
+`scripts/runpod-comfy-api.sh submit` also sends `COMFY_API_KEY` from `.env` as
+`extra_data.api_key_comfy_org`, which comfy.org partner nodes (Kling, Wan 2.7,
+Runway) need on the Pod. Without it they fail with `Please login first`.
+
 ## Current Resume Point
 
-No Pod is running. `c0u0flqd84rlen` was terminated 2026-10-17 and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`) is untouched.
+No Pod is running. `ep5rr963ctx22t` was terminated 2026-10-17 and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`) is untouched.
 
-Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, and Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
+Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` (seed 42) and `00002_.mp4` (seed 2126129005, the Pass A candidate). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
 
-Stock VACE knobs are closed. Do not queue another strength or mask tweak. Next test is Wan 2.7 Video Edit. That test does not need this GPU. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+Stock VACE knobs are closed. Wan 2.7 Video Edit seed `2126129005` is the Pass A candidate; it is soft, so sharpness tests (`1080P` same seed, then a cropped-in source) come next. Runway Aleph is on hold. The SkyReels V3 R2V × VACE merge was on the deleted Illinois volume and is not on `avw5iclb48`. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
 
-Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` only if the next test needs the local 14B model. The volume stays attached by that script's default.
+Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` when needed. The volume stays attached by that script's default.
 
 ### VACE Model Files
 
@@ -367,3 +371,8 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.17    | 2026-10-17 | Recorded resumed A40 Pod `c0u0flqd84rlen` after CA-MTL-1 A40 stock returned. |
 | 2.18    | 2026-10-17 | Corrected the resume point: strength 0.5 and silhouette runs are scored, and the next test is not another local VACE knob. |
 | 2.19    | 2026-10-17 | Terminated A40 Pod `c0u0flqd84rlen` and cleared the Pod ID. Next session starts at the benchmark; Wan 2.7 does not need the GPU. |
+| 2.20    | 2026-10-17 | Pod `qblvqx3v4pjho8` up; Wan 2.7 Video Edit scored on it; `submit` now passes the comfy.org key; recorded that the SkyReels merge is not on the current volume. |
+| 2.21    | 2026-10-17 | Terminated A40 Pod `qblvqx3v4pjho8` and cleared the Pod ID. |
+| 2.22    | 2026-10-17 | Pod `ep5rr963ctx22t` up for a hands-on Wan 2.7 Video Edit session. |
+| 2.23    | 2026-10-17 | Recorded Wan 2.7 run 2 on the volume and moved the resume point to sharpness tests on the candidate. |
+| 2.24    | 2026-10-17 | Terminated A40 Pod `ep5rr963ctx22t` and cleared the Pod ID. |

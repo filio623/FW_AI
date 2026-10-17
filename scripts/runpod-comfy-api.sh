@@ -65,7 +65,10 @@ case "$COMMAND" in
       echo "Usage: scripts/runpod-comfy-api.sh submit <api-workflow.json>" >&2
       exit 2
     fi
-    jq -n --slurpfile prompt "$WORKFLOW" '{prompt: $prompt[0]}' \
+    # Partner API nodes (Kling, Wan 2.7, Runway, ...) authenticate through
+    # extra_data.api_key_comfy_org. Read via jq env so the key never hits argv.
+    jq -n --slurpfile prompt "$WORKFLOW" \
+      '{prompt: $prompt[0]} + (if (env.COMFY_API_KEY // "") != "" then {extra_data: {api_key_comfy_org: env.COMFY_API_KEY}} else {} end)' \
       | rp_curl -X POST "$COMFYUI_URL/prompt" \
           -H 'Content-Type: application/json' \
           --data-binary @- \
