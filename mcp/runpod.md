@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-10-18
-**Version:** 2.28
+**Version:** 2.29
 
 # RunPod + ComfyUI
 
@@ -195,11 +195,22 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 
 ## Current Resume Point
 
-No Pod is running. `aafjaefo4nupf4` was terminated 2026-10-18 and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`, 32 GB free) is untouched. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
+Pod `p5u3i5lk87mrlk` (A40, `CA-MTL-1`, $0.59/hr) is up on volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB) with a termination guard at 2026-10-18T22:24:45Z. `RUNPOD_POD_ID` in `.env` points at it. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
 
 Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` through `00004_.mp4` (`00002_` is the paid fallback). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
 
-Stock VACE knobs are closed and Wan 2.7 tuning is closed. The next Pod work is the VACE × SkyReels merge (benchmark step 8); the merge is in `models/diffusion_models/`. The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. Running Mickmumpitz 1.3 ADV instead needs `wanvaceadvanced`, RES4LYF, and the FusionX LoRA installed first; none are on the volume. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+Stock VACE knobs are closed and Wan 2.7 tuning is closed. The next Pod work is the VACE × SkyReels merge: benchmark step 8 (model swap in the Pass A graph), then Mickmumpitz 1.3 ADV, saved on the volume as `user/default/workflows/mickmumpitz/260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json`. The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. In Mick 1.3, bypass the unconnected `UnetLoaderGGUF` and the two `easy cleanGpuUsed` pass-throughs inside the Sampler subgraph; ComfyUI-GGUF and `comfyui-easy-use` are not installed. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+
+### Custom Nodes Added 2026-10-18
+
+Installed into `custom_nodes/` on the volume for Mickmumpitz 1.3 ADV, by `git clone` from the default branch:
+
+- `ComfyUI-WanVaceAdvanced` (`drozbay`, commit `049213c`, 2026-10-01; registry latest 1.5.1, Mick's graph saved with 1.1.0). Provides `WanVacePhantomSimpleV2`.
+- `RES4LYF` (`ClownsharkBatwing`, commit `56e4475`, 2026-10-01). Provides the `res_2s` sampler and `beta57` scheduler for the stock `KSampler`.
+
+Their requirements were already in the venv except `PyWavelets`, installed with `.venv-cu128/bin/python -m pip install PyWavelets`. `opencv-python` was skipped on purpose because the venv already imports `cv2` 5.0.0, and a second OpenCV build can conflict. Both packs import without errors.
+
+Restarting ComfyUI after a node install: `start.sh` does not relaunch ComfyUI after it exits, and ComfyUI-Manager's `/manager/reboot` returns 404. Use `/workspace/restart_comfyui.sh` (on the volume), which sources `/etc/rp_environment`, activates `.venv-cu128`, and runs `main.py` with the template's arguments; launch it with `setsid nohup … > /workspace/comfyui_restart.log`. Stop the old process by PID, not with `pkill -f "main.py …"` over SSH: that pattern also matches the SSH shell's own command line and kills it.
 
 Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` when needed. The volume stays attached by that script's default.
 
@@ -221,6 +232,11 @@ Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `
   SHA-256 `59511532de0baa48d719ea49f857ada5672d384e5d92e70ea59848ece025d23d`
   (matches the Hugging Face LFS id). Downloaded 2026-10-18 with `hf download`
   in about 20 minutes, unauthenticated.
+- `models/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors`: FusionX LoRA from
+  `vrgamedevgirl84/Wan14BT2VFusioniX` (`FusionX_LoRa/`), 316,822,496 bytes.
+  SHA-256 `c653087fa7c9163abdd1a4c627bfc483966c6d78a4426667d1185f860951c30e`
+  (matches the Hugging Face LFS id). Downloaded 2026-10-18. This is the only
+  LoRA on the volume.
 
 The first encoder load logged missing CLIP weights and selected `SD1ClipModel`
 despite the submitted `CLIPLoader(type=wan)`. ComfyUI cached that bad loader
@@ -386,3 +402,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.26    | 2026-10-18 | Pod `iqe2i06yi7w9uy` up; downloaded and verified the VACE × SkyReels V3 R2V FP8 merge; recorded the working SSH key and the Pass A canvas state with its live Kling node. |
 | 2.27    | 2026-10-18 | Replaced Pod `iqe2i06yi7w9uy` with `aafjaefo4nupf4` for a fresh 2-hour guard. |
 | 2.28    | 2026-10-18 | Terminated A40 Pod `aafjaefo4nupf4` and cleared the Pod ID. Recorded Wan 2.7 runs 3–4 on the volume, the end of Wan 2.7 tuning, and the missing Mickmumpitz 1.3 prerequisites. |
+| 2.29    | 2026-10-18 | Pod `p5u3i5lk87mrlk` up. Installed ComfyUI-WanVaceAdvanced, RES4LYF, PyWavelets, and the FusionX LoRA for Mickmumpitz 1.3; saved the 1.3 workflow on the volume; documented the manual ComfyUI restart. |
