@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-17
-**Version:** 1.11
+**Modified:** 2026-10-18
+**Version:** 1.12
 
 # Findings
 
@@ -61,3 +61,10 @@
 - The previous `COMFY_API_KEY` was revoked (`api.comfy.org` returned `Invalid Comfy API key`, Comfy Cloud 401); a new key went into `.env` on 2026-10-17. Pod partner nodes authenticate through `extra_data.api_key_comfy_org` on `/prompt`, which `scripts/runpod-comfy-api.sh submit` now sends, so the browser login is no longer needed. Without it the node fails with `Unauthorized: Please login first to use this node` before any upload or charge.
 - The python.org Python 3.11 at `/usr/local/bin/python3` has no CA bundle, so `scripts/comfy-cloud-api.py` fails with `CERTIFICATE_VERIFY_FAILED`. Run it with `/opt/homebrew/bin/python3`, or run that framework's `Install Certificates.command` once.
 - Wan 2.7 Video Edit varies a lot by seed. Same prompt, graph, and inputs: seed 42 gave a generic glossy teardrop, while seed `2126129005` read as `JB-001` (smoky edge, sparks, pale core) and passed path, look, and black. It is the first Pass A candidate for shot 004, at $0.676 per 3.4 s clip at 720P. Its weakness is softness: the flame is only 150–400 px tall in a 1280×720 frame, keeps ~70–75% of `JB-001`'s detail at equal size, and comes back at ~0.7 Mbps. Try `1080P` on the same seed first, then a cropped-in source. Detail: `docs/vfx-element-benchmark.md`.
+
+## 2026-10-18
+
+- Wan 2.7 Video Edit cannot be tuned one knob at a time. Adding `JB-010` as a second reference at the same seed (`2126129005`) produced an unrelated sample: a smooth white teardrop that failed path and look. It differed from the good run about as much as a run with a different seed did. A run with prompt v2, `JB-010`, and seed 508 was recognizable (user: ~75%) but drifted 25–27% of frame width mid-jump. Overall one good run in four, about $2.70. Wan 2.7 tuning stopped; seed-2126129005 run 2 is the paid fallback. Detail: `docs/vfx-element-benchmark.md`.
+- Alibaba's Wan 2.7 video edit API rewrites the prompt with an LLM by default (`prompt_extend`, default true) and has a separate `negative_prompt` (≤500 chars). The ComfyUI `Wan2VideoEditApi` node sends neither, so every ComfyUI run is rewritten and negatives sit in the positive prompt. Source: Alibaba Model Studio `wan-video-editing-api-reference`.
+- ComfyUI's Generated assets panel on a fresh Pod shows only that Pod's runs; older outputs are still in `output/` on the volume. Load them with a `[output]` entry in Load Video or from the repo's kept copies.
+- Mickmumpitz AI-VFX 1.3 ADV (`260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json`, on the Desktop in `VFX workflows/`) runs the VACE × SkyReels merge through `WanVacePhantomSimpleV2` (pack `wanvaceadvanced`) with the FusionX LoRA, 5 steps, CFG 1, `res_2s`/`beta57`, NAG, and per-frame `ComposeColorMatch`. Volume `avw5iclb48` has the merge, KJNodes, VHS, and the Mickmumpitz nodes but lacks `wanvaceadvanced`, the RES4LYF sampler and scheduler, ComfyUI-GGUF, and any LoRA.

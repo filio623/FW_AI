@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
 **Modified:** 2026-10-18
-**Version:** 3.0
+**Version:** 3.1
 
 # VFX Element Benchmark
 
@@ -87,6 +87,8 @@ upscale before a paid resolution bump.
 | Pass A silhouette, 2026-10-17 | VACE, white mask as `control_video`, strength left at 0.5 | Small blob plus a gray ghost of the mask | Fail. Not `JB-001`. The white shape was drawn as gray smoke | Pass | Stock VACE cannot carry the still. Local knob tests are done. |
 | Wan 2.7 Video Edit, 2026-10-17 | `Wan2VideoEditApi` on the Pod, 720P, seed 42, `JB-001` as `image1` | Pass. ≤2.3% of frame width off the Houdini centroid at every tenth of the clip; landing 1.1% | Partial, scored Fail. A teardrop with a hot white core from frame 1, no late ramp. But it is a clean, glossy candle-drop, not `JB-001`'s soft, wispy fireball | Pass. Background ≤2/255 after frame 0 | First run to hold path and a Jerry-like shape together. The look still misses the still. |
 | Wan 2.7 Video Edit, 2026-10-17, run 2 | Same graph and prompt, queued by hand from the Pod canvas; only the seed changed (`2126129005`, randomized) | Pass. ≤5.5% of frame width off mid-jump; landing 0.3%. Grows after landing like the Houdini fire | Pass, soft. Reads as `JB-001`: smoky edge, sparks, pale glowing core, a tip that leans with the motion. Peachier and less saturated than the still. Softer than the still: the flame is 150–400 px tall against `JB-001`'s ~1350, and at equal height it keeps ~70–75% of the still's Laplacian detail. The file is ~0.7 Mbps | Pass. The only non-black pixels away from the flame are its own smoke and sparks, up to 17/255 over 0.2% of the frame. No ground or box | First run to pass all three checks. Seed alone moved the look from generic to `JB-001`. Sharpness is the open problem. |
+| Wan 2.7 Video Edit, 2026-10-18, run 3 | Three changes from run 2 at once: prompt v2 (names both references, keeps smoke and sparks, asks for crisp detail), `JB-010` added as `image2`, seed `508` | Fail. 25–27% of frame width off mid-jump, no flame on frame 0; lands in place | Partial. A pale pinkish-white ball with an orange tip: recognizably Jerry, but rounder and less saturated than `JB-001`. User: "about 75% there" | Mostly pass. A faint band on frame 0 (≤20/255 over 3.8%), clean after | Confounded; cannot say which change hurt. |
+| Wan 2.7 Video Edit, 2026-10-18, run 4 | Run 2 settings and seed `2126129005`, plus `JB-010` as `image2` (meant as a reproducibility check; `image2` was still wired) | Fail. 15–17% off mid-jump; lands ~12% low | Fail. A smooth white teardrop with a red rim, no flame texture or smoke; stays small instead of growing on landing. User: worse | Pass-ish. A faint glow halo, ≤13/255 over ~1–2% | Same seed plus one extra image gave an unrelated sample: it differs from run 2 about as much as run 3 (a different seed) does. Seed-locked one-knob A/B does not work on Wan 2.7. |
 
 ## Queue
 
@@ -109,12 +111,14 @@ is Pod time, and an open-weight winner is the cheapest path for the film.
 Questions: is the pass repeatable, and can it be sharp enough?
 
 1. ~~`Wan2VideoEditApi` (Wan 2.7 Video Edit).~~ Seed 42 failed look. Seed `2126129005` passed path, look, and black but is soft. Pass A candidate.
-2. **One new random 720P seed** (~$0.68). Same graph, prompt, and inputs. If it passes, the setting passes 2 of 3. If it fails, run one more 720P seed (~$0.68), then stop paying for replication.
-3. **Upscale the candidate after generation.** SeedVR2 (quality) and FlashVSR (speed) on the Pod, 2×, on `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4`. No generation cost and the frozen inputs do not change. Score as a finishing variant: look and black must still pass; measure detail against `JB-001` at equal height.
-4. **1080P, 3 seeds**, only if step 3 fails sharpness by eye. Seeds `2126129005`, `42`, and one new random seed, about $1.01 each (~$3.03). Wan 2.7 edit bills input + output seconds (3.375 s + ~3.37 s at $0.15/s), which matches the $0.676 logged at 720P ($0.10/s).
-5. **Crop variant.** Source cropped to the jump region and scaled back in comp. Changes the frozen motion input, so score it as a variant. Only if 3–4 leave it soft.
+2. ~~Replication.~~ Runs 3 and 4 (2026-10-18) both failed path and look. Run 4 showed that one extra reference image at the same seed produces an unrelated sample, so every Wan 2.7 change is a fresh draw and needs several paid runs to judge.
+3. **Upscale the candidate after generation.** SeedVR2 (quality) and FlashVSR (speed) on the Pod, 2×, on `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4`. No generation cost and the frozen inputs do not change. Score as a finishing variant: look and black must still pass; measure detail against `JB-001` at equal height. Still open; Pod time only.
+4. ~~1080P, 3 seeds.~~ Closed with Stage 1, not run.
+5. ~~Crop variant.~~ Closed with Stage 1, not run. Still a valid idea for any later winner that is soft because the flame is small in frame.
 
-Winner rule for this stage: at least 2 of 3 seeds pass at one resolution, and sharpness is accepted by eye against `JB-001` after any upscale.
+Stage 1 result (2026-10-18): no winner. One good run out of four (about $2.70) misses the 2-of-3 rule, and seed-locked tuning does not isolate a change. Wan 2.7 tuning stops here. Keep `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4` as the paid fallback element. Wan 2.7 renders at 30 fps and 1280×720 from the 24 fps 832×448 input; conform both before any comp.
+
+Wan 2.7 notes for any later use: Alibaba rewrites the prompt by default (`prompt_extend`, on unless disabled) and supports a separate `negative_prompt`; the ComfyUI node exposes neither. Our first prompt said "no smoke" although both references have smoke.
 
 ### Stage 2: Restyled-first-frame edits
 
@@ -130,7 +134,7 @@ test uses this file.
 
 6. **Luma Modify Video (Ray 3.2 video-to-video), `adhere` mode, start image = the JB-001 first frame.** Cloud. Third-party rates are about $0.35/s; confirm the price and whether ComfyUI has a node, or use Luma's API directly. Hypothesis: a restyled first frame with adhere strength keeps the path and takes the look from frame 1.
 7. **Runway Aleph 2 (`RunwayAleph2VideoToVideoNode`), guidance image = the JB-001 first frame at t = 0.** Cloud. Third-party rate $0.369/s with a 2 s minimum, so a 4 s clip is ~$1.48. Confirm the node exposes guidance images; without them it is a prompt-only restyle.
-8. **VACE × SkyReels V3 R2V merge, Pass A graph, model swap only.** Pod. Same graph as `00003` (strength 1, red mask, `JB-001` reference); change the diffusion model to `wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors` and nothing else. Hypothesis: stock VACE locked the path but could not carry the still; R2V training targets reference identity. The model is not on volume `avw5iclb48` (it was on the deleted Illinois volume); download it from `Inner-Reflections/VACE_Skyreels_V3_R2V_Merge` first. A Mickmumpitz graph that loads it is at `workflows/comfyui/mickmumpitz/shot004_jerry-vace-simple-fp8_v001.json`. 17 frames.
+8. **VACE × SkyReels V3 R2V merge, Pass A graph, model swap only.** Pod. Same graph as `00003` (strength 1, red mask, `JB-001` reference); change the diffusion model to `wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors` and nothing else. Hypothesis: stock VACE locked the path but could not carry the still; R2V training targets reference identity. The model is on volume `avw5iclb48` in `models/diffusion_models/` (downloaded and checksum-verified 2026-10-18). The saved Pass A canvas on the volume is in the silhouette state and has a live Kling Omni Edit node; see `mcp/runpod.md` before running it. Mickmumpitz's own graphs run this merge differently (`WanVacePhantomSimpleV2`, FusionX LoRA, 5 steps, CFG 1, `res_2s`/`beta57`, NAG); a model swap in our graph tests the merge outside that tuned setup. 17 frames.
 9. **Same merge, plus the JB-001 first frame as control frame 0** (mask black on frame 0, red mask after). Only after 8 is scored. It reopens first-frame conditioning on a new model, not a stock-VACE mask tweak.
 
 ### Stage 3: Image-to-video with a drawn path
@@ -204,6 +208,8 @@ Scored clips are the research set. The mp4 holds the picture and the canvas that
 | `.../shot004_fire-jump_seedance20-ref_v001.mp4` | `.../shot004_fire-jump_seedance20-ref_v001.workflow.json` | ComfyUI Seedance 2.0 Fast reference test, seed 825222339. Not the Higgsfield Seedance 2.5 run. |
 | `.../shot004_fire-jump_wan27-videoedit_seed42_v001.mp4` | `.../shot004_fire-jump_wan27-videoedit_seed42_v001.prompt.json` | Wan 2.7 Video Edit, seed 42, 720P. API-submitted, so prompt only; the runnable source is `workflows/comfyui/shot004_fire-jump_wan27-videoedit_api_v001.json`. |
 | `.../shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4` | `.../shot004_fire-jump_wan27-videoedit_seed2126129005_v001.workflow.json` | Wan 2.7 Video Edit, seed 2126129005, 720P. Queued by hand from the canvas; the extract is that canvas. The Pass A candidate. |
+| `.../shot004_fire-jump_wan27-videoedit_seed508-promptv2-jb010_v001.mp4` | `.../shot004_fire-jump_wan27-videoedit_seed508-promptv2-jb010_v001.workflow.json` | Wan 2.7 run 3: prompt v2, `JB-001` + `JB-010`, seed 508. |
+| `.../shot004_fire-jump_wan27-videoedit_seed2126129005-jb010_v001.mp4` | `.../shot004_fire-jump_wan27-videoedit_seed2126129005-jb010_v001.workflow.json` | Wan 2.7 run 4: run 2 settings plus `JB-010`. |
 
 The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still points at `outputs/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4`.
 
@@ -219,6 +225,8 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 2026-10-17 | Pass A silhouette | VACE 14B | control video = MaskToImage of the fire mask; strength stayed 0.5 | 17 | Pod time | Partial. Gray ghost of the mask | Fail | Pass | `FW_fire_comp_proxy_00006_.mp4` | stop local VACE knobs |
 | 2026-10-17 | Wan 2.7 Video Edit | `Wan2VideoEditApi` 720P, 16:9, duration auto | new tool; seed 42, `JB-001` as reference image | 81 in, 101 out (30 fps, 1280×720) | $0.68 Comfy credits | Pass | Fail. Generic teardrop, not the still | Pass | `shot004_fire-jump_wan27-videoedit_seed42_v001.mp4` | Runway Aleph |
 | 2026-10-17 | Wan 2.7 Video Edit run 2 | `Wan2VideoEditApi` 720P, 16:9, duration auto | seed `2126129005` only | 81 in, 101 out (30 fps, 1280×720) | $0.676 Comfy credits | Pass | Pass, soft | Pass, own smoke ≤17/255 | `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4` | 1080P same seed for sharpness |
+| 2026-10-18 | Wan 2.7 Video Edit run 3 | `Wan2VideoEditApi` 720P | prompt v2, `JB-010` added, seed 508 (three changes) | 81 in, 101 out | ~$0.68 Comfy credits (price formula; balance not checked); 196 s | Fail | Partial; user ~75% | Mostly pass | `shot004_fire-jump_wan27-videoedit_seed508-promptv2-jb010_v001.mp4` | reproducibility check |
+| 2026-10-18 | Wan 2.7 Video Edit run 4 | `Wan2VideoEditApi` 720P | `JB-010` added at seed `2126129005` | 81 in, 101 out | ~$0.68 Comfy credits (price formula; balance not checked); 215 s | Fail | Fail | Pass-ish, faint halo | `shot004_fire-jump_wan27-videoedit_seed2126129005-jb010_v001.mp4` | stop Wan 2.7 tuning; SkyReels merge |
 
 ---
 
@@ -237,3 +245,4 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 1.8 | 2026-10-17 | Scored Wan 2.7 run 2 (seed 2126129005) as the first pass on all three checks, soft. Made it the Pass A candidate, queued sharpness tests, and put Runway Aleph on hold. |
 | 2.0 | 2026-10-18 | Major revision; 1.8 archived to `docs/archive/vfx-element-benchmark-v1.8.md`. Added the 2-of-3 seed replication rule. Replaced the queue with a staged test matrix: Wan 2.7 confirmation, restyled-first-frame edits (Luma Modify, Runway Aleph 2, VACE × SkyReels merge), I2V path tools (ATI, Wan-Move, Time-to-Move), and a Jerry LoRA. Parked Wan-Alpha for Pass B and outlined the Pass B method. |
 | 3.0 | 2026-10-18 | Major revision; 2.0 archived to `docs/archive/vfx-element-benchmark-v2.0.md`. Cut Stage 1 cost: one or two 720P seeds for replication and a free Pod upscale before any 1080P run, which is now conditional. Pod-only tests (VACE × SkyReels merge, ATI) may run alongside Stage 1. Added a cost rule and required Pod minutes in score rows. |
+| 3.1 | 2026-10-18 | Scored Wan 2.7 runs 3 and 4. Closed Stage 1 with no winner, stopped Wan 2.7 tuning, and kept run 2 as the paid fallback. Recorded the hidden prompt rewrite and that the SkyReels merge is now on the volume, and noted how Mickmumpitz's graphs run that merge. |

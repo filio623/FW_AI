@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-10-18
-**Version:** 2.26
+**Version:** 2.28
 
 # RunPod + ComfyUI
 
@@ -195,11 +195,11 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 
 ## Current Resume Point
 
-Pod `iqe2i06yi7w9uy` (A40, `CA-MTL-1`, $0.59/hr) is up on volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, 32 GB free after the SkyReels merge) with a termination guard at 2026-10-18T17:51:06Z. `RUNPOD_POD_ID` in `.env` points at it. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
+No Pod is running. `aafjaefo4nupf4` was terminated 2026-10-18 and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`, 32 GB free) is untouched. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
 
-Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` (seed 42) and `00002_.mp4` (seed 2126129005, the Pass A candidate). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
+Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` through `00004_.mp4` (`00002_` is the paid fallback). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
 
-Stock VACE knobs are closed. Wan 2.7 Video Edit seed `2126129005` is the Pass A candidate. Work follows the staged queue in `docs/vfx-element-benchmark.md`. Pod-only tests may run alongside Stage 1; the first is the VACE × SkyReels merge model swap (step 8). The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+Stock VACE knobs are closed and Wan 2.7 tuning is closed. The next Pod work is the VACE × SkyReels merge (benchmark step 8); the merge is in `models/diffusion_models/`. The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. Running Mickmumpitz 1.3 ADV instead needs `wanvaceadvanced`, RES4LYF, and the FusionX LoRA installed first; none are on the volume. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
 
 Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` when needed. The volume stays attached by that script's default.
 
@@ -384,3 +384,5 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.24    | 2026-10-17 | Terminated A40 Pod `ep5rr963ctx22t` and cleared the Pod ID. |
 | 2.25    | 2026-10-18 | Pointed the resume point at Stage 1 of the benchmark's staged queue. |
 | 2.26    | 2026-10-18 | Pod `iqe2i06yi7w9uy` up; downloaded and verified the VACE × SkyReels V3 R2V FP8 merge; recorded the working SSH key and the Pass A canvas state with its live Kling node. |
+| 2.27    | 2026-10-18 | Replaced Pod `iqe2i06yi7w9uy` with `aafjaefo4nupf4` for a fresh 2-hour guard. |
+| 2.28    | 2026-10-18 | Terminated A40 Pod `aafjaefo4nupf4` and cleared the Pod ID. Recorded Wan 2.7 runs 3–4 on the volume, the end of Wan 2.7 tuning, and the missing Mickmumpitz 1.3 prerequisites. |
