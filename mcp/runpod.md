@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-10-18
-**Version:** 2.29
+**Version:** 2.32
 
 # RunPod + ComfyUI
 
@@ -195,11 +195,19 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 
 ## Current Resume Point
 
-Pod `p5u3i5lk87mrlk` (A40, `CA-MTL-1`, $0.59/hr) is up on volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB) with a termination guard at 2026-10-18T22:24:45Z. `RUNPOD_POD_ID` in `.env` points at it. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
+No Pod is running. `p5u3i5lk87mrlk` was terminated 2026-10-18 before any run was queued, and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`) is untouched. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
+
+The Mick 1.3 SkyReels run has not happened yet. Its `_runpod` copy was last saved 2026-10-18T20:53Z, partly wired; at the 20:48 save it still had Mick's lava inputs. Settings for the shot 004 run:
+
+- DRIVING VIDEO and MASK: `shot004_ren-small-fire6_control_832x448_81f_v001.mp4` (mask = red channel).
+- Reference Image 1: `JB-001_upright-compact-idle.png`. Bypass Reference Image 2 and its resize node.
+- Sampler: image mode `Reference Only`, match mode `Disabled (pass-through)`, `total_iterations` 1, `resume_from_iteration` 0. Keep 5 steps, CFG 1, `res_2s`/`beta57`.
+- SETTINGS: 480p, 16:9. Per-Iteration Prompts: `num_fields` 1, `string_1` = the fire-spirit-on-black prompt.
+- First run with the Lenovo LoRA bypassed; second run identical with Lenovo on (`wan/Lenovo.safetensors`, not Mick's `wan\Lenovo.safetensors`) and `l3n0v0` at the start of the prompt.
 
 Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` through `00004_.mp4` (`00002_` is the paid fallback). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
 
-Stock VACE knobs are closed and Wan 2.7 tuning is closed. The next Pod work is the VACE × SkyReels merge: benchmark step 8 (model swap in the Pass A graph), then Mickmumpitz 1.3 ADV, saved on the volume as `user/default/workflows/mickmumpitz/260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json`. The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. In Mick 1.3, bypass the unconnected `UnetLoaderGGUF` and the two `easy cleanGpuUsed` pass-throughs inside the Sampler subgraph; ComfyUI-GGUF and `comfyui-easy-use` are not installed. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+Stock VACE knobs are closed and Wan 2.7 tuning is closed. The next Pod work is the VACE × SkyReels merge: benchmark step 8 (model swap in the Pass A graph), then Mickmumpitz 1.3 ADV. Open the volume copy `user/default/workflows/mickmumpitz/260608_MICKMUMPITZ_AI-VFX_1-3_ADV_runpod.json`, not Mick's original next to it. The copy points `UNETLoader` at the merge's top-level path (Mick saved `wan\…`), and bypasses the unconnected `UnetLoaderGGUF` and the two `easy cleanGpuUsed` pass-throughs in the Sampler subgraph; `comfyui-easy-use` is not installed. The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
 
 ### Custom Nodes Added 2026-10-18
 
@@ -207,8 +215,12 @@ Installed into `custom_nodes/` on the volume for Mickmumpitz 1.3 ADV, by `git cl
 
 - `ComfyUI-WanVaceAdvanced` (`drozbay`, commit `049213c`, 2026-10-01; registry latest 1.5.1, Mick's graph saved with 1.1.0). Provides `WanVacePhantomSimpleV2`.
 - `RES4LYF` (`ClownsharkBatwing`, commit `56e4475`, 2026-10-01). Provides the `res_2s` sampler and `beta57` scheduler for the stock `KSampler`.
+- `rgthree-comfy` (`rgthree`, commit `d7297b4`, 2026-10-06). Provides Mick's `Label (rgthree)` nodes; without it the frontend reports a missing node pack. No Python requirements.
+- `ComfyUI-GGUF` (`city96`, commit `6ea2651`, 2026-01-12). Provides `UnetLoaderGGUF` for the low-VRAM model path; installed `gguf` and `protobuf` into the venv.
 
-Their requirements were already in the venv except `PyWavelets`, installed with `.venv-cu128/bin/python -m pip install PyWavelets`. `opencv-python` was skipped on purpose because the venv already imports `cv2` 5.0.0, and a second OpenCV build can conflict. Both packs import without errors.
+Not installed: `comfyui-easy-use`. Its requirements (diffusers, accelerate, onnxruntime, peft, and others) are heavy, and Mick 1.3 uses it only for two `easy cleanGpuUsed` VRAM-cleanup pass-throughs, which are bypassed instead.
+
+For WanVaceAdvanced and RES4LYF, every requirement was already in the venv except `PyWavelets`, installed with `.venv-cu128/bin/python -m pip install PyWavelets`. `opencv-python` was skipped on purpose because the venv already imports `cv2` 5.0.0, and a second OpenCV build can conflict. All four packs import without errors.
 
 Restarting ComfyUI after a node install: `start.sh` does not relaunch ComfyUI after it exits, and ComfyUI-Manager's `/manager/reboot` returns 404. Use `/workspace/restart_comfyui.sh` (on the volume), which sources `/etc/rp_environment`, activates `.venv-cu128`, and runs `main.py` with the template's arguments; launch it with `setsid nohup … > /workspace/comfyui_restart.log`. Stop the old process by PID, not with `pkill -f "main.py …"` over SSH: that pattern also matches the SSH shell's own command line and kills it.
 
@@ -235,8 +247,13 @@ Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `
 - `models/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors`: FusionX LoRA from
   `vrgamedevgirl84/Wan14BT2VFusioniX` (`FusionX_LoRa/`), 316,822,496 bytes.
   SHA-256 `c653087fa7c9163abdd1a4c627bfc483966c6d78a4426667d1185f860951c30e`
-  (matches the Hugging Face LFS id). Downloaded 2026-10-18. This is the only
-  LoRA on the volume.
+  (matches the Hugging Face LFS id). Downloaded 2026-10-18.
+- `models/loras/wan/Lenovo.safetensors`: Lenovo UltraReal v1.0 Wan, a
+  realism LoRA for Wan 14B text-to-video from Civitai (model version
+  2066914), 306,846,851 bytes. SHA-256
+  `64002d78edc3cea47d440c4d7bd7bb9de9c8a67177fe10607632cd6281144631`
+  (matches Civitai). Trigger word `l3n0v0`. Downloaded 2026-10-18 without a
+  Civitai token. Mick 1.3 ships with this node bypassed.
 
 The first encoder load logged missing CLIP weights and selected `SD1ClipModel`
 despite the submitted `CLIPLoader(type=wan)`. ComfyUI cached that bad loader
@@ -403,3 +420,6 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.27    | 2026-10-18 | Replaced Pod `iqe2i06yi7w9uy` with `aafjaefo4nupf4` for a fresh 2-hour guard. |
 | 2.28    | 2026-10-18 | Terminated A40 Pod `aafjaefo4nupf4` and cleared the Pod ID. Recorded Wan 2.7 runs 3–4 on the volume, the end of Wan 2.7 tuning, and the missing Mickmumpitz 1.3 prerequisites. |
 | 2.29    | 2026-10-18 | Pod `p5u3i5lk87mrlk` up. Installed ComfyUI-WanVaceAdvanced, RES4LYF, PyWavelets, and the FusionX LoRA for Mickmumpitz 1.3; saved the 1.3 workflow on the volume; documented the manual ComfyUI restart. |
+| 2.30    | 2026-10-18 | Installed rgthree-comfy and ComfyUI-GGUF; saved a RunPod-fixed copy of Mick 1.3 on the volume; recorded why `comfyui-easy-use` is skipped. |
+| 2.31    | 2026-10-18 | Added the Lenovo UltraReal Wan LoRA to the volume. |
+| 2.32    | 2026-10-18 | Terminated A40 Pod `p5u3i5lk87mrlk` before any run; recorded the Mick 1.3 run settings for the next session. |
