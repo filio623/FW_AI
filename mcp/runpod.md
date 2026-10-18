@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-10-18
-**Version:** 2.25
+**Version:** 2.26
 
 # RunPod + ComfyUI
 
@@ -195,11 +195,11 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 
 ## Current Resume Point
 
-No Pod is running. `ep5rr963ctx22t` was terminated 2026-10-17 and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`) is untouched.
+Pod `iqe2i06yi7w9uy` (A40, `CA-MTL-1`, $0.59/hr) is up on volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, 32 GB free after the SkyReels merge) with a termination guard at 2026-10-18T17:51:06Z. `RUNPOD_POD_ID` in `.env` points at it. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
 
 Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` (seed 42) and `00002_.mp4` (seed 2126129005, the Pass A candidate). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
 
-Stock VACE knobs are closed. Wan 2.7 Video Edit seed `2126129005` is the Pass A candidate. The next work is Stage 1 of the staged queue in `docs/vfx-element-benchmark.md`: 1080P on three seeds, then post-upscale on the Pod. The VACE × SkyReels V3 R2V merge is a Stage 2 Pod test; it was on the deleted Illinois volume and is not on `avw5iclb48`. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+Stock VACE knobs are closed. Wan 2.7 Video Edit seed `2126129005` is the Pass A candidate. Work follows the staged queue in `docs/vfx-element-benchmark.md`. Pod-only tests may run alongside Stage 1; the first is the VACE × SkyReels merge model swap (step 8). The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
 
 Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` when needed. The volume stays attached by that script's default.
 
@@ -215,6 +215,12 @@ Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `
   `VAELoader`.
 - `models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors`: official
   Comfy-Org scaled FP8 UMT5 encoder, 6,735,906,897 bytes.
+- `models/diffusion_models/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors`:
+  VACE × SkyReels V3 R2V merge, FP8, from
+  `Inner-Reflections/VACE_Skyreels_V3_R2V_Merge`, 17,344,681,528 bytes.
+  SHA-256 `59511532de0baa48d719ea49f857ada5672d384e5d92e70ea59848ece025d23d`
+  (matches the Hugging Face LFS id). Downloaded 2026-10-18 with `hf download`
+  in about 20 minutes, unauthenticated.
 
 The first encoder load logged missing CLIP weights and selected `SD1ClipModel`
 despite the submitted `CLIPLoader(type=wan)`. ComfyUI cached that bad loader
@@ -377,3 +383,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.23    | 2026-10-17 | Recorded Wan 2.7 run 2 on the volume and moved the resume point to sharpness tests on the candidate. |
 | 2.24    | 2026-10-17 | Terminated A40 Pod `ep5rr963ctx22t` and cleared the Pod ID. |
 | 2.25    | 2026-10-18 | Pointed the resume point at Stage 1 of the benchmark's staged queue. |
+| 2.26    | 2026-10-18 | Pod `iqe2i06yi7w9uy` up; downloaded and verified the VACE × SkyReels V3 R2V FP8 merge; recorded the working SSH key and the Pass A canvas state with its live Kling node. |

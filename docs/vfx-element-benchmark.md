@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
 **Modified:** 2026-10-18
-**Version:** 2.0
+**Version:** 3.0
 
 # VFX Element Benchmark
 
@@ -54,7 +54,7 @@ landing. Then fill one row in the score table. Taste is not the record.
 | Look | Side by side with `JB-001` | Reads as that still, not the rough Houdini blob |
 | Black | Sample the background away from the flame | Near black (`≤2/255`). Grass, floor, or a box fails. |
 | Face | Whole clip | No eyes, mouth, or drawn features |
-| Cost | Pod minutes or API credits | Written down before the next run |
+| Cost | Pod minutes (queue to finish, from ComfyUI history) or API credits | Written in the score row. "Pod time" alone is not a cost. |
 
 A run can pass trajectory and fail look. That is a useful result. Do not
 "fix" it by changing the prompt, the mask, and the model in the same queue.
@@ -67,6 +67,13 @@ when 3 seeds fail the same check. Score every seed as its own row.
 **Resolution changes the sample.** A seed at 1080P is not the same picture
 as that seed at 720P, because the noise shape changes with the latent size.
 Treat a resolution change as a new sample that also needs replication.
+
+**Cost.** Paid partner nodes charge every run and every seed, on every
+shot. A Pod test costs $0.59/hr while the Pod is up, whatever runs. A
+local workflow that wins is therefore much cheaper for the rest of the
+film than a paid one that wins. Prefer the cheapest test that answers
+the question: replicate at 720P before paying for 1080P, and try a free
+upscale before a paid resolution bump.
 
 ## Already Scored
 
@@ -93,15 +100,19 @@ stage only when the current one has no winner. Within a stage, a cloud
 test and a Pod test may run in the same session because they spend
 different budgets, but each is still one knob and one score row.
 
+Pod-only tests are not gated by stage order. Step 8 (VACE × SkyReels
+merge) and step 10 (ATI) may run alongside Stage 1. Their per-run cost
+is Pod time, and an open-weight winner is the cheapest path for the film.
+
 ### Stage 1: Confirm the Wan 2.7 candidate
 
 Questions: is the pass repeatable, and can it be sharp enough?
 
 1. ~~`Wan2VideoEditApi` (Wan 2.7 Video Edit).~~ Seed 42 failed look. Seed `2126129005` passed path, look, and black but is soft. Pass A candidate.
-2. **1080P, 3 seeds.** Same graph, prompt, and inputs; `resolution` 1080P only. Seeds `2126129005`, `42`, and one new random seed. About $1.01 each, so ~$3.03. Wan 2.7 edit bills input + output seconds (3.375 s + ~3.37 s at $0.15/s), which matches the $0.676 logged at 720P ($0.10/s). Answers sharpness and replication together.
-3. **Two more 720P seeds** only if step 2 is inconclusive (~$0.68 each).
-4. **Upscale the candidate after generation.** SeedVR2 (quality) and FlashVSR (speed) on the Pod, 2×, on `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4`. No generation cost and the frozen inputs do not change. Score as a finishing variant: look and black must still pass; measure detail against `JB-001` at equal height.
-5. **Crop variant.** Source cropped to the jump region and scaled back in comp. Changes the frozen motion input, so score it as a variant. Only if 2–4 leave it soft.
+2. **One new random 720P seed** (~$0.68). Same graph, prompt, and inputs. If it passes, the setting passes 2 of 3. If it fails, run one more 720P seed (~$0.68), then stop paying for replication.
+3. **Upscale the candidate after generation.** SeedVR2 (quality) and FlashVSR (speed) on the Pod, 2×, on `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4`. No generation cost and the frozen inputs do not change. Score as a finishing variant: look and black must still pass; measure detail against `JB-001` at equal height.
+4. **1080P, 3 seeds**, only if step 3 fails sharpness by eye. Seeds `2126129005`, `42`, and one new random seed, about $1.01 each (~$3.03). Wan 2.7 edit bills input + output seconds (3.375 s + ~3.37 s at $0.15/s), which matches the $0.676 logged at 720P ($0.10/s).
+5. **Crop variant.** Source cropped to the jump region and scaled back in comp. Changes the frozen motion input, so score it as a variant. Only if 3–4 leave it soft.
 
 Winner rule for this stage: at least 2 of 3 seeds pass at one resolution, and sharpness is accepted by eye against `JB-001` after any upscale.
 
@@ -225,3 +236,4 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 1.7 | 2026-10-17 | Scored Wan 2.7 Video Edit: path and black pass, look fails as a generic teardrop. Indexed the clip and moved the queue to Runway Aleph. |
 | 1.8 | 2026-10-17 | Scored Wan 2.7 run 2 (seed 2126129005) as the first pass on all three checks, soft. Made it the Pass A candidate, queued sharpness tests, and put Runway Aleph on hold. |
 | 2.0 | 2026-10-18 | Major revision; 1.8 archived to `docs/archive/vfx-element-benchmark-v1.8.md`. Added the 2-of-3 seed replication rule. Replaced the queue with a staged test matrix: Wan 2.7 confirmation, restyled-first-frame edits (Luma Modify, Runway Aleph 2, VACE × SkyReels merge), I2V path tools (ATI, Wan-Move, Time-to-Move), and a Jerry LoRA. Parked Wan-Alpha for Pass B and outlined the Pass B method. |
+| 3.0 | 2026-10-18 | Major revision; 2.0 archived to `docs/archive/vfx-element-benchmark-v2.0.md`. Cut Stage 1 cost: one or two 720P seeds for replication and a free Pod upscale before any 1080P run, which is now conditional. Pod-only tests (VACE × SkyReels merge, ATI) may run alongside Stage 1. Added a cost rule and required Pod minutes in score rows. |
