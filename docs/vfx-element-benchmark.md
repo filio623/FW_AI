@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
-**Modified:** 2026-10-17
-**Version:** 1.8
+**Modified:** 2026-10-18
+**Version:** 2.0
 
 # VFX Element Benchmark
 
@@ -59,6 +59,15 @@ landing. Then fill one row in the score table. Taste is not the record.
 A run can pass trajectory and fail look. That is a useful result. Do not
 "fix" it by changing the prompt, the mask, and the model in the same queue.
 
+**Replication.** One run does not prove or kill a setting. Wan 2.7 seed 42
+failed look and seed `2126129005` passed on identical settings. A setting
+passes when at least 2 of 3 seeds pass all three checks. A setting is dead
+when 3 seeds fail the same check. Score every seed as its own row.
+
+**Resolution changes the sample.** A seed at 1080P is not the same picture
+as that seed at 720P, because the noise shape changes with the latent size.
+Treat a resolution change as a new sample that also needs replication.
+
 ## Already Scored
 
 | Run | Tool | Trajectory | Look | Black | Decision |
@@ -79,19 +88,67 @@ Strength `0.5` smeared the path and still missed `JB-001`. A white-mask
 control video was drawn as gray smoke. Do not queue `0.35`, `0.7`, or
 another mask tweak on `WanVaceToVideo`.
 
-Next, one cloud edit, same motion clip and same still:
+The queue runs in stages. Work a stage top to bottom. Move to the next
+stage only when the current one has no winner. Within a stage, a cloud
+test and a Pod test may run in the same session because they spend
+different budgets, but each is still one knob and one score row.
 
-1. ~~`Wan2VideoEditApi` (Wan 2.7 Video Edit).~~ Seed 42 failed look. Seed `2126129005`, same prompt, passed path, look, and black but is soft. This is the Pass A candidate.
-2. Sharpness on the candidate, one knob per run: `1080P` with seed `2126129005` first (~$1.01 per run), then the source cropped to the jump region and scaled back in comp. The crop changes the frozen motion input, so score it as a variant.
-3. `RunwayAleph2VideoToVideoNode` is on hold while the Wan 2.7 candidate holds up. It is a comfy.org partner node too; `scripts/runpod-comfy-api.sh submit` sends `COMFY_API_KEY`.
+### Stage 1: Confirm the Wan 2.7 candidate
 
-Wan 2.7 output varies a lot by seed. Before calling a Wan 2.7 setting dead, run more than one seed.
+Questions: is the pass repeatable, and can it be sharp enough?
 
-Kling Omni Edit and Kling Motion Control are already scored. Do not retry them for this job.
+1. ~~`Wan2VideoEditApi` (Wan 2.7 Video Edit).~~ Seed 42 failed look. Seed `2126129005` passed path, look, and black but is soft. Pass A candidate.
+2. **1080P, 3 seeds.** Same graph, prompt, and inputs; `resolution` 1080P only. Seeds `2126129005`, `42`, and one new random seed. About $1.01 each, so ~$3.03. Wan 2.7 edit bills input + output seconds (3.375 s + ~3.37 s at $0.15/s), which matches the $0.676 logged at 720P ($0.10/s). Answers sharpness and replication together.
+3. **Two more 720P seeds** only if step 2 is inconclusive (~$0.68 each).
+4. **Upscale the candidate after generation.** SeedVR2 (quality) and FlashVSR (speed) on the Pod, 2×, on `shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4`. No generation cost and the frozen inputs do not change. Score as a finishing variant: look and black must still pass; measure detail against `JB-001` at equal height.
+5. **Crop variant.** Source cropped to the jump region and scaled back in comp. Changes the frozen motion input, so score it as a variant. Only if 2–4 leave it soft.
 
-If those edits fail, the next local branch is the SkyReels V3 R2V × Wan VACE merge, which is a new model and a new graph, not a setting on the current one. SkyReels V4 is a paper with no public weights.
+Winner rule for this stage: at least 2 of 3 seeds pass at one resolution, and sharpness is accepted by eye against `JB-001` after any upscale.
 
-A winner still has to pass path, look, and black on a short clip before any full-length rerun or Pass B.
+### Stage 2: Restyled-first-frame edits
+
+Question: can a tool take `JB-001` from frame 1 while it keeps the path?
+Kling Omni Edit reached the look only late. These tools take an explicit
+first frame or keyframe, which targets that failure.
+
+Build one new derived input first and freeze it:
+`JB-001` scaled to the Houdini fire's frame-0 height and placed on its
+frame-0 centroid, on black, at 832×448 and 1280×720
+(`shot004_jb001-first-frame_<res>_v001.png`). Every Stage 2 and Stage 3
+test uses this file.
+
+6. **Luma Modify Video (Ray 3.2 video-to-video), `adhere` mode, start image = the JB-001 first frame.** Cloud. Third-party rates are about $0.35/s; confirm the price and whether ComfyUI has a node, or use Luma's API directly. Hypothesis: a restyled first frame with adhere strength keeps the path and takes the look from frame 1.
+7. **Runway Aleph 2 (`RunwayAleph2VideoToVideoNode`), guidance image = the JB-001 first frame at t = 0.** Cloud. Third-party rate $0.369/s with a 2 s minimum, so a 4 s clip is ~$1.48. Confirm the node exposes guidance images; without them it is a prompt-only restyle.
+8. **VACE × SkyReels V3 R2V merge, Pass A graph, model swap only.** Pod. Same graph as `00003` (strength 1, red mask, `JB-001` reference); change the diffusion model to `wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors` and nothing else. Hypothesis: stock VACE locked the path but could not carry the still; R2V training targets reference identity. The model is not on volume `avw5iclb48` (it was on the deleted Illinois volume); download it from `Inner-Reflections/VACE_Skyreels_V3_R2V_Merge` first. A Mickmumpitz graph that loads it is at `workflows/comfyui/mickmumpitz/shot004_jerry-vace-simple-fp8_v001.json`. 17 frames.
+9. **Same merge, plus the JB-001 first frame as control frame 0** (mask black on frame 0, red mask after). Only after 8 is scored. It reopens first-frame conditioning on a new model, not a stock-VACE mask tweak.
+
+### Stage 3: Image-to-video with a drawn path
+
+Question: if no edit model takes the look, can an I2V model start from
+`JB-001` and follow the Houdini path?
+
+Build one more derived input: the Houdini fire centroid per frame as
+coordinates (`shot004_houdini-centroid_832x448_81f_v001.json`), taken
+from the same measurement used for trajectory scores. The existing
+`trajectory-dot` and `trajectory-streak` clips show this path.
+
+10. **ATI (Wan 2.1 I2V 14B, Kijai WanVideoWrapper or the ComfyUI template).** Start image = the JB-001 first frame, one trajectory = the centroid track. Pod. 480P only, so sharpness is a known risk. Watch whether the flame grows on landing, since I2V only animates the start image.
+11. **Wan-Move (Wan 2.1, 480P, 5 s).** Same inputs as 10. Run only if ATI follows the path poorly or its look is good but the motion is wrong.
+12. **Time-to-Move with Wan 2.2 I2V.** Training-free. Crude animation = the JB-001 first frame dragged along the centroid track (a cut-and-drag clip). Run only if 10 and 11 fail on motion. The cut-and-drag clip is also a possible source video for Wan 2.7 Video Edit; score that as a motion-input variant, not a Stage 1 setting.
+
+### Stage 4: Train the look
+
+13. **Jerry LoRA on Wan 2.1 14B (musubi-tuner or AI Toolkit).** Only if Stages 2–3 lock the path but no local model carries `JB-001`. The primary-body and motion-pose stills (`JB-001`–`JB-006`, `JB-009`–`JB-011`, `JB-013`) are about 10 images, the low end that hosted trainers suggest. Then rerun the best local path-lock graph with the LoRA as the one new knob.
+
+### Parked
+
+- **Wan-Alpha.** Text-to-video only, so it cannot take the motion clip. Moved to Pass B as a source of loose flame and smoke elements with real alpha.
+- **Wan 2.7 first/last-frame I2V.** Locks start and landing only; mid-jump path is free. Lower odds than Stage 3.
+- **Wan 2.7 reference-to-video and Seedance reference.** Reference-to-video already failed as the path lock. Look studies only.
+
+Kling Omni Edit and Kling Motion Control are already scored. Do not retry them for this job. SkyReels V4 is a paper with no public weights.
+
+A winner still has to pass path, look, and black on a short clip before any full-length rerun or Pass B. Third-party prices above were looked up on 2026-10-17; confirm on the node or the provider before queuing.
 
 ## Promote, Then Pass B
 
@@ -100,6 +157,8 @@ A winner is a short clip that passes all three checks. Only then:
 - Rerun that one setup at full length.
 - Comp it over the plate with Screen or Add.
 - Start Pass B as its own element: grass ignition and ground glow, masked, not baked into the character pass.
+
+Pass B gets the same method: frozen inputs (plate proxy, grass mask, landing frame from the Pass A winner), one knob per run, and its own checks (ignition starts at the landing frame, stays inside the grass mask, plate intact outside it). First candidates: VACE inpainting inside the grass mask over the plate, and Wan-Alpha flame and smoke elements comped by hand. Glow, contact shadow, and scorch start as comp work in Resolve or Fusion before any generation.
 
 ## Do Not Test For This Job
 
@@ -165,3 +224,4 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 1.6 | 2026-10-17 | Kept the Blender Jerry rig off the shot 004 motion driver until a scored row replaces the Houdini clip. |
 | 1.7 | 2026-10-17 | Scored Wan 2.7 Video Edit: path and black pass, look fails as a generic teardrop. Indexed the clip and moved the queue to Runway Aleph. |
 | 1.8 | 2026-10-17 | Scored Wan 2.7 run 2 (seed 2126129005) as the first pass on all three checks, soft. Made it the Pass A candidate, queued sharpness tests, and put Runway Aleph on hold. |
+| 2.0 | 2026-10-18 | Major revision; 1.8 archived to `docs/archive/vfx-element-benchmark-v1.8.md`. Added the 2-of-3 seed replication rule. Replaced the queue with a staged test matrix: Wan 2.7 confirmation, restyled-first-frame edits (Luma Modify, Runway Aleph 2, VACE × SkyReels merge), I2V path tools (ATI, Wan-Move, Time-to-Move), and a Jerry LoRA. Parked Wan-Alpha for Pass B and outlined the Pass B method. |

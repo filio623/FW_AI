@@ -16,6 +16,7 @@ frozen copy of an earlier version lives here.
 
 - `environment-v1.0.md`
 - `character-bible-v1.0.md`
+- `vfx-element-benchmark-v1.8.md`
 
 ## Retired Documents — mirroring their original path
 

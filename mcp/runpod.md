@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
-**Modified:** 2026-10-17
-**Version:** 2.24
+**Modified:** 2026-10-18
+**Version:** 2.25
 
 # RunPod + ComfyUI
 
@@ -199,7 +199,7 @@ No Pod is running. `ep5rr963ctx22t` was terminated 2026-10-17 and `RUNPOD_POD_ID
 
 Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` (seed 42) and `00002_.mp4` (seed 2126129005, the Pass A candidate). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
 
-Stock VACE knobs are closed. Wan 2.7 Video Edit seed `2126129005` is the Pass A candidate; it is soft, so sharpness tests (`1080P` same seed, then a cropped-in source) come next. Runway Aleph is on hold. The SkyReels V3 R2V × VACE merge was on the deleted Illinois volume and is not on `avw5iclb48`. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+Stock VACE knobs are closed. Wan 2.7 Video Edit seed `2126129005` is the Pass A candidate. The next work is Stage 1 of the staged queue in `docs/vfx-element-benchmark.md`: 1080P on three seeds, then post-upscale on the Pod. The VACE × SkyReels V3 R2V merge is a Stage 2 Pod test; it was on the deleted Illinois volume and is not on `avw5iclb48`. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
 
 Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` when needed. The volume stays attached by that script's default.
 
@@ -376,3 +376,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.22    | 2026-10-17 | Pod `ep5rr963ctx22t` up for a hands-on Wan 2.7 Video Edit session. |
 | 2.23    | 2026-10-17 | Recorded Wan 2.7 run 2 on the volume and moved the resume point to sharpness tests on the candidate. |
 | 2.24    | 2026-10-17 | Terminated A40 Pod `ep5rr963ctx22t` and cleared the Pod ID. |
+| 2.25    | 2026-10-18 | Pointed the resume point at Stage 1 of the benchmark's staged queue. |
