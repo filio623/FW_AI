@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-18
-**Version:** 1.14
+**Modified:** 2026-10-19
+**Version:** 1.15
 
 # Shot004 Fire Jump Workflow Test Plan
 
@@ -305,6 +305,7 @@ The test workflow is successful if:
 - 2026-10-17: Wan 2.7 Video Edit run 2 on Pod `ep5rr963ctx22t`, queued by hand from the canvas (prompt `464e0967-23df-4c19-b817-f50990c4595e`). Same graph, prompt, inputs, and 720P settings as run 1; seed `2126129005` (randomized), $0.676. Kept as `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_wan27-videoedit_seed2126129005_v001.mp4`. Passes trajectory (≤5.5% centroid drift, landing 0.3%), look (reads as `JB-001`, slightly peachier), and black (only its own smoke, ≤17/255). Soft compared with the still, so this is the Pass A candidate pending sharpness work. An earlier attempt (`7418a0d9-…`) failed with `Please login first` before sign-in, at no cost.
 - 2026-10-18: Wan 2.7 run 3 on Pod `iqe2i06yi7w9uy` (prompt `7f8c7ace-7e67-4062-9584-49dc5a72d228`, 196 s): prompt v2, `JB-001` + `JB-010`, seed 508. Kept as `…/benchmark/shot004_fire-jump_wan27-videoedit_seed508-promptv2-jb010_v001.mp4`. Recognizable (user: ~75%) but 25–27% off mid-jump with no flame on frame 0. Three changes at once, so confounded.
 - 2026-10-18: Wan 2.7 run 4 on Pod `aafjaefo4nupf4` (prompt `0acfe4cd-c788-49a3-beac-c3edf849f320`, 215 s), intended as a reproducibility check of run 2 but run with `JB-010` still wired as `image2`. Kept as `…/benchmark/shot004_fire-jump_wan27-videoedit_seed2126129005-jb010_v001.mp4`. White glossy teardrop, path fail. Same seed plus one image gave an unrelated sample, so Wan 2.7 tuning stopped with run 2 as the paid fallback. Both runs had an earlier `Please login first` attempt at no cost.
+- 2026-10-19: Mickmumpitz 1.3 ADV with the VACE × SkyReels merge on Pod `amsu1bpsrdzgfr`, graph `shot004_fire-jump_mick13-skyreels_v001` (FusionX, 5 steps, CFG 1, `res_2s`/`beta57`, 512p, `JB-001` Reference Only, NAG and Lenovo bypassed). Run 1 (`6bac1820`) used the Houdini fire RGB as driving video and mask and traced it. Run 2 (`c52a9114`) switched to gray-in-mask inputs and got its own body, but with a face. Run 3 (`2d60bae7`) used a "round ball" prompt and got an opaque sphere. Run 4 (`663517dd`) used prompt v3 and got a close, faceless flame body. Run 5 (`3924211c`, `seed_1` 1218565630 after restoring the seed wire) replicated it with the tightest path yet (≤0.9% / ≤1.9%). Run 6 (`05ac8918`) added `JB-010` and looked very similar. Clips are kept in `…/benchmark/shot004_fire-jump_mick13-skyreels_*_v001.mp4`; the inputs are in `…/fire/`. Four earlier attempts did not render: two skipped generation with `resume_from_iteration` 1, one failed in NAG, and one was cancelled. NAG was then bypassed and the crossfade node patched.
 
 ## Current Test Status
 
@@ -332,3 +333,4 @@ As of 2026-10-17, local `WanVaceToVideo` knobs are closed. Strength `1` copied t
 | 1.12    | 2026-10-17 | Logged the Wan 2.7 Video Edit run: path and black pass, look fails. |
 | 1.13    | 2026-10-17 | Logged Wan 2.7 run 2 (seed 2126129005) as the first Pass A candidate. |
 | 1.14    | 2026-10-18 | Logged Wan 2.7 runs 3 and 4 and the stop on Wan 2.7 tuning. |
+| 1.15    | 2026-10-19 | Logged Mick 1.3 SkyReels runs 1–6 and the first local setup to pass path, black, and face on two seeds. |

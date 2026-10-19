@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-18
-**Version:** 1.9
+**Modified:** 2026-10-19
+**Version:** 1.10
 
 # Asset Inventory
 
@@ -58,6 +58,8 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 - `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_trajectory-dot_832x448_81f_v001.mp4`: path-only control. Weighted luma centroid of the 832x448 proxy as a ~56px warm dot on black, 24 fps, 81 frames. Built 2026-09-03 to test Fun Control following jump timing without filling the CGI silhouette.
 - `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_trajectory-streak_832x448_81f_v001.mp4`: stronger path control. Same centroid with a ~72px head and 10-frame fading trail.
 - `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control-shrunk40_832x448_81f_v001.mp4`: original fire silhouette scaled 40% around its centroid on black. Middle ground between full CGI body and path-only.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control-graymask-grow16_832x448_81f_v001.mp4`: the fire's red-channel mask (threshold 20), dilated 16 px, holes filled, filled with flat RGB 128 on black. VACE DRIVING VIDEO for Mick 1.3 runs 2–6 (2026-10-19): path and size without fire texture.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_mask-grow16-soft_832x448_81f_v001.mp4`: the same mask as white on black with a 3 px Gaussian edge. MASK input for the same runs.
 
 ## Shot004 VACE Test Reference
 
@@ -68,7 +70,7 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 
 Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `workflows/comfyui/shot004-benchmark/`. The index and the keeping rule are in `docs/vfx-element-benchmark.md`.
 
-- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, and four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`).
+- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`), and six Mick 1.3 SkyReels runs (`shot004_fire-jump_mick13-skyreels_*_v001.mp4`; `graymask-promptv3_seed1218565630` is the current local reference).
 
 Media files are gitignored. The original base plate, grass fire, steam, and water passes are still only on the backup.
 
@@ -130,3 +132,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.7     | 2026-10-17 | Indexed the local shot004 benchmark clips copied off the RunPod volume. |
 | 1.8     | 2026-10-17 | Indexed the two Wan 2.7 Video Edit benchmark clips. |
 | 1.9     | 2026-10-18 | Indexed Wan 2.7 runs 3 and 4 and marked seed 2126129005 as the paid fallback. |
+| 1.10    | 2026-10-19 | Indexed the gray-in-mask driving and mask clips and the six Mick 1.3 SkyReels benchmark clips. |

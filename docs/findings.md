@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-18
-**Version:** 1.12
+**Modified:** 2026-10-19
+**Version:** 1.13
 
 # Findings
 
@@ -68,3 +68,12 @@
 - Alibaba's Wan 2.7 video edit API rewrites the prompt with an LLM by default (`prompt_extend`, default true) and has a separate `negative_prompt` (≤500 chars). The ComfyUI `Wan2VideoEditApi` node sends neither, so every ComfyUI run is rewritten and negatives sit in the positive prompt. Source: Alibaba Model Studio `wan-video-editing-api-reference`.
 - ComfyUI's Generated assets panel on a fresh Pod shows only that Pod's runs; older outputs are still in `output/` on the volume. Load them with a `[output]` entry in Load Video or from the repo's kept copies.
 - Mickmumpitz AI-VFX 1.3 ADV (`260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json`, on the Desktop in `VFX workflows/`) runs the VACE × SkyReels merge through `WanVacePhantomSimpleV2` (pack `wanvaceadvanced`) with the FusionX LoRA, 5 steps, CFG 1, `res_2s`/`beta57`, NAG, and per-frame `ComposeColorMatch`. Volume `avw5iclb48` has the merge, KJNodes, VHS, and the Mickmumpitz nodes but lacks `wanvaceadvanced`, the RES4LYF sampler and scheduler, ComfyUI-GGUF, and any LoRA.
+
+## 2026-10-19
+
+- Mickmumpitz 1.3 with the VACE × SkyReels merge is the first local setup to pass shot 004 Pass A path, black, and face on two seeds with a close `JB-001` look. Centroid drift is ≤0.9% horizontally and ≤1.9% vertically, the background is ≤3/255, and the output is 24 fps and 81 frames, the same timing as the source. It costs ~330 s of A40 time per 512p run. The working inputs are a flat mid-gray blob on black as DRIVING VIDEO plus the same shape as a soft white MASK (fire mask grown 16 px), `JB-001` Reference Only, and prompt v3. Detail: `docs/vfx-element-benchmark.md` step 8b.
+- Feeding the element's own RGB (the Houdini fire) as the VACE driving video makes the model trace it (~1% of frame size, matching area). The driving video must carry only where and when, not what.
+- On this setup the prompt decides the face and the body. "Fire spirit … faceless" produced eyes and a nose; "round ball of fire … smooth" produced an opaque sphere; "a teardrop-shaped fireball made entirely of soft, translucent flames…" produced the Jerry-like body. Avoid character words and face words, including negated ones, while NAG is unavailable.
+- One knob at a fixed seed gives a nearby sample on this setup: adding `JB-010` moved the picture less than a seed change did. That is the opposite of Wan 2.7, so one-knob A/B is usable here.
+- Mick 1.3 needed three fixes on RunPod: `WanVideoNAG` fails on the FP8 merge (`Half` vs `Float8_e4m3fn`, also unfixed upstream), "Reference Only" crashes `ControlCrossfadeIterationFix` (patched on the volume), and the 1.3 file drops the per-iteration seed wire present in 1.0 and 1.1. Detail: `mcp/runpod.md`.
+- The RunPod `--terminate-after` guard did not stop Pod `amsu1bpsrdzgfr` at its deadline. Shut Pods down by hand.

@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
-**Modified:** 2026-10-18
-**Version:** 2.32
+**Modified:** 2026-10-19
+**Version:** 2.35
 
 # RunPod + ComfyUI
 
@@ -159,6 +159,12 @@ volume `avw5iclb48` and a two-hour termination guard. Check GPU availability
 and the current volume before launch; never create a replacement Pod without
 attaching the persistent volume that holds ComfyUI and the saved VACE latent.
 
+The termination guard is not reliable. Pod `amsu1bpsrdzgfr` was created with
+`--terminate-after 2026-10-19T17:42:03Z` and was still `RUNNING` at 18:14Z, and
+`runpodctl pod get` shows no stored termination time. Every earlier Pod was
+terminated by hand before its guard, so the guard has never been seen to fire.
+Always run `scripts/runpod-pod-down.sh` at the end of a session.
+
 `runpod-pod-up.sh` accepts overrides for when the default GPU is out of stock:
 
 ```bash
@@ -195,19 +201,19 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 
 ## Current Resume Point
 
-No Pod is running. `p5u3i5lk87mrlk` was terminated 2026-10-18 before any run was queued, and `RUNPOD_POD_ID` is cleared in `.env`. Compute spend is zero. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB, `CA-MTL-1`) is untouched. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac.
+No Pod is running. `amsu1bpsrdzgfr` (A40, `CA-MTL-1`) ran 15:42–20:01Z on 2026-10-19, about 4 h 19 min or $2.55; its 17:42Z guard did not fire, and it was terminated by hand. `RUNPOD_POD_ID` is cleared in `.env`. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB) is untouched. A40 stock in `CA-MTL-1` can drop to `none`; `scripts/runpod-with-auth.sh runpodctl gpu list --include-unavailable` shows per-data-center stock, and the only GPU free there during the outage was an H100 SXM at $3.99/hr Secure. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac. A new Pod has a new host key; pass `-o StrictHostKeyChecking=accept-new`.
 
-The Mick 1.3 SkyReels run has not happened yet. Its `_runpod` copy was last saved 2026-10-18T20:53Z, partly wired; at the 20:48 save it still had Mick's lava inputs. Settings for the shot 004 run:
+The shot 004 Mick 1.3 graph is `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`, last saved by the user with the gray-in-mask inputs, prompt v3, and the restored seed wire. Running Mick 1.3 here needed three fixes:
 
-- DRIVING VIDEO and MASK: `shot004_ren-small-fire6_control_832x448_81f_v001.mp4` (mask = red channel).
-- Reference Image 1: `JB-001_upright-compact-idle.png`. Bypass Reference Image 2 and its resize node.
-- Sampler: image mode `Reference Only`, match mode `Disabled (pass-through)`, `total_iterations` 1, `resume_from_iteration` 0. Keep 5 steps, CFG 1, `res_2s`/`beta57`.
-- SETTINGS: 480p, 16:9. Per-Iteration Prompts: `num_fields` 1, `string_1` = the fire-spirit-on-black prompt.
-- First run with the Lenovo LoRA bypassed; second run identical with Lenovo on (`wan/Lenovo.safetensors`, not Mick's `wan\Lenovo.safetensors`) and `l3n0v0` at the start of the prompt.
+- `WanVideoNAG` (KJNodes `78cd992`, unchanged upstream as of 2026-10-19) fails with `mat1 and mat2 must have the same dtype, but got Half and Float8_e4m3fn` on the FP8 merge. Its `patch()` runs `diffusion_model.text_embedding` on 16-bit conditioning before ComfyUI wraps the FP8 weights for casting. It is bypassed in the shot 004 graph, so the negative prompt has no effect at CFG 1.
+- `ControlCrossfadeIterationFix` (Mickmumpitz nodes) crashes with `'NoneType' object has no attribute 'shape'` whenever the image mode is `Reference Only`, or `Auto-Detect` with more than one reference, because the router passes `start_frames=None` and iteration 0 reads `start_frames.shape`. Patched on the volume (marked `FW_AI patch 2026-10-19` at the top of `apply_crossfade` in `nodes/control_crossfade.py`): `None` becomes an empty batch, so iteration 0 injects nothing. `git -C custom_nodes/ComfyUI-Mickmumpitz-Nodes checkout nodes/control_crossfade.py` reverts it; a pull of that pack will conflict or drop it.
+- Mick's 1.3 file is missing the wire from `MultiChannelSlicer`'s `seed` output to the Sampler subgraph's `KSampler` `seed`; versions 1.0 and 1.1 have it. Without it every chunk uses the KSampler's fixed `1218564478` and `IterSeedBatch` does nothing. The user reconnected it in the shot 004 graph on 2026-10-19, so `seed_1` on the main canvas now sets the seed for chunk 1. `-1` in a later `seed_N` reuses the last valid seed.
 
-Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), and Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` through `00004_.mp4` (`00002_` is the paid fallback). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
+Mick's driving video must be a guide signal (pose, depth, canny, tracking), not the RGB of the element. Fed the Houdini fire RGB, run `6bac1820` traced it within ~1% of frame size. Gray-in-mask inputs are in `input/`: `shot004_ren-small-fire6_control-graymask-grow16_832x448_81f_v001.mp4` and `shot004_ren-small-fire6_mask-grow16-soft_832x448_81f_v001.mp4`.
 
-Stock VACE knobs are closed and Wan 2.7 tuning is closed. The next Pod work is the VACE × SkyReels merge: benchmark step 8 (model swap in the Pass A graph), then Mickmumpitz 1.3 ADV. Open the volume copy `user/default/workflows/mickmumpitz/260608_MICKMUMPITZ_AI-VFX_1-3_ADV_runpod.json`, not Mick's original next to it. The copy points `UNETLoader` at the merge's top-level path (Mick saved `wan\…`), and bypasses the unconnected `UnetLoaderGGUF` and the two `easy cleanGpuUsed` pass-throughs in the Sampler subgraph; `comfyui-easy-use` is not installed. The saved canvas `user/default/workflows/shot004_fire-vace14b_sample-latent_v001_pass_A.json` is in the silhouette-run state (control video = `MaskToImage`, strength 0.5), not `00003`, and still has an active `KlingOmniProEditVideoNode`. Bypass that node before pressing Run, or the queue spends Kling credits. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
+Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` through `00004_.mp4` (`00002_` is the paid fallback), and Mick 1.3 SkyReels runs `output/shot004_mick13-skyreels_00001.mp4` through `00006.mp4`. Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
+
+Stock VACE knobs and Wan 2.7 tuning are closed. Mick 1.3 SkyReels with gray-in-mask inputs and prompt v3 passed path, black, and face on two seeds with a close look (benchmark step 8b). Next Pod session, one knob each at `seed_1` 1218565630 in `shot004_fire-jump_mick13-skyreels_v001`: `vace_strength` 1.0 (Sampler subgraph → `WanVacePhantomSimpleV2`, 5th value), then the Lenovo LoRA with `l3n0v0`, then a patched NAG with negatives. The older `mickmumpitz/260608_MICKMUMPITZ_AI-VFX_1-3_ADV_runpod.json` and the Pass A canvas `shot004_fire-vace14b_sample-latent_v001_pass_A.json` (silhouette state, live `KlingOmniProEditVideoNode`; bypass it before any run) are superseded for this work. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
 
 ### Custom Nodes Added 2026-10-18
 
@@ -423,3 +429,6 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.30    | 2026-10-18 | Installed rgthree-comfy and ComfyUI-GGUF; saved a RunPod-fixed copy of Mick 1.3 on the volume; recorded why `comfyui-easy-use` is skipped. |
 | 2.31    | 2026-10-18 | Added the Lenovo UltraReal Wan LoRA to the volume. |
 | 2.32    | 2026-10-18 | Terminated A40 Pod `p5u3i5lk87mrlk` before any run; recorded the Mick 1.3 run settings for the next session. |
+| 2.33    | 2026-10-19 | Pod `amsu1bpsrdzgfr` up after waiting out A40 stock-outs in `CA-MTL-1`; confirmed the custom nodes and models persist across Pods. |
+| 2.34    | 2026-10-19 | Recorded that the termination guard did not fire, the NAG FP8 failure, the Mick crossfade patch, and the gray-in-mask inputs. |
+| 2.35    | 2026-10-19 | Terminated A40 Pod `amsu1bpsrdzgfr` after Mick 1.3 SkyReels runs 1–6; recorded the missing seed wire, the outputs on the volume, and the next one-knob tests. |
