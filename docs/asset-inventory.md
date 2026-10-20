@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-10-19
-**Version:** 1.10
+**Version:** 1.11
 
 # Asset Inventory
 
@@ -70,7 +70,7 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 
 Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `workflows/comfyui/shot004-benchmark/`. The index and the keeping rule are in `docs/vfx-element-benchmark.md`.
 
-- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`), and six Mick 1.3 SkyReels runs (`shot004_fire-jump_mick13-skyreels_*_v001.mp4`; `graymask-promptv3_seed1218565630` is the current local reference).
+- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`), and eight Mick 1.3 SkyReels runs (`shot004_fire-jump_mick13-skyreels_*_v001.mp4`; `graymask-promptv3-jb010-str125-lenovo_seed1218565630` is the current best).
 
 Media files are gitignored. The original base plate, grass fire, steam, and water passes are still only on the backup.
 
@@ -133,3 +133,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.8     | 2026-10-17 | Indexed the two Wan 2.7 Video Edit benchmark clips. |
 | 1.9     | 2026-10-18 | Indexed Wan 2.7 runs 3 and 4 and marked seed 2126129005 as the paid fallback. |
 | 1.10    | 2026-10-19 | Indexed the gray-in-mask driving and mask clips and the six Mick 1.3 SkyReels benchmark clips. |
+| 1.11    | 2026-10-19 | Indexed Mick 1.3 SkyReels runs 7 and 8; run 8 is the current best. |

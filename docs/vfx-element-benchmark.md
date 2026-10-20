@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
 **Modified:** 2026-10-19
-**Version:** 3.2
+**Version:** 3.3
 
 # VFX Element Benchmark
 
@@ -95,6 +95,8 @@ upscale before a paid resolution bump.
 | Mick 1.3 SkyReels, 2026-10-19, run 4 | Run 3 with prompt v3: "A teardrop-shaped fireball made entirely of soft, translucent flames, with a bright peach-white glow at its heart…" | Pass. ≤1.1% / ≤4.6% | Close. A teardrop body made of flame with a pale glowing interior and an ember band low down; no face. Center a little milky; less smoke and spark than `JB-001`. User: "better, not perfect but getting there" | Pass. ≤2/255 | First SkyReels look that reads as Jerry. |
 | Mick 1.3 SkyReels, 2026-10-19, run 5 | Run 4 with a new seed (`seed_1` 1218565630, through the restored seed wire) | Pass. ≤0.9% / ≤1.9%, tightest of any run | Close. Same character; flame strands visible through the center. Edge slightly clean and bubble-like | Pass. ≤3/255 | Replicates run 4: 2 of 2 seeds pass path, black, and face, with a close look. The setup passes the 2-of-3 rule. |
 | Mick 1.3 SkyReels, 2026-10-19, run 6 | Run 5 plus `JB-010` as Reference Image 2, same seed | Pass. ≤0.9% / ≤1.8% | Close. Very similar to run 5; slightly warmer, with a bit more spark and grain at the edge. User: "pretty similar" | Pass. ≤2/255 | One added image moved the picture less than a seed change did. Unlike Wan 2.7, one-knob A/B works on this setup. |
+| Mick 1.3 SkyReels, 2026-10-19, run 7 | Run 6 with `vace_strength` 1.5 → 1.0 | Pass. ≤1.0% / ≤1.2% | Mixed. More flame texture inside and taller tongues, but a faint gray-blue cone sticks up through the top in several frames, and the bottom edge is dull. User saw the cone | Pass-ish. ≤4/255 | Lower strength lets the flat gray guide show where the flame does not cover the grown mask's pointed tip. Too low for this guide. |
+| Mick 1.3 SkyReels, 2026-10-19, run 8 | Run 6 with `vace_strength` 1.25 **and** the Lenovo LoRA (`wan/Lenovo.safetensors` at 1.0, `l3n0v0,` at the start of the prompt). Two changes | Pass. ≤1.0% / ≤1.8% | Close, best so far. No cone; more ragged, photographic flame tongues on top; fire texture inside; less bubble-like than run 6 | Pass. ≤2/255 | Current best settings. Confounded: does not show whether 1.25 or Lenovo did the work. |
 
 ## Queue
 
@@ -142,6 +144,11 @@ test uses this file.
 7. **Runway Aleph 2 (`RunwayAleph2VideoToVideoNode`), guidance image = the JB-001 first frame at t = 0.** Cloud. Third-party rate $0.369/s with a 2 s minimum, so a 4 s clip is ~$1.48. Confirm the node exposes guidance images; without them it is a prompt-only restyle.
 8. **VACE × SkyReels V3 R2V merge, Pass A graph, model swap only.** Pod. Same graph as `00003` (strength 1, red mask, `JB-001` reference); change the diffusion model to `wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors` and nothing else. Hypothesis: stock VACE locked the path but could not carry the still; R2V training targets reference identity. The model is on volume `avw5iclb48` in `models/diffusion_models/` (downloaded and checksum-verified 2026-10-18). The saved Pass A canvas on the volume is in the silhouette state and has a live Kling Omni Edit node; see `mcp/runpod.md` before running it. Mickmumpitz's own graphs run this merge differently (`WanVacePhantomSimpleV2`, FusionX LoRA, 5 steps, CFG 1, `res_2s`/`beta57`, NAG); a model swap in our graph tests the merge outside that tuned setup. 17 frames.
 8b. **Mickmumpitz 1.3 ADV with the merge, gray-in-mask inputs.** Pod, 2026-10-19, runs 1–6 above. Graph `workflows/comfyui/shot004-benchmark/shot004_fire-jump_mick13-skyreels_graymask-promptv3_seed1218565630_v001.workflow.json`; inputs `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control-graymask-grow16_832x448_81f_v001.mp4` (DRIVING VIDEO) and `…_mask-grow16-soft_832x448_81f_v001.mp4` (MASK); prompt v3; `vace_strength` 1.5; NAG and Lenovo bypassed; 512p (912×512, 24 fps, 81 frames, the same timing as the source); ~330 s Pod time per run. This is the first local setup to pass path, black, and face on two seeds with a close look. Step 8 (a model swap in the stock Pass A graph) has not been run and is no longer needed to answer the merge question. Next, one knob each at seed `1218565630`: `vace_strength` 1.0 for a looser edge; the Lenovo LoRA (with `l3n0v0`); then a fixed NAG with "face, eyes, solid sphere" as negatives. After that, the comp check over the plate under "Promote, Then Pass B".
+8c. **Next session, in this order.** Start from run 8's settings (`seed_1` 1218565630, `JB-001` + `JB-010`, prompt v3 with `l3n0v0`, Lenovo on, `vace_strength` 1.25, NAG bypassed, 512p).
+    1. **NAG with a negative prompt.** Un-bypass `WanVideoNAG` in the Sampler subgraph and set the negative prompt to "face, eyes, nose, mouth, solid sphere, smooth plastic, ground, environment". This also verifies the KJNodes FP8 patch (see `mcp/runpod.md`).
+    2. **720p.** SETTINGS 512p → 720p on the best result of 1. Checks sharpness and whether path and black still pass. Expect about twice the Pod time per run (estimate).
+    3. **Comp check over the plate**, in Resolve or Fusion with Screen or Add, using the best clip. Conform 912×512 to the plate; timing already matches the source at 24 fps.
+    Optional, only if a result calls for it: separate run 8's two changes (Lenovo at 1.5, or 1.25 without Lenovo); a rounded, 8 px guide so lower strengths do not leak gray; a third seed on the final recipe; SeedVR2 or FlashVSR upscale of the best 512p clip. Full-length (84-frame) coverage and Pass B follow the comp check.
 9. **Same merge, plus the JB-001 first frame as control frame 0** (mask black on frame 0, red mask after). Only after 8 is scored. It reopens first-frame conditioning on a new model, not a stock-VACE mask tweak.
 
 ### Stage 3: Image-to-video with a drawn path
@@ -223,6 +230,8 @@ Scored clips are the research set. The mp4 holds the picture and the canvas that
 | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3_seed1218564478_v001.mp4` | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3_seed1218564478_v001.workflow.json` | Run 4: prompt v3, first close look. |
 | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3_seed1218565630_v001.mp4` | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3_seed1218565630_v001.workflow.json` | Run 5: prompt v3, second seed. The current local reference setup. |
 | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010_seed1218565630_v001.mp4` | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010_seed1218565630_v001.workflow.json` | Run 6: run 5 plus `JB-010`. |
+| `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str100_seed1218565630_v001.mp4` | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str100_seed1218565630_v001.workflow.json` | Run 7: `vace_strength` 1.0; gray cone. |
+| `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_v001.mp4` | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_v001.workflow.json` | Run 8: strength 1.25 + Lenovo. Current best. |
 
 The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still points at `outputs/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4`.
 
@@ -246,6 +255,8 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 2026-10-19 | Mick 1.3 SkyReels run 4 | same | prompt v3 | 81 / 81 | 330 s Pod | Pass | Close | Pass | `…_graymask-promptv3_seed1218564478_v001.mp4` | new seed |
 | 2026-10-19 | Mick 1.3 SkyReels run 5 | same | `seed_1` 1218565630 (seed wire restored) | 81 / 81 | 330 s Pod | Pass | Close | Pass | `…_graymask-promptv3_seed1218565630_v001.mp4` | `JB-010` as 2nd ref |
 | 2026-10-19 | Mick 1.3 SkyReels run 6 | same | `JB-010` added | 81 / 81 | 354 s Pod | Pass | Close, ≈ run 5 | Pass | `…_graymask-promptv3-jb010_seed1218565630_v001.mp4` | `vace_strength` 1.0, then Lenovo |
+| 2026-10-19 | Mick 1.3 SkyReels run 7 | same | `vace_strength` 1.0 | 81 / 81 | 376 s Pod | Pass | Mixed, gray cone | Pass-ish | `…_graymask-promptv3-jb010-str100_seed1218565630_v001.mp4` | 1.25 |
+| 2026-10-19 | Mick 1.3 SkyReels run 8 | same | `vace_strength` 1.25 + Lenovo with `l3n0v0` (two changes) | 81 / 81 | 353 s Pod | Pass | Close, best | Pass | `…_graymask-promptv3-jb010-str125-lenovo_seed1218565630_v001.mp4` | NAG, then 720p, then comp |
 
 ---
 
@@ -266,3 +277,4 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 3.0 | 2026-10-18 | Major revision; 2.0 archived to `docs/archive/vfx-element-benchmark-v2.0.md`. Cut Stage 1 cost: one or two 720P seeds for replication and a free Pod upscale before any 1080P run, which is now conditional. Pod-only tests (VACE × SkyReels merge, ATI) may run alongside Stage 1. Added a cost rule and required Pod minutes in score rows. |
 | 3.1 | 2026-10-18 | Scored Wan 2.7 runs 3 and 4. Closed Stage 1 with no winner, stopped Wan 2.7 tuning, and kept run 2 as the paid fallback. Recorded the hidden prompt rewrite and that the SkyReels merge is now on the volume, and noted how Mickmumpitz's graphs run that merge. |
 | 3.2 | 2026-10-19 | Scored Mickmumpitz 1.3 SkyReels runs 1–6. Fire RGB as the driving video traced the source; gray-in-mask inputs plus prompt v3 gave the first local setup that passes path, black, and face on two seeds with a close look. Added step 8b and its next knobs, and indexed the clips. |
+| 3.3 | 2026-10-19 | Scored Mick 1.3 runs 7 (strength 1.0, gray cone) and 8 (strength 1.25 + Lenovo, current best). Added step 8c, the next-session order: NAG, 720p, comp check. |
