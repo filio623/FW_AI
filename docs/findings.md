@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-10-19
-**Version:** 1.14
+**Version:** 1.15
 
 # Findings
 
@@ -78,3 +78,4 @@
 - Mick 1.3 needed three fixes on RunPod: `WanVideoNAG` fails on the FP8 merge (`Half` vs `Float8_e4m3fn`, also unfixed upstream), "Reference Only" crashes `ControlCrossfadeIterationFix` (patched on the volume), and the 1.3 file drops the per-iteration seed wire present in 1.0 and 1.1. Detail: `mcp/runpod.md`.
 - The RunPod `--terminate-after` guard did not stop Pod `amsu1bpsrdzgfr` at its deadline. Shut Pods down by hand.
 - On the Mick 1.3 SkyReels setup, `vace_strength` sets how hard the gray guide is followed. At 1.5 the body fills the guide but keeps a clean, bubble-like outline. At 1.0 there is more flame texture, but the flat gray guide shows through as a faint gray cone where flame does not cover the grown mask's pointed tip. 1.25 plus the Lenovo LoRA (`l3n0v0`) gave no cone and more ragged, photographic flame tongues; it is the current best (run 8). That run changed two things, so it does not say which one helped.
+- The Mickmumpitz Patreon workflows and guides now sit in a per-video library at `~/Desktop/VFX workflows/mickmumpitz/` (`references/mickmumpitz-library.md`). The loose AI-VFX files moved with it, so `260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json` is now under `mickmumpitz/2026-03-30_i-built-a-free-vfx-pipeline-with-local-ai___n0ir5V5tX4/advanced/`, not directly in `VFX workflows/`.

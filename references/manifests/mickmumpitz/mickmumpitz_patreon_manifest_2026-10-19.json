@@ -1,0 +1,2679 @@
+{
+ "captured": "2026-10-19",
+ "campaign_id": "10767818",
+ "posts": [
+  {
+   "post_id": "171703421",
+   "published": "2026-10-07T15:27:21.000+00:00",
+   "title": "[ADVANCED] AI Performance Capture 2.2 - 2x upscale, mattes for Nuke / After Effects, Krea 2 character sheets + example files",
+   "url": "https://mickmumpitz.ai/posts/advanced-ai-2-2-171703421",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "759761707",
+     "file_name": "MICKMUMPITZ_H3-PERFORMANCE-CAPTURE_2-2_ADV.json",
+     "size_bytes": 359339,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "759761709",
+     "file_name": "MICKMUMPITZ_KREA2_CHARACTER-SHEET_squirrel-emotions.json",
+     "size_bytes": 8956,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "759761711",
+     "file_name": "PERFCAP_2-2_ADV_EXAMPLE_FILES.zip",
+     "size_bytes": 3511746390,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "171702311",
+   "published": "2026-10-07T15:27:17.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOW] Turn yourself into ANY creature - local AI Performance Capture with MiniMax H3",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-171702311",
+   "embed_url": "https://youtu.be/2MzCkYrvDaI",
+   "attachments": [
+    {
+     "media_id": "759759234",
+     "file_name": "MICKMUMPITZ_H3-PERFORMANCE-CAPTURE_2-2_SMPL.json",
+     "size_bytes": 259379,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "759759239",
+     "file_name": "PROMPT_TEMPLATES.txt",
+     "size_bytes": 16084,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "169255940",
+   "published": "2026-09-11T19:50:26.000+00:00",
+   "title": "[ADVANCED WORKFLOWS] 4D-Video is here!",
+   "url": "https://mickmumpitz.ai/posts/advanced-4d-is-169255940",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "743193245",
+     "file_name": "H3_EXAMPLE_FILES.7z",
+     "size_bytes": 184677219,
+     "mimetype": "application/x-7z-compressed"
+    },
+    {
+     "media_id": "743297576",
+     "file_name": "260911_MICKMUMPITZ_H3_SPLAT-CLEANUP_1-2_ADV.json",
+     "size_bytes": 83819,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "169253362",
+   "published": "2026-09-11T19:50:03.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOW] 4D-Video is here!",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-169253362",
+   "embed_url": "https://youtu.be/nYisoS5wPYQ",
+   "attachments": [
+    {
+     "media_id": "743302623",
+     "file_name": "260911_MICKMUMPITZ_VIDEO-2-4D-SPLAT_1-0_SMPL.json",
+     "size_bytes": 25116,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "744634606",
+     "file_name": "install_splatkit.bat",
+     "size_bytes": 6495,
+     "mimetype": "text/x-msdos-batch"
+    },
+    {
+     "media_id": "745615203",
+     "file_name": "260915_MICKMUMPITZ_VIDEO-2-4D-SPLAT_1-1_SMPL.json",
+     "size_bytes": 24321,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "168176916",
+   "published": "2026-08-31T10:51:57.000+00:00",
+   "title": "[EXCLUSIVE DEVLOG & GUIDE] Create 360 Panoramas using KREA2",
+   "url": "https://mickmumpitz.ai/posts/exclusive-devlog-168176916",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "167646149",
+   "published": "2026-08-25T15:23:48.000+00:00",
+   "title": "[ADVANCED WORKFLOW, EXAMPLE FILES & GUIDE] We Open Sourced World Generation",
+   "url": "https://mickmumpitz.ai/posts/advanced-example-167646149",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "726559979",
+     "file_name": "260825_MICKMUMPITZ_3DGS-Dataset-Creator_1-0_ADV.json",
+     "size_bytes": 135680,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "726559980",
+     "file_name": "260825_MICKMUMPITZ_3DGS-Dataset-Creator_1-0_SMPL.json",
+     "size_bytes": 130045,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "726570847",
+     "file_name": "260825_MICKMUMPITZ_Krea2-360Pano-Creator_1-0.json",
+     "size_bytes": 94359,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "727113397",
+     "file_name": "01_Input_Panoramas.zip",
+     "size_bytes": 818182666,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "727113486",
+     "file_name": "02_Example_Splats.zip",
+     "size_bytes": 3405563810,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "727113552",
+     "file_name": "03_Training_Dataset_bavarian-village.zip",
+     "size_bytes": 4250566799,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "727113714",
+     "file_name": "03_Training_Dataset_medieval-market.zip",
+     "size_bytes": 4720124202,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "727207270",
+     "file_name": "04_HiRes_Composite_Study.zip",
+     "size_bytes": 2683900435,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "727291950",
+     "file_name": "05_Reference_Renders.zip",
+     "size_bytes": 477211793,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "167647096",
+   "published": "2026-08-25T15:23:26.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOWS] We Open Sourced World Generation",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-167647096",
+   "embed_url": "https://youtu.be/eJuYBNrD8HI",
+   "attachments": [
+    {
+     "media_id": "726563736",
+     "file_name": "260825_MICKMUMPITZ_3DGS-Dataset-Creator_1-0_SMPL.json",
+     "size_bytes": 130045,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "726570700",
+     "file_name": "260825_MICKMUMPITZ_Krea2-360Pano-Creator_1-0.json",
+     "size_bytes": 94359,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "166464561",
+   "published": "2026-08-12T09:29:32.000+00:00",
+   "title": "[ADVANCED WORKFLOWS] AI Rendering with MINIMAX: Free & Local on Your Own Machine",
+   "url": "https://mickmumpitz.ai/posts/advanced-ai-with-166464561",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "716437604",
+     "file_name": "260615_MICKMUMPITZ_FLUX_KLEIN_9B_V01.json",
+     "size_bytes": 122122,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "716437606",
+     "file_name": "MICKMUMPITZ_MINIMAX-H3_AI-RENDERER_1-1.json",
+     "size_bytes": 61226,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "716437611",
+     "file_name": "MICKMUMPITZ_MINIMAX-H3_AI-RENDERER_1-1_ADVANCED.json",
+     "size_bytes": 74459,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "716437675",
+     "file_name": "260812_AI-RENDERING_MINIMAX_PATREON_FILES.7z",
+     "size_bytes": 600848903,
+     "mimetype": "application/x-7z-compressed"
+    }
+   ]
+  },
+  {
+   "post_id": "166463119",
+   "published": "2026-08-12T09:29:20.000+00:00",
+   "title": "[NEW VIDEO, FREE WORKFLOWS & GUIDE] AI Rendering with MINIMAX: Free & Local on Your Own Machine",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-166463119",
+   "embed_url": "https://youtu.be/Q2oVBVQNQ_U",
+   "attachments": [
+    {
+     "media_id": "716439554",
+     "file_name": "260615_MICKMUMPITZ_FLUX_KLEIN_9B_V01.json",
+     "size_bytes": 122122,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "716439561",
+     "file_name": "MICKMUMPITZ_MINIMAX-H3_AI-RENDERER_1-1.json",
+     "size_bytes": 61226,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "165149497",
+   "published": "2026-07-29T09:44:53.000+00:00",
+   "title": "[BETA WORKFLOW & GUIDE] Consistent Character Creator 4.0 · Krea 2 Identity-Edit (BETA) - HUGE UPGRADE!",
+   "url": "https://mickmumpitz.ai/posts/beta-workflow-4-165149497",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "707498804",
+     "file_name": "260728_MICKMUMPITZ_CCC_4-0_KREA2-EDIT_BETA_PUBLISH.json",
+     "size_bytes": 720347,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "707643188",
+     "file_name": "260729_MICKMUMPITZ_CCC_4-1_KREA2-EDIT_BETA_PUBLISH.json",
+     "size_bytes": 1094599,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "164082665",
+   "published": "2026-07-17T13:42:50.000+00:00",
+   "title": "[ADVANCED WORKFLOWS & EXAMPLE FILES] The Consistent Character Creator 4.0 is here! ",
+   "url": "https://mickmumpitz.ai/posts/advanced-example-164082665",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "700530723",
+     "file_name": "260713_MICKMUMPITZ_DATASET-TAGGER_1-5.json",
+     "size_bytes": 78644,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "700530725",
+     "file_name": "260713_MICKMUMPITZ_IDEOGRAM_1-0.json",
+     "size_bytes": 82687,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "700530731",
+     "file_name": "260713_MICKMUMPITZ_KREA-2-IMG_1-0.json",
+     "size_bytes": 17963,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "700530734",
+     "file_name": "260713_MICKMUMPITZ_TAG-REVIEW-EDIT_1-0.json",
+     "size_bytes": 9325,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "702201270",
+     "file_name": "260713_MICKMUMPITZ_WAN-2-2-VID_1-0.json",
+     "size_bytes": 41421,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "702201406",
+     "file_name": "260720_MICKMUMPITZ_CCC_4-01_ADV.json",
+     "size_bytes": 1785361,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "721589102",
+     "file_name": "260820_MICKMUMPITZ_CCC_4-1_ADV.json",
+     "size_bytes": 1796206,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "164075060",
+   "published": "2026-07-17T13:38:40.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOWS] The Consistent Character Creator 4.0 is here! ",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-4-164075060",
+   "embed_url": "https://youtu.be/ghFYDG0DF1w",
+   "attachments": [
+    {
+     "media_id": "700531281",
+     "file_name": "260713_MICKMUMPITZ_DATASET-TAGGER_1-5.json",
+     "size_bytes": 78644,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "700531282",
+     "file_name": "260713_MICKMUMPITZ_IDEOGRAM_1-0.json",
+     "size_bytes": 82687,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "700531284",
+     "file_name": "260713_MICKMUMPITZ_KREA-2-IMG_1-0.json",
+     "size_bytes": 17963,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "700531285",
+     "file_name": "260713_MICKMUMPITZ_TAG-REVIEW-EDIT_1-0.json",
+     "size_bytes": 9325,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "702199182",
+     "file_name": "260713_MICKMUMPITZ_WAN-2-2-VID_1-0.json",
+     "size_bytes": 41421,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "702199363",
+     "file_name": "260720_MICKMUMPITZ_CCC_4-01_SMPL .json",
+     "size_bytes": 1701777,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "161519679",
+   "published": "2026-06-19T13:28:07.000+00:00",
+   "title": "[EXAMPLE FILES] We Built a FREE 3D Movie Pipeline with LOCAL AI",
+   "url": "https://mickmumpitz.ai/posts/example-files-we-161519679",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "684062614",
+     "file_name": "AI-RENDERING-EXAMPLE FILES.7z",
+     "size_bytes": 986179236,
+     "mimetype": "application/x-7z-compressed"
+    }
+   ]
+  },
+  {
+   "post_id": "161509029",
+   "published": "2026-06-19T13:02:49.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOWS] We Built a FREE 3D Movie Pipeline with LOCAL AI",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-161509029",
+   "embed_url": "https://youtu.be/7J7hi-Hxpac",
+   "attachments": [
+    {
+     "media_id": "684051061",
+     "file_name": "260603_LTX2-3_3D-RENDERING_LIP-SNYC_v08.json",
+     "size_bytes": 218401,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "684051064",
+     "file_name": "260615_MICKMUMPITZ_FLUX_KLEIN_9B_V01.json",
+     "size_bytes": 122122,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "157339064",
+   "published": "2026-05-04T14:24:33.000+00:00",
+   "title": "[ADVANCED WORKFLOW & EXAMPLE FILES] I Built a FREE Modular AI Movie Pipeline",
+   "url": "https://mickmumpitz.ai/posts/advanced-example-157339064",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "657544664",
+     "file_name": "260504_MICKMUMPITZ_MOVIE-BUILDER_1-0_EXAMPLE-FILES.7z",
+     "size_bytes": 29583505,
+     "mimetype": "application/x-7z-compressed"
+    },
+    {
+     "media_id": "657562003",
+     "file_name": "260504_DREADMOR_EXAMPLE_MOVIE_v01.json",
+     "size_bytes": 2025119,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "657562006",
+     "file_name": "260504_MICKMUMPITZ_MOVIE-BUILDER_1-0_ADV.json",
+     "size_bytes": 461333,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "657562010",
+     "file_name": "260504_MICKMUMPITZ_MOVIE-BUILDER_1-0_SMPL.json",
+     "size_bytes": 393960,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "658927034",
+     "file_name": "260507_MICKMUMPITZ_MOVIE-BUILDER_1-1_SMPL.json",
+     "size_bytes": 393936,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "658927037",
+     "file_name": "260507_MICKMUMPITZ_MOVIE-BUILDER_1-1_ADV.json",
+     "size_bytes": 461202,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "157336696",
+   "published": "2026-05-04T14:13:56.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOW] I Built a FREE Modular AI Movie Pipeline",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-i-157336696",
+   "embed_url": "https://youtu.be/0mT4p86ZxGQ",
+   "attachments": [
+    {
+     "media_id": "657532220",
+     "file_name": "brielle_ref.mp3",
+     "size_bytes": 80182,
+     "mimetype": "audio/mpeg"
+    },
+    {
+     "media_id": "657532241",
+     "file_name": "face.png",
+     "size_bytes": 7372359,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "657532242",
+     "file_name": "front.png",
+     "size_bytes": 8466189,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "657532244",
+     "file_name": "side.png",
+     "size_bytes": 9549331,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "657532382",
+     "file_name": "260504_BUG-SKY_EXAMPLE-MOVIE_v01.json",
+     "size_bytes": 2083594,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "657562709",
+     "file_name": "260504_MICKMUMPITZ_MOVIE-BUILDER_1-0_SMPL.json",
+     "size_bytes": 393960,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "658928459",
+     "file_name": "260507_MICKMUMPITZ_MOVIE-BUILDER_1-1_SMPL.json",
+     "size_bytes": 393936,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "157329723",
+   "published": "2026-05-04T14:00:00.000+00:00",
+   "title": "[GUIDE] LTX 2.3 Movie Builder Workflow",
+   "url": "https://mickmumpitz.ai/posts/guide-ltx-2-3-157329723",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "155607570",
+   "published": "2026-04-14T15:50:34.000+00:00",
+   "title": "[FREE WORKFLOW & GUIDE] LTX 2.3 VID2VID Lip Sync Workflow 1.0",
+   "url": "https://mickmumpitz.ai/posts/free-workflow-2-155607570",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "646271211",
+     "file_name": "260414_MICKMUMPITZ_LTX_2-3_VID2VID_LIPSYNC_1-0.json",
+     "size_bytes": 124610,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "154315215",
+   "published": "2026-03-30T16:05:40.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOWS] Generate EPIC VFX Shots with AI! ",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-154315215",
+   "embed_url": "https://youtu.be/_n0ir5V5tX4?si=VaQDJDnPaHcD04tw",
+   "attachments": [
+    {
+     "media_id": "637848206",
+     "file_name": "260330_MICKMUMPITZ_AI-VFX_1-0_SMPL.json",
+     "size_bytes": 117133,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "637848209",
+     "file_name": "260330_MICKMUMPITZ_AI-VFX_PREPROCESS_1-0.json",
+     "size_bytes": 97987,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "638242329",
+     "file_name": "260330_AI-VFX-STARTIMAGE_1-0.json",
+     "size_bytes": 52120,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "154321326",
+   "published": "2026-03-30T16:03:06.000+00:00",
+   "title": "[ADVANCED WORLFLOWS + EXAMPLE FILES] Generate EPIC VFX Shots with AI ",
+   "url": "https://mickmumpitz.ai/posts/advanced-example-154321326",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "637802857",
+     "file_name": "260330_MICKMUMPITZ_AI-VFX_PREPROCESS_1-0.json",
+     "size_bytes": 97987,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "637802902",
+     "file_name": "260330_MICKMUMPITZ_AI-VFX_1-0_ADV.json",
+     "size_bytes": 148417,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "638242442",
+     "file_name": "260330_AI-VFX-STARTIMAGE_1-0.json",
+     "size_bytes": 52120,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "638331959",
+     "file_name": "MICKMUMPITZ_AIVFX_EXAMPLE-FILES.zip",
+     "size_bytes": 1007011733,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "639645064",
+     "file_name": "260402_MICKMUMPITZ_AI-VFX_1-1_ADV.json",
+     "size_bytes": 150772,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "677909685",
+     "file_name": "260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json",
+     "size_bytes": 162820,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "154297687",
+   "published": "2026-03-30T15:19:48.000+00:00",
+   "title": "[FREE GUIDE] Generate EPIC VFX Shots with AI - AI VFX PREPROCESSOR",
+   "url": "https://mickmumpitz.ai/posts/free-guide-epic-154297687",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154092216",
+   "published": "2026-03-30T14:44:02.000+00:00",
+   "title": "[FREE GUIDE] Generate EPIC VFX Shots with AI!",
+   "url": "https://mickmumpitz.ai/posts/free-guide-epic-154092216",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154073740",
+   "published": "2026-03-27T11:46:59.000+00:00",
+   "title": "[FREE GUIDE] Installing RTX Nodes for ComfyUI",
+   "url": "https://mickmumpitz.ai/posts/free-guide-rtx-154073740",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "637848856",
+     "file_name": "260330_MICKMUMPITZ_NVIDIA-RTX-SUPER-RESOLUTION_1-0.json",
+     "size_bytes": 13979,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "152400855",
+   "published": "2026-03-06T18:00:59.000+00:00",
+   "title": "2x Faster WAN Renders - SageAttention Easy Installer for ComfyUI (Windows)",
+   "url": "https://mickmumpitz.ai/posts/2x-faster-wan-152400855",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "151636093",
+   "published": "2026-02-25T15:28:55.000+00:00",
+   "title": "[ADVANCED WORKFLOW] Turn Your Rough 3D LAYOUTS into CINEMATIC Renders locally - AI RENDERER 2.0",
+   "url": "https://mickmumpitz.ai/posts/advanced-turn-3d-151636093",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "619787435",
+     "file_name": "260225_MICKMUMPITZ_AI-RENDERER_ADV_2-0_Runpod.json",
+     "size_bytes": 178624,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "619787540",
+     "file_name": "260225_MICKMUMPITZ_AI-RENDERER_ADV_2-0.json",
+     "size_bytes": 180374,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "619787544",
+     "file_name": "260225_MICKMUMPITZ_AI-RENDERER_SMPL_2-0.json",
+     "size_bytes": 150868,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "619787546",
+     "file_name": "260225_MICKMUMPITZ_AI-RENDERER-PREPROCESS_1-0.json",
+     "size_bytes": 38552,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "619788494",
+     "file_name": "260225_AI-RENDERING_PATREON.zip",
+     "size_bytes": 131418226,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "623026161",
+     "file_name": "Example_Blender_Files.zip",
+     "size_bytes": 168435596,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "623026822",
+     "file_name": "260303_MICKMUMPITZ_Z-IMAGE_TURBO_CN_1-1.json",
+     "size_bytes": 27520,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "639617289",
+     "file_name": "260402_MICKMUMPITZ_AI-RENDERER_SMPL_2-1.json",
+     "size_bytes": 141579,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "639651160",
+     "file_name": "260402_MICKMUMPITZ_AI-RENDERER_ADV_2-1.json",
+     "size_bytes": 173406,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "639651174",
+     "file_name": "260402_MICKMUMPITZ_AI-RENDERER_ADV_2-1_Runpod.json",
+     "size_bytes": 171190,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "151633267",
+   "published": "2026-02-25T15:13:20.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOW] Turn Your Rough 3D LAYOUTS into CINEMATIC Renders locally - AI RENDERER 2.0",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-2-151633267",
+   "embed_url": "https://youtu.be/0WkixvqnPXw",
+   "attachments": [
+    {
+     "media_id": "619768755",
+     "file_name": "260225_MICKMUMPITZ_AI-RENDERER_SMPL_2-0.json",
+     "size_bytes": 150868,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "619768756",
+     "file_name": "260225_MICKMUMPITZ_AI-RENDERER-PREPROCESS_1-0.json",
+     "size_bytes": 38552,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "619769117",
+     "file_name": "260225_MICKMUMPITZ_AI-RENDERER_SMPL_2-0_Runpod.json",
+     "size_bytes": 153889,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "623032071",
+     "file_name": "260303_MICKMUMPITZ_Z-IMAGE_TURBO_CN_1-1.json",
+     "size_bytes": 27520,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "153434545",
+   "published": "2026-02-25T15:00:00.000+00:00",
+   "title": "AI Renderer 2.0 - Free ComfyUI Workflow for AI-Powered 3D Animation Rendering",
+   "url": "https://mickmumpitz.ai/posts/ai-renderer-2-0-153434545",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "146074703",
+   "published": "2025-12-17T17:08:02.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOW] I built a workflow to control AI characters like puppets",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-i-146074703",
+   "embed_url": "https://youtu.be/pUb58eAZ3pc",
+   "attachments": [
+    {
+     "media_id": "582187478",
+     "file_name": "251217_MICKMUMPITZ_TIME2MOVE-PREPARATION_1-0.json",
+     "size_bytes": 221524,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "582187479",
+     "file_name": "251217_MICKMUMPITZ_TIME2MOVE_1-0.json",
+     "size_bytes": 139468,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "154392669",
+   "published": "2025-12-17T10:00:00.000+00:00",
+   "title": "AI Video with a Stick",
+   "url": "https://mickmumpitz.ai/posts/ai-video-with-154392669",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "144369123",
+   "published": "2025-11-25T13:39:59.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOW] Upscale your Footage with this FREE AI TOOL ",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-144369123",
+   "embed_url": "https://youtu.be/NpNagmQI4yg?si=RrxlYokUdAJQ_Vz2",
+   "attachments": [
+    {
+     "media_id": "591794360",
+     "file_name": "251218_MICKMUMPITZ_EASY_VIDEO_UPSCALER_1-1.json",
+     "size_bytes": 329968,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "154393504",
+   "published": "2025-11-25T10:00:00.000+00:00",
+   "title": "STOP Paying for AI Upscaling",
+   "url": "https://mickmumpitz.ai/posts/stop-paying-for-154393504",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "143845893",
+   "published": "2025-11-18T11:59:46.000+00:00",
+   "title": "I gave a TED TALK!!!",
+   "url": "https://mickmumpitz.ai/posts/i-gave-ted-talk-143845893",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "142572552",
+   "published": "2025-11-01T09:26:01.000+00:00",
+   "title": "[EXAMPLE FILES] Build your own AI MOVIES shot by shot",
+   "url": "https://mickmumpitz.ai/posts/example-files-ai-142572552",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "557635171",
+     "file_name": "SceneBuilder_Examples.zip",
+     "size_bytes": 27477879,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "142571395",
+   "published": "2025-11-01T09:18:23.000+00:00",
+   "title": "[NEW VIDEO & WORKFLOW] Build your own AI MOVIES shot by shot!",
+   "url": "https://mickmumpitz.ai/posts/new-video-build-142571395",
+   "embed_url": "https://youtu.be/YpuSE9hcal8",
+   "attachments": [
+    {
+     "media_id": "557625494",
+     "file_name": "251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors",
+     "size_bytes": 295146160,
+     "mimetype": "application/octet-stream"
+    },
+    {
+     "media_id": "557625497",
+     "file_name": "251029_MICKMUMPITZ_IMG2VID_1-0.json",
+     "size_bytes": 48292,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "558910265",
+     "file_name": "251101_MICKMUMPITZ_SCENE-BUILDER_1-1.json",
+     "size_bytes": 169170,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "141501150",
+   "published": "2025-10-18T11:40:24.000+00:00",
+   "title": "[NEW WORKFLOW & LORA] AI-Powered 360° Scene Generation  (Early Access)",
+   "url": "https://mickmumpitz.ai/posts/new-workflow-ai-141501150",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "550225283",
+     "file_name": "251018_MICKMUMPITZ_QWEN-EDIT_360_03.safetensors",
+     "size_bytes": 295146160,
+     "mimetype": "application/octet-stream"
+    },
+    {
+     "media_id": "550229949",
+     "file_name": "251018_MICKMUMPITZ_QWEN-IMAGE-EDIT-360_1-0.json",
+     "size_bytes": 42805,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "551728878",
+     "file_name": "251018_MICKMUMPITZ_QWEN-IMAGE-EDIT-360_1-1.json",
+     "size_bytes": 71812,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "140672384",
+   "published": "2025-10-07T16:15:15.000+00:00",
+   "title": "[ADVANCED VERSION] Create HYPERREALISTIC Consistent AI Characters - FREE & LOCAL! ",
+   "url": "https://mickmumpitz.ai/posts/advanced-version-140672384",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "544632422",
+     "file_name": "251007_MICKMUMPITZ_CCC_3-6_ADV.json",
+     "size_bytes": 508156,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "544632423",
+     "file_name": "251007_MICKMUMPITZ_WAN-2-2-IMG_ADV.json",
+     "size_bytes": 55767,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "544632424",
+     "file_name": "251007_MICKMUMPITZ_WAN-2-2-VID_ADV.json",
+     "size_bytes": 53382,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "544633082",
+     "file_name": "ADV_Patreon.zip",
+     "size_bytes": 1281844849,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "545232826",
+     "file_name": "Pose_sheet_v02(1).png",
+     "size_bytes": 976772,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "567321976",
+     "file_name": "251119_MICKMUMPITZ_CCC_3-7_ADV.json",
+     "size_bytes": 495607,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "592425378",
+     "file_name": "260106_MICKMUMPITZ_CCC_3-8_ADV.json",
+     "size_bytes": 532467,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "140671046",
+   "published": "2025-10-07T15:55:47.000+00:00",
+   "title": "[NEW VIDEO] Create HYPERREALISTIC Consistent AI Characters - FREE & LOCAL! ",
+   "url": "https://mickmumpitz.ai/posts/new-video-create-140671046",
+   "embed_url": "https://youtu.be/PhiPASFYBmk",
+   "attachments": [
+    {
+     "media_id": "544624107",
+     "file_name": "251007_MICKMUMPITZ_CCC_3-6.json",
+     "size_bytes": 477558,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "544624108",
+     "file_name": "251007_MICKMUMPITZ_WAN-2-2-VID_SMPL.json",
+     "size_bytes": 41848,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "544624109",
+     "file_name": "251007_MICKMUMPITZ_WAN-2-2-IMG_SMPL.json",
+     "size_bytes": 42579,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "567324628",
+     "file_name": "251119_MICKMUMPITZ_CCC_3-7.json",
+     "size_bytes": 464583,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "592427463",
+     "file_name": "260106_MICKMUMPITZ_CCC_3-8_SMPL.json",
+     "size_bytes": 466863,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "154394090",
+   "published": "2025-10-07T09:00:00.000+00:00",
+   "title": "Create hyperrealistic CONSITENT CHARACTERS from input image!",
+   "url": "https://mickmumpitz.ai/posts/create-consitent-154394090",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154394938",
+   "published": "2025-10-07T09:00:00.000+00:00",
+   "title": "Introducing My Simple QWEN Image Edit Workflow!",
+   "url": "https://mickmumpitz.ai/posts/introducing-my-154394938",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "139998677",
+   "published": "2025-09-29T12:06:25.000+00:00",
+   "title": "Introducing My Simple QWEN Image Edit Workflow!",
+   "url": "https://mickmumpitz.ai/posts/introducing-my-139998677",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "544625191",
+     "file_name": "251007_MICKMUMPITZ_QWEN_IMAGE_EDIT_1-1.json",
+     "size_bytes": 78400,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "139991293",
+   "published": "2025-09-29T10:11:17.000+00:00",
+   "title": "Consistent Character Creator 3.5 IS HERE!",
+   "url": "https://mickmumpitz.ai/posts/consistent-3-5-139991293",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "540209377",
+     "file_name": "250929_MICKMUMPITZ_CCC_3-5.json",
+     "size_bytes": 474714,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "138192692",
+   "published": "2025-09-05T11:09:52.000+00:00",
+   "title": "Consistent Character Creator 3.2. IS HERE! ",
+   "url": "https://mickmumpitz.ai/posts/consistent-3-2-138192692",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "527720731",
+     "file_name": "250905_MICKMUMPITZ_CCC_3-1.json",
+     "size_bytes": 407110,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "527849947",
+     "file_name": "250905_MICKMUMPITZ_CCC_3-2.json",
+     "size_bytes": 407145,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "137635237",
+   "published": "2025-08-29T14:20:47.000+00:00",
+   "title": "[ADVANCED WORKFLOW] Generate ENTIRE AI WORLDS for your MOVIES  - Update 2.0",
+   "url": "https://mickmumpitz.ai/posts/advanced-entire-137635237",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "524007449",
+     "file_name": "250829_MICKMUMPITZ_ACTOR_COMPOSITOR_ADV_v01.json",
+     "size_bytes": 744500,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "600344606",
+     "file_name": "260120_MICKMUMPITZ_ACTOR_COMPOSITOR_ADV_2-0.json",
+     "size_bytes": 823535,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "137634149",
+   "published": "2025-08-29T14:09:57.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOWS] Generate ENTIRE AI WORLDS for your MOVIES",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-137634149",
+   "embed_url": "https://youtu.be/VaSZGkGff7U",
+   "attachments": [
+    {
+     "media_id": "524000291",
+     "file_name": "250829_MICKMUMPITZ_ACTOR_COMPOSITOR_SMPL_v01.json",
+     "size_bytes": 227888,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "524000295",
+     "file_name": "250829_MICKMUMPITZ_MASK_AND_TRACK_01.json",
+     "size_bytes": 131969,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "154075369",
+   "published": "2025-08-29T11:00:00.000+00:00",
+   "title": "Seamlessly Integrate Actors into AI-generated environments",
+   "url": "https://mickmumpitz.ai/posts/seamlessly-into-154075369",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154076297",
+   "published": "2025-08-29T11:00:00.000+00:00",
+   "title": "Seamlessly Integrate Actors into AI-generated environments [AVANCED]",
+   "url": "https://mickmumpitz.ai/posts/seamlessly-into-154076297",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154395518",
+   "published": "2025-08-29T09:00:00.000+00:00",
+   "title": "Installation Guide for the Actor Compositor",
+   "url": "https://mickmumpitz.ai/posts/installation-for-154395518",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "136914275",
+   "published": "2025-08-20T09:33:20.000+00:00",
+   "title": "Consistent Character Creator 3.0. IS HERE! ",
+   "url": "https://mickmumpitz.ai/posts/consistent-3-0-136914275",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "519056273",
+     "file_name": "250820_MICKMUMPITZ_CCC_3-0.json",
+     "size_bytes": 213760,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "519065881",
+     "file_name": "250820_MICKMUMPITZ_CCC_3-0_GGUF.json",
+     "size_bytes": 192987,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "134333105",
+   "published": "2025-07-17T13:14:19.000+00:00",
+   "title": "[ADVANCED WORKFLOW] Create CONTROLLABLE AI CHARACTERS for your MOVIES",
+   "url": "https://mickmumpitz.ai/posts/advanced-create-134333105",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "500967866",
+     "file_name": "250717_MICKMUMPITZ_AE_TRAJECTORY_EXPORT_v01.js",
+     "size_bytes": 8243,
+     "mimetype": "application/javascript"
+    },
+    {
+     "media_id": "500967867",
+     "file_name": "250717_MICKMUMPITZ_COORDINATE_CONVERTER_v01.html",
+     "size_bytes": 16099,
+     "mimetype": "text/html"
+    },
+    {
+     "media_id": "500967868",
+     "file_name": "250717_MICKMUMPITZ_CREATURE_PATH_SMPL_v01.json",
+     "size_bytes": 647196,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "500967870",
+     "file_name": "250717_MICKMUMPITZ_BLENDER_BONE_TRACER_v01.py",
+     "size_bytes": 13966,
+     "mimetype": "text/x-script.python"
+    },
+    {
+     "media_id": "500967894",
+     "file_name": "250717_MICKMUMPITZ_CREATURE_PATH_ADV_v01.json",
+     "size_bytes": 734330,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "500969894",
+     "file_name": "CreatureOnAPath_ADV_EXAMPLE_FILES_v01.zip",
+     "size_bytes": 7737775,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "134331641",
+   "published": "2025-07-17T13:04:15.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOWS] Create CONTROLLABLE AI CHARACTERS for your MOVIES ",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-134331641",
+   "embed_url": "https://youtu.be/OhKoh0CsVFo?si=2BV8dPq1hdfEmSW4",
+   "attachments": [
+    {
+     "media_id": "500959111",
+     "file_name": "250717_MICKMUMPITZ_BLENDER_BONE_TRACER_v01.py",
+     "size_bytes": 13966,
+     "mimetype": "text/x-script.python"
+    },
+    {
+     "media_id": "500959112",
+     "file_name": "250717_MICKMUMPITZ_CREATURE_PATH_SMPL_v01.json",
+     "size_bytes": 647196,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "500959113",
+     "file_name": "250717_MICKMUMPITZ_COORDINATE_CONVERTER_v01.html",
+     "size_bytes": 16099,
+     "mimetype": "text/html"
+    },
+    {
+     "media_id": "500959114",
+     "file_name": "250717_MICKMUMPITZ_AE_TRAJECTORY_EXPORT_v01.js",
+     "size_bytes": 8243,
+     "mimetype": "application/javascript"
+    }
+   ]
+  },
+  {
+   "post_id": "154396598",
+   "published": "2025-07-17T10:00:00.000+00:00",
+   "title": "Create Controllable Characters for your AI Movies",
+   "url": "https://mickmumpitz.ai/posts/create-for-your-154396598",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154397536",
+   "published": "2025-07-17T10:00:00.000+00:00",
+   "title": "Create Controllable Characters for your AI Movies [ADVANCED]",
+   "url": "https://mickmumpitz.ai/posts/create-for-your-154397536",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "131223683",
+   "published": "2025-06-11T13:03:04.000+00:00",
+   "title": "[ADVANCED WORKFLOWS] These FREE 3D AI Workflows are INCREDIBLE!",
+   "url": "https://mickmumpitz.ai/posts/advanced-these-131223683",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "481430333",
+     "file_name": "250610_MICKMUMPITZ_3D_TEXTURING_v07_ADV.json",
+     "size_bytes": 177814,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "131219567",
+   "published": "2025-06-11T12:06:12.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOWS] These FREE 3D AI Workflows are INCREDIBLE! (ComfyUI Tutorial + Blender)",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-131219567",
+   "embed_url": "https://youtu.be/o5ZqrVNoeiI",
+   "attachments": [
+    {
+     "media_id": "481408515",
+     "file_name": "250610_MICKMUMPITZ_3D_TEXTURING_v06_SMPL.json",
+     "size_bytes": 138761,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "481453195",
+     "file_name": "250610_MICKMUMPITZ_3DGEN+TEXTURING_v02.json",
+     "size_bytes": 133236,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "154406935",
+   "published": "2025-06-10T13:00:00.000+00:00",
+   "title": "From 3D Generation to Texturing: [Hunyuan 3D + SDXL]",
+   "url": "https://mickmumpitz.ai/posts/from-3d-to-3d-154406935",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154406422",
+   "published": "2025-06-10T12:56:00.000+00:00",
+   "title": "3D Model Texturing Made Easy [SIMPLE]",
+   "url": "https://mickmumpitz.ai/posts/3d-model-made-154406422",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154405015",
+   "published": "2025-06-10T12:00:00.000+00:00",
+   "title": "3D Model Texturing Made Easy [ADVANCED]",
+   "url": "https://mickmumpitz.ai/posts/3d-model-made-154405015",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "127895560",
+   "published": "2025-05-01T11:55:27.000+00:00",
+   "title": "Shoot ENTIRE MOVIES with this FREE AI WORKFLOW! ",
+   "url": "https://mickmumpitz.ai/posts/shoot-entire-ai-127895560",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "460234499",
+     "file_name": "250501_MICKMUMPITZ_WAN2_1_StartFrame+CN_ADV_v01.json",
+     "size_bytes": 147232,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "460234609",
+     "file_name": "ShootEntireMovies_Patreon.zip",
+     "size_bytes": 1285968291,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "467490282",
+     "file_name": "250501_MICKMUMPITZ_WAN2_1_StartFrame+CN_ADV_v02.json",
+     "size_bytes": 147934,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "127894905",
+   "published": "2025-05-01T11:41:43.000+00:00",
+   "title": "Shoot ENTIRE MOVIES with this FREE AI WORKFLOW! [NEW VIDEO + FREE WORKFLOWS]",
+   "url": "https://mickmumpitz.ai/posts/shoot-entire-ai-127894905",
+   "embed_url": "https://youtu.be/pd76XGHCavY",
+   "attachments": [
+    {
+     "media_id": "460231951",
+     "file_name": "250501_MICKMUMPITZ_WAN2_1_StartFrame+EndFrame_v01.json",
+     "size_bytes": 72925,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "460231952",
+     "file_name": "250501_MICKMUMPITZ_INPAINTING_FLUX_V01.json",
+     "size_bytes": 64861,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "460231953",
+     "file_name": "250501_MICKMUMPITZ_WAN2_1_CLEAN_PLATE_CREATOR_v01.json",
+     "size_bytes": 93522,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "460231955",
+     "file_name": "250501_MICKMUMPITZ_WAN2_1_StartFrame+CN_SMPL_v01.json",
+     "size_bytes": 129951,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "467496019",
+     "file_name": "250501_MICKMUMPITZ_WAN2_1_StartFrame+CN_SMPL_v02.json",
+     "size_bytes": 128789,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "154407779",
+   "published": "2025-04-28T13:17:00.000+00:00",
+   "title": "Replacing Actors in Videos with ComfyUI and WanVideo",
+   "url": "https://mickmumpitz.ai/posts/replacing-actors-154407779",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154408818",
+   "published": "2025-04-28T13:00:00.000+00:00",
+   "title": "Basic-Flux Inpainting Workflow – Easily Replace Characters",
+   "url": "https://mickmumpitz.ai/posts/basic-flux-154408818",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154409333",
+   "published": "2025-04-28T13:00:00.000+00:00",
+   "title": "Clean Plate Generator: Remove Objects from Videos Easily",
+   "url": "https://mickmumpitz.ai/posts/clean-plate-from-154409333",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "153738117",
+   "published": "2025-04-26T13:00:00.000+00:00",
+   "title": "ComfyUI Installation & Getting Started – Step-by-Step Guide",
+   "url": "https://mickmumpitz.ai/posts/comfyui-getting-153738117",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "154410002",
+   "published": "2025-04-25T13:00:00.000+00:00",
+   "title": "WAN StartEndFrame Guide",
+   "url": "https://mickmumpitz.ai/posts/wan-guide-154410002",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "124715263",
+   "published": "2025-03-19T16:35:10.000+00:00",
+   "title": "[FREE WORKFLOW] Basic FLUX+ ControlNet Workflow",
+   "url": "https://mickmumpitz.ai/posts/free-workflow-124715263",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "438678949",
+     "file_name": "250319_MICKMUMPITZ_BASICFLUX+CN_V01.json",
+     "size_bytes": 70420,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "154410696",
+   "published": "2025-03-07T14:00:00.000+00:00",
+   "title": "Control Multiple Consistent Characters & Camera",
+   "url": "https://mickmumpitz.ai/posts/control-multiple-154410696",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "123838367",
+   "published": "2025-03-07T11:22:00.000+00:00",
+   "title": "[ADVANCED WORKFLOWS] Control MULTIPLE CONSISTENT CHARACTERS + CAMERA with this FREE AI Workflow",
+   "url": "https://mickmumpitz.ai/posts/advanced-control-123838367",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "432504960",
+     "file_name": "250307_3D2IMG_v01_FLUX_ADV.json",
+     "size_bytes": 240236,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "432504961",
+     "file_name": "250307_3D2IMG_v01_SDXL_ADV.json",
+     "size_bytes": 250912,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "432504962",
+     "file_name": "250227_Hunyuan3D+Upscale_v01.json",
+     "size_bytes": 88464,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "432505096",
+     "file_name": "250307_3D2IMG_patreon.zip",
+     "size_bytes": 552964167,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "123836639",
+   "published": "2025-03-07T10:36:25.000+00:00",
+   "title": "Control MULTIPLE CONSISTENT CHARACTERS + CAMERA with this FREE AI Workflow",
+   "url": "https://mickmumpitz.ai/posts/control-multiple-123836639",
+   "embed_url": "https://youtu.be/PZVs4lqG6LA",
+   "attachments": [
+    {
+     "media_id": "432494464",
+     "file_name": "250227_Hunyuan3D+Upscale_v01.json",
+     "size_bytes": 88464,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "432494465",
+     "file_name": "250307_3D2IMG_v01_FLUX_SMPL.json",
+     "size_bytes": 187138,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "432494466",
+     "file_name": "250307_3D2IMG_v01_SDXL_SMPL.json",
+     "size_bytes": 199817,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "432508418",
+     "file_name": "250307_MICKMUMPITZ_LORA_HOOKS_v01.json",
+     "size_bytes": 27821,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "120806695",
+   "published": "2025-01-26T11:03:23.000+00:00",
+   "title": "[EXCLUSIVE GUIDE] CONSISTENT CHARACTER CREATOR v01 + PULID ",
+   "url": "https://mickmumpitz.ai/posts/exclusive-guide-120806695",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "412028779",
+     "file_name": "250126_MICKMUMPITZ_CCC_v01_FLUX_ADV+PULID.json",
+     "size_bytes": 446817,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "427892760",
+     "file_name": "250226_MICKMUMPITZ_CCC_v02_FLUX_ADV+PULID.json",
+     "size_bytes": 471063,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "120405703",
+   "published": "2025-01-20T17:50:52.000+00:00",
+   "title": "[ADVANCED WORKFLOWS]",
+   "url": "https://mickmumpitz.ai/posts/advanced-120405703",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "409174069",
+     "file_name": "250117_MICKMUMPITZ_CCC_v01_FLUX_ADV_LOWVRAM.json",
+     "size_bytes": 426621,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "409174070",
+     "file_name": "250117_MICKMUMPITZ_CCC_v01_SDXL_ADV_LOWVRAM.json",
+     "size_bytes": 447231,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "409174071",
+     "file_name": "250117_MICKMUMPITZ_CCC_v01_SDXL_ADV.json",
+     "size_bytes": 450163,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "409174072",
+     "file_name": "250117_MICKMUMPITZ_CCC_v01_FLUX_ADV.json",
+     "size_bytes": 432156,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "427900273",
+     "file_name": "250226_MICKMUMPITZ_CCC_v02_SDXL_ADV.json",
+     "size_bytes": 474799,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "427900719",
+     "file_name": "250226_MICKMUMPITZ_CCC_v02_FLUX_ADV.json",
+     "size_bytes": 455098,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "432954072",
+     "file_name": "250308_CCC_Patreon.zip",
+     "size_bytes": 1599014057,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "120405048",
+   "published": "2025-01-20T17:42:52.000+00:00",
+   "title": "[FREE WORKFLOWS] Generate endless CONSISTENT CHARACTERS from one input image! ",
+   "url": "https://mickmumpitz.ai/posts/free-workflows-120405048",
+   "embed_url": "https://youtu.be/grtmiWbmvv0",
+   "attachments": [
+    {
+     "media_id": "409170179",
+     "file_name": "250114_MICKMUMPITZ_CCC_v01_FLUX_IMG_GEN.json",
+     "size_bytes": 34136,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "409170182",
+     "file_name": "250117_MICKMUMPITZ_CCC_v01_FLUX_SIMPLE.json",
+     "size_bytes": 376357,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "409170183",
+     "file_name": "250117_MICKMUMPITZ_CCC_v01_SDXL_SIMPLE_LOWVRAM.json",
+     "size_bytes": 383801,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "409178674",
+     "file_name": "MICKMUMPITZ_POSE_SHEET.png",
+     "size_bytes": 45710,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "410117273",
+     "file_name": "250122_MICKMUMPITZ_CCC_v02_SDXL_SIMPLE.json",
+     "size_bytes": 388001,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "427887268",
+     "file_name": "250226_MICKMUMPITZ_CCC_v03_SDXL_SIMPLE.json",
+     "size_bytes": 401714,
+     "mimetype": "text/plain"
+    },
+    {
+     "media_id": "427888706",
+     "file_name": "250226_MICKMUMPITZ_CCC_v02_FLUX_SIMPLE.json",
+     "size_bytes": 396049,
+     "mimetype": "text/plain"
+    }
+   ]
+  },
+  {
+   "post_id": "117831197",
+   "published": "2024-12-12T14:01:42.000+00:00",
+   "title": "[ADVANCED WORKFLOW] Shoot EPIC MOVIES with this FREE AI Tool!",
+   "url": "https://mickmumpitz.ai/posts/advanced-shoot-117831197",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "390848041",
+     "file_name": "241212_MICKMUMPITZ_SCENESWAP_ADV_v01.json",
+     "size_bytes": 170271,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "390848277",
+     "file_name": "Example Outputs (incl. metadata).zip",
+     "size_bytes": 33986193,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "390848491",
+     "file_name": "Reference Footage.zip",
+     "size_bytes": 29696493,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "117830088",
+   "published": "2024-12-12T13:38:33.000+00:00",
+   "title": "Shoot EPIC MOVIES with this FREE AI Tool! ",
+   "url": "https://mickmumpitz.ai/posts/shoot-epic-with-117830088",
+   "embed_url": "https://youtu.be/gHI6PjTkBF4",
+   "attachments": [
+    {
+     "media_id": "390841423",
+     "file_name": "241212_MICKMUMPITZ_SCENESWAP_SIMPLE_v01.json",
+     "size_bytes": 111091,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "116247550",
+   "published": "2024-11-18T17:09:58.000+00:00",
+   "title": "Community Project #2: AI Short Film🎄",
+   "url": "https://mickmumpitz.ai/posts/community-2-ai-116247550",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "115147674",
+   "published": "2024-11-01T11:49:19.000+00:00",
+   "title": "Create CONSISTENT CHARACTERS from an INPUT IMAGE with FLUX [ADVANCED WORKFLOWS]",
+   "url": "https://mickmumpitz.ai/posts/create-from-with-115147674",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "373163207",
+     "file_name": "241028_MICKMUMPITZ_CHARACTER_SHEET_2_v01_SDXL_ADV.json",
+     "size_bytes": 202295,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "373163208",
+     "file_name": "241028_MICKMUMPITZ_CHARACTER_SHEET_2_v01_FLUX_ADV.json",
+     "size_bytes": 237954,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "373163209",
+     "file_name": "241028_MICKMUMPITZ_CHARACTER_SHEET_2_v01_FLUX_ADV_FAST.json",
+     "size_bytes": 237309,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "115147229",
+   "published": "2024-11-01T11:30:16.000+00:00",
+   "title": "Create CONSISTENT CHARACTERS from an INPUT IMAGE with FLUX & SDXL",
+   "url": "https://mickmumpitz.ai/posts/create-from-with-115147229",
+   "embed_url": "https://youtu.be/Uls_jXy9RuU",
+   "attachments": [
+    {
+     "media_id": "373157997",
+     "file_name": "241028_MICKMUMPITZ_CHARACTER_SHEET_2_v01_FLUX_SMPL_FAST.json",
+     "size_bytes": 215748,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "373157998",
+     "file_name": "241028_MICKMUMPITZ_CHARACTER_SHEET_2_v01_SDXL_SMPL.json",
+     "size_bytes": 171984,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "373158000",
+     "file_name": "241028_MICKMUMPITZ_CHARACTER_SHEET_2_v01_FLUX_SMPL.json",
+     "size_bytes": 214234,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "373316306",
+     "file_name": "Pose_sheet_v02.png",
+     "size_bytes": 976772,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "380274637",
+     "file_name": "241118_MICKMUMPITZ_CHARACTER_SHEET_2_v02_SDXL_SMPL.json",
+     "size_bytes": 173208,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "113745268",
+   "published": "2024-10-10T15:13:16.000+00:00",
+   "title": "[ADVANCED WORKFLOWS] Create CONSISTENT CHARACTERS for your projects with FLUX! + UPDATE",
+   "url": "https://mickmumpitz.ai/posts/advanced-create-113745268",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "364103716",
+     "file_name": "241007_MICKMUMPITZ_FLUX+LORA.json",
+     "size_bytes": 30760,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "364103717",
+     "file_name": "Pose_sheet_v02.png",
+     "size_bytes": 976772,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "364105143",
+     "file_name": "tinaai_dataset.zip",
+     "size_bytes": 7435696,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "364105575",
+     "file_name": "tinaai_dataset.zip",
+     "size_bytes": 7435696,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "364106092",
+     "file_name": "tinaai_ExampleImages_Metadata.zip",
+     "size_bytes": 15042999,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "364106645",
+     "file_name": "CharacterSheets_Metadata.zip",
+     "size_bytes": 41318862,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "364107025",
+     "file_name": "241007_MICKMUMPITZ_CHARACTER_SHEET_V02_SDXL_ADV.json",
+     "size_bytes": 70736,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "364573688",
+     "file_name": "241011_MICKMUMPITZ_CHARACTER_SHEET_V04_FLUX_ADV.json",
+     "size_bytes": 79886,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "370968223",
+     "file_name": "241027_MICKMUMPITZ_CHARACTER_SHEET_V05_FLUX_ADV.json",
+     "size_bytes": 82579,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "113743435",
+   "published": "2024-10-10T14:36:52.000+00:00",
+   "title": "[FREE WORKFLOWS] Create your own CONSISTENT characters with AI!",
+   "url": "https://mickmumpitz.ai/posts/free-workflows-113743435",
+   "embed_url": "https://youtu.be/MbQv8zoNEfY",
+   "attachments": [
+    {
+     "media_id": "364090993",
+     "file_name": "Pose_sheet_v02.png",
+     "size_bytes": 976772,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "364092082",
+     "file_name": "241007_MICKMUMPITZ_CHARACTER_SHEET_V03_SDXL_SMPL.json",
+     "size_bytes": 60829,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "364092684",
+     "file_name": "241007_MICKMUMPITZ_FLUX+LORA.json",
+     "size_bytes": 30760,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "364572151",
+     "file_name": "241011_MICKMUMPITZ_CHARACTER_SHEET_V04_FLUX_SMPL.json",
+     "size_bytes": 67690,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "365804261",
+     "file_name": "241007_MICKMUMPITZ_CHARACTER_SHEET_V03_FLUX_SMPL.json",
+     "size_bytes": 67760,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "370970302",
+     "file_name": "241027_MICKMUMPITZ_CHARACTER_SHEET_V05_FLUX_SMPL.json",
+     "size_bytes": 70517,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "112224131",
+   "published": "2024-09-17T10:29:06.000+00:00",
+   "title": "UPDATE",
+   "url": "https://mickmumpitz.ai/posts/update-112224131",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "112221865",
+   "published": "2024-09-17T09:34:29.000+00:00",
+   "title": "[PROJECT FILES] Generate STUNNING SET EXTENSIONS For Your Projects!",
+   "url": "https://mickmumpitz.ai/posts/project-files-112221865",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "354390942",
+     "file_name": "240917_SetExt_ProjectFiles_v01.zip",
+     "size_bytes": 82961490,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "112156652",
+   "published": "2024-09-16T10:39:30.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOWS] Generate STUNNING SET EXTENSIONS For Your Projects!",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-112156652",
+   "embed_url": "https://youtu.be/L0mhlsg8KyY",
+   "attachments": [
+    {
+     "media_id": "354004593",
+     "file_name": "240916_MICKMUMPITZ_SETEXTENSION_3D_v01.json",
+     "size_bytes": 54506,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "354387682",
+     "file_name": "240917_MICKMUMPITZ_SETEXTENSION_2D_v02.json",
+     "size_bytes": 60851,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "110954469",
+   "published": "2024-08-28T15:34:02.000+00:00",
+   "title": "[ADVANCED WORKFLOW, GUIDE & EXAMPLE FILES] Generate ENTIRE 3D SETS For Your Projects FAST!",
+   "url": "https://mickmumpitz.ai/posts/advanced-guide-110954469",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "346325448",
+     "file_name": "DepthMap_animated_00085.mp4",
+     "size_bytes": 31955042,
+     "mimetype": "video/mp4"
+    },
+    {
+     "media_id": "346325485",
+     "file_name": "DepthMap_animated_00087.png",
+     "size_bytes": 3214734,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "346325505",
+     "file_name": "DepthMap_animated_00099.png",
+     "size_bytes": 3005269,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "346325817",
+     "file_name": "01_Workflows.zip",
+     "size_bytes": 14046,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "346326138",
+     "file_name": "03_BlenderScene+RenderPasse.zip",
+     "size_bytes": 75326034,
+     "mimetype": "application/zip"
+    },
+    {
+     "media_id": "346326295",
+     "file_name": "02_ExampleImages+MetaData.zip",
+     "size_bytes": 189112385,
+     "mimetype": "application/zip"
+    }
+   ]
+  },
+  {
+   "post_id": "110950228",
+   "published": "2024-08-28T14:31:55.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOWS + GUIDE] Generate ENTIRE 3D SETS for your movies & games!",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-110950228",
+   "embed_url": "https://youtu.be/U_NHijmIF3E",
+   "attachments": [
+    {
+     "media_id": "346302749",
+     "file_name": "240828_MICKMUMPITZ_360IMAGE_FLUX_v01.json",
+     "size_bytes": 33485,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "346302750",
+     "file_name": "240828_MICKMUMPITZ_360IMAGE_SDXL_v01.json",
+     "size_bytes": 26871,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "109771250",
+   "published": "2024-08-09T13:36:59.000+00:00",
+   "title": "[ADVANCED WORKFLOWS] ADVANCED COMPOSITING V01",
+   "url": "https://mickmumpitz.ai/posts/advanced-v01-109771250",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "338762887",
+     "file_name": "240809_MICKMUMPITZ_COMPOSITING_ADV_V01.json",
+     "size_bytes": 168489,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "109770732",
+   "published": "2024-08-09T13:34:26.000+00:00",
+   "title": "[NEW VIDEO & FREE WORKFLOW] AI COMPOSITING V01",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-109770732",
+   "embed_url": "https://youtu.be/jk0jKKdHZvo",
+   "attachments": [
+    {
+     "media_id": "338760158",
+     "file_name": "240809_MICKMUMPITZ_COMPOSITING_SMPL_V01.json",
+     "size_bytes": 128133,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "111474797",
+   "published": "2024-08-05T13:20:00.000+00:00",
+   "title": "Community Project #1: AI Short Film Collaboration",
+   "url": "https://mickmumpitz.ai/posts/community-1-ai-111474797",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "108435562",
+   "published": "2024-07-19T15:32:21.000+00:00",
+   "title": "[ADVANCED WORKFLOW] Next level AI Filmmaking: Turn your storyboard sketches into MOVIES!",
+   "url": "https://mickmumpitz.ai/posts/advanced-next-ai-108435562",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "331022181",
+     "file_name": "240719_Mickmumpitz_STORYBOARDING_ADV_V01.json",
+     "size_bytes": 67027,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "108432558",
+   "published": "2024-07-19T14:41:46.000+00:00",
+   "title": "[NEW VIDEO + FREE WORKFLOWS] Turn your storyboard sketches into MOVIES!",
+   "url": "https://mickmumpitz.ai/posts/new-video-free-108432558",
+   "embed_url": "https://youtu.be/noMeCDIjsWw",
+   "attachments": [
+    {
+     "media_id": "331006214",
+     "file_name": "240719_Mickmumpitz_STORYBOARDING_SIMPLE_V01.json",
+     "size_bytes": 35330,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "106483196",
+   "published": "2024-06-19T11:16:48.000+00:00",
+   "title": "[NEW VIDEO + WORKFLOWS] Make your own ANIME with this new mind-blowing AI TOOL!",
+   "url": "https://mickmumpitz.ai/posts/new-video-make-106483196",
+   "embed_url": "https://youtu.be/mEn3CYU7s_A",
+   "attachments": [
+    {
+     "media_id": "319979277",
+     "file_name": "240612_Mickmumpitz_AnimeFix+Upscale_SD15_v01.json",
+     "size_bytes": 41311,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "319979278",
+     "file_name": "240612_Mickmumpitz_AnimeFix+Upscale_v01.json",
+     "size_bytes": 38554,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "319979280",
+     "file_name": "240612_Mickmumpitz_Anime_Pose_v01.json",
+     "size_bytes": 54314,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "319979282",
+     "file_name": "240612_Mickmumpitz_IMG2ANIME_v02.json",
+     "size_bytes": 20096,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "319979283",
+     "file_name": "240612_Mickmumpitz_Tooncrafter-Kijai_v02.json",
+     "size_bytes": 23520,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "319979284",
+     "file_name": "240612_Mickmumpitz_Model_Sheet_v02_ANIME.json",
+     "size_bytes": 63381,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "321336909",
+     "file_name": "Pose_sheet_v02(1).png",
+     "size_bytes": 976772,
+     "mimetype": "image/png"
+    }
+   ]
+  },
+  {
+   "post_id": "104795708",
+   "published": "2024-05-23T16:16:31.000+00:00",
+   "title": "[Advanced Workflows & Exclusive Guide] Render your 3D animations with AI!",
+   "url": "https://mickmumpitz.ai/posts/advanced-guide-104795708",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "310497595",
+     "file_name": "200524_Mickmumpitz_3D-RENDERING_IMG_SD15_ADVANCED_v3.json",
+     "size_bytes": 187932,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "310497597",
+     "file_name": "200524_Mickmumpitz_3D-RENDERING_IMG_SDXL_ADVANCED_v3.json",
+     "size_bytes": 183342,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "310497603",
+     "file_name": "200524_Mickmumpitz_3D-RENDERING_VIDEO_SD15LCM_ADVANCED_v3.json",
+     "size_bytes": 209920,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "310497604",
+     "file_name": "200524_Mickmumpitz_3D-RENDERING_VIDEO_SD15LCM_SIMPLE_v3.json",
+     "size_bytes": 170427,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "310499783",
+     "file_name": "240523_FuturisticCity_Patreon_v01.blend",
+     "size_bytes": 26823412,
+     "mimetype": "application/x-blender"
+    },
+    {
+     "media_id": "368869269",
+     "file_name": "201022_Mickmumpitz_3D-RENDERING_VIDEO_SD15LCM_ADVANCED_v4.json",
+     "size_bytes": 194940,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "380285146",
+     "file_name": "201118_Mickmumpitz_3D-RENDERING_VIDEO_SD15LCM_SIMPLE_v4.json",
+     "size_bytes": 157433,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "400100137",
+     "file_name": "020125_Mickmumpitz_3D-RENDERING_IMG_SD15LCM_ADVANCED_v5.json",
+     "size_bytes": 172066,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "400100349",
+     "file_name": "020125_Mickmumpitz_3D-RENDERING_IMG_SDXL_ADVANCED_v5.json",
+     "size_bytes": 169816,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "104795004",
+   "published": "2024-05-23T16:07:35.000+00:00",
+   "title": "[Free Workflows & Guide] Render your 3D animations with AI! ",
+   "url": "https://mickmumpitz.ai/posts/free-workflows-104795004",
+   "embed_url": "https://www.youtube.com/watch?v=8afb3luBvD8",
+   "attachments": [
+    {
+     "media_id": "310493786",
+     "file_name": "200524_Mickmumpitz_3D-RENDERING_VIDEO_SD15LCM_SIMPLE_v3.json",
+     "size_bytes": 170427,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "310493788",
+     "file_name": "200524_Mickmumpitz_3D-RENDERING_IMG_SD15_SIMPLE_v3.json",
+     "size_bytes": 154306,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "360697783",
+     "file_name": "201002_Mickmumpitz_3D-RENDERING_IMG_SDXL_SIMPLE_v4.json.json",
+     "size_bytes": 56448,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "380285307",
+     "file_name": "201118_Mickmumpitz_3D-RENDERING_VIDEO_SD15LCM_SIMPLE_v4.json",
+     "size_bytes": 157433,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "103733200",
+   "published": "2024-05-06T13:47:31.000+00:00",
+   "title": "3D Rendering Workflow UPDATE SOON!",
+   "url": "https://mickmumpitz.ai/posts/3d-rendering-103733200",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "103261741",
+   "published": "2024-04-29T11:18:23.000+00:00",
+   "title": "[NEW VIDEO + WORKFLOWS] Create Consistent, Editable AI Characters & Backgrounds for your Projects! ",
+   "url": "https://mickmumpitz.ai/posts/new-video-create-103261741",
+   "embed_url": "https://youtu.be/849xBkgpF3E?si=2w5PBiRhfxMBAP-w",
+   "attachments": [
+    {
+     "media_id": "301913030",
+     "file_name": "Mickmumpitz_ControllableCharacters_v01.json",
+     "size_bytes": 91580,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "301913031",
+     "file_name": "Mickmumpitz_CharacterSheet_v01.json",
+     "size_bytes": 64010,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "301945919",
+     "file_name": "Pose_sheet_v02.png",
+     "size_bytes": 976772,
+     "mimetype": "image/png"
+    },
+    {
+     "media_id": "352771712",
+     "file_name": "Mickmumpitz_ControllableCharacters_v03.json",
+     "size_bytes": 95965,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "101925986",
+   "published": "2024-04-08T06:42:39.000+00:00",
+   "title": "[Updated Workflows / IPAdapter ERROR] I’m BACK! ",
+   "url": "https://mickmumpitz.ai/posts/updated-error-im-101925986",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "101206759",
+   "published": "2024-03-28T03:00:58.000+00:00",
+   "title": "Update (ipAdapter Error)",
+   "url": "https://mickmumpitz.ai/posts/update-ipadapter-101206759",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "100752128",
+   "published": "2024-03-24T13:30:00.000+00:00",
+   "title": "[NEW VIDEO] Use AI to turn yourself into EPIC characters for 3D printing!",
+   "url": "https://mickmumpitz.ai/posts/new-video-use-ai-100752128",
+   "embed_url": "https://www.youtube.com/watch?v=h4K11iptqls",
+   "attachments": []
+  },
+  {
+   "post_id": "100598539",
+   "published": "2024-03-18T15:00:29.000+00:00",
+   "title": "[NEW VIDEO] Create mind-blowing AI RENDERINGS of your 3D animations!",
+   "url": "https://mickmumpitz.ai/posts/new-video-create-100598539",
+   "embed_url": "https://www.youtube.com/watch?v=mu3JEfx3PHM",
+   "attachments": []
+  },
+  {
+   "post_id": "100590607",
+   "published": "2024-03-18T14:43:17.000+00:00",
+   "title": "[BONUS TUTORIAL] Create mind-blowing AI RENDERINGS of your 3D animations!",
+   "url": "https://mickmumpitz.ai/posts/bonus-tutorial-100590607",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "100596644",
+   "published": "2024-03-18T14:42:08.000+00:00",
+   "title": "[Advanced Workflows + Guide + Example Files] Create mind-blowing AI renderings of your 3D animations! ",
+   "url": "https://mickmumpitz.ai/posts/advanced-guide-100596644",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "288051153",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_FREE_v02.json",
+     "size_bytes": 86777,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "288051180",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_IMG_FREE_v03.json",
+     "size_bytes": 72573,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "288051218",
+     "file_name": "BlenderExample_RenderSetup.rar",
+     "size_bytes": 886719,
+     "mimetype": "application/x-rar"
+    },
+    {
+     "media_id": "288052329",
+     "file_name": "Examples.rar",
+     "size_bytes": 77498861,
+     "mimetype": "application/x-rar"
+    },
+    {
+     "media_id": "294908958",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_ADV_v04.json",
+     "size_bytes": 96466,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "294910214",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_IMG_ADV_v04.json",
+     "size_bytes": 84579,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "301545324",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_IMG_ADV_v06.json",
+     "size_bytes": 84912,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "301545325",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_ADV_v06.json",
+     "size_bytes": 96703,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "302227228",
+     "file_name": "Example_Video_Passes_v01.rar",
+     "size_bytes": 96870070,
+     "mimetype": "application/x-rar"
+    },
+    {
+     "media_id": "381344958",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_ADV_v07.json",
+     "size_bytes": 83228,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "100595649",
+   "published": "2024-03-18T14:21:32.000+00:00",
+   "title": "[FREE WORKFLOW & GUIDE] Create mind-blowing AI RENDERINGS of your 3D animations!",
+   "url": "https://mickmumpitz.ai/posts/free-workflow-ai-100595649",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "362817007",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_IMG_FREE_v07.json",
+     "size_bytes": 55297,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "362818185",
+     "file_name": "Mickmumpitz_AI-RENDERING_SDXL_FREE_v07.json",
+     "size_bytes": 71773,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "99175958",
+   "published": "2024-02-25T14:20:48.000+00:00",
+   "title": "[NEW VIDEO] How much better is Sora?",
+   "url": "https://mickmumpitz.ai/posts/new-video-how-is-99175958",
+   "embed_url": "https://youtu.be/A6sAR70Q07Y?si=C0AHWGU6izz3Qw5m",
+   "attachments": []
+  },
+  {
+   "post_id": "98832164",
+   "published": "2024-02-20T15:11:47.000+00:00",
+   "title": "[Patreon Exclusive] Additional example workflows & models",
+   "url": "https://mickmumpitz.ai/posts/patreon-example-98832164",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "279230505",
+     "file_name": "Mickmumpitz_Vid2Vid_PIXAR_v02.json",
+     "size_bytes": 61829,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "279231297",
+     "file_name": "Mickmumpitz_Vid2Vid_ANIME_v02.json",
+     "size_bytes": 62983,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "279231781",
+     "file_name": "Mickmumpitz_Vid2Vid_ZELDA_v02.json",
+     "size_bytes": 62979,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "279232352",
+     "file_name": "Mickmumpitz_Vid2Vid_RETRO_v02 .json",
+     "size_bytes": 64104,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "98819681",
+   "published": "2024-02-20T10:22:36.000+00:00",
+   "title": "[NEW VIDEO] Turn your videos into ANY STYLE with this FREE AI ",
+   "url": "https://mickmumpitz.ai/posts/new-video-turn-98819681",
+   "embed_url": "https://www.youtube.com/watch?v=efxYEbF793c",
+   "attachments": []
+  },
+  {
+   "post_id": "98818966",
+   "published": "2024-02-20T10:08:51.000+00:00",
+   "title": "[Free Workflow] Turn yourself into ANY STYLE ",
+   "url": "https://mickmumpitz.ai/posts/free-workflow-98818966",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "279162748",
+     "file_name": "Mickmumpitz_Vid2Vid_PIXAR_v01.json",
+     "size_bytes": 59775,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "294906322",
+     "file_name": "Mickmumpitz_Vid2Vid_PIXAR_v03.json",
+     "size_bytes": 59330,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "301545403",
+     "file_name": "Mickmumpitz_Vid2Vid_PIXAR_v04.json",
+     "size_bytes": 59478,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "98718056",
+   "published": "2024-02-19T19:00:04.000+00:00",
+   "title": "[Free Workflow] Turn yourself into ANY STYLE ",
+   "url": "https://mickmumpitz.ai/posts/free-workflow-98718056",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "278648909",
+     "file_name": "Mickmumpitz_Vid2Vid_Pixar3D_v01.json",
+     "size_bytes": 54393,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "98273751",
+   "published": "2024-02-11T15:32:43.000+00:00",
+   "title": "[NEW VIDEO] Lip Sync for your AI MOVIES!",
+   "url": "https://mickmumpitz.ai/posts/new-video-lip-ai-98273751",
+   "embed_url": "https://youtu.be/kTdIbU_guNQ?si=6W18jWIoDXT9nmOK",
+   "attachments": []
+  },
+  {
+   "post_id": "98157565",
+   "published": "2024-02-09T14:12:55.000+00:00",
+   "title": "[Free Workfow] \"LIP SYNC for your AI MOVIES\" ",
+   "url": "https://mickmumpitz.ai/posts/free-workfow-lip-98157565",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "275650227",
+     "file_name": "Mickmumpitz_Wav2Lip_CleanUp_v04.json",
+     "size_bytes": 23925,
+     "mimetype": "application/json"
+    },
+    {
+     "media_id": "276279529",
+     "file_name": "Mickmumpitz_Wav2Lip_CleanUp_v05.json",
+     "size_bytes": 23956,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "96696904",
+   "published": "2024-01-17T22:33:09.000+00:00",
+   "title": "[Free Workfow] \"THIS is the FUTURE OF VFX\" ",
+   "url": "https://mickmumpitz.ai/posts/free-workfow-is-96696904",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "266552048",
+     "file_name": "mickmumpitz_VFX_Zombie_v05.json",
+     "size_bytes": 40719,
+     "mimetype": "application/json"
+    }
+   ]
+  },
+  {
+   "post_id": "96695669",
+   "published": "2024-01-17T22:19:39.000+00:00",
+   "title": "NEW VIDEO: \"THIS is the FUTURE OF VFX\"",
+   "url": "https://mickmumpitz.ai/posts/new-video-this-96695669",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "95004549",
+   "published": "2023-12-20T17:01:00.000+00:00",
+   "title": "AI Filmschool Assignment 05 - Prompting, Image Generation & Storyboard",
+   "url": "https://mickmumpitz.ai/posts/ai-filmschool-05-95004549",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "93821351",
+   "published": "2023-11-30T17:34:53.000+00:00",
+   "title": "[Bonus Tutorial] Generate 3D MOVIES with AI! Character Workflow",
+   "url": "https://mickmumpitz.ai/posts/bonus-tutorial-93821351",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "93746982",
+   "published": "2023-11-29T14:29:23.000+00:00",
+   "title": "NEW VIDEO: How I made a new Ratatouille in 5 days! [FREE AI Workflow]",
+   "url": "https://mickmumpitz.ai/posts/new-video-how-i-93746982",
+   "embed_url": "https://www.youtube.com/watch?v=SHbY-6Vy53g",
+   "attachments": []
+  },
+  {
+   "post_id": "93011334",
+   "published": "2023-11-16T19:55:12.000+00:00",
+   "title": "[Project Files] My hack for AI MUSIC VIDEOS! ",
+   "url": "https://mickmumpitz.ai/posts/project-files-my-93011334",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "92571772",
+   "published": "2023-11-09T10:09:48.000+00:00",
+   "title": "AI Filmschool Week 04 - Screenplay",
+   "url": "https://mickmumpitz.ai/posts/ai-filmschool-04-92571772",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "92571504",
+   "published": "2023-11-09T09:49:58.000+00:00",
+   "title": "NEW VIDEO: Create AI MOVIES with this FREE tool!",
+   "url": "https://mickmumpitz.ai/posts/new-video-create-92571504",
+   "embed_url": "https://youtu.be/8xJV4Yq7nog?si=SAcAdT1CF7Yw7ss-",
+   "attachments": []
+  },
+  {
+   "post_id": "92141409",
+   "published": "2023-11-05T14:00:04.000+00:00",
+   "title": "[Bonus Tutorial] Install ComfyUI + AnimateDiff + Custom Workflows",
+   "url": "https://mickmumpitz.ai/posts/bonus-tutorial-92141409",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "92142920",
+   "published": "2023-11-05T14:00:04.000+00:00",
+   "title": "[Free Workflows] ComfyUI AnimateDiff Workflows for txt2img",
+   "url": "https://mickmumpitz.ai/posts/free-workflows-92142920",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "91301666",
+   "published": "2023-10-19T21:07:28.000+00:00",
+   "title": "AI Filmschool Week 03 - Story",
+   "url": "https://mickmumpitz.ai/posts/ai-filmschool-03-91301666",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "91076471",
+   "published": "2023-10-16T11:59:11.000+00:00",
+   "title": "📝 Mickmumpitz “Create amazing 3D Animations with AI\" Patreon Workflow Sheet #4 - v01",
+   "url": "https://mickmumpitz.ai/posts/mickmumpitz-3d-4-91076471",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "237532178",
+     "file_name": "Mickmumpitz “Create amazing 3D Animations with AI Patreon Workflow Sheet #4 - v01.pdf",
+     "size_bytes": 7674265,
+     "mimetype": "application/pdf"
+    }
+   ]
+  },
+  {
+   "post_id": "91069190",
+   "published": "2023-10-16T08:44:23.000+00:00",
+   "title": "NEW VIDEO: Create amazing 3D Animations with AI!",
+   "url": "https://mickmumpitz.ai/posts/new-video-create-91069190",
+   "embed_url": "https://www.youtube.com/watch?v=YW3FzfVxAEs",
+   "attachments": []
+  },
+  {
+   "post_id": "90829474",
+   "published": "2023-10-12T10:38:41.000+00:00",
+   "title": "AI Filmschool Week 02 - Visual Development",
+   "url": "https://mickmumpitz.ai/posts/ai-filmschool-02-90829474",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "236340475",
+     "file_name": "Assignment 02 - Visual Development.pdf",
+     "size_bytes": 25117,
+     "mimetype": "application/pdf"
+    }
+   ]
+  },
+  {
+   "post_id": "90366571",
+   "published": "2023-10-05T09:11:52.000+00:00",
+   "title": "AI Filmschool Week 01 - Brainstorming & Pitch",
+   "url": "https://mickmumpitz.ai/posts/ai-filmschool-01-90366571",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "234181451",
+     "file_name": "Week 01 - Presentation Brainstorming & Pitch.pdf",
+     "size_bytes": 1145752,
+     "mimetype": "application/pdf"
+    },
+    {
+     "media_id": "234182362",
+     "file_name": "Assignment 01 - Pitch your idea!.pdf",
+     "size_bytes": 23291,
+     "mimetype": "application/pdf"
+    },
+    {
+     "media_id": "234182413",
+     "file_name": "Mickmumpitz AI Film School - Community Project #1 “The [...] Incident of [...]”-2.pdf",
+     "size_bytes": 2023881,
+     "mimetype": "application/pdf"
+    }
+   ]
+  },
+  {
+   "post_id": "90187613",
+   "published": "2023-10-02T13:16:07.000+00:00",
+   "title": "📽️ Join the Mickmumpitz AI Film School - Community Project #1! 🎬",
+   "url": "https://mickmumpitz.ai/posts/join-mickmumpitz-90187613",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "233447501",
+     "file_name": "Mickmumpitz AI Film School - Community Project #1 “The [...] Incident of [...]”-1.pdf",
+     "size_bytes": 2023881,
+     "mimetype": "application/pdf"
+    }
+   ]
+  },
+  {
+   "post_id": "90148496",
+   "published": "2023-10-01T18:39:12.000+00:00",
+   "title": "NEW VIDEO: Generate AI MUSIC VIDEOS based on your music!",
+   "url": "https://mickmumpitz.ai/posts/new-video-ai-on-90148496",
+   "embed_url": "https://youtu.be/mwWS8DyG_HU?si=l2Z7DX5Jo-DpDGE0",
+   "attachments": []
+  },
+  {
+   "post_id": "89199693",
+   "published": "2023-09-13T08:15:37.000+00:00",
+   "title": "“Generate 3D short films from 2D AI images!” Exclusive Patreon Workflow Sheet #3 -v01",
+   "url": "https://mickmumpitz.ai/posts/generate-3d-from-89199693",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "229143747",
+     "file_name": "Mickmumpitz “Generate 3D short films from 2D AI images Patreon Exclusive Workflow Sheet #3 -v01.pdf",
+     "size_bytes": 11935054,
+     "mimetype": "application/pdf"
+    }
+   ]
+  },
+  {
+   "post_id": "87840189",
+   "published": "2023-08-17T14:57:21.000+00:00",
+   "title": "Good news!",
+   "url": "https://mickmumpitz.ai/posts/good-news-87840189",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "87188990",
+   "published": "2023-08-04T15:55:44.000+00:00",
+   "title": "\"Generate entire movies with AI” Exclusive Patreon Workflow Sheet #2 - v01",
+   "url": "https://mickmumpitz.ai/posts/generate-entire-87188990",
+   "embed_url": null,
+   "attachments": [
+    {
+     "media_id": "220450213",
+     "file_name": "Mickmumpitz “Generate entire movies with AI” Patreon Workflow Sheet #2 - v01.pdf",
+     "size_bytes": 34151322,
+     "mimetype": "application/pdf"
+    }
+   ]
+  },
+  {
+   "post_id": "87140285",
+   "published": "2023-08-03T17:59:46.000+00:00",
+   "title": "NEW VIDEO: Generate entire movies with AI! ",
+   "url": "https://mickmumpitz.ai/posts/new-video-entire-87140285",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "86680284",
+   "published": "2023-07-26T09:50:11.000+00:00",
+   "title": "Mickmumpitz Discord channel is now online! ",
+   "url": "https://mickmumpitz.ai/posts/mickmumpitz-is-86680284",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "86637347",
+   "published": "2023-07-25T14:56:53.000+00:00",
+   "title": "“Turn your AI images into CG movies” Exclusive Patreon Workflow Sheet #1 - v01",
+   "url": "https://mickmumpitz.ai/posts/turn-your-ai-cg-86637347",
+   "embed_url": null,
+   "attachments": []
+  },
+  {
+   "post_id": "86477578",
+   "published": "2023-07-22T08:17:17.000+00:00",
+   "title": "Welcome to my Patreon!",
+   "url": "https://mickmumpitz.ai/posts/welcome-to-my-86477578",
+   "embed_url": null,
+   "attachments": []
+  }
+ ]
+}

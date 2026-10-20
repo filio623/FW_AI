@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.3
+**Modified:** 2026-10-19
+**Version:** 1.4
 
 # Workspace Map
 
@@ -26,6 +26,7 @@ This repo is the shared working area for the AI short-film VFX pipeline.
 - `outputs/`: generated renders, composites, thumbnails, and review artifacts.
 - `prompts/`: reusable prompt blocks, character language, and handoff prompts.
 - `references/`: external docs, copied snippets, model notes, and research summaries.
+  - `references/mickmumpitz-library.md`: the off-repo Mickmumpitz workflow library at `~/Desktop/VFX workflows/mickmumpitz/`, organized per YouTube video.
 - `scripts/`: project automation that is not specific to a single skill.
 - `shots/`: shot-by-shot plans, run logs, and compositing notes.
 - `skills/`: project-local Codex skills for repeatable workflows.
@@ -79,3 +80,4 @@ Keep the original plate untouched. Generate separable elements and interaction p
 | 1.1     | 2026-08-16 | Documented the document archive, media `_archive/` convention, and versioning split between media and Markdown. |
 | 1.2     | 2026-08-16 | Recorded that `docs/archive/` also holds retired documents under mirrored paths, and that superseded frozen editions stay put. |
 | 1.3     | 2026-10-08 | Clarified that the original `FW_test/` directory is absent from this checkout. |
+| 1.4     | 2026-10-19 | Added the off-repo Mickmumpitz workflow library under `references/`. |
