@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-01
-**Version:** 1.17
+**Version:** 1.18
 
 # Shot004 Fire Jump Workflow Test Plan
 
@@ -308,6 +308,10 @@ The test workflow is successful if:
 - 2026-10-19: Mickmumpitz 1.3 ADV with the VACE × SkyReels merge on Pod `amsu1bpsrdzgfr`, graph `shot004_fire-jump_mick13-skyreels_v001` (FusionX, 5 steps, CFG 1, `res_2s`/`beta57`, 512p, `JB-001` Reference Only, NAG and Lenovo bypassed). Run 1 (`6bac1820`) used the Houdini fire RGB as driving video and mask and traced it. Run 2 (`c52a9114`) switched to gray-in-mask inputs and got its own body, but with a face. Run 3 (`2d60bae7`) used a "round ball" prompt and got an opaque sphere. Run 4 (`663517dd`) used prompt v3 and got a close, faceless flame body. Run 5 (`3924211c`, `seed_1` 1218565630 after restoring the seed wire) replicated it with the tightest path yet (≤0.9% / ≤1.9%). Run 6 (`05ac8918`) added `JB-010` and looked very similar. Clips are kept in `…/benchmark/shot004_fire-jump_mick13-skyreels_*_v001.mp4`; the inputs are in `…/fire/`. Four earlier attempts did not render: two skipped generation with `resume_from_iteration` 1, one failed in NAG, and one was cancelled. NAG was then bypassed and the crossfade node patched.
 - 2026-10-19 (00:08–00:51Z on 10-20, Pod `jnfjz83llx199h`, ~$0.43): KJNodes `WanVideoNAG` patched for FP8 on the volume, not yet exercised. Run 7 (`ca30dacf`): run 6 with `vace_strength` 1.0. More flame texture, but a gray cone from the guide shows at the top. Run 8 (`56fa49b0`): `vace_strength` 1.25 plus the Lenovo LoRA with `l3n0v0`. No cone, more ragged flame tongues; current best. Run 8's two changes are not separated. One cancelled attempt (`7ab6a0e6`) ran before `l3n0v0` was added. Next session: benchmark step 8c (NAG with negatives, 720p, comp check).
 - 2026-11-01: RunPod `CA-MTL-1` (our volume's data center) was down, so the comp check was previewed locally with ffmpeg instead. Run 8 and the Houdini source were each Screen-blended over `FW_test_scene.mp4` scaled to 1920×1014, the source `.mov`'s decoded size after its frame-cropping metadata. Previews: `outputs/shot004_comp/shot004_fire-jump_comp-preview_{mick13-run8_screen,houdini-source_screen,houdini-left_run8-right}_v001.mp4`, 81 frames, not kept. Placement is within 2–11 px of the Houdini fire and black is clean. Jerry is 20–50% larger than the fire (mask grown 16 px) and reads as a pale glowing orb. Next: a smaller, rounded guide; NAG; 720p.
+- 2026-11-01: James's review notes on the run 8 comp preview. These are shot notes, not generation faults.
+  - Jerry reads a little translucent over the plate. Screen blending lets the plate show through Jerry's mid-tone interior; the Houdini fire is brighter and denser, so it reads solid. Options: a hotter, denser core (grade or prompt), or a two-layer comp (an opacity matte from Jerry's core comped "over", plus Screen or Add for the glow).
+  - At the start position a dirt ridge in front of the fire should partly hide it, as in the Houdini version. This needs a foreground holdout matte of the ridge (roto, or AI segmentation of the plate) in the comp. It answers the open question above: yes, the character passes behind foreground detail.
+  - When the fire jumps into the grass, the grass should catch and the flame should grow with it. Run 8 grows as a ball on its own and does not interact with the grass. That is Pass B (grass ignition) and possibly a guide change: if the growth after landing belongs to the grass fire, Jerry's guide could keep his size steady after landing. The production grass-fire render `ren_grassfire_cpu..mov` (86 frames, timed to this jump) and the delivered comp `Shot4 V031-1.mov` are on the NAS backup and not restored yet; they can serve as the Pass B element or reference.
 
 ## Current Test Status
 
@@ -338,3 +342,4 @@ As of 2026-10-17, local `WanVaceToVideo` knobs are closed. Strength `1` copied t
 | 1.15    | 2026-10-19 | Logged Mick 1.3 SkyReels runs 1–6 and the first local setup to pass path, black, and face on two seeds. |
 | 1.16    | 2026-10-19 | Logged Mick 1.3 runs 7 and 8 and the next-session order. |
 | 1.17    | 2026-11-01 | Logged the local comp preview of run 8 over the plate. |
+| 1.18    | 2026-11-01 | Recorded James's review notes: translucency, the ridge holdout, and grass ignition and growth. |
