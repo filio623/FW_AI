@@ -1,6 +1,6 @@
 **Created:** 2026-10-19
-**Modified:** 2026-10-19
-**Version:** 1.1
+**Modified:** 2026-11-01
+**Version:** 1.2
 
 # Mickmumpitz Workflow Library
 
@@ -79,7 +79,11 @@ Add `--apply` to move the files and rewrite `INDEX.md`. Files are matched by exa
 These are leads from the workflow file names and the models they load; their contents have not been reviewed yet.
 
 - **AI VFX pipeline 1.0–1.3** (`_n0ir5V5tX4`): the current shot004 Pass A workflow. See `docs/vfx-element-benchmark.md`.
-- **Creature on a Path** (`OhKoh0CsVFo`): Wan VACE drives a creature along a trajectory. It comes with an After Effects trajectory exporter (`.js`), a Blender bone tracer (`.py`) and a coordinate converter. This is the closest match to a guided path like Jerry's fire jump.
+- **Creature on a Path** (`OhKoh0CsVFo`, July 2025): Wan VACE drives a creature from a reference image along a trajectory. The motion guide is red squares on the path, optionally with a DWPose skeleton, plus an animated inpainting mask. It runs on the older Kijai WanVideoWrapper stack (Wan 2.1 T2V 14B fp8, a separate VACE module, the CausVid LoRA, 8 steps), none of which is on the RunPod volume. It comes with an After Effects trajectory exporter (`.js`), a Blender bone tracer (`.py`) and an HTML coordinate converter. Reviewed 2026-11-01. It is not a replacement for the shot 004 Mick 1.3 SkyReels setup, whose gray-blob guide carries shape and size as well as path. Ideas James wants to explore later:
+  - Drawing the path by hand (spline in ComfyUI or an online spline tool) for shots with no CG motion source.
+  - Importing motion from Blender (bone tracer) or After Effects to build a gray-blob guide for any blocked-out shot.
+  - Compositing in Blender, or building AI animation effects that are composited in Blender.
+  - Inpainting, as in its animated-mask and inpainted-start-frame options.
 - **AI Performance Capture 2.2** (`2MzCkYrvDaI`): actor-to-creature transfer with mattes for Nuke and After Effects. Possibly useful for Jerry and Tom body performance. Facial features stay a separate layer under the character-generation rules.
 - **Actor Compositor 2.0 and Mask & Track** (`VaSZGkGff7U`): Wan VACE plate integration.
 - **Wan 2.1 Clean Plate Creator** (`pd76XGHCavY`): plate prep. The start-frame and Flux inpainting graphs in the same folder are older and lower priority.
@@ -95,3 +99,4 @@ These are leads from the workflow file names and the models they load; their con
 |---------|------------|-------------|
 | 1.0     | 2026-10-19 | Initial Mickmumpitz Workflow Library. |
 | 1.1     | 2026-10-19 | Recorded the 30 folders pruned as obsolete; added Creature on a Path, Time2Move and Mask & Track to the candidates and dropped AI Compositing V01. |
+| 1.2     | 2026-11-01 | Reviewed Creature on a Path and recorded James's ideas for later: hand-drawn paths, Blender and After Effects motion import, Blender compositing, and inpainting. |

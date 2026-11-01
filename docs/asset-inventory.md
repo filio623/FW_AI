@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-19
-**Version:** 1.11
+**Modified:** 2026-11-01
+**Version:** 1.12
 
 # Asset Inventory
 
@@ -53,7 +53,7 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST/04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/ren_small_fire6/Proxy/ren_small_fire6..mov`
 
 - `assets/elements/by-shot/shot004_fire-jump/fire/ren_small_fire6..mov`: preserved production filename.
-- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`: same bytes, project-named. H.264, 1920x1080, 24 fps, 87 frames, 3.625s, `yuv420p`.
+- `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`: same bytes, project-named. H.264 coded 1920x1080 with frame-cropping metadata (33 px top and bottom), so it decodes and displays as 1920x1014, the 4K DCI plate's aspect, covering the whole plate. 24 fps, 87 frames, 3.625s, `yuv420p`.
 - `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`: rebuilt 832x448, 24 fps, 81-frame control proxy (pad-to-fit, first 81 frames). The expired `outputs/` copy was never on the production drive.
 - `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_trajectory-dot_832x448_81f_v001.mp4`: path-only control. Weighted luma centroid of the 832x448 proxy as a ~56px warm dot on black, 24 fps, 81 frames. Built 2026-09-03 to test Fun Control following jump timing without filling the CGI silhouette.
 - `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_trajectory-streak_832x448_81f_v001.mp4`: stronger path control. Same centroid with a ~72px head and 10-frame fading trail.
@@ -134,3 +134,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.9     | 2026-10-18 | Indexed Wan 2.7 runs 3 and 4 and marked seed 2126129005 as the paid fallback. |
 | 1.10    | 2026-10-19 | Indexed the gray-in-mask driving and mask clips and the six Mick 1.3 SkyReels benchmark clips. |
 | 1.11    | 2026-10-19 | Indexed Mick 1.3 SkyReels runs 7 and 8; run 8 is the current best. |
+| 1.12    | 2026-11-01 | Recorded that the fire source `.mov` decodes as 1920x1014 through frame-cropping metadata and covers the whole plate. |

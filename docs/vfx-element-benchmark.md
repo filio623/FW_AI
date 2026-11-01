@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
-**Modified:** 2026-10-19
-**Version:** 3.3
+**Modified:** 2026-11-01
+**Version:** 3.4
 
 # VFX Element Benchmark
 
@@ -147,8 +147,9 @@ test uses this file.
 8c. **Next session, in this order.** Start from run 8's settings (`seed_1` 1218565630, `JB-001` + `JB-010`, prompt v3 with `l3n0v0`, Lenovo on, `vace_strength` 1.25, NAG bypassed, 512p).
     1. **NAG with a negative prompt.** Un-bypass `WanVideoNAG` in the Sampler subgraph and set the negative prompt to "face, eyes, nose, mouth, solid sphere, smooth plastic, ground, environment". This also verifies the KJNodes FP8 patch (see `mcp/runpod.md`).
     2. **720p.** SETTINGS 512p → 720p on the best result of 1. Checks sharpness and whether path and black still pass. Expect about twice the Pod time per run (estimate).
-    3. **Comp check over the plate**, in Resolve or Fusion with Screen or Add, using the best clip. Conform 912×512 to the plate; timing already matches the source at 24 fps.
-    Optional, only if a result calls for it: separate run 8's two changes (Lenovo at 1.5, or 1.25 without Lenovo); a rounded, 8 px guide so lower strengths do not leak gray; a third seed on the final recipe; SeedVR2 or FlashVSR upscale of the best 512p clip. Full-length (84-frame) coverage and Pass B follow the comp check.
+    3. **Comp check over the plate**, in Resolve or Fusion with Screen or Add, using the best clip. A first ffmpeg preview of run 8 was made on 2026-11-01 while `CA-MTL-1` was down (`outputs/shot004_comp/`, not kept). To place a Mick 1.3 512p clip on the plate scaled to 1920×1014: scale ×2.0192 to 1842×1034, crop 10 px off the top, place at x +39 (see `docs/findings.md`, 2026-11-01). The preview showed correct placement and clean black, but Jerry is 20–50% larger than the Houdini fire, and over the plate he reads as a pale glowing orb, less hot and saturated than the fire. A grade in the comp can fix colour; size needs a new guide.
+    4. **Smaller guide (promoted from optional by the comp preview).** Rebuild the gray-in-mask guide and mask with less growth (about 4–8 px instead of 16) and a rounded top, then rerun run 8's settings. Expect a body closer to the Houdini fire's size and less gray leak at lower strengths.
+    Optional, only if a result calls for it: separate run 8's two changes (Lenovo at 1.5, or 1.25 without Lenovo); a third seed on the final recipe; SeedVR2 or FlashVSR upscale of the best 512p clip. Full-length (84-frame) coverage and Pass B follow the comp check.
 9. **Same merge, plus the JB-001 first frame as control frame 0** (mask black on frame 0, red mask after). Only after 8 is scored. It reopens first-frame conditioning on a new model, not a stock-VACE mask tweak.
 
 ### Stage 3: Image-to-video with a drawn path
@@ -278,3 +279,4 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 3.1 | 2026-10-18 | Scored Wan 2.7 runs 3 and 4. Closed Stage 1 with no winner, stopped Wan 2.7 tuning, and kept run 2 as the paid fallback. Recorded the hidden prompt rewrite and that the SkyReels merge is now on the volume, and noted how Mickmumpitz's graphs run that merge. |
 | 3.2 | 2026-10-19 | Scored Mickmumpitz 1.3 SkyReels runs 1–6. Fire RGB as the driving video traced the source; gray-in-mask inputs plus prompt v3 gave the first local setup that passes path, black, and face on two seeds with a close look. Added step 8b and its next knobs, and indexed the clips. |
 | 3.3 | 2026-10-19 | Scored Mick 1.3 runs 7 (strength 1.0, gray cone) and 8 (strength 1.25 + Lenovo, current best). Added step 8c, the next-session order: NAG, 720p, comp check. |
+| 3.4 | 2026-11-01 | Recorded the first comp preview of run 8 over the plate and its placement math. Promoted a smaller, rounded guide to step 8c item 4 because Jerry is 20–50% larger than the Houdini fire. |

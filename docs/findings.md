@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-19
-**Version:** 1.15
+**Modified:** 2026-11-01
+**Version:** 1.16
 
 # Findings
 
@@ -78,4 +78,10 @@
 - Mick 1.3 needed three fixes on RunPod: `WanVideoNAG` fails on the FP8 merge (`Half` vs `Float8_e4m3fn`, also unfixed upstream), "Reference Only" crashes `ControlCrossfadeIterationFix` (patched on the volume), and the 1.3 file drops the per-iteration seed wire present in 1.0 and 1.1. Detail: `mcp/runpod.md`.
 - The RunPod `--terminate-after` guard did not stop Pod `amsu1bpsrdzgfr` at its deadline. Shut Pods down by hand.
 - On the Mick 1.3 SkyReels setup, `vace_strength` sets how hard the gray guide is followed. At 1.5 the body fills the guide but keeps a clean, bubble-like outline. At 1.0 there is more flame texture, but the flat gray guide shows through as a faint gray cone where flame does not cover the grown mask's pointed tip. 1.25 plus the Lenovo LoRA (`l3n0v0`) gave no cone and more ragged, photographic flame tongues; it is the current best (run 8). That run changed two things, so it does not say which one helped.
+
+## 2026-11-01
+
+- RunPod `CA-MTL-1`, which holds network volume `avw5iclb48`, has been down since 2026-10-31 20:30 UTC (status page incident "CA-MTL-1 DC is Unavailable", shared with EU-SE-1, unresolved at 2026-11-01 ~17:30 UTC). `runpodctl gpu list` shows no GPU type there and `pod create` fails with "no longer any instances available". The volume still lists. Nothing on it can be used from another data center.
+- The shot 004 Houdini fire source `.mov` carries H.264 frame-cropping metadata (33 px top and bottom). It decodes as 1920×1014, the 4K DCI plate's 1.896 aspect, so the render covers the whole plate: plate scaled to 1920×1014 lines up with the fire. The 832×448 control proxy is that 1920×1014 frame scaled ×0.4333 with about 4.3 px of padding top and bottom (pad-to-fit, as documented). Mick 1.3's 512p resize scales the proxy ×1.1429 and crops 19.4 px off each side, so a Mick 1.3 output maps back to the plate at ×2.0192 (912×512 → 1842×1034), offset x +39 and y −10 at 1920 wide.
+- First comp preview of Mick 1.3 run 8 over the plate (Screen, ffmpeg, `outputs/shot004_comp/`). It sits within 2–11 px of the Houdini fire and its black vanishes cleanly; differences away from the element match the Houdini comp's re-encode noise. Jerry is 20–50% larger than the Houdini fire, 1.5× wide at frame 0 and 1.05–1.2× by the landing, because the guide is the fire mask grown 16 px and Jerry fills it. Over the plate he reads as a pale, glowing orb with flame tongues, less saturated and hot than the Houdini fire.
 - The Mickmumpitz Patreon workflows and guides now sit in a per-video library at `~/Desktop/VFX workflows/mickmumpitz/` (`references/mickmumpitz-library.md`). The loose AI-VFX files moved with it, so `260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json` is now under `mickmumpitz/2026-03-30_i-built-a-free-vfx-pipeline-with-local-ai___n0ir5V5tX4/advanced/`, not directly in `VFX workflows/`.
