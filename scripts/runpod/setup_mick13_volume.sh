@@ -7,6 +7,7 @@
 #   bash setup_mick13_volume.sh              # nodes, patches, restart script, then models
 #   bash setup_mick13_volume.sh nodes        # only custom nodes + patches + restart script
 #   bash setup_mick13_volume.sh models       # only model downloads + checksum checks
+#   bash setup_mick13_volume.sh patch        # only reapply the node patches
 #
 # Idempotent: existing clones, patched files and complete downloads are left alone.
 # Model list, checksums and patch rationale: mcp/runpod.md.
@@ -51,21 +52,23 @@ install_nodes() {
 }
 
 patch_nodes() {
-    # 1. KJNodes WanVideoNAG on FP8 weights: run the text embedding through a temporary
-    #    16-bit copy (mat1/mat2 Half vs Float8_e4m3fn otherwise). Revert with
-    #    git -C custom_nodes/ComfyUI-KJNodes checkout nodes/model_optimization_nodes.py
+    # 1. KJNodes WanVideoNAG on FP8 weights: NAG embeds its negative prompt while
+    #    comfy_cast_weights is still off, so a plain Linear forward meets FP8 weights
+    #    (mat1/mat2 Half vs Float8_e4m3fn). Run each layer through ComfyUI's own casting
+    #    path instead. (A temporary deep copy, the 2026-10-19 approach, crashes on
+    #    ComfyUI 0.30 with dynamic VRAM: CUDA invalid argument, then a double free.)
+    #    Revert with git -C custom_nodes/ComfyUI-KJNodes checkout nodes/model_optimization_nodes.py
     # 2. Mickmumpitz ControlCrossfadeIterationFix with Reference Only: start_frames is None,
     #    so make it an empty batch and inject nothing on iteration 0. Revert with
     #    git -C custom_nodes/ComfyUI-Mickmumpitz-Nodes checkout nodes/control_crossfade.py
     "$PY" - "$NODES" <<'PY'
 import pathlib, sys
 nodes = pathlib.Path(sys.argv[1])
-MARK = "FW_AI patch 2026-10-19"
 
-def patch(path, old, new):
+def patch(path, mark, old, new):
     p = nodes / path
     text = p.read_text()
-    if MARK in text:
+    if mark in text:
         print(f"already patched: {path}")
         return
     if text.count(old) != 1:
@@ -73,28 +76,22 @@ def patch(path, old, new):
     p.write_text(text.replace(old, new))
     print(f"patched: {path}")
 
-patch("ComfyUI-KJNodes/nodes/model_optimization_nodes.py",
+patch("ComfyUI-KJNodes/nodes/model_optimization_nodes.py", "FW_AI patch 2026-11-02",
       "        diffusion_model.text_embedding.to(device)\n"
       "        context = diffusion_model.text_embedding(conditioning[0][0].to(device, dtype))\n",
-      "        # FW_AI patch 2026-10-19: FP8 text-embedding weights cannot take 16-bit input\n"
-      "        # before ComfyUI's cast wrapper exists, so embed with a temporary 16-bit copy.\n"
-      "        text_embedding = diffusion_model.text_embedding\n"
-      "        weight_dtype = next(text_embedding.parameters()).dtype\n"
-      "        if weight_dtype in (torch.float8_e4m3fn, torch.float8_e5m2):\n"
-      "            embed_dtype = dtype if dtype in (torch.float16, torch.bfloat16) else torch.bfloat16\n"
-      "            text_embedding = copy.deepcopy(text_embedding).to(device=device, dtype=embed_dtype)\n"
-      "            context = text_embedding(conditioning[0][0].to(device, embed_dtype))\n"
-      "            del text_embedding\n"
-      "        else:\n"
-      "            text_embedding.to(device)\n"
-      "            context = text_embedding(conditioning[0][0].to(device, dtype))\n")
+      "        # FW_AI patch 2026-11-02: casting is not switched on yet when NAG patches the\n"
+      "        # model, so FP8 weights would meet 16-bit input; use ComfyUI's casting path.\n"
+      "        compute_dtype = getattr(model_clone.model, \"manual_cast_dtype\", None) or dtype\n"
+      "        if compute_dtype not in (torch.float16, torch.bfloat16, torch.float32):\n"
+      "            compute_dtype = torch.bfloat16\n"
+      "        context = conditioning[0][0].to(device, compute_dtype)\n"
+      "        for layer in diffusion_model.text_embedding:\n"
+      "            if hasattr(layer, \"forward_comfy_cast_weights\"):\n"
+      "                context = layer.forward_comfy_cast_weights(context)\n"
+      "            else:\n"
+      "                context = layer(context)\n")
 
-p = nodes / "ComfyUI-KJNodes/nodes/model_optimization_nodes.py"
-text = p.read_text()
-if "\nimport copy\n" not in text:
-    p.write_text("import copy  # FW_AI patch 2026-10-19\n" + text)
-
-patch("ComfyUI-Mickmumpitz-Nodes/nodes/control_crossfade.py",
+patch("ComfyUI-Mickmumpitz-Nodes/nodes/control_crossfade.py", "FW_AI patch 2026-10-19",
       "        B, H, W, C = control_frames.shape\n        device = control_frames.device\n",
       "        B, H, W, C = control_frames.shape\n        device = control_frames.device\n"
       "        # FW_AI patch 2026-10-19: Reference Only passes start_frames=None; treat it as\n"
@@ -165,6 +162,7 @@ install_models() {
 case "$WHAT" in
     all) install_nodes; install_models ;;
     nodes) install_nodes ;;
+    patch) patch_nodes ;;
     models) install_models ;;
-    *) echo "usage: $0 [all|nodes|models]" >&2; exit 2 ;;
+    *) echo "usage: $0 [all|nodes|patch|models]" >&2; exit 2 ;;
 esac

@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-02
-**Version:** 1.19
+**Version:** 1.20
 
 # Findings
 
@@ -95,3 +95,4 @@
 - RunPod `CA-MTL-1` was still down at 17:58 UTC; the incident's first update since it opened ("continuing to work on resolving") came at 17:34 UTC. James chose to wait rather than rebuild the volume elsewhere.
 - DaVinci Resolve Studio 21.1.1 scripting works from Resolve's bundled `ResolvePython` with no environment variables, once Preferences → System → General → External scripting is set to Local. Pitfalls: `MediaPool.ImportMedia` with the documented dict form returned `None` (a plain list of paths works); `AppendToTimeline` `endFrame` is exclusive; a Fusion clip made by `Timeline.CreateFusionClip` reports no comps through `TimelineItem.GetFusionCompByIndex`, so open the Fusion page on it and use `fusion.GetCurrentComp()`; `comp.Execute` runs Lua asynchronously; a pasted settings block drops links to tools outside the block; Fusion tool names are case-insensitive, so a paste renames clashing tools; with the default "Scale entire image to fit", a 912×512 clip reaches Fusion already scaled ×4.21875 (fit to height) and centred on the 4096×2160 timeline. Polyline points are X = px / width − 0.5, Y = 0.5 − row / height; at 4096 wide a Blur of size 1 has a sigma of about 2.45 px. Detail: `scripts/resolve/shot004_comp_fusion.py`.
 - Rebuilt the Mick 1.3 stack on a new RunPod volume in `EU-RO-1` (`dqlwnz6nq8`, `scripts/runpod/setup_mick13_volume.sh`). Run 8's unchanged graph and seed on the new install and an L4 gave a nearby sample, not the same one: same body, path, and size, per-frame PSNR 26.5–34.2 dB against run 8, flame tongues different in detail. A seed fixes a sample only within one GPU type and software install, so one-knob comparisons need a baseline rerun on the current setup. The L4 took 667 s against the A40's 353 s.
+- The 2026-10-19 `WanVideoNAG` FP8 patch (a temporary deep copy of the text embedding) crashes on ComfyUI 0.30.0 with dynamic VRAM: `CUDA error: invalid argument` in the copy, then `free(): double free` in comfy-aimdo, which kills ComfyUI. Running each text-embedding layer through ComfyUI's own `forward_comfy_cast_weights` avoids copying weights and passed a standalone test on the FP8 merge. Custom-node patches that copy or move model weights by hand are fragile under dynamic VRAM; use ComfyUI's casting helpers.

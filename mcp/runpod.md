@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.42
+**Version:** 2.43
 
 # RunPod + ComfyUI
 
@@ -206,7 +206,7 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were unavailable) started 19:05Z and is still running. The template installed ComfyUI 0.30.0 into `/workspace/runpod-slim/ComfyUI` (venv `.venv-cu128`, Python 3.12, torch 2.10.0+cu128) with ComfyUI-Manager, ComfyUI-KJNodes `78cd992`, Civicomfy, and ComfyUI-RunpodDirect. `scripts/runpod/setup_mick13_volume.sh`, run on the Pod, then installed everything else in about 15 minutes:
 
 - Nodes at pinned commits: VideoHelperSuite (latest), Mickmumpitz-Nodes `270afbd`, WanVaceAdvanced `049213c`, RES4LYF `56e4475`, rgthree `d7297b4`, GGUF `6ea2651`, plus PyWavelets, gguf, protobuf. All import; `/object_info` has every node type in the run 8 graph and the `res_2s` sampler and `beta57` scheduler.
-- Both patches reapplied by the script (marked `FW_AI patch 2026-10-19`); the Mickmumpitz `start_frames=None` bug is still upstream at `270afbd`.
+- Both patches reapplied by the script; the Mickmumpitz `start_frames=None` bug is still upstream at `270afbd`. The first NAG run (2026-11-02, L4) showed the 2026-10-19 NAG patch does not work on ComfyUI 0.30.0: its deep copy of the text embedding raised `CUDA error: invalid argument` under dynamic VRAM (comfy-aimdo), then ComfyUI died with `free(): double free detected` in `comfy_aimdo/host_buffer.py`. The script now applies a replacement, marked `FW_AI patch 2026-11-02`: `patch()` runs each text-embedding layer through `forward_comfy_cast_weights`, ComfyUI's own casting path, in the model's `manual_cast_dtype` (FP16 here). A standalone test on the Pod loaded the merge (FP8 weights) and patched all 40 blocks without error; a full NAG run is still the real check. `bash setup_mick13_volume.sh patch` reapplies only the patches.
 - Models: the merge (checksum verified), UMT5 FP8 encoder (size verified), Kijai's BF16 Wan VAE as `wan_2.1_vae.safetensors`, FusionX and Lenovo LoRAs (checksums verified). The merge downloaded at about 30 MB/s.
 - `/workspace/restart_comfyui.sh` recreated by the script.
 - Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
@@ -221,7 +221,7 @@ No Pod is running. `jnfjz83llx199h` (A40, `CA-MTL-1`) ran 00:08–00:51Z on 2026
 
 The shot 004 Mick 1.3 graph is `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`, last saved by the user with the gray-in-mask inputs, prompt v3, and the restored seed wire. Running Mick 1.3 here needed three fixes:
 
-- `WanVideoNAG` (KJNodes `78cd992`, unchanged upstream as of 2026-10-19) fails with `mat1 and mat2 must have the same dtype, but got Half and Float8_e4m3fn` on the FP8 merge. Its `patch()` runs `diffusion_model.text_embedding` on 16-bit conditioning before ComfyUI wraps the FP8 weights for casting. Patched on the volume (marked `FW_AI patch 2026-10-19` in `nodes/model_optimization_nodes.py`): when the text-embedding weights are FP8, `patch()` runs a temporary 16-bit deep copy instead. That is only correct for plain FP8; the merge has 1,327 `F8_E4M3` tensors and no scale keys. `git -C custom_nodes/ComfyUI-KJNodes checkout nodes/model_optimization_nodes.py` reverts it. Until a run with NAG un-bypassed succeeds, treat the patch as unverified.
+- `WanVideoNAG` (KJNodes `78cd992`, unchanged upstream as of 2026-10-19) fails with `mat1 and mat2 must have the same dtype, but got Half and Float8_e4m3fn` on the FP8 merge. Its `patch()` runs `diffusion_model.text_embedding` on 16-bit conditioning before ComfyUI wraps the FP8 weights for casting. Patched on the volume (marked `FW_AI patch 2026-10-19` in `nodes/model_optimization_nodes.py`): when the text-embedding weights are FP8, `patch()` runs a temporary 16-bit deep copy instead. That is only correct for plain FP8; the merge has 1,327 `F8_E4M3` tensors and no scale keys. `git -C custom_nodes/ComfyUI-KJNodes checkout nodes/model_optimization_nodes.py` reverts it. Until a run with NAG un-bypassed succeeds, treat the patch as unverified. (Superseded on the `EU-RO-1` volume by the 2026-11-02 patch above; the deep copy crashed there.)
 - `ControlCrossfadeIterationFix` (Mickmumpitz nodes) crashes with `'NoneType' object has no attribute 'shape'` whenever the image mode is `Reference Only`, or `Auto-Detect` with more than one reference, because the router passes `start_frames=None` and iteration 0 reads `start_frames.shape`. Patched on the volume (marked `FW_AI patch 2026-10-19` at the top of `apply_crossfade` in `nodes/control_crossfade.py`): `None` becomes an empty batch, so iteration 0 injects nothing. `git -C custom_nodes/ComfyUI-Mickmumpitz-Nodes checkout nodes/control_crossfade.py` reverts it; a pull of that pack will conflict or drop it.
 - Mick's 1.3 file is missing the wire from `MultiChannelSlicer`'s `seed` output to the Sampler subgraph's `KSampler` `seed`; versions 1.0 and 1.1 have it. Without it every chunk uses the KSampler's fixed `1218564478` and `IterSeedBatch` does nothing. The user reconnected it in the shot 004 graph on 2026-10-19, so `seed_1` on the main canvas now sets the seed for chunk 1. `-1` in a later `seed_N` reuses the last valid seed.
 
@@ -455,3 +455,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.40    | 2026-11-02 | Recorded the 17:58 UTC check and James's decision to wait out the outage. |
 | 2.41    | 2026-11-02 | Built new volume `dqlwnz6nq8` in `EU-RO-1` with `scripts/runpod/setup_mick13_volume.sh`; pointed the up-script defaults at it. |
 | 2.42    | 2026-11-02 | Recorded run 8r: run 8 reproduced on the new volume (L4, 667 s). |
+| 2.43    | 2026-11-02 | Recorded the NAG crash on the new volume and the replacement NAG patch. |
