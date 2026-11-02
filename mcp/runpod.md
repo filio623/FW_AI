@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.40
+**Version:** 2.41
 
 # RunPod + ComfyUI
 
@@ -154,10 +154,10 @@ scripts/runpod-pod-up.sh      # create, wait for ComfyUI, record RUNPOD_POD_ID i
 scripts/runpod-pod-down.sh    # terminate and clear the id; the volume is untouched
 ```
 
-As of 2026-10-08 the up-script defaults are A40 in `CA-MTL-1` with network
-volume `avw5iclb48` and a two-hour termination guard. Check GPU availability
-and the current volume before launch; never create a replacement Pod without
-attaching the persistent volume that holds ComfyUI and the saved VACE latent.
+As of 2026-11-02 the up-script defaults are an RTX A6000 in `EU-RO-1` with network
+volume `dqlwnz6nq8` and a two-hour termination guard. Check GPU availability
+before launch and override `GPU` when the A6000 is out of stock; never create a
+replacement Pod without attaching the persistent volume that holds ComfyUI.
 
 The termination guard is not reliable. Pod `amsu1bpsrdzgfr` was created with
 `--terminate-after 2026-10-19T17:42:03Z` and was still `RUNNING` at 18:14Z, and
@@ -200,6 +200,18 @@ reaches ComfyUI, so the URL is still sensitive and should not be shared.
 Runway) need on the Pod. Without it they fail with `Please login first`.
 
 ## Current Resume Point
+
+**2026-11-02: new volume `dqlwnz6nq8` in `EU-RO-1`.** With `CA-MTL-1` down, James approved rebuilding elsewhere. `EU-RO-1` was chosen because it hosts the most GPU types of any data center (16, including RTX A6000 48 GB at $0.59/hr, L4, RTX 4090/5090, A100, RTX PRO 6000) and supports Runpod's S3-compatible volume API, so files can be moved without a Pod; it is in Romania. Volume `fw-ai-comfyui-eu-ro`, 100 GB. Data on `avw5iclb48` cannot be copied out while `CA-MTL-1` is down (moving data needs a running Pod on each side, and `CA-MTL-1` has no S3 API), but nothing on it is irreplaceable, so the new volume was rebuilt from scratch.
+
+Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were unavailable) started 19:05Z and is still running. The template installed ComfyUI 0.30.0 into `/workspace/runpod-slim/ComfyUI` (venv `.venv-cu128`, Python 3.12, torch 2.10.0+cu128) with ComfyUI-Manager, ComfyUI-KJNodes `78cd992`, Civicomfy, and ComfyUI-RunpodDirect. `scripts/runpod/setup_mick13_volume.sh`, run on the Pod, then installed everything else in about 15 minutes:
+
+- Nodes at pinned commits: VideoHelperSuite (latest), Mickmumpitz-Nodes `270afbd`, WanVaceAdvanced `049213c`, RES4LYF `56e4475`, rgthree `d7297b4`, GGUF `6ea2651`, plus PyWavelets, gguf, protobuf. All import; `/object_info` has every node type in the run 8 graph and the `res_2s` sampler and `beta57` scheduler.
+- Both patches reapplied by the script (marked `FW_AI patch 2026-10-19`); the Mickmumpitz `start_frames=None` bug is still upstream at `270afbd`.
+- Models: the merge (checksum verified), UMT5 FP8 encoder (size verified), Kijai's BF16 Wan VAE as `wan_2.1_vae.safetensors`, FusionX and Lenovo LoRAs (checksums verified). The merge downloaded at about 30 MB/s.
+- `/workspace/restart_comfyui.sh` recreated by the script.
+- Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
+
+Run 8 has not yet been reproduced on the new volume; that is the check before new tests. Account balance was $4.90 at 19:24Z against $0.61/hr.
 
 **2026-11-01: `CA-MTL-1` is down.** RunPod's status page has had "CA-MTL-1 DC is Unavailable" open since 2026-10-31 20:30 UTC. `gpu list` shows no GPU type in `CA-MTL-1`, and `scripts/runpod-pod-up.sh` fails with "no longer any instances available" (nothing is charged). Volume `avw5iclb48` still lists in the account, but no Pod anywhere can attach it until the data center returns. If the outage lasts days, the fallback is a new volume in another data center, rebuilt from this file's model, node, and patch notes plus the repo's workflows and inputs, at roughly 25 GB of downloads.
 
@@ -441,3 +453,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.38    | 2026-11-01 | Recorded the `CA-MTL-1` outage blocking volume `avw5iclb48` and the rebuild fallback. |
 | 2.39    | 2026-11-02 | Recorded that `CA-MTL-1` was still down on 2026-11-02; no Pod started. |
 | 2.40    | 2026-11-02 | Recorded the 17:58 UTC check and James's decision to wait out the outage. |
+| 2.41    | 2026-11-02 | Built new volume `dqlwnz6nq8` in `EU-RO-1` with `scripts/runpod/setup_mick13_volume.sh`; pointed the up-script defaults at it. |

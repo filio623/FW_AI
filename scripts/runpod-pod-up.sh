@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Create the FW_AI ComfyUI development Pod, wait for it, and record the Pod ID.
 #
-#   scripts/runpod-pod-up.sh              # A40, CA-MTL-1 persistent volume, 2-hour guard
+#   scripts/runpod-pod-up.sh              # RTX A6000, EU-RO-1 persistent volume, 2-hour guard
 #   HOURS=4 scripts/runpod-pod-up.sh      # longer guard
-#   GPU="NVIDIA RTX A6000" DC=US-TX-1 VOLUME= scripts/runpod-pod-up.sh  # explicit throwaway Pod
+#   GPU="NVIDIA L4" scripts/runpod-pod-up.sh  # another GPU in EU-RO-1 when the A6000 is out of stock
 #
 # Models and the ComfyUI install live on the network volume, so a terminated Pod
 # loses nothing. See mcp/runpod.md.
@@ -12,10 +12,10 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_FILE="$ROOT_DIR/.env"
 
-GPU="${GPU:-NVIDIA A40}"
+GPU="${GPU:-NVIDIA RTX A6000}"               # 48 GB; EU-RO-1 also has L4, RTX 4090/5090, A100, RTX PRO 6000
 TEMPLATE="${TEMPLATE:-cw3nka7d08}"          # official ComfyUI - CUDA 12.8
-DC="${DC:-CA-MTL-1}"
-VOLUME="${VOLUME-avw5iclb48}"                # FW_AI persistent VACE volume; VOLUME= opts out
+DC="${DC:-EU-RO-1}"
+VOLUME="${VOLUME-dqlwnz6nq8}"                # fw-ai-comfyui-eu-ro (2026-11-02); VOLUME= opts out
 PORTS="${PORTS:-8188/http,22/tcp}"
 HOURS="${HOURS:-2}"
 NAME="${NAME:-fw-ai-comfyui-dev}"
