@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.43
+**Version:** 2.44
 
 # RunPod + ComfyUI
 
@@ -206,7 +206,7 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were unavailable) started 19:05Z and is still running. The template installed ComfyUI 0.30.0 into `/workspace/runpod-slim/ComfyUI` (venv `.venv-cu128`, Python 3.12, torch 2.10.0+cu128) with ComfyUI-Manager, ComfyUI-KJNodes `78cd992`, Civicomfy, and ComfyUI-RunpodDirect. `scripts/runpod/setup_mick13_volume.sh`, run on the Pod, then installed everything else in about 15 minutes:
 
 - Nodes at pinned commits: VideoHelperSuite (latest), Mickmumpitz-Nodes `270afbd`, WanVaceAdvanced `049213c`, RES4LYF `56e4475`, rgthree `d7297b4`, GGUF `6ea2651`, plus PyWavelets, gguf, protobuf. All import; `/object_info` has every node type in the run 8 graph and the `res_2s` sampler and `beta57` scheduler.
-- Both patches reapplied by the script; the Mickmumpitz `start_frames=None` bug is still upstream at `270afbd`. The first NAG run (2026-11-02, L4) showed the 2026-10-19 NAG patch does not work on ComfyUI 0.30.0: its deep copy of the text embedding raised `CUDA error: invalid argument` under dynamic VRAM (comfy-aimdo), then ComfyUI died with `free(): double free detected` in `comfy_aimdo/host_buffer.py`. The script now applies a replacement, marked `FW_AI patch 2026-11-02`: `patch()` runs each text-embedding layer through `forward_comfy_cast_weights`, ComfyUI's own casting path, in the model's `manual_cast_dtype` (FP16 here). A standalone test on the Pod loaded the merge (FP8 weights) and patched all 40 blocks without error; a full NAG run is still the real check. `bash setup_mick13_volume.sh patch` reapplies only the patches.
+- Both patches reapplied by the script; the Mickmumpitz `start_frames=None` bug is still upstream at `270afbd`. The first NAG run (2026-11-02, L4) showed the 2026-10-19 NAG patch does not work on ComfyUI 0.30.0: its deep copy of the text embedding raised `CUDA error: invalid argument` under dynamic VRAM (comfy-aimdo), then ComfyUI died with `free(): double free detected` in `comfy_aimdo/host_buffer.py`. The script now applies a replacement, marked `FW_AI patch 2026-11-02`: `patch()` runs each text-embedding layer through `forward_comfy_cast_weights`, ComfyUI's own casting path, in the model's `manual_cast_dtype` (FP16 here). A standalone test on the Pod loaded the merge (FP8 weights) and patched all 40 blocks without error, and the full NAG run (benchmark run 9, 684 s on the L4) completed, so the patch is verified. `bash setup_mick13_volume.sh patch` reapplies only the patches.
 - Models: the merge (checksum verified), UMT5 FP8 encoder (size verified), Kijai's BF16 Wan VAE as `wan_2.1_vae.safetensors`, FusionX and Lenovo LoRAs (checksums verified). The merge downloaded at about 30 MB/s.
 - `/workspace/restart_comfyui.sh` recreated by the script.
 - Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
@@ -456,3 +456,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.41    | 2026-11-02 | Built new volume `dqlwnz6nq8` in `EU-RO-1` with `scripts/runpod/setup_mick13_volume.sh`; pointed the up-script defaults at it. |
 | 2.42    | 2026-11-02 | Recorded run 8r: run 8 reproduced on the new volume (L4, 667 s). |
 | 2.43    | 2026-11-02 | Recorded the NAG crash on the new volume and the replacement NAG patch. |
+| 2.44    | 2026-11-02 | Verified the replacement NAG patch with a full run (benchmark run 9). |
