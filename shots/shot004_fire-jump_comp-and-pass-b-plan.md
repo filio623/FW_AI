@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.5
+**Version:** 1.6
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -69,6 +69,17 @@ Candidates, cheapest and most controllable first:
 2. **Inpainting on the clean plate.** Mick 1.3's native mode: DRIVING VIDEO = the clean plate, MASK = the grass region, animated to start at the landing spot on the landing frame and spread outward, prompt for dry grass catching fire, match mode "Compose + Match", which keeps the plate outside the mask and fixes the colour seam. Use the clean plate, never the plate with Jerry comped in, or the model redraws Jerry and bakes him into the grass layer. Can also scorch and blacken the grass, which an element on black cannot. Caution: the first stock-VACE plate test (2026-10-08) failed with colour artefacts and a growing static mask; Mick's animated-mask setup is different but expect iteration.
 3. **Loose flame and smoke elements** from Wan-Alpha (text-to-video with real alpha), comped by hand as extra detail. Parked in the benchmark until 1 or 2 is scored.
 4. **MiniMax H3 inpainting** (found 2026-11-02). H3 is the open-weight video model Mickmumpitz built his 2026-10-28 short film on; his Performance Capture 2.2 and AI renderer graphs also use it. It generates 5–15 s in one pass at a native 1344×768 and inpaints video through a mask with its Fun ControlNet Union patch (ComfyUI 0.35+, Union 2.0 0.38+; the `EU-RO-1` Pod runs 0.30.0). Its minimum length is 5 s (124 frames), so the 84-frame shot would be padded and trimmed. Local commercial use needs a paid MiniMax license through Comfy; Comfy Cloud generations include commercial rights, and Comfy Cloud already has the H3 nodes and models, so the first H3 test can run there with the same plate crop and mask as candidate 2.
+
+#### Candidate 2 setup, test 1 (2026-11-02)
+
+Inputs from `scripts/build_shot004_grassfire_inputs.py`, saved in `assets/elements/by-shot/shot004_fire-jump/scorch-contact/` (`_v001`, with a JSON report of the settings):
+
+- **Window.** A 1824×1024 window of the 4096×2160 plate, top-left at plate (1838, 488), scaled ×0.5 to 912×512. Inpainting this window instead of the whole frame keeps twice the detail: the result goes back on the plate at ×2, where a full-frame 512p run would need ×4.3. It holds the grass clump and Jerry from the landing on.
+- **Mask** (`…_mask-start25-full50-soft_…`). Empty to frame 24. From frame 25, when Jerry touches down, it spreads from his landing contact (window pixel 490, 450) through a burn zone, the grass clump and the air above it, and covers it by frame 50, then holds to the end. It climbs faster than it spreads sideways, its front and outline are irregular, and it stays 24 px inside the window, so flames never meet the window's edge where the inpaint joins the untouched plate. About 53% of the window at full spread. Timing, spread curve, climb and raggedness are settings.
+- **DRIVING VIDEO** (`…_control-plate-canny-start25-full50_…`). The plate outside the mask; inside it, the plate's Canny edges on black. This is Mickmumpitz's recipe from his OfficeFlood example (`MICKMUMPITZ_AIVFX_EXAMPLE-FILES.zip`, `010_OfficeFlood`): the blade edges keep the grass's structure while the model draws fire into it.
+- **Start image** (`…_start-frame_…`): the window's frame 0, the plate before any fire. Not committed: plate stills are ignored like the plate.
+
+Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_grassfire-inpaint_mick13_v001.json`, on the Pod as `shot004/pass-b_grassfire/`. It is the Jerry graph (run 9 state) with these changes: the three inputs above; Reference Image 2 (`JB-010`) bypassed; image mode `Start + Reference` and match mode `Compose + Match`; `vace_strength` 1.0 and `vace_ref_strength` 0, as in the OfficeFlood run; a grass-fire prompt with `l3n0v0`; the NAG negatives swapped from face words to "cartoon, CGI, animation, fireball, glowing orb, character, face, text, watermark"; output prefix `shot004_grassfire`. Seed, steps, sampler, LoRAs, 512p and 81 frames are unchanged. Because this is the first run of a new graph, it is a baseline, not a one-knob test.
 
 Smoke or heat distortion and scorch are listed in the shot plan's required layers. Scorch comes free with candidate 2; heat distortion is a comp effect.
 
@@ -157,11 +168,16 @@ Not GPU-bound:
 2. ~~Build the first Blender comp with what is on hand: plate, run 8, ridge holdout, ground glow. Render a preview for review and hand over the `.blend`.~~ Blender Comp v001, 2026-11-02.
 3. When the NAS files arrive: restore and index them, then compare with the delivered comp.
 
-GPU, once RunPod `CA-MTL-1` is back (down since 2026-10-31; see `mcp/runpod.md`):
+GPU, on the rebuilt `EU-RO-1` volume (see `mcp/runpod.md`):
 
-4. Pass A, benchmark step 8c: smaller guide with run 8's settings, NAG with negatives, 720p.
-5. Pass B: candidate 1 (needs the grass-fire render), then candidate 2.
+4. Pass A, benchmark step 8c: smaller guide with run 9's settings; 720p later.
+5. Pass B: candidate 2 test 1 (above), then candidate 1 once the grass-fire render is restored.
 6. Swap the winners into the Blender comp; final grading in Resolve if wanted.
+
+Later (James, 2026-11-02), not now:
+
+- Update ComfyUI, either in place with a rollback or as a second install beside the current one. Needed before MiniMax H3 can run on the Pod. Why the Pod runs 0.30.0, and what an update risks, is in `mcp/runpod.md` (ComfyUI version).
+- Try MiniMax H3 for the grass fire (candidate 4), probably on Comfy Cloud first.
 
 Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, compositing in Blender, inpainting) are in `references/mickmumpitz-library.md` under Creature on a Path.
 
@@ -177,3 +193,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.3     | 2026-11-02 | Built Fusion Comp v001 in Resolve Studio from the same layers and geometry and compared it with Blender Comp v001. |
 | 1.4     | 2026-11-02 | Recorded the decision to stay in Blender for now, and the Resolve project export `.drp`. |
 | 1.5     | 2026-11-02 | Added MiniMax H3 inpainting as Pass B candidate 4. |
+| 1.6     | 2026-11-02 | Recorded the grass-fire inpaint inputs and graph for candidate 2 test 1, and James's notes for later: a ComfyUI update or second install, and MiniMax H3. |

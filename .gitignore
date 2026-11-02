@@ -67,3 +67,6 @@ assets/inbox/*
 *.tar.gz
 *.tgz
 *.7z
+
+# Stills cut from the plate are plate media; the mp4 inputs beside them are already ignored.
+assets/elements/by-shot/**/*_start-frame_*.png
