@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.9
+**Version:** 1.10
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -88,6 +88,7 @@ Kept clips are in `assets/elements/by-shot/shot004_fire-jump/benchmark/` and gra
 | Date | Test | Change | Time | Ignition | Fire size and place | Plate outside mask | Look | Next |
 |---|---|---|---|---|---|---|---|---|
 | 2026-11-02 | 1 | New graph: inputs v001, settings above | 610 s (L4) | Pass. A spark at Jerry's landing contact on frame 26, spreading from frame 28 | Fail. A Jerry-sized fire at the base of the clump: at most 7.5% of the window and 11–14% of the mask; the rest of the mask was redrawn as grass. 56–100% of the fire sits where Jerry is, so he would hide most of it | Pass outside, fail at the edge. Outside: ~2/255, the re-encode level; 7 fire pixels in 81 frames. Inside, the redrawn grass is darker than the plate (luma −8 to −13 from 2 to 60 px inside the edge on frame 80), so the mask outline shows as a dark ring (James); Compose + Match did not correct it | Mixed. Flames weave through the blades, with blades in front and a scorched base, and the window blends into the plate with no visible seam. But the flames are saturated, hard-edged and sticker-like, with no smoke and no spread up the blades, and their colour does not match Jerry | prompt rewrite (below) |
+| 2026-11-02 | 2 | Test 1 plus `JB-010` as Reference Image 2 (James), `vace_ref_strength` still 0 | 647 s (L4) | Pass, same as test 1 | Fail, ≈ test 1: 1.7–6.8% of the window, 59–84% of it under Jerry. A different sample after ignition (PSNR 19–25 dB against test 1, 43 dB or more before frame 25), not a style change | Pass outside; the same dark ring | Same sticker-like flames; a bluish-white smoke puff at the base late in the shot | With `vace_ref_strength` 0 an added reference only reshuffles the sample. To pass style it needs a strength above 0, which risks Jerry's shape. Back to test 1's state for the prompt rewrite |
 
 Fix for the dark ring, in the comp rather than the generation: take from the inpaint only what changed. A change matte (per-pixel difference from the plate window, ramped from 22 to 45 of 255, grown 6 px, blurred 6 px, times the mask) keeps the fire, the scorch and the blades in front of the fire, and drops grass the model merely redrew darker. On frames 50 and 80 it cut the darkening in the band 2–60 px inside the edge from −12.7 and −11.0 to −1.9 and −1.8 luma. The Blender comp's Pass B layer should use it.
 
@@ -216,3 +217,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.7     | 2026-11-02 | Added James's fire-style LoRA idea to the later list. |
 | 1.8     | 2026-11-02 | Scored Pass B candidate 2 test 1 and listed the next tests. |
 | 1.9     | 2026-11-02 | Recorded the dark ring along the mask edge in test 1 and the change-matte fix for the comp. |
+| 1.10    | 2026-11-02 | Scored Pass B test 2 (`JB-010` added at reference strength 0). |

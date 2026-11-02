@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-02
-**Version:** 1.19
+**Version:** 1.20
 
 # Asset Inventory
 
@@ -76,7 +76,7 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 
 Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `workflows/comfyui/shot004-benchmark/`. The index and the keeping rule are in `docs/vfx-element-benchmark.md`.
 
-- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`), and ten Mick 1.3 SkyReels runs (`shot004_fire-jump_mick13-skyreels_*_v001.mp4`; `graymask-promptv3-jb010-str125-lenovo_seed1218565630` is the current best, and its `…_eu-ro-l4-repro_v001` copy, run 8r, is the same graph rerun on the rebuilt `EU-RO-1` volume; `…-lenovo-nag_…_eu-ro-l4_v001`, run 9, adds NAG), and the first Pass B grass-fire inpaint, `shot004_fire-jump_grassfire-inpaint_mick13_test1_seed1218565630_v001.mp4` (a 912x512 window of the plate, not a full frame).
+- `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`), and ten Mick 1.3 SkyReels runs (`shot004_fire-jump_mick13-skyreels_*_v001.mp4`; `graymask-promptv3-jb010-str125-lenovo_seed1218565630` is the current best, and its `…_eu-ro-l4-repro_v001` copy, run 8r, is the same graph rerun on the rebuilt `EU-RO-1` volume; `…-lenovo-nag_…_eu-ro-l4_v001`, run 9, adds NAG), and the first Pass B grass-fire inpaint, `shot004_fire-jump_grassfire-inpaint_mick13_test1_seed1218565630_v001.mp4` (a 912x512 window of the plate, not a full frame), and test 2 (`…_test2-jb010_…`).
 
 Media files are gitignored. The original base plate, grass fire, steam, and water passes are still only on the backup.
 
@@ -148,3 +148,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.17    | 2026-11-02 | Indexed run 9 (NAG) from the `EU-RO-1` volume. |
 | 1.18    | 2026-11-02 | Indexed the Pass B grass-fire inpaint inputs. |
 | 1.19    | 2026-11-02 | Indexed Pass B grass-fire test 1. |
+| 1.20    | 2026-11-02 | Indexed Pass B grass-fire test 2. |
