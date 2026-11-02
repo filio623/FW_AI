@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.2
+**Version:** 1.3
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -99,6 +99,32 @@ Review of the full render (`outputs/shot004_comp_blender/shot004_fire-jump_comp-
 
 Blender 5.2 compositor details that cost time: the comp is `scene.compositing_node_group`, a node group with an Image output (there is no Composite node); the render percentage does not scale image inputs, so render at 100%; the Mix node clamps its factor to 0–1 unless `clamp_factor` is off; mask coordinates are x = px / width and y = (height / 2 − row) / width + 0.5.
 
+## Fusion Comp v001 (2026-11-02)
+
+James asked for the same comp in DaVinci Resolve Studio's Fusion page to compare the two tools. Built by `scripts/resolve/shot004_comp_fusion.py` through Resolve's scripting interface (External scripting = Local), run with Resolve's bundled Python:
+
+```sh
+"/Applications/DaVinci Resolve/DaVinci Resolve.app/Contents/Applications/ResolvePython" \
+  scripts/resolve/shot004_comp_fusion.py \
+  --setting assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting \
+  [--render-preview DIR --frames 0-80]
+```
+
+- **Where it lives:** Resolve project `FW_AI_shot004_comp` (Local Database; it was "New Project 4"), project and timeline at 4096×2160, 24 fps. Timeline `shot004_comp_v001` has the plate on V1 and run 8 on V2, turned into one Fusion clip, so MediaIn1 is the plate and MediaIn2 is Jerry. The node tree is also saved as `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`, which can be pasted into any comp; after pasting, wire MediaIn2 → `Jerry_Place`, MediaIn1 → `Glow_PlateXLight` (Background) and `Glow_Add` (Background), and `Final_Grade` → MediaOut1.
+- **Rerunning the script rebuilds the comp** and deletes every tool except the MediaIns and MediaOut, so hand edits are lost. Before tuning by hand, copy the Fusion clip or the timeline in Resolve.
+- **Nodes:** four underlays group the layers (`Layer_Jerry_Element`, `Layer_Ground_Glow`, `Layer_Jerry_Comp`, `Layer_Ridge_Holdout`). Tools are named for their job (`Jerry_Place`, `Jerry_DarkFill`, `Jerry_CoreKey`, `Glow_GroundMask`, `PassB_Slot`, `Ridge_Mask`, `Final_Grade`, and so on), and the two masks are Polyline masks whose points can be dragged in the viewer.
+- **Same layers, different maths:** Fusion in Resolve works on the Rec.709 values it receives, not scene linear as Blender's compositor does, so its grade, matte thresholds, and glow strength are separate values, tuned until the two matched. Resolve hands Jerry to Fusion already fitted to the timeline height (×4.21875), so `Jerry_Place` adds only ×1.0213 to reach the same ×4.3077 placement.
+- **Match against the Blender comp** (`outputs/shot004_comp_fusion/shot004_fire-jump_comp-fusion_run8_preview_v001.mp4`; side by side in `outputs/shot004_comp_blender-vs-fusion_v001.mp4`): placement matches; ground glow just under Jerry is within about 10% of Blender's (red ×2.0–2.2 against ×2.1–2.4), a little weaker 150 px out; Jerry's body is slightly more yellow; the ridge holdout covers the same area. The dark-patch fill softens the face patches a little more than Blender's, but they still read as a face on frames 45–70.
+
+| | Blender compositor | Fusion page (Resolve) |
+|---|---|---|
+| Build by script | `bpy`, headless; no app open | Resolve must be open with scripting on; several API traps (see `docs/findings.md`, 2026-11-02) |
+| Render, 4096×2160 | ~2 s per frame on the M2 Pro GPU | ~8 s per frame, rendered through a temporary Saver |
+| Working space | Scene linear | Rec.709 as received, unless Resolve colour management is set up |
+| Masks | Mask editor, a separate editor | Polyline points in the viewer, as in any Fusion comp |
+| Grading | Compositor nodes only | Color page on the same clip |
+| File in the repo | `.blend`, opens by itself | `.setting` text; the live comp is in the Resolve database |
+
 ## Ignition Timing In The Delivered Comp
 
 From the local `Shot4 V031-1.mp4`: the fire lands around frame 23, the grass catches at once, spreads upward and outward through about frame 48, peaks around frames 42–54, and has burned down by about frame 66, while the main fire keeps growing taller to the end. The Houdini source settles on the ground at frames 25–28, so the delivered comp may sit the fire 2–3 frames earlier, or its source differs; confirm against the NAS `.mov` when restored. The delivered comp also carries other elements (a silver shape lower left, smoke near the start), so compare only the fire, grass, and glow.
@@ -145,3 +171,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.0     | 2026-11-02 | Initial Shot004 Fire Jump Comp And Pass B Plan. |
 | 1.1     | 2026-11-02 | Recorded James's answer: Jerry grows slightly after landing alongside the grass fire. Set the guide's damped post-landing growth target. |
 | 1.2     | 2026-11-02 | Built the guide builder and a candidate smaller guide (awaiting approval), built Blender Comp v001 with ground glow and ridge holdout, recorded the face problem the opaque comp exposes in run 8, and recorded the local delivered comp copy and its ignition timing. |
+| 1.3     | 2026-11-02 | Built Fusion Comp v001 in Resolve Studio from the same layers and geometry and compared it with Blender Comp v001. |

@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.39
+**Version:** 2.40
 
 # RunPod + ComfyUI
 
@@ -203,7 +203,7 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 
 **2026-11-01: `CA-MTL-1` is down.** RunPod's status page has had "CA-MTL-1 DC is Unavailable" open since 2026-10-31 20:30 UTC. `gpu list` shows no GPU type in `CA-MTL-1`, and `scripts/runpod-pod-up.sh` fails with "no longer any instances available" (nothing is charged). Volume `avw5iclb48` still lists in the account, but no Pod anywhere can attach it until the data center returns. If the outage lasts days, the fallback is a new volume in another data center, rebuilt from this file's model, node, and patch notes plus the repo's workflows and inputs, at roughly 25 GB of downloads.
 
-**2026-11-02 ~16:40 UTC: still down.** The status-page incident "CA-MTL-1 and EU-SE-1 DC is Unavailable" has had no update since it opened on 2026-10-31 20:30 UTC. `gpu list --include-unavailable` lists no GPU type in `CA-MTL-1`; volume `avw5iclb48` still lists there. No Pod was started.
+**2026-11-02 ~16:40 UTC: still down.** The status-page incident "CA-MTL-1 and EU-SE-1 DC is Unavailable" has had no update since it opened on 2026-10-31 20:30 UTC. `gpu list --include-unavailable` lists no GPU type in `CA-MTL-1`; volume `avw5iclb48` still lists there. No Pod was started. At 17:58 UTC it was still down; the incident's first update (17:34 UTC) said only that work continues. James chose to wait rather than rebuild the volume in another data center (A100 SXM 80 GB had Low stock in US-KS-2 and US-MD-1 at $1.79/hr).
 
 No Pod is running. `jnfjz83llx199h` (A40, `CA-MTL-1`) ran 00:08–00:51Z on 2026-10-20, about 43 min or $0.43, and was terminated by hand. Before it, `amsu1bpsrdzgfr` ran 15:42–20:01Z on 2026-10-19 (about $2.55). `RUNPOD_POD_ID` is cleared in `.env`. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB). The `--terminate-after` guard is not reliable; shut every Pod down by hand. A40 stock in `CA-MTL-1` can drop to `none`; `scripts/runpod-with-auth.sh runpodctl gpu list --include-unavailable` shows per-data-center stock, and the only GPU free there during the outage was an H100 SXM at $3.99/hr Secure. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac. A new Pod has a new host key; pass `-o StrictHostKeyChecking=accept-new`.
 
@@ -440,3 +440,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.37    | 2026-10-19 | Terminated A40 Pod `jnfjz83llx199h` after Mick 1.3 runs 7–8; set the resume point to benchmark step 8c (NAG, 720p, comp check). |
 | 2.38    | 2026-11-01 | Recorded the `CA-MTL-1` outage blocking volume `avw5iclb48` and the rebuild fallback. |
 | 2.39    | 2026-11-02 | Recorded that `CA-MTL-1` was still down on 2026-11-02; no Pod started. |
+| 2.40    | 2026-11-02 | Recorded the 17:58 UTC check and James's decision to wait out the outage. |

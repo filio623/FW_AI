@@ -11,11 +11,10 @@ Layer stack (bottom to top), one Frame node per layer:
 Media paths are stored relative to the .blend. Tunable values sit on nodes labelled
 "CTRL ..." so the comp can be adjusted node by node.
 
-Placement: a Mick 1.3 512p clip (912x512) maps onto the 4096x2160 plate by a uniform
-x4.3077 scale about the frame centre (docs/findings.md, 2026-11-01: x2.0192 at 1920
-wide, centred). The compositor centres images on the render canvas, so the Transform
-node needs no offset. Render at 100%: the 5.2 compositor does not scale image inputs
-with the resolution percentage.
+Placement and mask geometry come from scripts/shot004_comp_geometry.py, shared with the
+Fusion builder. The compositor centres images on the render canvas, so the Transform
+node scales Jerry by JERRY_SCALE with no offset. Render at 100%: the 5.2 compositor does
+not scale image inputs with the resolution percentage.
 
 Mask coordinates: x = px / width, y = (height/2 - row) / width + 0.5, where row is the
 pixel row from the top (verified 2026-11-02 on Blender 5.2.1).
@@ -27,20 +26,9 @@ import sys
 
 import bpy
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-SHOT = os.path.join(ROOT, "assets/elements/by-shot/shot004_fire-jump")
-PLATE = os.path.join(SHOT, "plates/FW_test_scene.mp4")
-JERRY = os.path.join(
-    SHOT, "benchmark/shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_v001.mp4")
-W, H = 4096, 2160
-PLATE_FRAMES, JERRY_FRAMES = 84, 81
-JERRY_SCALE = (1842 / 912) * (4096 / 1920)  # 4.3077: x2.0192 at 1920 wide, then up to 4096
-
-# Ridge top edge in plate pixels (x, row from top), traced from the focus fall-off of the
-# defocused foreground ridge on frame 0; the camera is locked.
-RIDGE_EDGE = [(-40, 1812), (576, 1805), (960, 1815), (1216, 1798), (1600, 1796), (1984, 1803),
-              (2368, 1800), (2624, 1778), (3008, 1781), (3264, 1782), (3648, 1786), (4136, 1790)]
-GROUND_TOP = 500  # the ground-glow limit runs from here down to the ridge (ground and grass)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from shot004_comp_geometry import (GROUND_POLYGON, H, JERRY, JERRY_FRAMES, JERRY_SCALE,  # noqa: E402
+                                   PLATE, PLATE_FRAMES, RIDGE_POLYGON, W)
 
 # Starting values for the CTRL nodes; tune in the .blend afterwards.
 LOOK = {
@@ -155,8 +143,8 @@ def build(jerry_path):
 
     plate_img, _ = movie(PLATE, PLATE_FRAMES)
     jerry_img, _ = movie(jerry_path, JERRY_FRAMES)
-    ridge = polygon_mask("ridge_holdout", RIDGE_EDGE + [(4136, 2240), (-40, 2240)])
-    ground = polygon_mask("ground_glow_limit", [(-40, GROUND_TOP), (4136, GROUND_TOP)] + RIDGE_EDGE[::-1])
+    ridge = polygon_mask("ridge_holdout", RIDGE_POLYGON)
+    ground = polygon_mask("ground_glow_limit", GROUND_POLYGON)
 
     # --- Plate ---
     f_plate = t.frame("PLATE  FW_test_scene (staged test plate)", (0.25, 0.25, 0.3))

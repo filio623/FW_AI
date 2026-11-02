@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-02
-**Version:** 1.17
+**Version:** 1.18
 
 # Findings
 
@@ -92,3 +92,5 @@
 - Comping Mick 1.3 run 8 opaque (core matte "over" plus a hotter grade, Blender) makes its darker interior patches read as two eyes and a mouth on about frames 45–70. Screen-only comps hide this because the patches read as pale cloud. Check a Jerry element opaque and graded, not only Screened, before scoring its look. Detail: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
 - Blender 5.2.1 compositor: the comp lives in `scene.compositing_node_group`, a node group whose Image output is the result (no Composite node); images sit centred on the render canvas at native size, and the render percentage does not scale them, so render at 100%; `ShaderNodeMix` clamps its factor to 0–1 unless `clamp_factor` is off; mask spline coordinates are x = px / width, y = (height / 2 − row) / width + 0.5. Blender's movie decode of the 10-bit test plate is about 1.5–2 of 255 brighter than ffmpeg's default `rgb24` conversion.
 - A copy of the delivered shot 004 comp, `Shot4 V031-1.mp4`, has been in `assets/elements/by-shot/shot004_fire-jump/comps/` since 2026-10-08; it was thought to be NAS-only. It shows the grass catching at landing (about frame 23), spreading through about frame 48, and burning down by about frame 66.
+- RunPod `CA-MTL-1` was still down at 17:58 UTC; the incident's first update since it opened ("continuing to work on resolving") came at 17:34 UTC. James chose to wait rather than rebuild the volume elsewhere.
+- DaVinci Resolve Studio 21.1.1 scripting works from Resolve's bundled `ResolvePython` with no environment variables, once Preferences → System → General → External scripting is set to Local. Pitfalls: `MediaPool.ImportMedia` with the documented dict form returned `None` (a plain list of paths works); `AppendToTimeline` `endFrame` is exclusive; a Fusion clip made by `Timeline.CreateFusionClip` reports no comps through `TimelineItem.GetFusionCompByIndex`, so open the Fusion page on it and use `fusion.GetCurrentComp()`; `comp.Execute` runs Lua asynchronously; a pasted settings block drops links to tools outside the block; Fusion tool names are case-insensitive, so a paste renames clashing tools; with the default "Scale entire image to fit", a 912×512 clip reaches Fusion already scaled ×4.21875 (fit to height) and centred on the 4096×2160 timeline. Polyline points are X = px / width − 0.5, Y = 0.5 − row / height; at 4096 wide a Blur of size 1 has a sigma of about 2.45 px. Detail: `scripts/resolve/shot004_comp_fusion.py`.
