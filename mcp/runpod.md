@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.41
+**Version:** 2.42
 
 # RunPod + ComfyUI
 
@@ -211,7 +211,7 @@ Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were 
 - `/workspace/restart_comfyui.sh` recreated by the script.
 - Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
 
-Run 8 has not yet been reproduced on the new volume; that is the check before new tests. Account balance was $4.90 at 19:24Z against $0.61/hr.
+Run 8 reproduced on the new volume (run 8r, 2026-11-02): James ran the saved graph unchanged on the L4; it finished in 667 s (run 8 took 353 s on the A40) and gave a nearby sample, not a bit-identical one (see `docs/vfx-element-benchmark.md`). The stack is verified; one-knob tests on it compare against run 8r on the same GPU type. Account balance was $4.90 at 19:24Z against $0.61/hr.
 
 **2026-11-01: `CA-MTL-1` is down.** RunPod's status page has had "CA-MTL-1 DC is Unavailable" open since 2026-10-31 20:30 UTC. `gpu list` shows no GPU type in `CA-MTL-1`, and `scripts/runpod-pod-up.sh` fails with "no longer any instances available" (nothing is charged). Volume `avw5iclb48` still lists in the account, but no Pod anywhere can attach it until the data center returns. If the outage lasts days, the fallback is a new volume in another data center, rebuilt from this file's model, node, and patch notes plus the repo's workflows and inputs, at roughly 25 GB of downloads.
 
@@ -454,3 +454,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.39    | 2026-11-02 | Recorded that `CA-MTL-1` was still down on 2026-11-02; no Pod started. |
 | 2.40    | 2026-11-02 | Recorded the 17:58 UTC check and James's decision to wait out the outage. |
 | 2.41    | 2026-11-02 | Built new volume `dqlwnz6nq8` in `EU-RO-1` with `scripts/runpod/setup_mick13_volume.sh`; pointed the up-script defaults at it. |
+| 2.42    | 2026-11-02 | Recorded run 8r: run 8 reproduced on the new volume (L4, 667 s). |
