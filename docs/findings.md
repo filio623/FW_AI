@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-02
-**Version:** 1.23
+**Version:** 1.24
 
 # Findings
 
@@ -99,3 +99,4 @@
 - NAG on the Mick 1.3 SkyReels setup, at its default scale 11 with face words in the negative prompt, gave a nearby sample (PSNR 36–39 dB against the same seed without NAG) with a slightly brighter, more even interior and half as many dark interior pixels. It is a small nudge, not a fix. How strongly the dark interior patches read as a face varies by sample: run 8 showed a clear face once comped opaque, while its reproduction on the new volume (run 8r) and run 9 show only faint lobes.
 - The Mick 1.3 graph's four seed fields serve its chunking for long shots (`MultiChannelSlicer`, 81 frames per iteration). The shot 004 runs are 81 frames, one iteration, so only `seed_1` is used and no chunks are stitched. MiniMax H3, the open-weight model Mickmumpitz moved to in late 2026, generates 5–15 s in one pass at 1344×768 and supports mask inpainting through its Fun ControlNet Union patch (ComfyUI 0.35+). Local commercial use needs a paid MiniMax license; Comfy Cloud generations include commercial rights, and Comfy Cloud lists the H3 nodes and `minimax_h3_ref2va`/`fl2va` models (checked 2026-11-02).
 - Mickmumpitz's own inpainting example for AI-VFX (OfficeFlood, in the 1.0 example files) feeds a DRIVING VIDEO that is the plate outside the mask and the plate's Canny edges on black inside it, with a mask that grows over time, `vace_strength` 1.0, `vace_ref_strength` 0, NAG on, Lenovo on, and 720p. The edges keep the scene's structure while the model generates new content in the masked area. The shot 004 grass-fire inputs follow that recipe.
+- First grass-fire inpaint on the shot 004 plate (Mick 1.3, Canny edges inside a spreading mask, `vace_strength` 1.0): ignition landed on the right frame and place and the plate outside the mask stayed intact, but the model redrew most of the mask as grass and kept the fire small, and the redrawn grass came out darker than the plate, so the mask outline showed as a dark ring that Compose + Match did not remove. Edges inside a mask preserve structure but cannot ask for new content. Comping only the pixels that changed (a soft difference matte against the plate, inside the mask) removes the ring and keeps the fire and scorch. Detail: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B test log.

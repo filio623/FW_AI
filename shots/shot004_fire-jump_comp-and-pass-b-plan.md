@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.7
+**Version:** 1.9
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -80,6 +80,24 @@ Inputs from `scripts/build_shot004_grassfire_inputs.py`, saved in `assets/elemen
 - **Start image** (`…_start-frame_…`): the window's frame 0, the plate before any fire. Not committed: plate stills are ignored like the plate.
 
 Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_grassfire-inpaint_mick13_v001.json`, on the Pod as `shot004/pass-b_grassfire/`. It is the Jerry graph (run 9 state) with these changes: the three inputs above; Reference Image 2 (`JB-010`) bypassed; image mode `Start + Reference` and match mode `Compose + Match`; `vace_strength` 1.0 and `vace_ref_strength` 0, as in the OfficeFlood run; a grass-fire prompt with `l3n0v0`; the NAG negatives swapped from face words to "cartoon, CGI, animation, fireball, glowing orb, character, face, text, watermark"; output prefix `shot004_grassfire`. Seed, steps, sampler, LoRAs, 512p and 81 frames are unchanged. Because this is the first run of a new graph, it is a baseline, not a one-knob test.
+
+#### Pass B test log
+
+Kept clips are in `assets/elements/by-shot/shot004_fire-jump/benchmark/` and graph extracts in `workflows/comfyui/shot004-benchmark/`, both named `shot004_fire-jump_grassfire-inpaint_mick13_test<N>_…`. Measures: fire pixels (bright, red-dominant) as a share of the window and of the mask; the share of the fire that run 9's Jerry would cover; and the mean change outside the mask.
+
+| Date | Test | Change | Time | Ignition | Fire size and place | Plate outside mask | Look | Next |
+|---|---|---|---|---|---|---|---|---|
+| 2026-11-02 | 1 | New graph: inputs v001, settings above | 610 s (L4) | Pass. A spark at Jerry's landing contact on frame 26, spreading from frame 28 | Fail. A Jerry-sized fire at the base of the clump: at most 7.5% of the window and 11–14% of the mask; the rest of the mask was redrawn as grass. 56–100% of the fire sits where Jerry is, so he would hide most of it | Pass outside, fail at the edge. Outside: ~2/255, the re-encode level; 7 fire pixels in 81 frames. Inside, the redrawn grass is darker than the plate (luma −8 to −13 from 2 to 60 px inside the edge on frame 80), so the mask outline shows as a dark ring (James); Compose + Match did not correct it | Mixed. Flames weave through the blades, with blades in front and a scorched base, and the window blends into the plate with no visible seam. But the flames are saturated, hard-edged and sticker-like, with no smoke and no spread up the blades, and their colour does not match Jerry | prompt rewrite (below) |
+
+Fix for the dark ring, in the comp rather than the generation: take from the inpaint only what changed. A change matte (per-pixel difference from the plate window, ramped from 22 to 45 of 255, grown 6 px, blurred 6 px, times the mask) keeps the fire, the scorch and the blades in front of the fire, and drops grass the model merely redrew darker. On frames 50 and 80 it cut the darkening in the band 2–60 px inside the edge from −12.7 and −11.0 to −1.9 and −1.8 luma. The Blender comp's Pass B layer should use it.
+
+Reading of test 1: the prompt asked for "a small flame" that "spreads", and inside the mask the Canny edges tell the model exactly where grass blades are, at `vace_strength` 1.0, so it redrew grass and kept the fire small. Edges can show structure; they cannot ask for fire. Next tests, one change each, cheapest first:
+
+1. **Prompt.** Drop "small flame"; describe the whole clump engulfed, with tall flames climbing above the blades and grey smoke, in Jerry's flame vocabulary (soft translucent flames, peach-white heart, orange and gold tongues, thin dark smoke, sparks) so the two fires match.
+2. **Inside the mask.** Canny edges replaced by flat gray, or `vace_strength` lowered, to loosen the hold on the grass.
+3. **Taller window, 720p** (input set v002): a window from the frame top so the mask can reach the grass tips. Only useful once the fire fills the current mask.
+4. **Styled reference still**, as in Mickmumpitz's OfficeFlood run: a plate frame with burning grass painted in by an image model, given Jerry's flames as the style.
+5. **The production grass-fire render as the guide** (candidate 1) once it is restored from the NAS: it would tell the model where and how big the fire is.
 
 Smoke or heat distortion and scorch are listed in the shot plan's required layers. Scorch comes free with candidate 2; heat distortion is a comp effect.
 
@@ -196,3 +214,5 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.5     | 2026-11-02 | Added MiniMax H3 inpainting as Pass B candidate 4. |
 | 1.6     | 2026-11-02 | Recorded the grass-fire inpaint inputs and graph for candidate 2 test 1, and James's notes for later: a ComfyUI update or second install, and MiniMax H3. |
 | 1.7     | 2026-11-02 | Added James's fire-style LoRA idea to the later list. |
+| 1.8     | 2026-11-02 | Scored Pass B candidate 2 test 1 and listed the next tests. |
+| 1.9     | 2026-11-02 | Recorded the dark ring along the mask edge in test 1 and the change-matte fix for the comp. |
