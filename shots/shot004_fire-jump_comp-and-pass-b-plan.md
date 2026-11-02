@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.4
+**Version:** 1.5
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -68,6 +68,7 @@ Candidates, cheapest and most controllable first:
 1. **AI enhancement of the production grass-fire render.** Feed `ren_grassfire_cpu` as the VACE driving video with flame references and a photographic-flame prompt, on black. Pass A run 1 showed that an RGB driving video is traced almost exactly. That was a failure for Jerry, but here it keeps the production timing and shape while the model replaces the texture. Output is an element on black for Screen or Add, like Jerry. Needs the render restored from the NAS.
 2. **Inpainting on the clean plate.** Mick 1.3's native mode: DRIVING VIDEO = the clean plate, MASK = the grass region, animated to start at the landing spot on the landing frame and spread outward, prompt for dry grass catching fire, match mode "Compose + Match", which keeps the plate outside the mask and fixes the colour seam. Use the clean plate, never the plate with Jerry comped in, or the model redraws Jerry and bakes him into the grass layer. Can also scorch and blacken the grass, which an element on black cannot. Caution: the first stock-VACE plate test (2026-10-08) failed with colour artefacts and a growing static mask; Mick's animated-mask setup is different but expect iteration.
 3. **Loose flame and smoke elements** from Wan-Alpha (text-to-video with real alpha), comped by hand as extra detail. Parked in the benchmark until 1 or 2 is scored.
+4. **MiniMax H3 inpainting** (found 2026-11-02). H3 is the open-weight video model Mickmumpitz built his 2026-10-28 short film on; his Performance Capture 2.2 and AI renderer graphs also use it. It generates 5–15 s in one pass at a native 1344×768 and inpaints video through a mask with its Fun ControlNet Union patch (ComfyUI 0.35+, Union 2.0 0.38+; the `EU-RO-1` Pod runs 0.30.0). Its minimum length is 5 s (124 frames), so the 84-frame shot would be padded and trimmed. Local commercial use needs a paid MiniMax license through Comfy; Comfy Cloud generations include commercial rights, and Comfy Cloud already has the H3 nodes and models, so the first H3 test can run there with the same plate crop and mask as candidate 2.
 
 Smoke or heat distortion and scorch are listed in the shot plan's required layers. Scorch comes free with candidate 2; heat distortion is a comp effect.
 
@@ -175,3 +176,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.2     | 2026-11-02 | Built the guide builder and a candidate smaller guide (awaiting approval), built Blender Comp v001 with ground glow and ridge holdout, recorded the face problem the opaque comp exposes in run 8, and recorded the local delivered comp copy and its ignition timing. |
 | 1.3     | 2026-11-02 | Built Fusion Comp v001 in Resolve Studio from the same layers and geometry and compared it with Blender Comp v001. |
 | 1.4     | 2026-11-02 | Recorded the decision to stay in Blender for now, and the Resolve project export `.drp`. |
+| 1.5     | 2026-11-02 | Added MiniMax H3 inpainting as Pass B candidate 4. |
