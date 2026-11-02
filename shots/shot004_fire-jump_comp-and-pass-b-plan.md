@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.6
+**Version:** 1.7
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -178,6 +178,7 @@ Later (James, 2026-11-02), not now:
 
 - Update ComfyUI, either in place with a rollback or as a second install beside the current one. Needed before MiniMax H3 can run on the Pod. Why the Pod runs 0.30.0, and what an update risks, is in `mcp/runpod.md` (ComfyUI version).
 - Try MiniMax H3 for the grass fire (candidate 4), probably on Comfy Cloud first.
+- A fire-style LoRA (James, 2026-11-02): one trained look for every AI fire in the film, Jerry and grass alike. Train it on fire material (flame close-ups, approved renders, matching real fire), not on whole Jerry bodies, so it carries the look without pulling every fire into his teardrop shape; a Jerry character LoRA stays a separate option (benchmark Stage 4). A LoRA only works on the base model it was trained for, so decide between the Wan 2.1 14B family and MiniMax H3 first, and approve the target look first.
 
 Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, compositing in Blender, inpainting) are in `references/mickmumpitz-library.md` under Creature on a Path.
 
@@ -194,3 +195,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.4     | 2026-11-02 | Recorded the decision to stay in Blender for now, and the Resolve project export `.drp`. |
 | 1.5     | 2026-11-02 | Added MiniMax H3 inpainting as Pass B candidate 4. |
 | 1.6     | 2026-11-02 | Recorded the grass-fire inpaint inputs and graph for candidate 2 test 1, and James's notes for later: a ComfyUI update or second install, and MiniMax H3. |
+| 1.7     | 2026-11-02 | Added James's fire-style LoRA idea to the later list. |
