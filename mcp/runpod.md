@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.44
+**Version:** 2.45
 
 # RunPod + ComfyUI
 
@@ -210,6 +210,8 @@ Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were 
 - Models: the merge (checksum verified), UMT5 FP8 encoder (size verified), Kijai's BF16 Wan VAE as `wan_2.1_vae.safetensors`, FusionX and Lenovo LoRAs (checksums verified). The merge downloaded at about 30 MB/s.
 - `/workspace/restart_comfyui.sh` recreated by the script.
 - Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
+
+ComfyUI version (checked 2026-11-02): the official template image `runpod/comfyui:1.3.3-comfyuiv0.30.0-cuda12.8` bakes ComfyUI 0.30.0; upstream is at 0.43.0 (2026-10-27). On every boot `start.sh` compares the volume's bundle manifest with the image's; when they differ (a new template image) it rsyncs the image's ComfyUI core over the volume's, keeping `models`, `input`, `output`, `user`, `custom_nodes` and the venv. So a ComfyUI updated by hand on the volume survives restarts until RunPod ships a new template image, which then overwrites it, possibly with an older version. Updating in place also risks the pinned custom nodes and the NAG patch and changes the seed baseline, so do it at a break between tests, with a rollback (record the commit and `pip freeze` first), or as a second install on the same volume.
 
 Run 8 reproduced on the new volume (run 8r, 2026-11-02): James ran the saved graph unchanged on the L4; it finished in 667 s (run 8 took 353 s on the A40) and gave a nearby sample, not a bit-identical one (see `docs/vfx-element-benchmark.md`). The stack is verified; one-knob tests on it compare against run 8r on the same GPU type. Account balance was $4.90 at 19:24Z against $0.61/hr.
 
@@ -457,3 +459,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.42    | 2026-11-02 | Recorded run 8r: run 8 reproduced on the new volume (L4, 667 s). |
 | 2.43    | 2026-11-02 | Recorded the NAG crash on the new volume and the replacement NAG patch. |
 | 2.44    | 2026-11-02 | Verified the replacement NAG patch with a full run (benchmark run 9). |
+| 2.45    | 2026-11-02 | Recorded why the Pod runs ComfyUI 0.30.0 and how the template overwrites a hand-updated core. |
