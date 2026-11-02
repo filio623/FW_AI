@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-02
-**Version:** 1.14
+**Version:** 1.15
 
 # Asset Inventory
 
@@ -68,6 +68,7 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 - `assets/elements/by-shot/shot004_fire-jump/comps/Shot4 V031-1.mp4`: local copy of the delivered Houdini comp (H.264, 1920x1080, 24 fps, 84 frames), file-dated 2026-10-08 like the staged test plate, matching the surveyed `FW_test/Scene 4/Shot4 V031-1.mp4` metadata. Its relation to the NAS delivery proxy `Shot4 V031-1.mov` is unverified, but it shows the delivered ignition timing: the fire lands around frame 23, the grass catches at once, spreads through about frame 48, and has burned down by about frame 66.
 - `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend`: first Blender comp (Blender 5.2.1 compositor), built by `scripts/blender/shot004_comp_build.py`. Plate + ground glow + Pass B slot + Mick 1.3 run 8 (core over, Screen glow, bloom) + ridge holdout + neutral final grade. Media paths are relative to the `.blend`. Method and review: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
 - `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`: the same comp as a Fusion node tree (settings text), built in DaVinci Resolve Studio 21.1.1 by `scripts/resolve/shot004_comp_fusion.py`. The live copy is the Fusion clip in timeline `shot004_comp_v001` of Resolve project `FW_AI_shot004_comp` (Local Database). Method and comparison: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
+- `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.drp`: export of that Resolve project (timeline plus the Fusion clip with the full node tree, checked by decoding the export). Import it from Resolve's Project Manager; media are linked by absolute path.
 
 ### Benchmark clips
 
@@ -140,3 +141,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.12    | 2026-11-01 | Recorded that the fire source `.mov` decodes as 1920x1014 through frame-cropping metadata and covers the whole plate. |
 | 1.13    | 2026-11-02 | Indexed the local copy of the delivered comp `Shot4 V031-1.mp4` and its ignition timing, and the first Blender comp `.blend`. |
 | 1.14    | 2026-11-02 | Indexed the Fusion version of the shot004 comp and its Resolve project. |
+| 1.15    | 2026-11-02 | Indexed the Resolve project export `.drp` of the Fusion comp. |

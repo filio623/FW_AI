@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.3
+**Version:** 1.4
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -10,6 +10,7 @@ The plan for turning the shot 004 Pass A element (Jerry on black) into a layered
 
 - **Comp tool: Blender first.** The agent builds the comp as a Blender compositor node tree by script, renders a preview, checks it, and hands over a `.blend` that James can open and adjust node by node. Blender 5.2.1 is installed and the Blender MCP bridge is set up (`mcp/blender.md`).
 - **Fusion and Resolve later, if needed.** James has DaVinci Resolve Studio 21.1.1, so external scripting is available, and the same comp could be authored as a Fusion graph. Resolve's color tools are the main reason to move there. Final grading may be a separate Resolve step either way.
+- **After the side-by-side (2026-11-02): stay in Blender for now.** It renders about four times faster and is simpler to rebuild by script. The Fusion version is kept for reference (see Fusion Comp v001); Resolve stays the likely place for the final grade.
 - **Pass B grass ignition is AI-first.** The production grass-fire render `ren_grassfire_cpu..mov` is a rough first attempt, kept as a timing and behavior reference. It is not the element. The goal is an AI version that looks better.
 - **Quick previews** can still be made with `ffmpeg` (Screen blend). Placement math is in `docs/findings.md`, 2026-11-01.
 
@@ -111,6 +112,7 @@ James asked for the same comp in DaVinci Resolve Studio's Fusion page to compare
 ```
 
 - **Where it lives:** Resolve project `FW_AI_shot004_comp` (Local Database; it was "New Project 4"), project and timeline at 4096×2160, 24 fps. Timeline `shot004_comp_v001` has the plate on V1 and run 8 on V2, turned into one Fusion clip, so MediaIn1 is the plate and MediaIn2 is Jerry. The node tree is also saved as `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`, which can be pasted into any comp; after pasting, wire MediaIn2 → `Jerry_Place`, MediaIn1 → `Glow_PlateXLight` (Background) and `Glow_Add` (Background), and `Final_Grade` → MediaOut1.
+- **Project file in the repo:** `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.drp`, a Resolve project export (File → Import Project in Resolve's Project Manager). It holds the timeline and the Fusion clip with the full node tree; the media are linked by absolute path, so relink if the repo moves.
 - **Rerunning the script rebuilds the comp** and deletes every tool except the MediaIns and MediaOut, so hand edits are lost. Before tuning by hand, copy the Fusion clip or the timeline in Resolve.
 - **Nodes:** four underlays group the layers (`Layer_Jerry_Element`, `Layer_Ground_Glow`, `Layer_Jerry_Comp`, `Layer_Ridge_Holdout`). Tools are named for their job (`Jerry_Place`, `Jerry_DarkFill`, `Jerry_CoreKey`, `Glow_GroundMask`, `PassB_Slot`, `Ridge_Mask`, `Final_Grade`, and so on), and the two masks are Polyline masks whose points can be dragged in the viewer.
 - **Same layers, different maths:** Fusion in Resolve works on the Rec.709 values it receives, not scene linear as Blender's compositor does, so its grade, matte thresholds, and glow strength are separate values, tuned until the two matched. Resolve hands Jerry to Fusion already fitted to the timeline height (×4.21875), so `Jerry_Place` adds only ×1.0213 to reach the same ×4.3077 placement.
@@ -172,3 +174,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.1     | 2026-11-02 | Recorded James's answer: Jerry grows slightly after landing alongside the grass fire. Set the guide's damped post-landing growth target. |
 | 1.2     | 2026-11-02 | Built the guide builder and a candidate smaller guide (awaiting approval), built Blender Comp v001 with ground glow and ridge holdout, recorded the face problem the opaque comp exposes in run 8, and recorded the local delivered comp copy and its ignition timing. |
 | 1.3     | 2026-11-02 | Built Fusion Comp v001 in Resolve Studio from the same layers and geometry and compared it with Blender Comp v001. |
+| 1.4     | 2026-11-02 | Recorded the decision to stay in Blender for now, and the Resolve project export `.drp`. |
