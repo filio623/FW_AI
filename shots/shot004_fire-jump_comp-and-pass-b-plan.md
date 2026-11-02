@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.1
+**Version:** 1.2
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -21,7 +21,8 @@ The plan for turning the shot 004 Pass A element (Jerry on black) into a layered
 | Jerry (Pass A) | `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_v001.mp4` (run 8, 912×512, 24 fps, 81 frames) | Current best. Too large (see below). |
 | Houdini fire (reference) | `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov` (decodes 1920×1014, covers the whole plate) | Motion source for Pass A. |
 | Grass fire (reference only) | `ren_grassfire_cpu..mov` on the NAS backup | Not restored. |
-| Delivered comp (reference) | `Shot4 V031-1.mov` on the NAS backup | Not restored. |
+| Delivered comp (reference) | `assets/elements/by-shot/shot004_fire-jump/comps/Shot4 V031-1.mp4` (1920×1080, 24 fps, 84 frames) | Local copy, file-dated 2026-10-08; its relation to the NAS `Shot4 V031-1.mov` is unverified. Ignition timing below. |
+| Comp (Blender) | `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend` | v001, 2026-11-02. See Blender Comp v001. |
 
 Placing a Mick 1.3 512p clip on the plate scaled to 1920×1014: scale ×2.0192 to 1842×1034, crop 10 px off the top, place at x +39.
 
@@ -44,16 +45,18 @@ Every layer is a separate input or node, so Jerry, the grass fire, or the glow c
 
 - Review of run 8 over the plate (2026-11-01): placement and black are correct; Jerry reads as a pale glowing orb and slightly translucent; he is 20–50% larger than the Houdini fire.
 - **Size:** rebuild the gray-in-mask guide with about 4–8 px of growth and a rounded top (benchmark step 8c, item 4). **Growth after landing (James, 2026-11-02):** Jerry grows slightly as the grass catches and grows with him. He should not inflate the way the Houdini fire does: its area roughly triples from landing to the last frame, about 1.7× in linear size. Build the guide at the Houdini fire's size up to landing, then damp the post-landing growth to about 1.2–1.3× linear by the last frame. Make the factor a setting in the guide builder so it can be tuned after a test, and time it to the grass ignition so Jerry and the grass grow together.
-- **Translucency:** comp first. Use an opacity matte from Jerry's bright core comped "over" the plate, plus a Screen or Add copy for the glow, plus a hotter grade. Generation fallback: prompt for a denser, brighter core, or NAG negatives.
+- **Guide builder (2026-11-02):** `scripts/build_shot004_guide.py`, run with `/usr/local/bin/python3` (numpy, OpenCV). Per frame: red channel > 20, holes filled; an opening with a 14 px disk removes flame tongues and the tip; the largest piece is replaced by its convex hull; after scaling, a second opening at 0.3 × the body's smaller side domes the top; then 6 px of growth. Up to frame 28 (bottom settles on the ground) the body keeps the fire's size. After it, width and height each follow the fire's own growth raised to one exponent, so the body's linear size (√(w·h)) reaches `--post-scale` at `--grow-end` and keeps the fire's timing. Measured on the rounded body, the fire grows 1.91× from frame 28 to 80; at 1.25 the exponent is 0.346 and the body grows 1.24×. Settings: `--grow`, `--round`, `--round-frac`, `--landing`, `--post-scale`, `--grow-end` (default the last frame; set it nearer frame 48–54 to finish growing with the grass), `--soft` (mask edge, sigma 3 as before). Each run writes the guide, the mask, and a JSON report of the settings and per-frame sizes.
+- **Default candidate, awaiting James's approval** (in `outputs/shot004_guide_v002/candidates/`, not yet an asset): `grow6-round14-30-post125`. Against the grow16 guide it is 0.83× linear at frame 0, 0.80× at landing, and 0.60× by frame 80. Against the fire mask it is 1.16× at frame 0 (6 px of growth on a small body), 1.09× at landing, and 0.73× at frame 80, where the fire is a tall column. Variants built for comparison: `grow4`, `grow8`, `post120`, `post130`, and `round-frac 0`. Previews: `outputs/shot004_guide_v002/guide_v002_outlines_a.png`, `guide_v002_fill_a.png`, `guide_v002_on-run8_a.png`, `guide_v002_preview_v001.mp4`. On approval it is copied into `fire/` under its `_v001` name, indexed in `docs/asset-inventory.md`, and uploaded to the volume's `input/`. The GPU run then changes one input, the guide, but that input changes size, top shape, and post-landing growth together; if the result is mixed, the variants separate them.
+- **Translucency:** comp first. Use an opacity matte from Jerry's bright core comped "over" the plate, plus a Screen or Add copy for the glow, plus a hotter grade. Generation fallback: prompt for a denser, brighter core, or NAG negatives. Done in Blender Comp v001; it exposed a face problem in run 8 (see below).
 - Remaining GPU tests are in benchmark step 8c: NAG with negatives, 720p, smaller guide.
 
 ### Ridge holdout
 
-At the start position a dirt ridge in front of Jerry should hide part of him, as in the Houdini version. Cut the ridge out of the plate as a foreground matte (hand roto in Blender or Fusion, or AI segmentation such as SAM2) and layer it back over Jerry. Comp only.
+At the start position a dirt ridge in front of Jerry should hide part of him, as in the Houdini version. Cut the ridge out of the plate as a foreground matte (hand roto in Blender or Fusion, or AI segmentation such as SAM2) and layer it back over Jerry. Comp only. Done in Blender Comp v001 as a hand-placed mask.
 
 ### Ground glow
 
-A comp effect, not AI. Take Jerry's element brightness, blur it heavily and tint it orange, and use that light map to brighten and warm the plate where the light falls, limited by a soft ground mask with a strength control. It moves and flickers with Jerry automatically. Upgrade path if it looks flat: a rough ground surface in Blender with a point light following Jerry's path, rendered as a light pass.
+A comp effect, not AI. Take Jerry's element brightness, blur it heavily and tint it orange, and use that light map to brighten and warm the plate where the light falls, limited by a soft ground mask with a strength control. It moves and flickers with Jerry automatically. Upgrade path if it looks flat: a rough ground surface in Blender with a point light following Jerry's path, rendered as a light pass. Done in Blender Comp v001.
 
 ### Pass B: grass ignition (AI)
 
@@ -67,6 +70,39 @@ Candidates, cheapest and most controllable first:
 
 Smoke or heat distortion and scorch are listed in the shot plan's required layers. Scorch comes free with candidate 2; heat distortion is a comp effect.
 
+## Blender Comp v001 (2026-11-02)
+
+`assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend`, built by `scripts/blender/shot004_comp_build.py` (Blender 5.2.1). Rebuild with:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \
+  --python scripts/blender/shot004_comp_build.py -- assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend
+```
+
+Rebuilding overwrites the file, so save hand edits as `_v002` first. Starting values are in the script's `LOOK` table; every tunable node is labelled `CTRL …`. 4096×2160 at 100%, frames 1–81 (Jerry's length; the plate has 84). Frame 1 is plate frame 0 and run 8 frame 0. Renders at about 2 s per frame on the M2 Pro GPU. To inspect one node, `scripts/blender/comp_tap.py` renders its output to EXR without saving the `.blend`.
+
+| Layer | Nodes and starting values |
+|---|---|
+| Plate | Image node, movie, 84 frames. View transform Standard. |
+| Ground glow | Jerry luminance → Fast Gaussian blur 900 px → map range 0–0.08 to 0–1 → × tint (1.0, 0.42, 0.10). Lit plate = plate × (1 + 2.5 × tint × light), limited by mask `ground_glow_limit` (row 500 down to the ridge, blurred 220 px), so the ridge's camera side stays dark. Raises the dirt under Jerry about 1.6–2.4× in red. |
+| Pass B slot | A reroute (`Pass B in`) between the lit plate and Jerry; insert the grass ignition there. |
+| Jerry | Run 8 → Transform ×4.3077 about the centre, bicubic (the 2026-11-01 placement math; the compositor centres images, so no offset) → saturation 1.2 → gain (1.25, 1.0, 0.78) → dark-patch fill (Lighten with a 140 px blur of itself, amount 1.0). Core over: matte = luminance blurred 30 px, mapped 0.03–0.22 to 0–1, × opacity 0.85. Then the same Jerry Screened on top, plus Fog Glow bloom (threshold 0.25, strength 0.6). |
+| Ridge holdout | Mask `ridge_holdout`, a polygon along the defocused ridge top (rows 1778–1815 at 4096 wide, traced from the focus fall-off on frame 0; the camera is locked), blurred 28 px; mixes the lit plate back over Jerry. Hides the bottom ~90 px of Jerry at the start, frames 1–12. |
+| Final grade | Neutral Color Balance → Group Output and Viewer. |
+
+Review of the full render (`outputs/shot004_comp_blender/shot004_fire-jump_comp-blender_run8_preview_v001.mp4`, 2048×1080):
+
+- Placement matches the ffmpeg preview within a few pixels on frames 1 and 33. Jerry now reads as hot and opaque, and the ground glow gives a warm pool on the dirt and grass that follows him without visible flicker (the largest frame-to-frame change in a ground patch is 2.7 of 255, during the jump).
+- **Face problem in run 8.** Once Jerry is opaque and hot, the darker interior patches of run 8 read as two eyes and a mouth on about frames 45–70. Over the plate with Screen alone they read as pale cloud, which hid this. The dark-patch fill reduces it but does not remove it, and it softens the flame texture. This is a generation problem, and the reason to run benchmark step 8c item 1 (NAG negatives "face, eyes, nose, mouth") before trusting a look; the smaller guide may also change it.
+- A thin blue-violet line sits along Jerry's bottom edge on some frames after landing (visible at frames 49 and 65).
+- Blender's movie decode of the plate is about 1.5–2 of 255 brighter than ffmpeg's `rgb24` conversion across the frame. It is a decode difference, not a comp change; compare comps against Blender's own plate.
+
+Blender 5.2 compositor details that cost time: the comp is `scene.compositing_node_group`, a node group with an Image output (there is no Composite node); the render percentage does not scale image inputs, so render at 100%; the Mix node clamps its factor to 0–1 unless `clamp_factor` is off; mask coordinates are x = px / width and y = (height / 2 − row) / width + 0.5.
+
+## Ignition Timing In The Delivered Comp
+
+From the local `Shot4 V031-1.mp4`: the fire lands around frame 23, the grass catches at once, spreads upward and outward through about frame 48, peaks around frames 42–54, and has burned down by about frame 66, while the main fire keeps growing taller to the end. The Houdini source settles on the ground at frames 25–28, so the delivered comp may sit the fire 2–3 frames earlier, or its source differs; confirm against the NAS `.mov` when restored. The delivered comp also carries other elements (a silver shape lower left, smoke near the start), so compare only the fire, grass, and glow.
+
 ## Files To Fetch From The NAS
 
 James will copy these when he is at the NAS. Put them in `assets/inbox/`; they are classified and renamed from there. NAS restore prefix: `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST/`.
@@ -74,21 +110,22 @@ James will copy these when he is at the NAS. Put them in `assets/inbox/`; they a
 | Priority | NAS path (under the prefix) | Use |
 |---|---|---|
 | 1 | `04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/ren_grassfire_cpu/` (Proxy `.mov`; any EXR or full-res frames too) | Pass B reference and the input for candidate 1 |
-| 1 | `04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/Proxy/Shot4 V031-1.mov` | The delivered comp: ignition timing, occlusion, glow reference |
 | 2 | The original base plate (`4 base plate.mov`); exact NAS location not yet recorded, likely under `04 VFX/VFX Footage/Shot_4/` | The real plate for the final comp |
+| 3 | `04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/Proxy/Shot4 V031-1.mov` | The delivered comp; a local `.mp4` copy already covers timing and glow reference, so this only confirms provenance |
 | 3 | `.../shot_4v031_delivery/ren_steam/` and `.../ren_wetmap/` | Smoke and scorch reference |
 
 ## Open Questions For James
 
 - ~~After landing, should Jerry keep the same size while the grass carries the growth?~~ Answered 2026-11-02: Jerry grows slightly as the grass catches and grows with him (see Size).
-- Ignition frame: confirm against `Shot4 V031-1.mov` once restored.
+- Ignition frame: the local `Shot4 V031-1.mp4` shows ignition at landing, about frame 23 (see Ignition Timing). Confirm against the NAS `.mov` once restored.
+- Guide: approve `grow6-round14-30-post125`, or pick a variant (growth 4 or 8 px, post-landing 1.2 or 1.3, growth ending at the grass peak instead of the last frame).
 
 ## Order Of Work
 
 Not GPU-bound:
 
-1. Build the smaller, rounded guide and mask (local, free).
-2. Build the first Blender comp with what is on hand: plate, run 8, ridge holdout, ground glow. Render a preview for review and hand over the `.blend`.
+1. ~~Build the smaller, rounded guide and mask (local, free).~~ Built 2026-11-02; candidate awaiting approval (see Size).
+2. ~~Build the first Blender comp with what is on hand: plate, run 8, ridge holdout, ground glow. Render a preview for review and hand over the `.blend`.~~ Blender Comp v001, 2026-11-02.
 3. When the NAS files arrive: restore and index them, then compare with the delivered comp.
 
 GPU, once RunPod `CA-MTL-1` is back (down since 2026-10-31; see `mcp/runpod.md`):
@@ -107,3 +144,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 |---------|------------|-------------|
 | 1.0     | 2026-11-02 | Initial Shot004 Fire Jump Comp And Pass B Plan. |
 | 1.1     | 2026-11-02 | Recorded James's answer: Jerry grows slightly after landing alongside the grass fire. Set the guide's damped post-landing growth target. |
+| 1.2     | 2026-11-02 | Built the guide builder and a candidate smaller guide (awaiting approval), built Blender Comp v001 with ground glow and ridge holdout, recorded the face problem the opaque comp exposes in run 8, and recorded the local delivered comp copy and its ignition timing. |

@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-01
-**Version:** 1.16
+**Modified:** 2026-11-02
+**Version:** 1.17
 
 # Findings
 
@@ -85,3 +85,10 @@
 - The shot 004 Houdini fire source `.mov` carries H.264 frame-cropping metadata (33 px top and bottom). It decodes as 1920×1014, the 4K DCI plate's 1.896 aspect, so the render covers the whole plate: plate scaled to 1920×1014 lines up with the fire. The 832×448 control proxy is that 1920×1014 frame scaled ×0.4333 with about 4.3 px of padding top and bottom (pad-to-fit, as documented). Mick 1.3's 512p resize scales the proxy ×1.1429 and crops 19.4 px off each side, so a Mick 1.3 output maps back to the plate at ×2.0192 (912×512 → 1842×1034), offset x +39 and y −10 at 1920 wide.
 - First comp preview of Mick 1.3 run 8 over the plate (Screen, ffmpeg, `outputs/shot004_comp/`). It sits within 2–11 px of the Houdini fire and its black vanishes cleanly; differences away from the element match the Houdini comp's re-encode noise. Jerry is 20–50% larger than the Houdini fire, 1.5× wide at frame 0 and 1.05–1.2× by the landing, because the guide is the fire mask grown 16 px and Jerry fills it. Over the plate he reads as a pale, glowing orb with flame tongues, less saturated and hot than the Houdini fire.
 - The Mickmumpitz Patreon workflows and guides now sit in a per-video library at `~/Desktop/VFX workflows/mickmumpitz/` (`references/mickmumpitz-library.md`). The loose AI-VFX files moved with it, so `260608_MICKMUMPITZ_AI-VFX_1-3_ADV.json` is now under `mickmumpitz/2026-03-30_i-built-a-free-vfx-pipeline-with-local-ai___n0ir5V5tX4/advanced/`, not directly in `VFX workflows/`.
+
+## 2026-11-02
+
+- RunPod `CA-MTL-1` was still down at ~16:40 UTC: the incident "CA-MTL-1 and EU-SE-1 DC is Unavailable" had no update since 2026-10-31 20:30 UTC, and `gpu list --include-unavailable` listed no GPU type there.
+- Comping Mick 1.3 run 8 opaque (core matte "over" plus a hotter grade, Blender) makes its darker interior patches read as two eyes and a mouth on about frames 45–70. Screen-only comps hide this because the patches read as pale cloud. Check a Jerry element opaque and graded, not only Screened, before scoring its look. Detail: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
+- Blender 5.2.1 compositor: the comp lives in `scene.compositing_node_group`, a node group whose Image output is the result (no Composite node); images sit centred on the render canvas at native size, and the render percentage does not scale them, so render at 100%; `ShaderNodeMix` clamps its factor to 0–1 unless `clamp_factor` is off; mask spline coordinates are x = px / width, y = (height / 2 − row) / width + 0.5. Blender's movie decode of the 10-bit test plate is about 1.5–2 of 255 brighter than ffmpeg's default `rgb24` conversion.
+- A copy of the delivered shot 004 comp, `Shot4 V031-1.mp4`, has been in `assets/elements/by-shot/shot004_fire-jump/comps/` since 2026-10-08; it was thought to be NAS-only. It shows the grass catching at landing (about frame 23), spreading through about frame 48, and burning down by about frame 66.
