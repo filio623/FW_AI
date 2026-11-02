@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.0
+**Version:** 1.1
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -43,7 +43,7 @@ Every layer is a separate input or node, so Jerry, the grass fire, or the glow c
 ### Jerry (Pass A element)
 
 - Review of run 8 over the plate (2026-11-01): placement and black are correct; Jerry reads as a pale glowing orb and slightly translucent; he is 20–50% larger than the Houdini fire.
-- **Size:** rebuild the gray-in-mask guide with about 4–8 px of growth and a rounded top (benchmark step 8c, item 4). Open creative question below about whether Jerry should keep growing after landing.
+- **Size:** rebuild the gray-in-mask guide with about 4–8 px of growth and a rounded top (benchmark step 8c, item 4). **Growth after landing (James, 2026-11-02):** Jerry grows slightly as the grass catches and grows with him. He should not inflate the way the Houdini fire does: its area roughly triples from landing to the last frame, about 1.7× in linear size. Build the guide at the Houdini fire's size up to landing, then damp the post-landing growth to about 1.2–1.3× linear by the last frame. Make the factor a setting in the guide builder so it can be tuned after a test, and time it to the grass ignition so Jerry and the grass grow together.
 - **Translucency:** comp first. Use an opacity matte from Jerry's bright core comped "over" the plate, plus a Screen or Add copy for the glow, plus a hotter grade. Generation fallback: prompt for a denser, brighter core, or NAG negatives.
 - Remaining GPU tests are in benchmark step 8c: NAG with negatives, 720p, smaller guide.
 
@@ -57,7 +57,7 @@ A comp effect, not AI. Take Jerry's element brightness, blur it heavily and tint
 
 ### Pass B: grass ignition (AI)
 
-What it must do: ignition starts where and when Jerry lands, spreads through the grass, and the flame grows with the grass catching, not as Jerry inflating. Checks, as in the benchmark: ignition starts at the landing frame, stays inside the grass region, plate intact outside it.
+What it must do: ignition starts where and when Jerry lands and spreads through the grass. Most of the growth in flame comes from the grass catching; Jerry grows only slightly with it (see Size above). Checks, as in the benchmark: ignition starts at the landing frame, stays inside the grass region, plate intact outside it.
 
 Candidates, cheapest and most controllable first:
 
@@ -80,7 +80,7 @@ James will copy these when he is at the NAS. Put them in `assets/inbox/`; they a
 
 ## Open Questions For James
 
-- After landing, should Jerry himself keep roughly the same size while the growth comes from the grass catching? If yes, the new guide holds his size steady after landing.
+- ~~After landing, should Jerry keep the same size while the grass carries the growth?~~ Answered 2026-11-02: Jerry grows slightly as the grass catches and grows with him (see Size).
 - Ignition frame: confirm against `Shot4 V031-1.mov` once restored.
 
 ## Order Of Work
@@ -106,3 +106,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | Version | Date       | Description |
 |---------|------------|-------------|
 | 1.0     | 2026-11-02 | Initial Shot004 Fire Jump Comp And Pass B Plan. |
+| 1.1     | 2026-11-02 | Recorded James's answer: Jerry grows slightly after landing alongside the grass fire. Set the guide's damped post-landing growth target. |
