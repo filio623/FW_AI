@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.2
+**Modified:** 2026-11-02
+**Version:** 1.3
 
 # AI Video Workflows
 
@@ -26,7 +26,10 @@ Doing the work:
 - `docs/asset-intake.md`: how to upload, classify, name, and track incoming film assets.
 - `docs/asset-inventory.md`: index of tracked assets and restorable source media.
 - `docs/comfyui-vfx-workflow-strategy.md`: layer strategy and the Scene 4 branch plan.
-- `shots/shot004_fire-jump_workflow-test-plan_v001.md`: current VACE run record and guided next-session graph review.
+- `docs/vfx-element-benchmark.md`: shot 004 Pass A test queue and score sheet. Start here to resume generation work.
+- `shots/shot004_fire-jump_comp-and-pass-b-plan.md`: shot 004 comp (Blender first), Pass B grass ignition, glow, holdout, and files to fetch.
+- `shots/shot004_fire-jump_workflow-test-plan_v001.md`: shot 004 brief, run log, and review notes.
+- `references/mickmumpitz-library.md`: the local Mickmumpitz workflow library and ideas for later shots.
 - `docs/findings.md`: running log of what worked and what did not.
 - `mcp/runpod.md`: RunPod GPU setup and the current resume point.
 
@@ -51,3 +54,4 @@ Core principle: keep plates untouched and generate separable character/effect el
 | 1.0     | 2026-05-18 | Initial AI Video Workflows. |
 | 1.1     | 2026-08-16 | Grouped the Start here list and added AGENTS.md, the per-character bibles, both ComfyUI VFX docs, findings, RunPod, references, and outputs. |
 | 1.2     | 2026-10-08 | Replaced links to retired learning and handoff documents with the active shot004 review plan. |
+| 1.3     | 2026-11-02 | Pointed Doing the work at the shot 004 benchmark, the comp and Pass B plan, and the Mickmumpitz library. |

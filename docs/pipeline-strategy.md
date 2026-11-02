@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-17
-**Version:** 1.1
+**Modified:** 2026-11-02
+**Version:** 1.2
 
 # Pipeline Strategy
 
@@ -49,9 +49,11 @@ Under evaluation, not adopted. A Jerry fire rig exists at `assets/characters/jer
 
 Its job, if the pose and dash tests pass, would be rigged simulated elements rendered to multilayer EXR for compositing. It is not the shot 004 motion driver. That driver stays the Houdini fire proxy until a scored benchmark row replaces it.
 
+Separately, Blender is the first compositing tool (decided 2026-11-02). The agent builds comps as Blender compositor node trees by script, renders and checks them, and hands over a `.blend` for James to adjust. Shot 004's plan is `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
+
 ### Compositing App
 
-Use After Effects, Nuke, Fusion, or Resolve for final assembly:
+Use After Effects, Nuke, Fusion, or Resolve for final assembly. For agent-built comps, start in Blender (above). Move to Fusion when Resolve's color tools are needed: James has DaVinci Resolve Studio 21.1.1, so external scripting is available. Final assembly covers:
 
 - Layer timing.
 - Masks and roto.
@@ -75,3 +77,4 @@ Use After Effects, Nuke, Fusion, or Resolve for final assembly:
 |---------|------------|-------------|
 | 1.0     | 2026-05-18 | Initial Pipeline Strategy. |
 | 1.1     | 2026-10-17 | Added Blender as an unevaluated CG track and kept it off the shot 004 motion driver. |
+| 1.2     | 2026-11-02 | Recorded Blender as the first, agent-built compositing tool, with Fusion and Resolve Studio for color work. |

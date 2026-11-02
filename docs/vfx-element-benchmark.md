@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
-**Modified:** 2026-11-01
-**Version:** 3.4
+**Modified:** 2026-11-02
+**Version:** 3.5
 
 # VFX Element Benchmark
 
@@ -190,6 +190,8 @@ A winner is a short clip that passes all three checks. Only then:
 
 Pass B gets the same method: frozen inputs (plate proxy, grass mask, landing frame from the Pass A winner), one knob per run, and its own checks (ignition starts at the landing frame, stays inside the grass mask, plate intact outside it). First candidates: VACE inpainting inside the grass mask over the plate, and Wan-Alpha flame and smoke elements comped by hand. Glow, contact shadow, and scorch start as comp work in Resolve or Fusion before any generation.
 
+As of 2026-11-02 the comp and Pass B plan lives in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`: Blender comp first, then Fusion or Resolve; AI-first grass ignition with the production render as reference only; ground glow and the ridge holdout as comp work. Pass B scores still go in this file's score table.
+
 ## Do Not Test For This Job
 
 - Veo text-to-video or image-to-video. No motion-video input, so it cannot lock this jump.
@@ -280,3 +282,4 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 3.2 | 2026-10-19 | Scored Mickmumpitz 1.3 SkyReels runs 1–6. Fire RGB as the driving video traced the source; gray-in-mask inputs plus prompt v3 gave the first local setup that passes path, black, and face on two seeds with a close look. Added step 8b and its next knobs, and indexed the clips. |
 | 3.3 | 2026-10-19 | Scored Mick 1.3 runs 7 (strength 1.0, gray cone) and 8 (strength 1.25 + Lenovo, current best). Added step 8c, the next-session order: NAG, 720p, comp check. |
 | 3.4 | 2026-11-01 | Recorded the first comp preview of run 8 over the plate and its placement math. Promoted a smaller, rounded guide to step 8c item 4 because Jerry is 20–50% larger than the Houdini fire. |
+| 3.5 | 2026-11-02 | Pointed Pass B and comp work at the new shot004 comp and Pass B plan. |

@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-01
-**Version:** 1.18
+**Modified:** 2026-11-02
+**Version:** 1.19
 
 # Shot004 Fire Jump Workflow Test Plan
 
@@ -16,7 +16,7 @@
   - `FW_test/Scene 4/ren_steam..mov`
 - Current VACE test reference: `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`; the 49-frame 1280x672 proxy is indexed in `docs/asset-inventory.md`.
 - Restored fire motion source: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`.
-- Status: stock VACE Pass A is scored and closed. Path can lock; the still's look does not transfer. Next test is Wan 2.7 Video Edit. Score sheet: `docs/vfx-element-benchmark.md`.
+- Status (2026-11-02): Pass A has a working local setup. Mick 1.3 with the VACE × SkyReels merge passes path, black and face on two seeds; run 8 is the current best. It is too large and reads slightly translucent over the plate. Comp and Pass B plan: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`. Pass A queue and scores: `docs/vfx-element-benchmark.md`.
 
 ## Creative Intent
 
@@ -317,7 +317,7 @@ The test workflow is successful if:
 
 Working queue and scores: `docs/vfx-element-benchmark.md`. Do not keep a second queue here.
 
-As of 2026-10-17, local `WanVaceToVideo` knobs are closed. Strength `1` copied the Houdini fire. Strength `0.5` smeared it. A white-mask control video was drawn as gray smoke and did not become `JB-001`. Kling Motion Control cannot take a non-human still. Kling Omni Edit ramps the look in late. Next test is Wan 2.7 Video Edit, then Runway Aleph only if that fails. Pass B waits for a Pass A winner.
+As of 2026-11-02: stock `WanVaceToVideo`, Kling, and Wan 2.7 tuning are closed (Wan 2.7 seed-2126129005 run 2 is a paid fallback). Mickmumpitz 1.3 with the VACE × SkyReels merge and gray-in-mask inputs passes Pass A path, black and face on two seeds; run 8 is the current best. The remaining Pass A GPU tests are benchmark step 8c: smaller guide, NAG, 720p. RunPod `CA-MTL-1`, which holds our volume, has been down since 2026-10-31. A first local comp preview of run 8 was reviewed on 2026-11-01. The comp, ridge holdout, ground glow and AI-first Pass B grass ignition are planned in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
 
 
 ## Changelog
@@ -343,3 +343,4 @@ As of 2026-10-17, local `WanVaceToVideo` knobs are closed. Strength `1` copied t
 | 1.16    | 2026-10-19 | Logged Mick 1.3 runs 7 and 8 and the next-session order. |
 | 1.17    | 2026-11-01 | Logged the local comp preview of run 8 over the plate. |
 | 1.18    | 2026-11-01 | Recorded James's review notes: translucency, the ridge holdout, and grass ignition and growth. |
+| 1.19    | 2026-11-02 | Replaced the stale status lines with the current Pass A state and a pointer to the comp and Pass B plan. |
