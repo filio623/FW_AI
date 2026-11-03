@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-02
-**Version:** 1.2
+**Modified:** 2026-11-03
+**Version:** 1.3
 
 # Pipeline Strategy
 
@@ -43,6 +43,8 @@ Use for high-quality cloud generation:
 - Temp baked shots.
 - Candidate element-generation tests when separability is not required or can be extracted.
 
+Plate use (James, 2026-11-03; replaces the 2026-10-11 rule "never upload the plate", whose reason was not recorded): stills or crops of the plate may go to Higgsfield as references, for example a plate frame to paint a burning-grass keyframe into. Parts of a Higgsfield-generated asset may be used in the comp or as reference stills. Keep whole plate clips and full-resolution plate media in the repo, on the NAS and on RunPod Secure Cloud, and share them only privately.
+
 ### Blender
 
 Under evaluation, not adopted. A Jerry fire rig exists at `assets/characters/jerry/source-cgi/jerry_fire-rig_v001.blend`. Setup is in `mcp/blender.md`. The run log is `workflows/blender/jerry/jerry_fire-rig_log_v001.md`. r09 is not an approved look.
@@ -78,3 +80,4 @@ Use After Effects, Nuke, Fusion, or Resolve for final assembly. For agent-built 
 | 1.0     | 2026-05-18 | Initial Pipeline Strategy. |
 | 1.1     | 2026-10-17 | Added Blender as an unevaluated CG track and kept it off the shot 004 motion driver. |
 | 1.2     | 2026-11-02 | Recorded Blender as the first, agent-built compositing tool, with Fusion and Resolve Studio for color work. |
+| 1.3     | 2026-11-03 | Recorded James's plate-use rule for Higgsfield: plate stills and crops as references are allowed, and parts of Higgsfield assets may be comped. |

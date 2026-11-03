@@ -4,9 +4,9 @@
 Outputs (912x512, 24 fps, --frames frames, a 2x downscale of a 1824x1024 window of the
 4096x2160 plate, so the inpaint keeps twice the detail of a full-frame 512p run):
 
-- control: the plate outside the mask; inside it, the plate's Canny edges on black, so
-  grass blades keep their structure while the model draws fire (the recipe of
-  Mickmumpitz's OfficeFlood example). DRIVING VIDEO.
+- control: the plate outside the mask; inside it, either the plate's Canny edges on black
+  (--inside canny, the recipe of Mickmumpitz's OfficeFlood example: blades keep their
+  structure) or flat mid-gray (--inside gray: the model draws freely). DRIVING VIDEO.
 - mask: white where the model may draw, soft edge. Empty before --start; from there it
   spreads from the ignition point (Jerry's landing contact) through the burn zone
   (the grass clump and the air above it) until --full, then holds. MASK.
@@ -114,10 +114,13 @@ def build(args: argparse.Namespace) -> dict:
         hard = hard_u8.astype(bool)
         hard_u8 = hard_u8 * 255
         soft = cv2.GaussianBlur(hard_u8, (0, 0), args.soft) if args.soft > 0 else hard_u8
-        gray = cv2.cvtColor(plate[t], cv2.COLOR_RGB2GRAY)
-        edges = cv2.Canny(cv2.GaussianBlur(gray, (0, 0), 1.0), args.canny_low, args.canny_high)
-        edges_rgb = np.repeat(edges[..., None], 3, axis=2)
-        control = np.where(hard[..., None], edges_rgb, plate[t])
+        if args.inside == "canny":
+            gray = cv2.cvtColor(plate[t], cv2.COLOR_RGB2GRAY)
+            edges = cv2.Canny(cv2.GaussianBlur(gray, (0, 0), 1.0), args.canny_low, args.canny_high)
+            fill = np.repeat(edges[..., None], 3, axis=2)
+        else:  # flat mid-gray: VACE's "generate freely here"
+            fill = np.full_like(plate[t], 128)
+        control = np.where(hard[..., None], fill, plate[t])
         controls.append(control)
         masks.append(soft)
         coverage.append(round(float(hard.mean()), 4))
@@ -126,7 +129,7 @@ def build(args: argparse.Namespace) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     tag = f"start{args.start}-full{args.full}"
     stem = f"{W}x{H}_{n}f_{args.version}"
-    control_path = out / f"shot004_grassfire_control-plate-canny-{tag}_{stem}.mp4"
+    control_path = out / f"shot004_grassfire_control-plate-{args.inside}-{tag}_{stem}.mp4"
     mask_path = out / f"shot004_grassfire_mask-{tag}-soft_{stem}.mp4"
     start_path = out / f"shot004_grassfire_start-frame_{W}x{H}_{args.version}.png"
     write_video(controls, control_path, "rgb24")
@@ -139,7 +142,7 @@ def build(args: argparse.Namespace) -> dict:
         "control": str(control_path), "mask": str(mask_path), "start_image": str(start_path),
         "coverage": coverage,
     }
-    (out / f"shot004_grassfire_inputs-{tag}_{stem}.json").write_text(json.dumps(report, indent=1))
+    (out / f"shot004_grassfire_inputs-{args.inside}-{tag}_{stem}.json").write_text(json.dumps(report, indent=1))
     return report
 
 
@@ -153,6 +156,8 @@ def main() -> None:
     p.add_argument("--climb", type=float, default=0.6, help="vertical distance weight; below 1 climbs faster")
     p.add_argument("--ragged", type=float, default=0.25, help="how irregular the fire front is")
     p.add_argument("--soft", type=float, default=3.0, help="mask edge Gaussian sigma in px")
+    p.add_argument("--inside", choices=["canny", "gray"], default="canny",
+                   help="what the DRIVING VIDEO shows inside the mask: the plate's Canny edges, or flat gray")
     p.add_argument("--canny-low", type=int, default=20)
     p.add_argument("--canny-high", type=int, default=60)
     p.add_argument("--seed", type=int, default=4)

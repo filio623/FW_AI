@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-02
-**Version:** 1.24
+**Modified:** 2026-11-03
+**Version:** 1.25
 
 # Findings
 
@@ -100,3 +100,9 @@
 - The Mick 1.3 graph's four seed fields serve its chunking for long shots (`MultiChannelSlicer`, 81 frames per iteration). The shot 004 runs are 81 frames, one iteration, so only `seed_1` is used and no chunks are stitched. MiniMax H3, the open-weight model Mickmumpitz moved to in late 2026, generates 5–15 s in one pass at 1344×768 and supports mask inpainting through its Fun ControlNet Union patch (ComfyUI 0.35+). Local commercial use needs a paid MiniMax license; Comfy Cloud generations include commercial rights, and Comfy Cloud lists the H3 nodes and `minimax_h3_ref2va`/`fl2va` models (checked 2026-11-02).
 - Mickmumpitz's own inpainting example for AI-VFX (OfficeFlood, in the 1.0 example files) feeds a DRIVING VIDEO that is the plate outside the mask and the plate's Canny edges on black inside it, with a mask that grows over time, `vace_strength` 1.0, `vace_ref_strength` 0, NAG on, Lenovo on, and 720p. The edges keep the scene's structure while the model generates new content in the masked area. The shot 004 grass-fire inputs follow that recipe.
 - First grass-fire inpaint on the shot 004 plate (Mick 1.3, Canny edges inside a spreading mask, `vace_strength` 1.0): ignition landed on the right frame and place and the plate outside the mask stayed intact, but the model redrew most of the mask as grass and kept the fire small, and the redrawn grass came out darker than the plate, so the mask outline showed as a dark ring that Compose + Match did not remove. Edges inside a mask preserve structure but cannot ask for new content. Comping only the pixels that changed (a soft difference matte against the plate, inside the mask) removes the ring and keeps the fire and scorch. Detail: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B test log.
+
+## 2026-11-03
+
+- James relaxed the 2026-10-11 "never upload the plate" rule for Higgsfield: plate stills and crops may be uploaded as references, and parts of Higgsfield-generated assets may be used in the comp. Whole plate clips stay off third-party services by default. Detail: `docs/pipeline-strategy.md`, Higgsfield.
+- On the Mick 1.3 SkyReels merge, grass-fire inpainting with only a spreading mask, Canny edges inside it and a prompt gave a modest fire behind intact blades in four tests (`vace_strength` 1.0 and 0.6, two prompts, with and without a reference image at strength 0). Lowering the strength to 0.6 enlarged the fire from about 6% to 8–9% of the window but did not make blades burn. The model has to be shown the result, not only told where. Detail: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B test log.
+- The A100 80 GB PCIe in `EU-RO-1` ran an 81-frame 512p Mick 1.3 inpaint in 191–280 s, about $0.10–0.14 a run at $1.79/hr, against 610–684 s ($0.10–0.11) on the L4.
