@@ -106,3 +106,15 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** Calmer and smoother: blown-out white inside the mask fell from 11–14% to about 5%, and the flame has a soft gradient from a yellow-white heart to orange edges. But it is no longer a grass fire. It is one smooth ribbon of flame floating above the grass, close to a second Jerry, with no blades burning, no scorch at the base and no embers. The interaction from test 6 is gone.
 - **Reading:** Jerry's flame words ("soft and translucent, peach-white glow at the heart, orange and gold tongues"), once the "engulf" and "tall flames" words are gone, pull the model toward the l3n0v0 creature-like flame sheet. The words that make it a grass fire make it wild (test 6). A prompt cannot do both, so the style should come from a picture (the keyframe) or the comp grade, and the prompt should only describe physical grass fire.
 - **Next:** prompt 4 on the gray control: prompt 1's physical grass-fire wording without "small flame", no Jerry style words. Then the keyframe.
+
+## Test 8 — 2026-11-03
+
+- **Change:** Test 6 with a new seed (`seed_1` in Iter Seed Batch, node 3462: 1218565630 → 1218565804), James. Prompt 2 restored. Checked: only the seed changed. The first of the seed checks in the plan.
+- **Run:** 192 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test8-gray-prompt2-str060_seed1218565804_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test8-gray-prompt2-str060_seed1218565804_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, but it starts as a large white smoke puff (frames 32–50) with the flame inside it.
+- **Fire size and place:** Larger and earlier than test 6: 9.8% of the window on frame 40 (test 6: 4.4%), 13.0% on frame 50, 9.3% on frame 80; 15–25% of the mask from frame 40. More of it under Jerry (62–91% from frame 50). No fire pixels outside the mask (test 6: 133).
+- **Plate outside the mask:** Pass outside. The ring measure reads +13.1 on frame 50 because the smoke inside the mask is brighter than the plate, and −8.4 on frame 80 (test 6: −15.8 and −14.8).
+- **Look:** Very different from test 6 at the same settings. Flames are separate vertical tongues with soft edges, much less blown out (white 3–5% of the mask against 11–14%), with blades crossing in front of them. Closer to Jerry's tongues than test 6. But a thick white-lavender smoke cloud fills much of the mask from frame 32 to about 60, reading like steam, and there is less scorch and fewer embers than test 6.
+- **Reading:** The seed changes the result as much as any single knob tried so far (tests 3–7). Single runs have been compared as if the change caused the difference; from here each setting needs at least two seeds before it is judged.
+- **Next:** a third seed of test 6, then compare prompt 4 over the same seeds.
