@@ -1,6 +1,6 @@
 **Created:** 2026-11-03
 **Modified:** 2026-11-03
-**Version:** 1.0
+**Version:** 1.1
 
 # Worklog
 
@@ -66,3 +66,15 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 - Documented the ComfyUI workflow layout and naming (`workflows/comfyui/README.md`).
 - Made the GitHub repo private. Moved the Mickmumpitz library into `references/mickmumpitz/`. Reorganized `outputs/` by shot and pass.
 - Added a README to every working folder, including `outputs/` (READMEs are now tracked there); moved the Pass B tests into their own log; started this worklog.
+
+## 2026-11-03, afternoon
+
+- Pass B tests 8–14 on the A100 (`shots/shot004_fire-jump_pass-b_grassfire-log.md`):
+  - Tests 8–9: two more seeds of test 6. The size is the same; smoke and interaction change with the seed.
+  - Test 10: `vace_strength` 0.8 with extra negatives. About the same.
+  - Tests 11 and 11b: James's combined mask (blades at full strength, the rest at half). A gray veil, then pale tubes on the thin blade strips; branch stopped.
+  - Tests 12–13: Higgsfield keyframe `k2` as a reference at 0.4 and 1.0. No real change.
+  - Test 14: `k2` inside the clip on frames 49–52. The first real change of look: soft peach tongues among the blades after frame 53, but a glowing dome before it.
+- Received four Higgsfield keyframes from James's colleague; registered them to the plate and the Pass B window (`assets/elements/by-shot/shot004_fire-jump/scorch-contact/keyframes/`).
+- Grass input builder gained the combined mask, edges on gray, and keyframe groups (`scripts/build_shot004_grassfire_inputs.py`).
+- Pod terminated; next is test 15, the keyframe on three groups (`mcp/runpod.md`, resume point).

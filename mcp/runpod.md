@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-03
-**Version:** 2.48
+**Version:** 2.49
 
 # RunPod + ComfyUI
 
@@ -215,7 +215,7 @@ ComfyUI version (checked 2026-11-02): the official template image `runpod/comfyu
 
 **2026-11-03: Pod `g0jkc58x01xpa2` running** on the `EU-RO-1` volume, an A100 80 GB PCIe at $1.79/hr, started about 19:20Z. The L4, RTX A6000, RTX 4090, RTX 5090 and RTX PRO 6000 all returned "no longer any instances available"; only the A100 started. Created with `runpodctl pod create` directly (same template, volume and ports as the up-script, no `--terminate-after`). Patches, nodes and workflow folders were intact. A100 samples are not comparable seed-for-seed with the L4 runs.
 
-**Resume here (2026-11-03, after Pass B test 7):** start a Pod on the `EU-RO-1` volume with `scripts/runpod-pod-up.sh`. Pass B tests 3–7 ran on an A100 80GB, so keep the A100 for exact one-knob comparisons (`GPU="NVIDIA A100 80GB PCIe"`). Workflows are in folders: `shot004/pass-a_jerry/`, `shot004/pass-b_grassfire/`, `mickmumpitz/`. Every Pass B run is in `shots/shot004_fire-jump_pass-b_grassfire-log.md`; the ranked next tests (seeds of test 6 first) are in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B tests. The smaller Jerry guide still awaits James's approval.
+**Resume here (2026-11-03, after Pass B test 14):** Pod `g0jkc58x01xpa2` (A100 80GB, EU-RO-1) was terminated at about 22:00 UTC; balance $16.56, volume only ($0.019/hr). Start a Pod on the `EU-RO-1` volume with `scripts/runpod-pod-up.sh`; keep an A100 80GB for exact comparisons with tests 3–14 (`GPU="NVIDIA A100 80GB PCIe"`). The saved Pass B graph is in test 14's state (keyframe `k2` in the clip on frames 49–52, match mode pass-through, `k2` reference at 0.4); the repo copy in `workflows/comfyui/shot004-working/pass-b_grassfire/` matches it. Next run: Pass B test 15, the keyframe on three groups; its inputs are already in the volume's `input/`. Steps in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B tests; every run in `shots/shot004_fire-jump_pass-b_grassfire-log.md`. The smaller Jerry guide still awaits James's approval.
 
 Run 8 reproduced on the new volume (run 8r, 2026-11-02): James ran the saved graph unchanged on the L4; it finished in 667 s (run 8 took 353 s on the A40) and gave a nearby sample, not a bit-identical one (see `docs/vfx-element-benchmark.md`). The stack is verified; one-knob tests on it compare against run 8r on the same GPU type. Account balance was $4.90 at 19:24Z against $0.61/hr.
 
@@ -467,3 +467,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.46    | 2026-11-02 | Terminated Pod `ji7jkj0lcps26b` by hand; set the resume point to Pass B test 3. |
 | 2.47    | 2026-11-03 | Started Pod `g0jkc58x01xpa2` (A100 80 GB; no L4 or A6000 stock in `EU-RO-1`). |
 | 2.48 | 2026-11-03 | Updated the resume point after Pass B test 7; pointed it at the new Pass B test log. |
+| 2.49 | 2026-11-03 | Terminated Pod `g0jkc58x01xpa2` after Pass B test 14; set the resume point to test 15. |
