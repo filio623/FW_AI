@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-03
-**Version:** 2.3
+**Version:** 2.4
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -102,11 +102,11 @@ Fix for the dark ring, in the comp rather than the generation: take from the inp
 
 1. **Done, stopped: combined mask (tests 11, 11b).** Test 11 gave a gray veil; test 11b fixed the veil but the thin blade strips came out as pale tubes and the fire shrank to about 3% of the window. Thin masks are below what the model can draw in; see the log. Test 11b was: **combined mask with the plate under the half-strength area** (`…_control-plate-canny-gray-blades4-start25-full50_…`, built with `--field-fill plate`; same mask). Test 11 put gray there and came out with a gray veil (see the log). Then test 12 on the better of tests 10 and 11b.
    Test 11 (done): **combined mask.** Full strength on the blades, half strength on the space around them, and the blade edges on gray in the DRIVING VIDEO (`…_mask-start25-full50-blades4-field050-soft_…`, `…_control-plate-canny-gray-start25-full50_…`, built with `--inside canny-gray --field 0.5`). Compose + Match pastes with this mask, so the field comes out half plate; if that ghosts, feed the paste a solid mask (graph v002).
-2. **Test 12: keyframe `k2` as Reference Image 2** (node 3349, un-bypassed, loading `shot004_grassfire_keyframe-k2_window_912x512_v001.png`) with `vace_ref_strength` 0.4, on test 10's setup. The VACE node encodes a reference as its own frame with its own strength, so this shows the model the look without fixing any frame of the clip.
-3. **Test 13: reference strength.** 0.7 if test 12 moved toward the keyframe but not enough; 0.2 if it copied the keyframe's flames too literally or froze.
-4. **Test 14: `k4` instead of `k2`**, at the best strength, to see how much the choice of keyframe matters.
-5. **Tests 15–16: seeds 1218565804 and 1218565905** on the best setting, before calling it.
-6. **If a reference is not enough: the keyframe inside the control.** `k2` in the DRIVING VIDEO at frames 49–52 with the mask at 0 there, so the model has to pass through it. Four frames because the model works in groups of four frames; expect a brief hold. Needs a new input set.
+2. **Done: test 12, keyframe `k2` as Reference Image 2 at `vace_ref_strength` 0.4.** About the same as test 10; the reference barely reaches the result.
+3. **Test 13: `vace_ref_strength` 1.0**, otherwise test 12.
+4. **Test 14: `k2` inside the DRIVING VIDEO**, on test 12's setup: DRIVING VIDEO `shot004_grassfire_control-plate-gray-keyk2-f049-052-start25-full50_912x512_81f_v001.mp4` and MASK `shot004_grassfire_mask-start25-full50-soft-keyk2-f049-052_912x512_81f_v001.mp4` (built with `--keyframe … --keyframe-tag k2`). On frames 49–52 the control shows `k2` inside the spread and the plate outside it, and the mask is 0 on the whole frame, so the model has to pass through the keyframe. Four frames because the model encodes frames in groups of four and reads the mask once per group (at frame 52 for this group). Match mode must be **Disabled (pass-through)**: Compose + Match pastes with the same mask and would put the plate back on those four frames. Expect a brief hold at the keyframe; the comp uses the change matte, so pass-through's whole-frame output is fine.
+5. **Then: seeds 1218565804 and 1218565905** on the best setting, and `k4` instead of `k2`.
+6. **Later, if still short:** the keyframe on more than one group (for example frames 49–52 and 77–80), or a keyframe sequence.
 7. **Comp:** grade the kept result toward the keyframe's colours, roll off its highlights, and use the change matte.
 8. Later: **taller window, 720p** (input set v002) for finer flames, once the look is right; **the production grass-fire render as the guide** (candidate 1) once it is restored from the NAS; prompt 4 (physical grass-fire wording only).
 
@@ -240,3 +240,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 2.1 | 2026-11-03 | Updated Pass B state after test 10; recorded the Higgsfield keyframes; replaced the next-test list with the sequence for tests 11–16. |
 | 2.2 | 2026-11-03 | Recorded test 11's gray-veil result and queued test 11b (plate under the half-strength area). |
 | 2.3 | 2026-11-03 | Recorded test 11b and stopped the combined-mask branch; test 12 runs on test 10's setup. |
+| 2.4 | 2026-11-03 | Recorded test 12; set tests 13 (reference strength 1.0) and 14 (keyframe inside the control, pass-through). |

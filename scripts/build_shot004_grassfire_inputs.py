@@ -101,6 +101,12 @@ def build(args: argparse.Namespace) -> dict:
     noise = smooth_noise(args.seed, 24)
 
     controls, masks, coverage, blade_cover = [], [], [], []
+    key, key_from, key_to = None, -1, -1
+    if args.keyframe:
+        key = cv2.cvtColor(cv2.imread(str(args.keyframe)), cv2.COLOR_BGR2RGB)
+        if key.shape[:2] != (H, W):
+            key = cv2.resize(key, (W, H), interpolation=cv2.INTER_AREA)
+        key_from, key_to = (int(x) for x in args.key_frames.split("-"))
     for t in range(n):
         if t < args.start:
             front = -1.0
@@ -142,6 +148,14 @@ def build(args: argparse.Namespace) -> dict:
                 # show the plate (half keep the grass), not gray (test 11: a gray veil).
                 control = np.where(blades[..., None], fill, plate[t])
         soft = cv2.GaussianBlur(hard_u8, (0, 0), args.soft) if args.soft > 0 else hard_u8
+        if key is not None and key_from <= t <= key_to:
+            # Keyframe: the still inside the spread (softened edge), the plate outside it, and
+            # mask 0 on the whole frame so the model keeps it. The model groups frames by four
+            # (latent j holds frames 4j-3..4j and reads the mask at its last frame), so the
+            # keyframe should fill one whole group, e.g. 49-52.
+            a = cv2.GaussianBlur(cv2.dilate(hard_u8, np.ones((25, 25), np.uint8)), (0, 0), 12)[..., None] / 255.0
+            control = (key * a + plate[t] * (1 - a)).round().astype(np.uint8)
+            soft = np.zeros_like(soft)
         controls.append(control)
         masks.append(soft)
         coverage.append(round(float(hard.mean()), 4))
@@ -152,8 +166,9 @@ def build(args: argparse.Namespace) -> dict:
     stem = f"{W}x{H}_{n}f_{args.version}"
     mask_kind = "soft" if args.field >= 1.0 else f"blades{args.blade_grow}-field{round(args.field * 100):03d}-soft"
     inside_kind = args.inside if args.field >= 1.0 or args.field_fill == "inside" else f"{args.inside}-blades{args.blade_grow}"
-    control_path = out / f"shot004_grassfire_control-plate-{inside_kind}-{tag}_{stem}.mp4"
-    mask_path = out / f"shot004_grassfire_mask-{tag}-{mask_kind}_{stem}.mp4"
+    key_kind = "" if key is None else f"-key{args.keyframe_tag}-f{key_from:03d}-{key_to:03d}"
+    control_path = out / f"shot004_grassfire_control-plate-{inside_kind}{key_kind}-{tag}_{stem}.mp4"
+    mask_path = out / f"shot004_grassfire_mask-{tag}-{mask_kind}{key_kind}_{stem}.mp4"
     start_path = out / f"shot004_grassfire_start-frame_{W}x{H}_{args.version}.png"
     write_video(controls, control_path, "rgb24")
     write_video(masks, mask_path, "gray")
@@ -166,6 +181,7 @@ def build(args: argparse.Namespace) -> dict:
         "coverage": coverage, "blade_coverage": blade_cover,
     }
     kind = args.inside if args.field >= 1.0 else f"{args.inside}-{mask_kind}" + ("-platefield" if args.field_fill == "plate" else "")
+    kind += key_kind
     (out / f"shot004_grassfire_inputs-{kind}-{tag}_{stem}.json").write_text(json.dumps(report, indent=1))
     return report
 
@@ -194,6 +210,10 @@ def main() -> None:
     p.add_argument("--field-fill", choices=["inside", "plate"], default="inside",
                    help="with --field below 1, what the DRIVING VIDEO shows in the half-strength area: the "
                         "--inside fill (test 11, which came out as a gray veil) or the plate (only the blades get the fill)")
+    p.add_argument("--keyframe", type=Path, help="still of the fire at its height, registered to the window; "
+                   "placed in the DRIVING VIDEO over --key-frames with the mask at 0 there")
+    p.add_argument("--keyframe-tag", default="", help="short name for file names, e.g. k2")
+    p.add_argument("--key-frames", default="49-52", help="first-last frame (0-based) holding the keyframe")
     p.add_argument("--seed", type=int, default=4)
     p.add_argument("--version", default="v001")
     r = build(p.parse_args())

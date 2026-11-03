@@ -166,3 +166,15 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** The flames that do appear run along the blades in thin tongues, the closest yet to fire climbing individual blades. But they are small, and the tubes spoil the frame.
 - **Reading:** Under the full-strength strips the model copied the control's pattern instead of drawing fire. The strips are about 9 px wide, close to the model's 8 px working grid, and with half of the spread on "keep" the model leans toward copying. Thin, fine-grained masks do not work with this model; masks need to be regions at least a few grid cells wide. Stop the combined-mask branch here.
 - **Next:** test 12, the keyframe as a reference, on test 10's setup.
+
+## Test 12 — 2026-11-03
+
+- **Change:** Test 10 with keyframe `k2` as Reference Image 2 (node 3349 un-bypassed, loading `shot004_grassfire_keyframe-k2_window_912x512_v001.png`) and `vace_ref_strength` 0 → 0.4. Checked: those are the only changes, plus the image batch node that now carries the second reference.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test12-gray-prompt2-str080-nagneg2-refk2-040_seed1218565630_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test12-gray-prompt2-str080-nagneg2-refk2-040_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, as test 10.
+- **Fire size and place:** As test 10: 3–9% of the window. Before ignition the frames are nearly identical (PSNR 44–46 dB against test 10); after it, a nearby sample with the same layout (PSNR about 17 dB).
+- **Plate outside the mask:** As test 10.
+- **Look:** About the same as test 10 (James: not much difference). Slightly warmer fire (mean fire colour 240/189/92 against 241/185/83) and slightly less blown out (white 6–13% of the mask against 7–14%). Still thick, opaque flames with a hard orange edge, far from `k2` (soft peach tongues, mean 207/137/70, no blown-out white).
+- **Reading:** At 0.4 the reference barely reaches the result. Either a stronger reference or putting the keyframe in the clip itself.
+- **Next:** test 13 (`vace_ref_strength` 1.0) and test 14 (`k2` inside the DRIVING VIDEO at frames 49–52, mask 0 there, match mode pass-through).

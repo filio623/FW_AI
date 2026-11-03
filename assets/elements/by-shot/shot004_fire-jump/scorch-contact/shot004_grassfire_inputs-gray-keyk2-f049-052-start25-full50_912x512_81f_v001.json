@@ -1,0 +1,177 @@
+{
+ "settings": {
+  "out_dir": "outputs/shot004/pass-b_grassfire/inpaint_v001/candidates-key",
+  "frames": 81,
+  "start": 25,
+  "full": 50,
+  "ease": 0.7,
+  "climb": 0.6,
+  "ragged": 0.25,
+  "soft": 3.0,
+  "inside": "gray",
+  "canny_low": 20,
+  "canny_high": 60,
+  "field": 1.0,
+  "blade_grow": 4,
+  "blade_low": 20,
+  "blade_high": 60,
+  "field_fill": "inside",
+  "keyframe": "assets/elements/by-shot/shot004_fire-jump/scorch-contact/keyframes/shot004_grassfire_keyframe-k2_window_912x512_v001.png",
+  "keyframe_tag": "k2",
+  "key_frames": "49-52",
+  "seed": 4,
+  "version": "v001"
+ },
+ "window_on_plate": {
+  "x": 1838,
+  "y": 488,
+  "w": 1824,
+  "h": 1024,
+  "scale_to_plate": 2.0
+ },
+ "burn_zone": [
+  [
+   300,
+   445
+  ],
+  [
+   630,
+   445
+  ],
+  [
+   740,
+   350
+  ],
+  [
+   830,
+   220
+  ],
+  [
+   860,
+   110
+  ],
+  [
+   800,
+   55
+  ],
+  [
+   600,
+   45
+  ],
+  [
+   450,
+   60
+  ],
+  [
+   300,
+   45
+  ],
+  [
+   130,
+   60
+  ],
+  [
+   70,
+   130
+  ],
+  [
+   110,
+   240
+  ],
+  [
+   200,
+   350
+  ]
+ ],
+ "ignition": [
+  490,
+  450
+ ],
+ "control": "outputs/shot004/pass-b_grassfire/inpaint_v001/candidates-key/shot004_grassfire_control-plate-gray-keyk2-f049-052-start25-full50_912x512_81f_v001.mp4",
+ "mask": "outputs/shot004/pass-b_grassfire/inpaint_v001/candidates-key/shot004_grassfire_mask-start25-full50-soft-keyk2-f049-052_912x512_81f_v001.mp4",
+ "start_image": "outputs/shot004/pass-b_grassfire/inpaint_v001/candidates-key/shot004_grassfire_start-frame_912x512_v001.png",
+ "coverage": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0167,
+  0.0365,
+  0.0583,
+  0.087,
+  0.1193,
+  0.1517,
+  0.1935,
+  0.231,
+  0.2655,
+  0.3038,
+  0.3403,
+  0.3634,
+  0.3909,
+  0.4155,
+  0.4364,
+  0.4562,
+  0.4732,
+  0.4849,
+  0.4972,
+  0.5089,
+  0.5179,
+  0.5231,
+  0.5269,
+  0.5299,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315,
+  0.5315
+ ],
+ "blade_coverage": []
+}

@@ -14,6 +14,7 @@ Inputs and raw results for the Pass B grass-fire inpaint (`workflows/comfyui/sho
 ## Source and history
 
 - 2026-11-02: inputs built; tests 1–2.
+- 2026-11-03: test 12 (`k2` as a reference at 0.4; about test 10). `candidates-key/`: `k2` inside the control at frames 49–52 (`preview_key.png`), uploaded for test 14.
 - 2026-11-03: test 11b (plate in the half-strength area; pale tubes on the blade strips, small fire). Combined-mask branch stopped.
 - 2026-11-03: test 11 (combined mask; gray veil). `candidates-combo-plate/`: the fix, plate under the half-strength area (`preview_combo-plate.png`), uploaded for test 11b.
 - 2026-11-03: combined-mask candidates built and uploaded to the Pod. Test 10: `vace_strength` 0.8 with extra negatives.
