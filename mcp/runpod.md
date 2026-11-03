@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.45
+**Version:** 2.46
 
 # RunPod + ComfyUI
 
@@ -203,7 +203,7 @@ Runway) need on the Pod. Without it they fail with `Please login first`.
 
 **2026-11-02: new volume `dqlwnz6nq8` in `EU-RO-1`.** With `CA-MTL-1` down, James approved rebuilding elsewhere. `EU-RO-1` was chosen because it hosts the most GPU types of any data center (16, including RTX A6000 48 GB at $0.59/hr, L4, RTX 4090/5090, A100, RTX PRO 6000) and supports Runpod's S3-compatible volume API, so files can be moved without a Pod; it is in Romania. Volume `fw-ai-comfyui-eu-ro`, 100 GB. Data on `avw5iclb48` cannot be copied out while `CA-MTL-1` is down (moving data needs a running Pod on each side, and `CA-MTL-1` has no S3 API), but nothing on it is irreplaceable, so the new volume was rebuilt from scratch.
 
-Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were unavailable) started 19:05Z and is still running. The template installed ComfyUI 0.30.0 into `/workspace/runpod-slim/ComfyUI` (venv `.venv-cu128`, Python 3.12, torch 2.10.0+cu128) with ComfyUI-Manager, ComfyUI-KJNodes `78cd992`, Civicomfy, and ComfyUI-RunpodDirect. `scripts/runpod/setup_mick13_volume.sh`, run on the Pod, then installed everything else in about 15 minutes:
+Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were unavailable) ran 19:05Z on 2026-11-02 to 00:14Z on 2026-11-03 (about 5 h 9 min, roughly $3.04 at $0.59/hr) and was terminated by hand with `scripts/runpod-pod-down.sh`. No Pod is running; the two volumes cost about $0.019/hr together. Balance after the top-up: $21.89. The template installed ComfyUI 0.30.0 into `/workspace/runpod-slim/ComfyUI` (venv `.venv-cu128`, Python 3.12, torch 2.10.0+cu128) with ComfyUI-Manager, ComfyUI-KJNodes `78cd992`, Civicomfy, and ComfyUI-RunpodDirect. `scripts/runpod/setup_mick13_volume.sh`, run on the Pod, then installed everything else in about 15 minutes:
 
 - Nodes at pinned commits: VideoHelperSuite (latest), Mickmumpitz-Nodes `270afbd`, WanVaceAdvanced `049213c`, RES4LYF `56e4475`, rgthree `d7297b4`, GGUF `6ea2651`, plus PyWavelets, gguf, protobuf. All import; `/object_info` has every node type in the run 8 graph and the `res_2s` sampler and `beta57` scheduler.
 - Both patches reapplied by the script; the Mickmumpitz `start_frames=None` bug is still upstream at `270afbd`. The first NAG run (2026-11-02, L4) showed the 2026-10-19 NAG patch does not work on ComfyUI 0.30.0: its deep copy of the text embedding raised `CUDA error: invalid argument` under dynamic VRAM (comfy-aimdo), then ComfyUI died with `free(): double free detected` in `comfy_aimdo/host_buffer.py`. The script now applies a replacement, marked `FW_AI patch 2026-11-02`: `patch()` runs each text-embedding layer through `forward_comfy_cast_weights`, ComfyUI's own casting path, in the model's `manual_cast_dtype` (FP16 here). A standalone test on the Pod loaded the merge (FP8 weights) and patched all 40 blocks without error, and the full NAG run (benchmark run 9, 684 s on the L4) completed, so the patch is verified. `bash setup_mick13_volume.sh patch` reapplies only the patches.
@@ -212,6 +212,8 @@ Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were 
 - Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
 
 ComfyUI version (checked 2026-11-02): the official template image `runpod/comfyui:1.3.3-comfyuiv0.30.0-cuda12.8` bakes ComfyUI 0.30.0; upstream is at 0.43.0 (2026-10-27). On every boot `start.sh` compares the volume's bundle manifest with the image's; when they differ (a new template image) it rsyncs the image's ComfyUI core over the volume's, keeping `models`, `input`, `output`, `user`, `custom_nodes` and the venv. So a ComfyUI updated by hand on the volume survives restarts until RunPod ships a new template image, which then overwrites it, possibly with an older version. Updating in place also risks the pinned custom nodes and the NAG patch and changes the seed baseline, so do it at a break between tests, with a rollback (record the commit and `pip freeze` first), or as a second install on the same volume.
+
+**Resume here (2026-11-03):** start a Pod on the `EU-RO-1` volume with `scripts/runpod-pod-up.sh` (an L4 keeps the Pass A and Pass B comparisons on one GPU type: `GPU="NVIDIA L4" scripts/runpod-pod-up.sh`). Workflows are in folders: `shot004/pass-a_jerry/`, `shot004/pass-b_grassfire/`, `mickmumpitz/`. Next run: Pass B test 3, the prompt rewrite, from test 1's state (`JB-010` bypassed); the prompt text and the queue after it are in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B test log. The smaller Jerry guide still awaits James's approval.
 
 Run 8 reproduced on the new volume (run 8r, 2026-11-02): James ran the saved graph unchanged on the L4; it finished in 667 s (run 8 took 353 s on the A40) and gave a nearby sample, not a bit-identical one (see `docs/vfx-element-benchmark.md`). The stack is verified; one-knob tests on it compare against run 8r on the same GPU type. Account balance was $4.90 at 19:24Z against $0.61/hr.
 
@@ -460,3 +462,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.43    | 2026-11-02 | Recorded the NAG crash on the new volume and the replacement NAG patch. |
 | 2.44    | 2026-11-02 | Verified the replacement NAG patch with a full run (benchmark run 9). |
 | 2.45    | 2026-11-02 | Recorded why the Pod runs ComfyUI 0.30.0 and how the template overwrites a hand-updated core. |
+| 2.46    | 2026-11-02 | Terminated Pod `ji7jkj0lcps26b` by hand; set the resume point to Pass B test 3. |

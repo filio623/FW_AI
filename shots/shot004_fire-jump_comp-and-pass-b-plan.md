@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-02
-**Version:** 1.10
+**Version:** 1.11
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -94,7 +94,8 @@ Fix for the dark ring, in the comp rather than the generation: take from the inp
 
 Reading of test 1: the prompt asked for "a small flame" that "spreads", and inside the mask the Canny edges tell the model exactly where grass blades are, at `vace_strength` 1.0, so it redrew grass and kept the fire small. Edges can show structure; they cannot ask for fire. Next tests, one change each, cheapest first:
 
-1. **Prompt.** Drop "small flame"; describe the whole clump engulfed, with tall flames climbing above the blades and grey smoke, in Jerry's flame vocabulary (soft translucent flames, peach-white heart, orange and gold tongues, thin dark smoke, sparks) so the two fires match.
+1. **Prompt** (test 3, ready to run; `JB-010` bypassed again, prompt below). Drop "small flame"; describe the whole clump engulfed, with tall flames climbing above the blades and grey smoke, in Jerry's flame vocabulary (soft translucent flames, peach-white heart, orange and gold tongues, thin dark smoke, sparks) so the two fires match.
+   Test 3 prompt: "l3n0v0, A fire suddenly ignites at the base of the grass clump and within a second engulfs the whole clump of dry grass. Tall flames climb up every blade and rise high above the tips, with grey smoke curling upward and glowing embers drifting in the air. The flames are soft and translucent, with a bright peach-white glow at the heart and orange and gold flame tongues licking upward, thin dark smoke wisps and tiny sparks. Grass blades blacken and curl as they burn. Realistic outdoor fire in natural daylight, filmed with a real camera."
 2. **Inside the mask.** Canny edges replaced by flat gray, or `vace_strength` lowered, to loosen the hold on the grass.
 3. **Taller window, 720p** (input set v002): a window from the frame top so the mask can reach the grass tips. Only useful once the fire fills the current mask.
 4. **Styled reference still**, as in Mickmumpitz's OfficeFlood run: a plate frame with burning grass painted in by an image model, given Jerry's flames as the style.
@@ -218,3 +219,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.8     | 2026-11-02 | Scored Pass B candidate 2 test 1 and listed the next tests. |
 | 1.9     | 2026-11-02 | Recorded the dark ring along the mask edge in test 1 and the change-matte fix for the comp. |
 | 1.10    | 2026-11-02 | Scored Pass B test 2 (`JB-010` added at reference strength 0). |
+| 1.11    | 2026-11-02 | Recorded the test 3 prompt for the next session. |
