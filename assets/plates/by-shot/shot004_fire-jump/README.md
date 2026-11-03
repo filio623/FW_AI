@@ -1,6 +1,6 @@
 # Shot004 Fire Jump Plate Assets
 
-Current source/test media is still preserved in `FW_test/Scene 4/`.
+Nothing is stored here yet. The working plate is `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4` (see that folder's README). The original `4 base plate.mov` is on the NAS backup only, and the `FW_test/` directory these notes first pointed to is absent from this checkout.
 
 ## Intended Organization
 

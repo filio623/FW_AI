@@ -18,6 +18,7 @@ frozen copy of an earlier version lives here.
 - `character-bible-v1.0.md`
 - `vfx-element-benchmark-v1.8.md`
 - `vfx-element-benchmark-v2.0.md`
+- `mickmumpitz-library-v1.2.md`
 
 ## Retired Documents — mirroring their original path
 

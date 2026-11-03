@@ -29,4 +29,13 @@ Possible decisions:
 - `source-only`: context, scale, or plate integration only.
 - `reject`: do not use for Tom.
 
+## Files
+
+- `approval_manifest.tsv`: review IDs, roles, paths, source traceability, and decision fields.
+- `review_gallery.md`: visual gallery for quick review.
+- `rejected-v001_notes.md`: notes on why v001 candidates were replaced.
+- `candidates/`: staged review images grouped by provisional role:
+  - `source-stills/`: TB2-001 through TB2-007
+  - `material/`: TB2-008, TB2-009, TB2-010
+
 Do not move anything into `assets/characters/tom/approved/` or assemble `assets/characters/tom/character-bible-v001/` until review decisions are recorded.

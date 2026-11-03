@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-03
-**Version:** 1.16
+**Version:** 2.0
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -81,29 +81,31 @@ Inputs from `scripts/build_shot004_grassfire_inputs.py`, saved in `assets/elemen
 
 Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_grassfire-inpaint_mick13_v001.json`, on the Pod as `shot004/pass-b_grassfire/`. It is the Jerry graph (run 9 state) with these changes: the three inputs above; Reference Image 2 (`JB-010`) bypassed; image mode `Start + Reference` and match mode `Compose + Match`; `vace_strength` 1.0 and `vace_ref_strength` 0, as in the OfficeFlood run; a grass-fire prompt with `l3n0v0`; the NAG negatives swapped from face words to "cartoon, CGI, animation, fireball, glowing orb, character, face, text, watermark"; output prefix `shot004_grassfire`. Seed, steps, sampler, LoRAs, 512p and 81 frames are unchanged. Because this is the first run of a new graph, it is a baseline, not a one-knob test.
 
-#### Pass B test log
+#### Pass B tests
 
-Kept clips are in `assets/elements/by-shot/shot004_fire-jump/benchmark/` and graph extracts in `workflows/comfyui/shot004-benchmark/`, both named `shot004_fire-jump_grassfire-inpaint_mick13_test<N>_…`. Measures: fire pixels (bright, red-dominant) as a share of the window and of the mask; the share of the fire that run 9's Jerry would cover; and the mean change outside the mask.
+Every test run, with its change, scores, look and the kept clip, is in the append-only log `shots/shot004_fire-jump_pass-b_grassfire-log.md`. This section holds only the current state and the next steps.
 
-| Date | Test | Change | Time | Ignition | Fire size and place | Plate outside mask | Look | Next |
-|---|---|---|---|---|---|---|---|---|
-| 2026-11-02 | 1 | New graph: inputs v001, settings above | 610 s (L4) | Pass. A spark at Jerry's landing contact on frame 26, spreading from frame 28 | Fail. A Jerry-sized fire at the base of the clump: at most 7.5% of the window and 11–14% of the mask; the rest of the mask was redrawn as grass. 56–100% of the fire sits where Jerry is, so he would hide most of it | Pass outside, fail at the edge. Outside: ~2/255, the re-encode level; 7 fire pixels in 81 frames. Inside, the redrawn grass is darker than the plate (luma −8 to −13 from 2 to 60 px inside the edge on frame 80), so the mask outline shows as a dark ring (James); Compose + Match did not correct it | Mixed. Flames weave through the blades, with blades in front and a scorched base, and the window blends into the plate with no visible seam. But the flames are saturated, hard-edged and sticker-like, with no smoke and no spread up the blades, and their colour does not match Jerry | prompt rewrite (below) |
-| 2026-11-02 | 2 | Test 1 plus `JB-010` as Reference Image 2 (James), `vace_ref_strength` still 0 | 647 s (L4) | Pass, same as test 1 | Fail, ≈ test 1: 1.7–6.8% of the window, 59–84% of it under Jerry. A different sample after ignition (PSNR 19–25 dB against test 1, 43 dB or more before frame 25), not a style change | Pass outside; the same dark ring | Same sticker-like flames; a bluish-white smoke puff at the base late in the shot | With `vace_ref_strength` 0 an added reference only reshuffles the sample. To pass style it needs a strength above 0, which risks Jerry's shape. Back to test 1's state for the prompt rewrite |
-| 2026-11-03 | 3 | Test 1 with the prompt rewrite (whole clump engulfed, tall flames, smoke, Jerry's flame words); `JB-010` bypassed. On an A100, so not seed-for-seed comparable with tests 1–2 | 280 s (A100) | Pass | Fail, a little better: 0.9–6.4% of the window, 11–13% of the mask; wider, two-lobed flames, so less of it under Jerry (42–76%). Climbs higher early (top row 90 vs 123 on frame 40) but not by the end. 107 fire pixels outside the mask | Pass outside; the dark ring is unchanged (−10.6 and −12.8 luma inside the edge on frames 50 and 80) | Brighter, whiter flames, close to Jerry's average colour (fire pixels RGB 239/177/95 against Jerry's 224/158/93), but hard-edged and cut-out, not soft and translucent like Jerry. The blades stay intact thin dark lines in front of the flames: the fire sits behind the grass instead of the grass burning (James) | loosen the edges inside the mask |
-| 2026-11-03 | 4 | Test 3 with `vace_strength` 1.0 → 0.6 (same A100) | 191 s (A100) | Pass | Fail, better: from frame 50 the fire is 8–9% of the window and 15–17% of the mask (test 3: 6% and 11–12%), still 54–77% under Jerry. A different sample (PSNR 13–15 dB against test 3). Inside the mask the grass follows the plate's edges less (edge agreement 0.24–0.28 against 0.33–0.36) | Pass outside; the dark ring is unchanged (−11.8 and −12.7 luma) | Fuller flames, but still cut-out, and the blades are still dark lines in front of them. James: not much different | gray inside the mask, or a keyframe in the control video |
-| 2026-11-03 | 5 (repeat) | Meant as gray inside the mask, but the DRIVING VIDEO loader still pointed at the Canny control, so the graph was test 4's exactly | 190 s (A100) | — | Every frame pixel-identical to test 4 (max difference 0) | — | — | Not kept. It shows that on one GPU type and install a rerun reproduces exactly, so one-knob A/B on the A100 is exact. Rerun as test 6 with the gray control |
-| 2026-11-03 | 6 | Test 4 with flat gray instead of Canny edges inside the mask (same A100) | 190 s (A100) | Pass | Fail on look, not size: 3–10% of the window, 9–19% of the mask, about as large as test 4, and less of it under Jerry mid-shot (47–49% on frames 50–66). 157 fire pixels outside the mask | Pass outside; the dark ring stays (−11.7 and −10.7 luma) | The interaction James wanted: the fire replaces the blades where it burns instead of sitting behind intact ones, with embers falling and a scorched, glowing base. But the flames are a thick, opaque, blown-out yellow-white mass with a hard orange outline, wild and far from Jerry's soft, translucent fire (James: too thick and wild) | calmer prompt on the gray control; then the keyframe |
+**State after test 7 (2026-11-03).** Size and placement are close enough; the look is not. Two results define the problem:
+
+- **Test 6** (flat gray inside the mask, prompt 2) is the best so far for interaction: the fire replaces the blades where it burns, with embers and a scorched base. Its flames are a thick, opaque, wild yellow-white mass, far from Jerry's.
+- **Test 7** (prompt 3, calmer, with Jerry's flame words) is smoother and softer but turned into one floating ribbon of flame, like a second Jerry, with no grass burning. Worse overall (James).
+
+Reading: Jerry's flame words pull the model toward a creature-like flame, while the "engulf, tall flames" words make it wild. The prompt should describe only physical grass fire; the match to Jerry's look should come from a picture (keyframe or reference crop) and from the comp grade.
 
 Fix for the dark ring, in the comp rather than the generation: take from the inpaint only what changed. A change matte (per-pixel difference from the plate window, ramped from 22 to 45 of 255, grown 6 px, blurred 6 px, times the mask) keeps the fire, the scorch and the blades in front of the fire, and drops grass the model merely redrew darker. On frames 50 and 80 it cut the darkening in the band 2–60 px inside the edge from −12.7 and −11.0 to −1.9 and −1.8 luma. The Blender comp's Pass B layer should use it.
 
-Reading of test 1: the prompt asked for "a small flame" that "spreads", and inside the mask the Canny edges tell the model exactly where grass blades are, at `vace_strength` 1.0, so it redrew grass and kept the fire small. Edges can show structure; they cannot ask for fire. Next tests, one change each, cheapest first:
+**Next tests, one change each, on the A100 against test 6 unless noted:**
 
-1. **Prompt** (test 3, ready to run; `JB-010` bypassed again, prompt below). Drop "small flame"; describe the whole clump engulfed, with tall flames climbing above the blades and grey smoke, in Jerry's flame vocabulary (soft translucent flames, peach-white heart, orange and gold tongues, thin dark smoke, sparks) so the two fires match.
-   Test 3 prompt: "l3n0v0, A fire suddenly ignites at the base of the grass clump and within a second engulfs the whole clump of dry grass. Tall flames climb up every blade and rise high above the tips, with grey smoke curling upward and glowing embers drifting in the air. The flames are soft and translucent, with a bright peach-white glow at the heart and orange and gold flame tongues licking upward, thin dark smoke wisps and tiny sparks. Grass blades blacken and curl as they burn. Realistic outdoor fire in natural daylight, filmed with a real camera."
-2. **Inside the mask.** Canny edges replaced by flat gray, or `vace_strength` lowered, to loosen the hold on the grass.
-3. **Taller window, 720p** (input set v002): a window from the frame top so the mask can reach the grass tips. Only useful once the fire fills the current mask.
-4. **Styled reference still**, as in Mickmumpitz's OfficeFlood run: a plate frame with burning grass painted in by an image model, given Jerry's flames as the style.
-5. **The production grass-fire render as the guide** (candidate 1) once it is restored from the NAS: it would tell the model where and how big the fire is.
+1. **Seeds.** Two or three more seeds of test 6 as it stands, to learn how much of each result is the sample and how much is the change. On this GPU each seed is exact and repeatable, and each run is about 3 minutes.
+2. **Prompt 4.** Prompt 1's physical grass-fire wording without "small flame" and with no Jerry style words, on the gray control.
+3. **Part-strength edges inside the mask.** A control between test 4 (full Canny edges: grass intact, fire behind it) and test 6 (gray: grass burns, fire wild): the edges dimmed to about 30–50%, or edges only on the blades with gray in the air above. Needs a new input set from `scripts/build_shot004_grassfire_inputs.py`.
+4. **`vace_strength` 0.8 on the gray control.** Gray at 0.6 gave the model the most freedom; 0.8 may calm it while gray still lets the grass burn.
+5. **Flame reference at a low strength.** A crop of Jerry's flame texture (`outputs/shot004/pass-b_grassfire/keyframe_v001/jerry-flame-style_*.png`), not his whole body, as Reference Image 2 with `vace_ref_strength` about 0.3. At strength 0 a reference changes nothing (test 2); at full strength it may copy Jerry's shape.
+6. **NAG negatives** for the test 7 failure: add "fireball, flame creature, smooth flame ribbon, blob".
+7. **Keyframe** in the control video at frame ~50 (mask 0 there), once the Higgsfield stills arrive.
+8. **Taller window, 720p** (input set v002) for finer flames, once the look is right; **the production grass-fire render as the guide** (candidate 1) once it is restored from the NAS.
+
+The VAE is not a lever: it only encodes and decodes the frames and has no effect on the fire's look.
 
 Smoke or heat distortion and scorch are listed in the shot plan's required layers. Scorch comes free with candidate 2; heat distortion is a comp effect.
 
@@ -229,3 +231,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.14    | 2026-11-03 | Logged test 5: an unchanged rerun of test 4, pixel-identical. |
 | 1.15 | 2026-11-03 | Updated `outputs/` paths to the per-shot layout (`outputs/<shot>/<pass or comp>/`). |
 | 1.16 | 2026-11-03 | Scored Pass B test 6 (gray inside the mask). |
+| 2.0 | 2026-11-03 | Major revision; 1.16 archived to `docs/archive/shot004_fire-jump_comp-and-pass-b-plan-v1.16.md`. Moved the Pass B test table into the new append-only `shots/shot004_fire-jump_pass-b_grassfire-log.md` (tests 1–7 there), and replaced the stale next-test list with the state after test 7 and a ranked list of levers. |

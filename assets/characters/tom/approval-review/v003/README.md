@@ -29,4 +29,14 @@ Possible decisions:
 - `source-only`: context, scale, or plate integration only.
 - `reject`: do not use for Tom.
 
+## Files
+
+- `approval_manifest.tsv`: review IDs, roles, paths, source traceability, and decision fields.
+- `review_gallery.md`: visual gallery for quick review.
+- `v002-feedback-notes.md`: Robbie's v002 feedback that shaped this pack.
+- `candidates/`: staged review images grouped by provisional role:
+  - `source-stills/`: TB3-001 through TB3-007 (from `Shot_8A_tom_firev02`)
+  - `material/`: TB3-008, TB3-009, TB3-010 (from `shot6-tomgreentips`)
+  - `storyboard-ref/`: TB3-011, TB3-012
+
 Do not move anything into `assets/characters/tom/approved/` or assemble `assets/characters/tom/character-bible-v001/` until review decisions are recorded.

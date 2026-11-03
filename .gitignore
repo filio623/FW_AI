@@ -31,8 +31,12 @@ node_modules/
 # Mantaflow writes its 24 MB noise tile to the working directory on upres bakes/renders
 waveletNoiseTile.bin
 
-# Generated review/output artifacts
-outputs/
+# Generated review/output artifacts. Only the folder READMEs are tracked, so every
+# outputs/ folder keeps its context even though its media is ephemeral.
+outputs/**
+!outputs/**/
+!outputs/README.md
+!outputs/**/README.md
 memories/responses/
 ComfyUI_temp_*.png
 

@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-03
-**Version:** 1.7
+**Version:** 1.8
 
 # Repository Guidelines
 
@@ -9,6 +9,8 @@
 This repository is a working area for an AI-assisted short-film VFX pipeline. Use `docs/` for durable decisions, setup notes, findings, and production strategy. Use `assets/` for source and curated media, with new uploads staged in `assets/inbox/` before classification. Shot-specific plans, run logs, and compositing notes belong in `shots/`; start from `shots/shot-template.md` for new shots. Reusable prompts live in `prompts/`, external research in `references/`, automation in `scripts/`, local agent skills in `skills/`, and saved ComfyUI/Higgsfield workflows in `workflows/`. Generated renders, composites, thumbnails, and review artifacts belong in `outputs/`, which is ignored by Git.
 
 ComfyUI graphs follow one layout, in the repo and in the Pod's workflow browser: a working folder per shot and pass (`workflows/comfyui/shot<NNN>-working/pass-<letter>_<layer>/`, mirrored on the Pod as `shot<NNN>/pass-<letter>_<layer>/`), one frozen extract per scored run in `shot<NNN>-benchmark/` named after its kept clip, and untouched creator originals in their own folder. A knob change is a run; a structural change is a new `_vNNN`. Details and naming: `workflows/comfyui/README.md`.
+
+Every working folder has a `README.md` signpost: what the folder holds, why, where its contents came from, and a dated "Source and history" list pointing to the documents that record decisions and scores. This includes `outputs/` folders; Git tracks only their READMEs. Write the README when you create the folder, and add a history line when you add or change something in it. A parent README may cover small subfolders it lists in full, such as the category folders of one versioned set. Vendor and tool folders (`.agents/`, `.claude/`, `skills/*` with a `SKILL.md`, per-video folders under `references/mickmumpitz/`) and `docs/archive/` subfolders are exempt. Signpost READMEs follow the exemption in `Scope And Exemptions` and carry no version block.
 
 ## Build, Test, and Development Commands
 
@@ -25,7 +27,10 @@ Networked commands require valid `.env` values, especially `COMFY_API_KEY`.
 This repository is the single source of truth for project memory. Durable facts belong in
 the governed documents described below, not in an external memory service. Record decisions
 in the relevant `docs/` file, dated observations in `docs/findings.md`, and run detail in the
-matching `shots/` or `workflows/` log.
+matching `shots/` or `workflows/` log. Each generation pass keeps an append-only test log with one entry per run
+(change, run, kept clip, scores, look, next): Pass A in `docs/vfx-element-benchmark.md`, later passes in
+`shots/<shot>_<slug>_pass-<letter>_<layer>-log.md`, such as `shots/shot004_fire-jump_pass-b_grassfire-log.md`.
+At the end of every working session, add a dated entry to `docs/worklog.md` summarizing what was done, with pointers.
 
 Supermemory was retired on 2026-08-16; see `docs/archive/mcp/supermemory.md` for that record.
 

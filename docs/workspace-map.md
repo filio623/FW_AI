@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-03
-**Version:** 1.5
+**Version:** 1.6
 
 # Workspace Map
 
@@ -19,7 +19,7 @@ This repo is the shared working area for the AI short-film VFX pipeline.
   - `assets/references/`: visual, motion, and style references.
   - `assets/audio/`: music, dialogue, sound effects, and temp audio.
   - `assets/editorial/`: EDL/XML files, reference exports, and edit-facing material.
-- `docs/`: durable decisions, setup notes, findings, and pipeline strategy.
+- `docs/`: durable decisions, setup notes, findings, and pipeline strategy. `docs/worklog.md` records what was done when, one entry per session. Every working folder has a `README.md` saying what it holds and why (`AGENTS.md`).
   - `docs/archive/`: immutable records. Major-revision snapshots sit flat with a `-vNNN` suffix; retired documents sit under a subfolder mirroring their original path. Nothing here is live.
 - `FW_test/`: historical survey path, absent in this checkout. See `docs/asset-inventory.md` for restored files and external-drive manifests.
 - `mcp/`: MCP setup notes and server plans.
@@ -82,3 +82,4 @@ Keep the original plate untouched. Generate separable elements and interaction p
 | 1.3     | 2026-10-08 | Clarified that the original `FW_test/` directory is absent from this checkout. |
 | 1.4     | 2026-10-19 | Added the off-repo Mickmumpitz workflow library under `references/`. |
 | 1.5     | 2026-11-03 | Moved the Mickmumpitz library into `references/mickmumpitz/` and recorded the `outputs/` layout. |
+| 1.6 | 2026-11-03 | Added `docs/worklog.md`, the per-pass test logs and the folder README rule. |

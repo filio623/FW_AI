@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-03
-**Version:** 1.27
+**Version:** 1.28
 
 # Findings
 
@@ -108,3 +108,4 @@
 - The A100 80 GB PCIe in `EU-RO-1` ran an 81-frame 512p Mick 1.3 inpaint in 191–280 s, about $0.10–0.14 a run at $1.79/hr, against 610–684 s ($0.10–0.11) on the L4.
 - Rerunning an unchanged Mick 1.3 graph on the same GPU type and install (A100, `EU-RO-1` volume) reproduced every frame exactly (maximum pixel difference 0). Same seed, graph, GPU type and software give the same clip; a different GPU or install gives a nearby but different one (run 8r).
 - Repository housekeeping: the GitHub repo `filio623/FW_AI` is now private (it was public, with paid Mickmumpitz Patreon workflows already in `workflows/comfyui/mickmumpitz/`). The Mickmumpitz library moved from `~/Desktop/VFX workflows/mickmumpitz/` into `references/mickmumpitz/`, with only workflows, guides and scripts tracked. `outputs/` now follows a per-shot, per-pass layout (`AGENTS.md`, Generated Outputs).
+- Grass-fire inpaint, shot 004 (Mick 1.3 SkyReels, gray inside the mask, `vace_strength` 0.6, A100): describing Jerry's flame look in the prompt ("soft and translucent, peach-white glow at the heart, orange and gold tongues") without the strong "engulf, tall flames" words turned the grass fire into one smooth floating ribbon of flame, close to a second Jerry, with no grass burning (test 7). With those strong words it was a wild, opaque mass that did burn the grass (test 6). Style words cannot match a fire to Jerry without changing what the fire is; describe the physical fire in the prompt and bring the look from a picture or the comp grade. Detail: `shots/shot004_fire-jump_pass-b_grassfire-log.md`.

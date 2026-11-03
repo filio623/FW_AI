@@ -1,5 +1,15 @@
 # Shot004 Fire Jump VFX Elements
 
+Curated elements for shot 004, the Jerry fire jump. Large media here is gitignored; this README and the subfolder READMEs are the record of what each file is.
+
+## Folders
+
+- `fire/`: the delivered Houdini fire element and the control proxies built from it (below).
+- `plates/`: the staged plate and its proxy.
+- `benchmark/`: scored Pass A (Jerry) and Pass B (grass fire) clips. Scores: `docs/vfx-element-benchmark.md` and the Pass B test log `shots/shot004_fire-jump_pass-b_grassfire-log.md`.
+- `scorch-contact/`: Pass B grass-fire inputs (control, mask, start frame).
+- `comps/`: Blender and Fusion comp files and the delivered comp for comparison.
+
 ## Restored working files
 
 Copied 2026-08-18 from the NAS backup of the production drive:

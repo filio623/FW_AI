@@ -27,7 +27,12 @@ Do not move anything into `assets/characters/tom/approved/` or assemble `assets/
 
 - `approval_manifest.tsv`: review IDs, roles, paths, source traceability, and blank decision fields.
 - `review_gallery.md`: visual gallery for quick review.
-- `candidates/`: staged review images grouped by provisional role.
+- `candidates/`: staged review images grouped by provisional role:
+  - `primary-body/`: TB-005, TB-006, TB-007, TB-010, TB-013
+  - `motion-poses/`: TB-008, TB-009, TB-011, TB-014
+  - `material/`: TB-012, TB-015, TB-016
+  - `source-ref-only/`: TB-002, TB-003, TB-004
+  - `performance-2d-ref-only/`: TB-001
 
 ## Source Notes
 
