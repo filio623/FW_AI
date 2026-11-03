@@ -154,3 +154,15 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** The flames themselves are the softest yet: white in only 0.2–2.4% of the mask (test 10: 8–14%), more translucent, with the blades as dark lines in front. But the blades do not burn (James: no interaction), and the gray veil spoils the frame.
 - **Reading:** With a mask between 0 and 1 the VACE node keeps that share of the control as it is. The control showed flat gray there, so the model half-kept the gray, and Compose + Match then pasted that area at half strength. Whatever sits under a partial mask must be the plate, not gray, so that "half keep" means half keep the grass.
 - **Next:** test 11b: the same mask with the plate, not gray, in the half-strength area, and gray with edges only on the blades.
+
+## Test 11b — 2026-11-03
+
+- **Change:** Test 11 with the plate, not gray, in the half-strength area: DRIVING VIDEO `shot004_grassfire_control-plate-canny-gray-blades4-start25-full50_912x512_81f_v001.mp4` (gray with edges only on the full-strength blade strips, plate everywhere else; `--field-fill plate`). Same mask. Checked: only the DRIVING VIDEO changed.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test11b-cannygray-bladesonly-field050-platefield-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test11b-cannygray-bladesonly-field050-platefield-str080-nagneg2_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Weak and late: 0.3% of the window on frame 32, 2.6% on frame 40.
+- **Fire size and place:** Small: about 3% of the window from frame 50 (test 10: 7–8.5%), 40–56% under Jerry. 63 fire pixels outside the mask.
+- **Plate outside the mask:** The veil is gone: the half-strength area stays within about 4 luma of the plate (difference 7.5–7.9). New artifact on the blade strips: the model redrew the gray strips and their white edges as pale blue-gray tubes over the blades, about 16–19 luma brighter than the plate (James: still mask artifacts).
+- **Look:** The flames that do appear run along the blades in thin tongues, the closest yet to fire climbing individual blades. But they are small, and the tubes spoil the frame.
+- **Reading:** Under the full-strength strips the model copied the control's pattern instead of drawing fire. The strips are about 9 px wide, close to the model's 8 px working grid, and with half of the spread on "keep" the model leans toward copying. Thin, fine-grained masks do not work with this model; masks need to be regions at least a few grid cells wide. Stop the combined-mask branch here.
+- **Next:** test 12, the keyframe as a reference, on test 10's setup.

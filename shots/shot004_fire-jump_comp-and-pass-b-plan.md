@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-03
-**Version:** 2.2
+**Version:** 2.3
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -100,9 +100,9 @@ Fix for the dark ring, in the comp rather than the generation: take from the inp
 
 **Next tests, one change each, on the A100, first seed (1218565630), against test 10 unless noted:**
 
-1. **Test 11b: combined mask with the plate under the half-strength area** (`…_control-plate-canny-gray-blades4-start25-full50_…`, built with `--field-fill plate`; same mask). Test 11 put gray there and came out with a gray veil (see the log). Then test 12 on the better of tests 10 and 11b.
+1. **Done, stopped: combined mask (tests 11, 11b).** Test 11 gave a gray veil; test 11b fixed the veil but the thin blade strips came out as pale tubes and the fire shrank to about 3% of the window. Thin masks are below what the model can draw in; see the log. Test 11b was: **combined mask with the plate under the half-strength area** (`…_control-plate-canny-gray-blades4-start25-full50_…`, built with `--field-fill plate`; same mask). Test 11 put gray there and came out with a gray veil (see the log). Then test 12 on the better of tests 10 and 11b.
    Test 11 (done): **combined mask.** Full strength on the blades, half strength on the space around them, and the blade edges on gray in the DRIVING VIDEO (`…_mask-start25-full50-blades4-field050-soft_…`, `…_control-plate-canny-gray-start25-full50_…`, built with `--inside canny-gray --field 0.5`). Compose + Match pastes with this mask, so the field comes out half plate; if that ghosts, feed the paste a solid mask (graph v002).
-2. **Test 12: keyframe `k2` as Reference Image 2** (node 3349, un-bypassed, loading `shot004_grassfire_keyframe-k2_window_912x512_v001.png`) with `vace_ref_strength` 0.4, on the better of tests 10 and 11. The VACE node encodes a reference as its own frame with its own strength, so this shows the model the look without fixing any frame of the clip.
+2. **Test 12: keyframe `k2` as Reference Image 2** (node 3349, un-bypassed, loading `shot004_grassfire_keyframe-k2_window_912x512_v001.png`) with `vace_ref_strength` 0.4, on test 10's setup. The VACE node encodes a reference as its own frame with its own strength, so this shows the model the look without fixing any frame of the clip.
 3. **Test 13: reference strength.** 0.7 if test 12 moved toward the keyframe but not enough; 0.2 if it copied the keyframe's flames too literally or froze.
 4. **Test 14: `k4` instead of `k2`**, at the best strength, to see how much the choice of keyframe matters.
 5. **Tests 15–16: seeds 1218565804 and 1218565905** on the best setting, before calling it.
@@ -239,3 +239,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 2.0 | 2026-11-03 | Major revision; 1.16 archived to `docs/archive/shot004_fire-jump_comp-and-pass-b-plan-v1.16.md`. Moved the Pass B test table into the new append-only `shots/shot004_fire-jump_pass-b_grassfire-log.md` (tests 1–7 there), and replaced the stale next-test list with the state after test 7 and a ranked list of levers. |
 | 2.1 | 2026-11-03 | Updated Pass B state after test 10; recorded the Higgsfield keyframes; replaced the next-test list with the sequence for tests 11–16. |
 | 2.2 | 2026-11-03 | Recorded test 11's gray-veil result and queued test 11b (plate under the half-strength area). |
+| 2.3 | 2026-11-03 | Recorded test 11b and stopped the combined-mask branch; test 12 runs on test 10's setup. |
