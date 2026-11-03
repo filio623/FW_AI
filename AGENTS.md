@@ -1,12 +1,14 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.5
+**Modified:** 2026-11-03
+**Version:** 1.6
 
 # Repository Guidelines
 
 ## Project Structure & Module Organization
 
 This repository is a working area for an AI-assisted short-film VFX pipeline. Use `docs/` for durable decisions, setup notes, findings, and production strategy. Use `assets/` for source and curated media, with new uploads staged in `assets/inbox/` before classification. Shot-specific plans, run logs, and compositing notes belong in `shots/`; start from `shots/shot-template.md` for new shots. Reusable prompts live in `prompts/`, external research in `references/`, automation in `scripts/`, local agent skills in `skills/`, and saved ComfyUI/Higgsfield workflows in `workflows/`. Generated renders, composites, thumbnails, and review artifacts belong in `outputs/`, which is ignored by Git.
+
+ComfyUI graphs follow one layout, in the repo and in the Pod's workflow browser: a working folder per shot and pass (`workflows/comfyui/shot<NNN>-working/pass-<letter>_<layer>/`, mirrored on the Pod as `shot<NNN>/pass-<letter>_<layer>/`), one frozen extract per scored run in `shot<NNN>-benchmark/` named after its kept clip, and untouched creator originals in their own folder. A knob change is a run; a structural change is a new `_vNNN`. Details and naming: `workflows/comfyui/README.md`.
 
 ## Build, Test, and Development Commands
 
