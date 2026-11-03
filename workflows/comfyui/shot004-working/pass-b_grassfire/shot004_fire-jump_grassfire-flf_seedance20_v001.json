@@ -1,0 +1,399 @@
+{
+ "id": "d64da39a-bb07-4d01-87bd-8afc131c496f",
+ "revision": 0,
+ "last_node_id": 4,
+ "last_link_id": 3,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadImage",
+   "pos": [
+    -1300,
+    -900
+   ],
+   "size": [
+    380,
+    330
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "title": "First frame: clean plate, frame 25 (16:9 full frame)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "shot004_grassfire_plate-full169_f025_1920x1080_v001.png",
+    "image"
+   ],
+   "color": "#f2f2f2",
+   "bgcolor": "#dedede",
+   "shape": "box"
+  },
+  {
+   "id": 2,
+   "type": "LoadImage",
+   "pos": [
+    -1300,
+    -450
+   ],
+   "size": [
+    380,
+    330
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 1,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "COMBO",
+     "widget": {
+      "name": "image"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "choose file to upload",
+     "name": "upload",
+     "type": "IMAGEUPLOAD",
+     "widget": {
+      "name": "upload"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      2
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "title": "Last frame: keyframe k2 on the plate background (16:9 full frame)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "shot004_grassfire_keyframe-k2_full169-platebg_1920x1080_v001.png",
+    "image"
+   ],
+   "color": "#f2f2f2",
+   "bgcolor": "#dedede",
+   "shape": 1
+  },
+  {
+   "id": 3,
+   "type": "ByteDance2FirstLastFrameNode",
+   "pos": [
+    -800,
+    -900
+   ],
+   "size": [
+    440.4458984375,
+    394
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "first_frame",
+     "name": "first_frame",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 1
+    },
+    {
+     "localized_name": "last_frame",
+     "name": "last_frame",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 2
+    },
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "model"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "prompt",
+     "name": "model.prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "model.prompt"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "resolution",
+     "name": "model.resolution",
+     "type": "COMBO",
+     "widget": {
+      "name": "model.resolution"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "ratio",
+     "name": "model.ratio",
+     "type": "COMBO",
+     "widget": {
+      "name": "model.ratio"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "duration",
+     "name": "model.duration",
+     "type": "INT",
+     "widget": {
+      "name": "model.duration"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "generate_audio",
+     "name": "model.generate_audio",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "model.generate_audio"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "seed",
+     "name": "seed",
+     "type": "INT",
+     "widget": {
+      "name": "seed"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "watermark",
+     "name": "watermark",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "watermark"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "first_frame_asset_id",
+     "name": "first_frame_asset_id",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "first_frame_asset_id"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "last_frame_asset_id",
+     "name": "last_frame_asset_id",
+     "shape": 7,
+     "type": "STRING",
+     "widget": {
+      "name": "last_frame_asset_id"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VIDEO",
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "ByteDance2FirstLastFrameNode"
+   },
+   "widgets_values": [
+    "Seedance 2.0",
+    "Static locked-off camera on a tripod: no camera movement, no zoom, no reframing. Close-up of a dry grass clump on sandy soil in daylight. A small spark catches at the base of the clump in the centre, and within about one second the fire spreads up and through the grass blades until the whole clump is burning. Soft, translucent peach and orange flame tongues climb the individual blades; the blades blacken, curl and glow at their tips; small embers drift upward; thin wisps of smoke. The fire then keeps burning steadily, flickering naturally. Realistic fire, natural motion, shallow depth of field. The ground, the background grass and the framing stay exactly the same; only the fire and the burning blades change.",
+    "720p",
+    "adaptive",
+    4,
+    false,
+    42,
+    "fixed",
+    false,
+    "",
+    ""
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 4,
+   "type": "SaveVideo",
+   "pos": [
+    -300,
+    -900
+   ],
+   "size": [
+    270,
+    106
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 3
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMBO",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0"
+   },
+   "widgets_values": [
+    "video/shot004_grassfire-flf",
+    "auto",
+    "auto"
+   ]
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   3,
+   0,
+   "IMAGE"
+  ],
+  [
+   2,
+   2,
+   0,
+   3,
+   1,
+   "IMAGE"
+  ],
+  [
+   3,
+   3,
+   0,
+   4,
+   0,
+   "VIDEO"
+  ]
+ ],
+ "groups": [],
+ "config": {},
+ "extra": {
+  "frontendVersion": "1.47.11",
+  "ds": {
+   "scale": 0.8,
+   "offset": [
+    1500,
+    1100
+   ]
+  }
+ },
+ "version": 0.4
+}
