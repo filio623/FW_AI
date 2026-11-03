@@ -178,3 +178,24 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** About the same as test 10 (James: not much difference). Slightly warmer fire (mean fire colour 240/189/92 against 241/185/83) and slightly less blown out (white 6–13% of the mask against 7–14%). Still thick, opaque flames with a hard orange edge, far from `k2` (soft peach tongues, mean 207/137/70, no blown-out white).
 - **Reading:** At 0.4 the reference barely reaches the result. Either a stronger reference or putting the keyframe in the clip itself.
 - **Next:** test 13 (`vace_ref_strength` 1.0) and test 14 (`k2` inside the DRIVING VIDEO at frames 49–52, mask 0 there, match mode pass-through).
+
+## Test 13 — 2026-11-03
+
+- **Change:** Test 12 with `vace_ref_strength` 0.4 → 1.0. Checked: only that changed.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test13-gray-prompt2-str080-nagneg2-refk2-100_seed1218565630_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test13-gray-prompt2-str080-nagneg2-refk2-100_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Result:** Almost test 12: 2.6–9.4% of the window, white in 7–13% of the mask (test 12: 6–13%). James: did not change very much.
+- **Reading:** Even at full strength the reference does not carry the keyframe's look into this graph. A reference image is not the lever here.
+
+## Test 14 — 2026-11-03
+
+- **Change:** Test 12 with keyframe `k2` inside the clip: DRIVING VIDEO `shot004_grassfire_control-plate-gray-keyk2-f049-052-start25-full50_912x512_81f_v001.mp4` and MASK `shot004_grassfire_mask-start25-full50-soft-keyk2-f049-052_912x512_81f_v001.mp4` (on frames 49–52, `k2` inside the spread and the plate outside, mask 0), and match mode Compose + Match → Disabled (pass-through), which the keyframe needs. `vace_ref_strength` 0.4 as in test 12. Checked: those three changes only.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test14-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test14-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, but frames 30–48 are a "poof" (James): the whole growing mask fills with a flat, glowing peach dome in the keyframe's colour, edged with sparks, shaped exactly like the mask.
+- **Keyframe:** Kept: frames 49–52 are within about 11 of the control inside the spread (about 66 before and after). They hold still (change between frames 0.6–1.5 against about 7 elsewhere), with a jump into and out of the hold (about 19 and 18).
+- **Fire size and place:** 14–15% of the window on frames 40–48 (the dome), 9–10.5% from frame 50.
+- **Plate outside the mask:** Pass-through regenerates the whole frame: outside the mask it differs from the plate by 9–11 (Compose + Match: about 3.4). The comp's change matte only takes what changed, but that threshold will need checking against this level.
+- **Look:** From frame 53 on, the best so far and the closest to `k2` and Jerry: soft, translucent peach flame tongues among the plate's blades, blades dark and burning at the tips in front, embers at the base, and no blown-out white anywhere (0% of the mask, against 7–13% in tests 12–13). The fire moves about half as much as in test 12 (frame-to-frame change about 6.5 against 12), and its outline still follows the mask's shape.
+- **Reading:** Putting the keyframe in the clip is the first change that moved the look. The poof comes from the model filling the whole mask with the keyframe's colour while it waits for frame 49; it has nothing to tell it how the fire grows before then.
+- **Next:** test 15: the same keyframe on three groups along the spread (frames 33–36, 41–44, 49–52), each limited to the part of the spread that has caught by then, so the growth is shown too.
