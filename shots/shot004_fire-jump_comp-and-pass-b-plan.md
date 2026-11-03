@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-03
-**Version:** 2.7
+**Version:** 2.8
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -106,7 +106,7 @@ Fix for the dark ring, in the comp rather than the generation: take from the inp
 3. **Done: test 13, `vace_ref_strength` 1.0.** About test 12. A reference image is not the lever in this graph.
 4. **Done: test 14, `k2` inside the DRIVING VIDEO on frames 49–52** (mask 0 there, match mode pass-through). From frame 53 the best look so far: soft peach tongues among the blades, embers, no blown-out white. Before frame 49 the whole mask fills with a glowing peach dome (the "poof"); the keyframe frames hold still.
 5. **Done on an RTX 4090 (no A100 in stock): test 14r** (test 14 unchanged, the 4090 baseline) **and test 15, the keyframe on three groups** (33–36, 41–44, 49–52). Test 15 removes the poof: the fire grows in `k2`'s look from frame 30. But its outline is the spread's outline (a glowing block), because `k2`'s flames reach far past the spread and are cut, and it moves about half as much, with a hold on each group.
-6. **Next (2026-11-03): Seedance 2.0 First-Last-Frame, through the ComfyUI API node on the Pod** (James). First frame: the clean plate window at frame 25 (`keyframes/shot004_grassfire_plate-window_f025_1824x1024_v001.png`); last frame: `k2` registered to the window (`…_keyframe-k2_window_1824x1024_v001.png`). A video model trained on real footage invents the ignition and spread itself, so there is no mask to shape the fire; the camera is locked off, so only the fire area is comped back with the change matte and the timing is set in the comp. Only stills go to the service, which the plate rule allows. Start at Seedance 2.0 Fast, 720p, 4 s, audio off.
+6. **S1 done (2026-11-03): Seedance 2.0 First-Last-Frame works.** Natural ignition at the base at 0.5 s, the clump burning by 1–1.5 s, soft translucent flames among the blades, no blown-out white (James: looks pretty good). Open: the fire runs off the window's edges, the whole frame warms toward `k2`'s grade, and it was 480p. **Next, S2:** full-frame 16:9 first frame (`keyframes/shot004_grassfire_plate-full169_f025_1920x1080_v001.png`) and `k2` on the plate's background (`…_keyframe-k2_full169-platebg_1920x1080_v001.png`), 720p, no `l3n0v0`; then 1080p or 4K for the final (4K maps 1:1 onto the 16:9 crop of the plate). How S1 was set up: First frame: the clean plate window at frame 25 (`keyframes/shot004_grassfire_plate-window_f025_1824x1024_v001.png`); last frame: `k2` registered to the window (`…_keyframe-k2_window_1824x1024_v001.png`). A video model trained on real footage invents the ignition and spread itself, so there is no mask to shape the fire; the camera is locked off, so only the fire area is comped back with the change matte and the timing is set in the comp. Only stills go to the service, which the plate rule allows. Start at Seedance 2.0 Fast, 720p, 4 s, audio off.
    In parallel on the GPU, optional: test 16, the SkyReels graph with a static zone (no growing front) sized to `k2`'s fire and `k2` at frames 57–60 (`--growth static --zone-from-key --key-frames 57-60`; inputs in the Pod's `input/`).
 7. **Earlier choice, parked:** make the spread cover the keyframe's fire (bigger fire, up to the window's edges; may need the taller 720p window), or have the keyframes remade with the fire limited to the clump. Then: fewer groups (two) for more motion; seeds; check the change matte against pass-through's whole-frame change (9–11 outside the mask).
 7. **Comp:** grade the kept result toward the keyframe's colours, roll off its highlights, and use the change matte.
@@ -246,3 +246,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 2.5 | 2026-11-03 | Recorded tests 13 and 14 (keyframe in the clip: first real change of look); set test 15 (keyframe on three groups). |
 | 2.6 | 2026-11-03 | Recorded tests 14r and 15 (4090); next choice: spread to fit the keyframe, or keyframes limited to the clump. |
 | 2.7 | 2026-11-03 | Set the next Pass B step: Seedance 2.0 first-last-frame from the clean plate to k2, via the ComfyUI API node; test 16 (static zone) optional. |
+| 2.8 | 2026-11-03 | Recorded Seedance S1 (first-last-frame works); set S2 (full frame, plate background). |
