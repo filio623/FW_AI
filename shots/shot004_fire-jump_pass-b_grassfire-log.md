@@ -218,3 +218,7 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** `k2`'s look all the way through: soft peach flame, blades dark in front with glowing tips, embers, no blown-out white. Two problems. The fire's outline is the mask's outline: a glowing block with a flat top and soft edges, because `k2`'s flames reach well past the spread (38% of `k2`'s fire lies outside it, and 39–43% for the other keyframes; `keyframes_vs_spread_f52.png`) and are cut by it. And the fire moves less: frame-to-frame change inside the spread is 4–9 against 9–12 for test 14r, with holds on each group and a jump out of each (13–24).
 - **Reading:** Keyframe groups along the spread fix the growth. The silhouette now comes from the cut, so the keyframe and the spread have to agree: either the spread grows to cover the keyframe's fire, or the keyframe is made with the fire limited to the clump.
 - **Next:** James to choose: a bigger spread that covers `k2`'s fire (a fire about 2.5 times the current size, reaching the window's edges), or keyframes regenerated with the fire limited to the clump.
+
+## Review of tests 14r and 15 — 2026-11-03
+
+- James: test 15 starts with an unnatural glowing, growing effect; neither 14r nor 15 is a success. The growth reads as a glow spreading with the mask front, not as grass catching.
