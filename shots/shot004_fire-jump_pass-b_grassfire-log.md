@@ -199,3 +199,22 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** From frame 53 on, the best so far and the closest to `k2` and Jerry: soft, translucent peach flame tongues among the plate's blades, blades dark and burning at the tips in front, embers at the base, and no blown-out white anywhere (0% of the mask, against 7–13% in tests 12–13). The fire moves about half as much as in test 12 (frame-to-frame change about 6.5 against 12), and its outline still follows the mask's shape.
 - **Reading:** Putting the keyframe in the clip is the first change that moved the look. The poof comes from the model filling the whole mask with the keyframe's colour while it waits for frame 49; it has nothing to tell it how the fire grows before then.
 - **Next:** test 15: the same keyframe on three groups along the spread (frames 33–36, 41–44, 49–52), each limited to the part of the spread that has caught by then, so the growth is shown too.
+
+## Test 14r — 2026-11-03
+
+- **Change:** None: test 14 rerun unchanged on an RTX 4090 (Pod `bd2rmuu6fy08ks`; no A100 80GB in `EU-RO-1`), as the baseline for later 4090 tests. Checked: the graph is identical to test 14.
+- **Run:** 293 s on the 4090, including the first model load (test 15 after it: 226 s).
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test14r-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test14r-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.workflow.json`.
+- **Result:** A nearby sample of test 14, as expected on another GPU (PSNR 42 dB before ignition, 18–32 dB after). Same behaviour: a glowing dome filling the mask on frames 30–48 (a bright glow over 24–31% of the mask), the keyframe held on 49–52, then soft peach tongues among the blades with no blown-out white. 9–14% of the window.
+
+## Test 15 — 2026-11-03
+
+- **Change:** Test 14r with `k2` on three groups along the spread: DRIVING VIDEO `shot004_grassfire_control-plate-gray-keyk2-f033-036-041-044-049-052-start25-full50_912x512_81f_v001.mp4` and MASK `shot004_grassfire_mask-start25-full50-soft-keyk2-f033-036-041-044-049-052_912x512_81f_v001.mp4`; each group shows `k2` only where the spread has reached. Checked: only the two loaders changed.
+- **Run:** 226 s (RTX 4090); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test15-gray-keyk2-f033-036-041-044-049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test15-gray-keyk2-f033-036-041-044-049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.workflow.json`.
+- **Ignition:** Pass, and the poof is gone: the fire grows in `k2`'s look from a small patch on frame 30 (0.9% of the window, 3.4–3.6% on frames 34–38, 8.3–8.6% on 42–46, about 10% from 50). The bright glow covers 5–14% of the mask on frames 30–46, against 24–31% in test 14r.
+- **Fire size and place:** About 10% of the window from frame 50, like test 14r.
+- **Plate outside the mask:** As test 14r (pass-through).
+- **Look:** `k2`'s look all the way through: soft peach flame, blades dark in front with glowing tips, embers, no blown-out white. Two problems. The fire's outline is the mask's outline: a glowing block with a flat top and soft edges, because `k2`'s flames reach well past the spread (38% of `k2`'s fire lies outside it, and 39–43% for the other keyframes; `keyframes_vs_spread_f52.png`) and are cut by it. And the fire moves less: frame-to-frame change inside the spread is 4–9 against 9–12 for test 14r, with holds on each group and a jump out of each (13–24).
+- **Reading:** Keyframe groups along the spread fix the growth. The silhouette now comes from the cut, so the keyframe and the spread have to agree: either the spread grows to cover the keyframe's fire, or the keyframe is made with the fire limited to the clump.
+- **Next:** James to choose: a bigger spread that covers `k2`'s fire (a fire about 2.5 times the current size, reaching the window's edges), or keyframes regenerated with the fire limited to the clump.

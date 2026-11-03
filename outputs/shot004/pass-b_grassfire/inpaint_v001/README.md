@@ -14,6 +14,7 @@ Inputs and raw results for the Pass B grass-fire inpaint (`workflows/comfyui/sho
 ## Source and history
 
 - 2026-11-02: inputs built; tests 1–2.
+- 2026-11-03: tests 14r and 15 on an RTX 4090 (`test14r_sequence.png`, `test15_sequence.png`, `keyframes_vs_spread_f52.png`).
 - 2026-11-03: tests 13 (reference 1.0; no change) and 14 (`k2` in the clip; best look after frame 53, a glowing dome before it). `test14_sequence.png`. `candidates-key3/`: `k2` on three groups (`preview_key3.png`), uploaded for test 15.
 - 2026-11-03: test 12 (`k2` as a reference at 0.4; about test 10). `candidates-key/`: `k2` inside the control at frames 49–52 (`preview_key.png`), uploaded for test 14.
 - 2026-11-03: test 11b (plate in the half-strength area; pale tubes on the blade strips, small fire). Combined-mask branch stopped.

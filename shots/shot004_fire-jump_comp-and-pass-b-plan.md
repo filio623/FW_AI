@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-03
-**Version:** 2.5
+**Version:** 2.6
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -105,8 +105,8 @@ Fix for the dark ring, in the comp rather than the generation: take from the inp
 2. **Done: test 12, keyframe `k2` as Reference Image 2 at `vace_ref_strength` 0.4.** About the same as test 10; the reference barely reaches the result.
 3. **Done: test 13, `vace_ref_strength` 1.0.** About test 12. A reference image is not the lever in this graph.
 4. **Done: test 14, `k2` inside the DRIVING VIDEO on frames 49–52** (mask 0 there, match mode pass-through). From frame 53 the best look so far: soft peach tongues among the blades, embers, no blown-out white. Before frame 49 the whole mask fills with a glowing peach dome (the "poof"); the keyframe frames hold still.
-5. **Test 15: the keyframe on three groups along the spread**, on test 14's setup: DRIVING VIDEO `shot004_grassfire_control-plate-gray-keyk2-f033-036-041-044-049-052-start25-full50_912x512_81f_v001.mp4` and MASK `shot004_grassfire_mask-start25-full50-soft-keyk2-f033-036-041-044-049-052_912x512_81f_v001.mp4` (`--key-frames 33-36,41-44,49-52`). Each group shows `k2` only where the spread has reached by then, so the model sees the fire grow instead of a dome. Three short holds are expected; the comp can blend across them.
-6. **Then:** seeds 1218565804 and 1218565905 on the best keyframe setting; `k4` instead of `k2`; more motion after the last group (a later group, e.g. 69–72, from a second keyframe, or a lower hold); check the change matte against pass-through's whole-frame change (9–11 outside the mask).
+5. **Done on an RTX 4090 (no A100 in stock): test 14r** (test 14 unchanged, the 4090 baseline) **and test 15, the keyframe on three groups** (33–36, 41–44, 49–52). Test 15 removes the poof: the fire grows in `k2`'s look from frame 30. But its outline is the spread's outline (a glowing block), because `k2`'s flames reach far past the spread and are cut, and it moves about half as much, with a hold on each group.
+6. **Next, James to choose:** make the spread cover the keyframe's fire (bigger fire, up to the window's edges; may need the taller 720p window), or have the keyframes remade with the fire limited to the clump. Then: fewer groups (two) for more motion; seeds; check the change matte against pass-through's whole-frame change (9–11 outside the mask).
 7. **Comp:** grade the kept result toward the keyframe's colours, roll off its highlights, and use the change matte.
 8. Later: **taller window, 720p** (input set v002) for finer flames, once the look is right; **the production grass-fire render as the guide** (candidate 1) once it is restored from the NAS; prompt 4 (physical grass-fire wording only).
 
@@ -242,3 +242,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 2.3 | 2026-11-03 | Recorded test 11b and stopped the combined-mask branch; test 12 runs on test 10's setup. |
 | 2.4 | 2026-11-03 | Recorded test 12; set tests 13 (reference strength 1.0) and 14 (keyframe inside the control, pass-through). |
 | 2.5 | 2026-11-03 | Recorded tests 13 and 14 (keyframe in the clip: first real change of look); set test 15 (keyframe on three groups). |
+| 2.6 | 2026-11-03 | Recorded tests 14r and 15 (4090); next choice: spread to fit the keyframe, or keyframes limited to the clump. |
