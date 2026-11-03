@@ -130,3 +130,15 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** A wide, bowl-shaped sheet of opaque flame, the most blown out of the three (white 12–24% of the mask, against 11–14% for test 6 and 3–5% for test 8), with a little dark smoke at the edges. The blades are dark lines in front of the flames again rather than burning. James: less interaction with the grass, a little too wild.
 - **Reading over tests 6, 8 and 9 (same settings, three seeds):** size and coverage are consistent (about 10–13% of the window by frame 50). The look is consistently thick, opaque, wild fire. What changes with the seed is the smoke (none, a heavy cloud, a little) and whether the blades burn or stay in front. These settings will not give Jerry's look by reseeding; the next change has to constrain the fire's shape or show the model the look.
 - **Next:** see the plan, Pass B tests.
+
+## Test 10 — 2026-11-03
+
+- **Change:** Test 6 (first seed, 1218565630) with two changes, James: `vace_strength` 0.6 → 0.8, and "opaque, blown out, fireball, smoke cloud" added to the end of the NAG negative prompt (node 3262). The two cannot be separated in this run.
+- **Run:** 191 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test10-gray-prompt2-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test10-gray-prompt2-str080-nagneg2_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, as test 6.
+- **Fire size and place:** Nearly test 6: the same sample and composition, slightly smaller (8.5% of the window on frames 50–66 against 8.5–10.0%); 47–63% under Jerry; 42 fire pixels outside the mask (test 6: 133). Inside the mask the output follows the plate's blade edges a little more (edge agreement 0.29–0.34 against 0.23–0.27).
+- **Plate outside the mask:** Pass outside; the ring is unchanged (−15.3 and −16.1 luma, same measure as tests 7–9).
+- **Look:** Test 6 again, a little tidier, with the blades slightly more present and a scorched, ember-lit base. Still thick and blown out: white in 8–14% of the mask, as in test 6, so the "opaque, blown out" negatives did not reduce it.
+- **Reading:** Within 0.6–0.8 and with these negatives the result is set by the seed and the inputs, not by these knobs.
+- **Next:** the combined mask (full strength on the blades, half on the space around them) with edges on gray.

@@ -4,12 +4,17 @@
 Outputs (912x512, 24 fps, --frames frames, a 2x downscale of a 1824x1024 window of the
 4096x2160 plate, so the inpaint keeps twice the detail of a full-frame 512p run):
 
-- control: the plate outside the mask; inside it, either the plate's Canny edges on black
+- control: the plate outside the mask; inside it, the plate's Canny edges on black
   (--inside canny, the recipe of Mickmumpitz's OfficeFlood example: blades keep their
-  structure) or flat mid-gray (--inside gray: the model draws freely). DRIVING VIDEO.
+  structure), flat mid-gray (--inside gray: the model draws freely), or the edges on
+  mid-gray (--inside canny-gray: structure without telling the model to keep black). DRIVING VIDEO.
 - mask: white where the model may draw, soft edge. Empty before --start; from there it
   spreads from the ignition point (Jerry's landing contact) through the burn zone
-  (the grass clump and the air above it) until --full, then holds. MASK.
+  (the grass clump and the air above it) until --full, then holds. MASK. With --field
+  below 1, only the blades inside the spread (strong plate edges grown by --blade-grow px)
+  are full white; the rest of the spread is --field (e.g. 0.5), a looser "may change".
+  Note the graph's Compose + Match pastes the result with this mask, so a field of 0.5
+  also mixes the plate back in at half strength there.
 - start: the plate window's first frame as a still (start image / reference).
 - a JSON report of the settings and per-frame mask coverage.
 
@@ -95,7 +100,7 @@ def build(args: argparse.Namespace) -> dict:
     dist /= dist[zone.astype(bool)].max()
     noise = smooth_noise(args.seed, 24)
 
-    controls, masks, coverage = [], [], []
+    controls, masks, coverage, blade_cover = [], [], [], []
     for t in range(n):
         if t < args.start:
             front = -1.0
@@ -113,14 +118,26 @@ def build(args: argparse.Namespace) -> dict:
                                        cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))) & zone
         hard = hard_u8.astype(bool)
         hard_u8 = hard_u8 * 255
-        soft = cv2.GaussianBlur(hard_u8, (0, 0), args.soft) if args.soft > 0 else hard_u8
+        gray = cv2.cvtColor(plate[t], cv2.COLOR_RGB2GRAY)
+        edges = cv2.Canny(cv2.GaussianBlur(gray, (0, 0), 1.0), args.canny_low, args.canny_high)
         if args.inside == "canny":
-            gray = cv2.cvtColor(plate[t], cv2.COLOR_RGB2GRAY)
-            edges = cv2.Canny(cv2.GaussianBlur(gray, (0, 0), 1.0), args.canny_low, args.canny_high)
             fill = np.repeat(edges[..., None], 3, axis=2)
+        elif args.inside == "canny-gray":
+            fill = np.full_like(plate[t], 128)
+            fill[edges > 0] = 255
         else:  # flat mid-gray: VACE's "generate freely here"
             fill = np.full_like(plate[t], 128)
         control = np.where(hard[..., None], fill, plate[t])
+        if args.field < 1.0 and t >= args.start:
+            # Full strength on the blades, --field on the space around them.
+            strong = cv2.Canny(cv2.GaussianBlur(gray, (0, 0), 1.5), args.blade_low, args.blade_high)
+            k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * args.blade_grow + 1,) * 2)
+            blades = ((cv2.dilate(strong, k) > 0) & hard).astype(np.uint8)
+            cv2.circle(blades, IGNITION, 10, 1, -1)
+            blades = blades.astype(bool) & hard
+            hard_u8 = np.where(blades, 255, np.where(hard, round(255 * args.field), 0)).astype(np.uint8)
+            blade_cover.append(round(float(blades.mean()), 4))
+        soft = cv2.GaussianBlur(hard_u8, (0, 0), args.soft) if args.soft > 0 else hard_u8
         controls.append(control)
         masks.append(soft)
         coverage.append(round(float(hard.mean()), 4))
@@ -129,8 +146,9 @@ def build(args: argparse.Namespace) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     tag = f"start{args.start}-full{args.full}"
     stem = f"{W}x{H}_{n}f_{args.version}"
+    mask_kind = "soft" if args.field >= 1.0 else f"blades{args.blade_grow}-field{round(args.field * 100):03d}-soft"
     control_path = out / f"shot004_grassfire_control-plate-{args.inside}-{tag}_{stem}.mp4"
-    mask_path = out / f"shot004_grassfire_mask-{tag}-soft_{stem}.mp4"
+    mask_path = out / f"shot004_grassfire_mask-{tag}-{mask_kind}_{stem}.mp4"
     start_path = out / f"shot004_grassfire_start-frame_{W}x{H}_{args.version}.png"
     write_video(controls, control_path, "rgb24")
     write_video(masks, mask_path, "gray")
@@ -140,9 +158,10 @@ def build(args: argparse.Namespace) -> dict:
         "window_on_plate": {"x": WINDOW_X, "y": WINDOW_Y, "w": WINDOW_W, "h": WINDOW_H, "scale_to_plate": 2.0},
         "burn_zone": BURN_ZONE, "ignition": IGNITION,
         "control": str(control_path), "mask": str(mask_path), "start_image": str(start_path),
-        "coverage": coverage,
+        "coverage": coverage, "blade_coverage": blade_cover,
     }
-    (out / f"shot004_grassfire_inputs-{args.inside}-{tag}_{stem}.json").write_text(json.dumps(report, indent=1))
+    kind = args.inside if args.field >= 1.0 else f"{args.inside}-{mask_kind}"
+    (out / f"shot004_grassfire_inputs-{kind}-{tag}_{stem}.json").write_text(json.dumps(report, indent=1))
     return report
 
 
@@ -156,10 +175,17 @@ def main() -> None:
     p.add_argument("--climb", type=float, default=0.6, help="vertical distance weight; below 1 climbs faster")
     p.add_argument("--ragged", type=float, default=0.25, help="how irregular the fire front is")
     p.add_argument("--soft", type=float, default=3.0, help="mask edge Gaussian sigma in px")
-    p.add_argument("--inside", choices=["canny", "gray"], default="canny",
-                   help="what the DRIVING VIDEO shows inside the mask: the plate's Canny edges, or flat gray")
+    p.add_argument("--inside", choices=["canny", "gray", "canny-gray"], default="canny",
+                   help="what the DRIVING VIDEO shows inside the mask: Canny edges on black, flat gray, "
+                        "or Canny edges on gray")
     p.add_argument("--canny-low", type=int, default=20)
     p.add_argument("--canny-high", type=int, default=60)
+    p.add_argument("--field", type=float, default=1.0,
+                   help="mask level around the blades inside the spread; 1 = one solid mask")
+    p.add_argument("--blade-grow", type=int, default=4, help="px the blade edges are grown for the full-strength mask")
+    p.add_argument("--blade-low", type=int, default=20, help="Canny thresholds that pick the blades for the mask "
+                                                              "(on a 1.5 px blur; 20/60 picks about a third of the spread)")
+    p.add_argument("--blade-high", type=int, default=60)
     p.add_argument("--seed", type=int, default=4)
     p.add_argument("--version", default="v001")
     r = build(p.parse_args())
