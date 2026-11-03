@@ -70,3 +70,18 @@ assets/inbox/*
 
 # Stills cut from the plate are plate media; the mp4 inputs beside them are already ignored.
 assets/elements/by-shot/**/*_start-frame_*.png
+
+# Mickmumpitz library (references/mickmumpitz/): track the workflows, guides, index and
+# helper scripts; keep example packs, media and extracted example folders local only.
+references/mickmumpitz/**
+!references/mickmumpitz/**/
+!references/mickmumpitz/**/*.json
+!references/mickmumpitz/**/*.md
+!references/mickmumpitz/**/*.txt
+!references/mickmumpitz/**/*.tsv
+!references/mickmumpitz/**/*.py
+!references/mickmumpitz/**/*.js
+!references/mickmumpitz/**/*.bat
+!references/mickmumpitz/**/*.html
+references/mickmumpitz/**/*EXAMPLE-FILES*/
+references/mickmumpitz/**/*EXAMPLE_FILES*/

@@ -18,7 +18,7 @@ back on the plate: scale x2 and put its top-left corner at plate (WINDOW_X, WIND
 
 Needs numpy and opencv-python (/usr/local/bin/python3 has both) and ffmpeg.
 
-    /usr/local/bin/python3 scripts/build_shot004_grassfire_inputs.py --out-dir outputs/shot004_grassfire_v001
+    /usr/local/bin/python3 scripts/build_shot004_grassfire_inputs.py --out-dir outputs/shot004/pass-b_grassfire/inpaint_v001
 """
 
 from __future__ import annotations

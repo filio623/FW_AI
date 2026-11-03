@@ -1,6 +1,6 @@
 **Created:** 2026-10-13
-**Modified:** 2026-11-02
-**Version:** 3.9
+**Modified:** 2026-11-03
+**Version:** 3.10
 
 # VFX Element Benchmark
 
@@ -147,7 +147,7 @@ test uses this file.
 8c. **Next session, in this order.** Start from run 8's settings (`seed_1` 1218565630, `JB-001` + `JB-010`, prompt v3 with `l3n0v0`, Lenovo on, `vace_strength` 1.25, NAG bypassed, 512p). **Since 2026-11-02 the Pod runs on the rebuilt `EU-RO-1` volume; compare each one-knob test with run 8r (the same graph rerun there on an L4), not with run 8, and keep the GPU type the same within a comparison.** The same seed and graph on the new GPU and install gave a nearby sample, not an identical one.
     1. **NAG with a negative prompt.** Un-bypass `WanVideoNAG` in the Sampler subgraph and set the negative prompt to "face, eyes, nose, mouth, solid sphere, smooth plastic, ground, environment". This also verifies the KJNodes FP8 patch (see `mcp/runpod.md`). **Done 2026-11-02 as run 9:** the patch works after a rewrite; NAG at its default settings changed little (see the score row). Keep it on, since it costs only seconds.
     2. **720p.** SETTINGS 512p → 720p on the best result of 1. Checks sharpness and whether path and black still pass. Expect about twice the Pod time per run (estimate). **Deferred (James, 2026-11-02):** run the smaller guide (item 4) first; 720p can be rerun later from any kept clip, since each Mick 1.3 clip embeds its full workflow and prompt in its metadata.
-    3. **Comp check over the plate**, in Resolve or Fusion with Screen or Add, using the best clip. A first ffmpeg preview of run 8 was made on 2026-11-01 while `CA-MTL-1` was down (`outputs/shot004_comp/`, not kept). To place a Mick 1.3 512p clip on the plate scaled to 1920×1014: scale ×2.0192 to 1842×1034, crop 10 px off the top, place at x +39 (see `docs/findings.md`, 2026-11-01). The preview showed correct placement and clean black, but Jerry is 20–50% larger than the Houdini fire, and over the plate he reads as a pale glowing orb, less hot and saturated than the fire. A grade in the comp can fix colour; size needs a new guide. **2026-11-02:** done in Blender instead (Blender Comp v001 in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`). With an opaque core and a hotter grade, run 8's darker interior patches read as two eyes and a mouth on about frames 45–70. Screen alone had hidden this. Run item 1 (NAG negatives) before trusting run 8's look.
+    3. **Comp check over the plate**, in Resolve or Fusion with Screen or Add, using the best clip. A first ffmpeg preview of run 8 was made on 2026-11-01 while `CA-MTL-1` was down (`outputs/shot004/comp/ffmpeg-preview/`, not kept). To place a Mick 1.3 512p clip on the plate scaled to 1920×1014: scale ×2.0192 to 1842×1034, crop 10 px off the top, place at x +39 (see `docs/findings.md`, 2026-11-01). The preview showed correct placement and clean black, but Jerry is 20–50% larger than the Houdini fire, and over the plate he reads as a pale glowing orb, less hot and saturated than the fire. A grade in the comp can fix colour; size needs a new guide. **2026-11-02:** done in Blender instead (Blender Comp v001 in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`). With an opaque core and a hotter grade, run 8's darker interior patches read as two eyes and a mouth on about frames 45–70. Screen alone had hidden this. Run item 1 (NAG negatives) before trusting run 8's look.
     4. **Smaller guide (promoted from optional by the comp preview).** Rebuild the gray-in-mask guide and mask with less growth (about 4–8 px instead of 16) and a rounded top, then rerun run 8's settings. Expect a body closer to the Houdini fire's size and less gray leak at lower strengths. **2026-11-02:** built with `scripts/build_shot004_guide.py` (6 px growth, rounded top, post-landing growth damped to 1.25×); the candidate awaits approval and is described in the comp plan under Size.
     Optional, only if a result calls for it: separate run 8's two changes (Lenovo at 1.5, or 1.25 without Lenovo); a third seed on the final recipe; SeedVR2 or FlashVSR upscale of the best 512p clip. Full-length (84-frame) coverage and Pass B follow the comp check.
 9. **Same merge, plus the JB-001 first frame as control frame 0** (mask black on frame 0, red mask after). Only after 8 is scored. It reopens first-frame conditioning on a new model, not a stock-VACE mask tweak.
@@ -238,14 +238,14 @@ Scored clips are the research set. The mp4 holds the picture and the canvas that
 | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_eu-ro-l4-repro_v001.mp4` | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_eu-ro-l4-repro_v001.workflow.json` | Run 8r: run 8's graph unchanged, rerun on the new `EU-RO-1` volume with an L4. Baseline for one-knob tests on that setup. |
 | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo-nag_seed1218565630_eu-ro-l4_v001.mp4` | `.../shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo-nag_seed1218565630_eu-ro-l4_v001.workflow.json` | Run 9: run 8r plus NAG with face negatives. |
 
-The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still points at `outputs/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4`.
+The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still points at `outputs/shot004/pass-a_jerry/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4`.
 
 ## Score Rows
 
 | Date | Run | Tool | Knob changed | Frames | Cost | Trajectory | Look | Black | File | Next |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-11 | Pass A 00003 | VACE 14B | strength 1, red mask | 17 | Pod time | Pass | Fail | Pass | `shot004_vace_latent_00003_.latent` | strength 0.5 |
-| 2026-10-11 | HF Seedance 2.5 | video_edit 480p | — | 89 | 14 credits | Fail | Pass | Pass | `outputs/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4` | not the driver |
+| 2026-10-11 | HF Seedance 2.5 | video_edit 480p | — | 89 | 14 credits | Fail | Pass | Pass | `outputs/shot004/pass-a_jerry/higgsfield/shot004_jerry_seedance25-edit_480p_run001.mp4` | not the driver |
 | 2026-10-13 | Kling Motion Control | `KlingMotionControl` | — | — | 0 | n/a | n/a | n/a | — | do not retry |
 | 2026-10-13 | Kling Omni Edit 00005 / 00006 | `kling-v3-omni` 720p | prompt asked for still look, video for scale and motion | full clip, scaled to 1338×720 class | Comfy credits | Held, not measured | Fail. Look ramps in late | Not measured | `output/video/ComfyUI_00005_.mp4` seed 436, `ComfyUI_00006_.mp4` seed 602 | VACE strength 0.5, then Wan 2.7 Video Edit |
 | 2026-10-17 | Pass A strength 0.5 | VACE 14B | strength 0.5 only | 17 | Pod time | Partial. Splits | Fail | Pass | `FW_fire_comp_proxy_00005_.mp4` | silhouette as control video |
@@ -291,3 +291,4 @@ The Higgsfield Seedance 2.5 clip is not in this checkout. Its score row still po
 | 3.7 | 2026-11-02 | Scored run 8r, run 8 reproduced on the rebuilt `EU-RO-1` volume (L4), and made it the baseline for step 8c on that setup. |
 | 3.8 | 2026-11-02 | Scored run 9 (NAG with face negatives): a small, positive change; NAG stays on. |
 | 3.9 | 2026-11-02 | Deferred 720p behind the smaller guide. |
+| 3.10 | 2026-11-03 | Updated `outputs/` paths to the per-shot layout (`outputs/<shot>/<pass or comp>/`). |

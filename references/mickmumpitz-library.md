@@ -1,24 +1,24 @@
 **Created:** 2026-10-19
-**Modified:** 2026-11-01
-**Version:** 1.2
+**Modified:** 2026-11-03
+**Version:** 2.0
 
 # Mickmumpitz Workflow Library
 
-A local copy of the Mickmumpitz Patreon workflows and guides, organized per YouTube video. The files live off-repo. This document and `references/manifests/mickmumpitz/` are the durable record of what exists and where.
+A local copy of the Mickmumpitz Patreon workflows and guides, organized per YouTube video. Since 2026-11-03 it lives in the repo at `references/mickmumpitz/` (it was `~/Desktop/VFX workflows/mickmumpitz/`). Git tracks the workflows, guides, index, manifests and helper scripts; the example packs and media stay local only. The repo is private, which matters because many of these files are paid Patreon content.
 
 - YouTube: <https://www.youtube.com/@mickmumpitz> (50 videos as of 2026-10-19)
 - Patreon: <https://mickmumpitz.ai/> (James is a member; 131 posts as of 2026-10-19)
 
 ## Location
 
-`~/Desktop/VFX workflows/mickmumpitz/`, about 7.0 GB on 2026-10-19 after pruning.
+`references/mickmumpitz/`, about 7.0 GB on disk. Tracked in Git (rules in `.gitignore`): `.json`, `.md`, `.txt`, `.tsv`, and the helper `.py`, `.js`, `.bat` and `.html` files, 74 files. Local only: `.zip` and `.7z` example packs, `.mp4`, images, and any extracted `*EXAMPLE-FILES*` folder. Back the local-only files up with the rest of the production media, not through Git.
 
 - `INDEX.md`: generated catalog. Each video lists its YouTube link, every matching Patreon post, and every attachment with its library path. Files that were not downloaded are marked.
 - `<YYYY-MM-DD>_<video-slug>__<youtube-id>/{free,advanced}/`: one folder per video. Free and advanced attachments are kept apart.
 - `_patreon-only/<YYYY-MM-DD>_<post-slug>__p<post-id>/`: posts with attachments that do not belong to a video (Consistent Character Creator betas, film-school PDFs, the RTX node guide, the LTX lip-sync workflow, and similar).
 - `_meta/`: the Patreon post manifest and YouTube video list the index was built from, plus `removed_<date>.txt` listing pruned folders. Repo copies of all three are in `references/manifests/mickmumpitz/`.
 
-The repo working copies in `workflows/comfyui/mickmumpitz/` are unchanged. The library is reference material; anything adopted for a shot is copied into `workflows/` and logged there.
+The repo working copies in `workflows/comfyui/mickmumpitz/` are unchanged; graphs adapted for a shot go under `workflows/comfyui/shot<NNN>-working/` (see `workflows/comfyui/README.md`). The library is reference material; anything adopted for a shot is copied into `workflows/` and logged there.
 
 ## How Posts Map To Videos
 
@@ -69,7 +69,7 @@ To restore a folder, use Finder's Put Back while it is still in the Trash, or do
 3. Dry run, then apply:
 
 ```bash
-python3 scripts/mickmumpitz-library.py --manifest "$HOME/Desktop/VFX workflows/mickmumpitz/_meta/mickmumpitz_patreon_manifest_2026-10-19.json" --videos "$HOME/Desktop/VFX workflows/mickmumpitz/_meta/youtube_videos_2026-10-19.tsv" --library "$HOME/Desktop/VFX workflows/mickmumpitz" --source "$HOME/Downloads"
+python3 scripts/mickmumpitz-library.py --manifest references/mickmumpitz/_meta/mickmumpitz_patreon_manifest_2026-10-19.json --videos references/mickmumpitz/_meta/youtube_videos_2026-10-19.tsv --library references/mickmumpitz --source "$HOME/Downloads"
 ```
 
 Add `--apply` to move the files and rewrite `INDEX.md`. Files are matched by exact name and byte size, so a partial or renamed download is never filed. Copy the new manifest and TSV into `references/manifests/mickmumpitz/`.
@@ -100,3 +100,4 @@ These are leads from the workflow file names and the models they load; their con
 | 1.0     | 2026-10-19 | Initial Mickmumpitz Workflow Library. |
 | 1.1     | 2026-10-19 | Recorded the 30 folders pruned as obsolete; added Creature on a Path, Time2Move and Mask & Track to the candidates and dropped AI Compositing V01. |
 | 1.2     | 2026-11-01 | Reviewed Creature on a Path and recorded James's ideas for later: hand-drawn paths, Blender and After Effects motion import, Blender compositing, and inpainting. |
+| 2.0     | 2026-11-03 | Major revision; 1.2 archived to `docs/archive/mickmumpitz-library-v1.2.md`. Moved the library into the repo at `references/mickmumpitz/` (James), with Git tracking the workflows, guides and index and keeping example packs and media local; the repo was made private. |

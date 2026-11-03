@@ -10,6 +10,8 @@ Project copies of ComfyUI workflows. The layout and naming below are the convent
 | `shot<NNN>-benchmark/` | One graph extract per scored run, pulled from that run's output metadata | No; frozen with its clip |
 | `<vendor>/`, e.g. `mickmumpitz/` | Untouched originals from a creator or template, plus early adaptations | No |
 
+The full Mickmumpitz library, every workflow and guide per video, is in `references/mickmumpitz/` (`references/mickmumpitz-library.md`); `workflows/comfyui/mickmumpitz/` holds only the originals copied for use.
+
 The Pod's ComfyUI workflow browser (`/workspace/runpod-slim/ComfyUI/user/default/workflows/`) mirrors the working folders with the same file names: `shot<NNN>/pass-<letter>_<layer>/` and `<vendor>/`. A pass is one layer of the comp built by one generation method (Pass A Jerry, Pass B grass ignition); its letter and layer name match the shot's comp plan in `shots/`.
 
 ## Naming

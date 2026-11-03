@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-03
-**Version:** 1.6
+**Version:** 1.7
 
 # Repository Guidelines
 
@@ -119,6 +119,8 @@ Never delete an approved look, a delivered element, or a plate. If a shot was ev
 ### Generated Outputs
 
 `outputs/` is ignored by Git and treated as ephemeral. It may be cleared at any time and is not archived. Anything worth keeping is promoted first: copy it into the correct `assets/` subfolder under a proper `_vNNN` name, record it in `docs/asset-inventory.md`, and only then let the `outputs/` copy expire.
+
+Organize `outputs/` the same way as the workflows: `outputs/<shot>/<pass>/<task>[_vNNN]/` for a pass (pass folders named as in `workflows/comfyui/shot<NNN>-working/`, e.g. `outputs/shot004/pass-b_grassfire/inpaint_v001/`), `outputs/<shot>/comp/<tool>/` for comps, and `outputs/<shot>/reference/` for shot reference media. Work that is not shot-specific goes in `outputs/characters/<name>/<task>/`, `outputs/reference/<topic>/`, or `outputs/tools/<service>/`. Nothing goes loose in the `outputs/` root.
 
 ### Cold Storage
 

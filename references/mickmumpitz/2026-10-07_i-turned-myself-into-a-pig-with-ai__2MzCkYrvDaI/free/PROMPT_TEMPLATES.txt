@@ -1,0 +1,159 @@
+PROMPT TEMPLATES - H3 PERFORMANCE CAPTURE 2.2
+=============================================
+
+
+HOW THE PROMPT BOX WORKS
+------------------------
+
+One text, three parts, in this order:
+
+  1. THE SWAP: what gets replaced and what stays. Copy it as is.
+  2. THE CREATURE: what it looks like, how it is lit, how it acts. Fill the placeholders.
+  3. THE TIMELINE (optional): timed cues for eyes, expressions, actions and dialogue.
+
+Rules:
+  - Keep <Picture 1> where it stands, that is your character sheet. With NO CHARACTER SHEET on,
+    the workflow removes the <Picture 1> references by itself, so every template below also
+    works without a sheet.
+  - The sentence about the acting reference is added automatically. Do not write it.
+  - Your voice drives the mouth. Writing the dialogue is optional; it helps the timing of expressions.
+  - Never name your helmet, phone or rig in the prompt. Naming it makes H3 draw it.
+    It belongs in WHAT GETS REPLACED.
+  - Write in natural language and be descriptive. "Small head" in the prompt and a smaller
+    GROW MASK both shrink a bobblehead.
+
+
+WHICH TEMPLATE
+--------------
+
+  You want                                  Template   WHAT GETS REPLACED                                              Toggles
+  a creature head on your body              1          head, helmet, phone, camera rig on the helmet                   pose off
+  your whole body as a real animal          2          person, helmet, phone, camera rig on the helmet                 pose off
+  your whole body as a humanoid creature    3          person, helmet, phone, camera rig on the helmet                 POSE ON
+  head and legs, torso stays                4          head, legs, trousers, shoes, helmet, phone, camera rig on the helmet   pose off
+  one person out of several                 5          man (or woman)                                                  PERSON = who acts, 0 = leftmost
+
+Placeholders, in CAPITALS inside square brackets:
+
+  [CREATURE]   the creature, short                     a real horse / a green lizard / a pink domestic pig
+  [LOOKS]      4 to 6 visual features, comma-separated  a short glossy chestnut coat, upright pointed ears, a long muzzle, big dark eyes
+  [LIGHT]      the light of your shot                  warm late-afternoon sunlight from the right, soft shadows under the chin
+  [ACTING]     what the face does, in verbs            his lips move big and clearly with every word, his ears flick, his eyes widen and squint
+  [ACTION]     what the body does (full body only)     he creeps up to the planter and eats the plants
+
+
+=====================================================================
+TEMPLATE 1: HEAD SWAP
+=====================================================================
+
+Your body, clothes and hands stay. Settings: GROW MASK 40 (64 for a long muzzle), pose control off.
+
+Replace only the man's head in the shot with the head of the character in <Picture 1>. The character's head is his real head: its neck grows naturally out of his shirt collar and blends seamlessly into his body, one continuous living creature. Keep the replacement character's identity, look and art style from <Picture 1>. Preserve the source video's camera, background, lighting, objects and his body, clothes and hands. Do not show the reference sheet or its background.
+
+The character is a man with the head of [CREATURE] exactly as in <Picture 1>: [LOOKS]; he keeps his own body and his own clothes. The head is lit exactly like the rest of the shot: [LIGHT], the same exposure and white balance as his body. His [CREATURE] face is very expressive: [ACTING].
+
+--- Example from the video (the horse, shot 06d) ---
+
+The character is a man with the head of a real horse exactly as in <Picture 1>: a short glossy chestnut coat, a long flowing auburn mane and forelock, upright pointed ears, a long muzzle with dark nostrils and big dark eyes; he keeps his own body and his own clothes. The head is lit exactly like the rest of the shot: warm, bright late-afternoon sunlight from the right of the frame, strong highlights on that side, soft shadows under the chin and the bright green bush behind him, the same exposure and white balance as his body. His horse face is very expressive: his long muzzle and soft lips move big and clearly with every single word, his mouth opens wide and shows his big teeth when he grins, his nostrils flare, his ears turn and flick and his big eyes widen and squint.
+
+
+=====================================================================
+TEMPLATE 2: WHOLE BODY, REAL ANIMAL
+=====================================================================
+
+Four legs, no clothes. Settings: GROW MASK 40, pose control off (the animal would stand up like a person).
+
+Replace the whole man in the shot with the character in <Picture 1>: the character takes his place in the shot with its own anatomy from <Picture 1>, not a human body shape, and his head movements and acting carry over to the character's face. Keep the replacement character's identity, look and art style from <Picture 1>. Preserve the source video's camera, background, lighting, objects and everything else in the shot. Do not show the reference sheet or its background.
+
+The character is a real [CREATURE] exactly as in <Picture 1>: [LOOKS]. He is lit exactly like the rest of the shot: [LIGHT], the same exposure and white balance as the street behind him. He always stays on four legs and never stands up like a person. His [CREATURE] face is very expressive: [ACTING].
+
+--- Example from the video (the pig, shot 05) ---
+
+The character is a real pink domestic pig exactly as in <Picture 1>: pale pink skin with fine white bristles, large upright pink ears, a round pink snout, small dark eyes, four legs with small hooves and a curly tail. He is lit exactly like the rest of the shot: bright, sunny afternoon light from the upper right with hard shadows on the paving stones and on his body, the same exposure and warm white balance as the street behind him. He always stays on four legs and never stands up like a person. His pig face is very expressive: his snout wiggles, his ears flick and his eyes squint with pleasure.
+
+
+=====================================================================
+TEMPLATE 3: WHOLE BODY, HUMANOID CREATURE
+=====================================================================
+
+Arms and legs. Settings: GROW MASK 40, POSE CONTROL ON.
+
+Replace the whole man in the shot with the character in <Picture 1>: the character takes his place in the shot with its own anatomy from <Picture 1>, not a human body shape, and his head movements and acting carry over to the character's face. Keep the replacement character's identity, look and art style from <Picture 1>. Preserve the source video's camera, background, lighting, objects and everything else in the shot. Do not show the reference sheet or its background.
+
+The character is [CREATURE] exactly as in <Picture 1>: [LOOKS]. He is lit exactly like the rest of the shot: [LIGHT], the same exposure and white balance as the courtyard. His face is extremely expressive and mirrors every expression of the performance: [ACTING]. [ACTION]
+
+--- Example from the video (Gollum, shot 13b) ---
+
+The character is Gollum exactly as in <Picture 1>: a gaunt, wiry, pale creature with thin translucent greyish-pink skin, a bald head with a few long thin strands of hair, huge pale blue-grey eyes, big pointed ears, a few crooked yellow teeth, a ragged loincloth and long thin limbs with bony hands and feet. He is lit exactly like the rest of the shot: soft, even outdoor daylight in the shade of the building, soft shadows on the paving stones, the same exposure and white balance as the courtyard. His face is extremely expressive and mirrors every expression of the performance: his huge eyes widen and squint, his brows lift and furrow, his wide mouth opens and grins with his few crooked teeth. He creeps up to the concrete flower planter, crouches over it and greedily grabs and eats the plants.
+
+
+=====================================================================
+TEMPLATE 4: HEAD AND LEGS, TORSO STAYS
+=====================================================================
+
+The cursed worm setup. Settings: GROW MASK 40, pose control off.
+
+Replace the man's head in the shot with the head of the character in <Picture 1>, and replace his legs with the character's body from <Picture 1>; his torso, arms and the clothes on them stay. Keep the replacement character's identity, look and art style from <Picture 1>. Preserve the source video's camera, background, lighting, objects and everything else in the shot. Do not show the reference sheet or its background.
+
+The character is [CREATURE] exactly as in <Picture 1>: [LOOKS]. His face is extremely expressive: [ACTING].
+
+--- Example from the video (the worm, shot 12) ---
+
+The character is a giant cartoon worm exactly as in <Picture 1>: one single, continuous, thick, ringed, glossy pink-brown worm body with only one tail end, no arms and no legs; a round friendly Pixar-style human face with big brown eyes, bushy brown eyebrows and rosy cheeks, and a small black top hat. His cartoon face is extremely expressive.
+
+
+=====================================================================
+TEMPLATE 5: ONE PERSON OUT OF SEVERAL
+=====================================================================
+
+Found footage with two or more people. WHAT GETS REPLACED = man (or woman), PERSON = the one who acts
+(0 = leftmost in the first frame). If people swap sides at a cut, render each shot separately.
+
+Replace the man in the shot with the character in <Picture 1>: [CREATURE] takes his place, his head and his body, and copies his pose, head turns, eye direction and acting exactly. Keep the character's identity and look from <Picture 1>. Preserve the source video's camera, shot cuts, background, lighting, colour grading, the other people and everything else in the shot. Do not show the reference sheet or its background.
+
+The character is [CREATURE] exactly as in <Picture 1>: [LOOKS]. [ACTION]
+
+--- Example from the video (the vampire, shot 11a) ---
+
+The character is a horrifying, ancient cliché vampire exactly as in <Picture 1>: a tall gaunt old man with deathly pale grey-white wrinkled skin, sunken red eyes, thin slicked-back white hair, long pointed ears and long sharp fangs, in a black Victorian suit and a high-collared black cape with a blood-red lining. In a misty forest he stands very close to the young woman and stares at her with a creepy, hungry look.
+
+
+=====================================================================
+BUILDING BLOCKS: ADD TO THE END OF ANY TEMPLATE
+=====================================================================
+
+TIMED CUES. Time, then what happens. Dialogue goes in <d> tags with the language; your recording
+still drives the mouth.
+
+At 00:00.000 he says: <d>[English] Check out my eyes, like how they're moving, like now.</d> At 00:02.620 he looks far to the right: <d>[English] I'm looking to the right now.</d> At 00:05.240 he looks up, at 00:07.120 he beams with a huge grin and at 00:08.880 his face drops, sad and droopy.
+
+SOMEONE ELSE TOUCHES YOU. Their hand must be inside the mask (SAM "person" does that), never cut
+a hole for it.
+
+At 00:06.500 another person's normal human hand in a light grey sleeve reaches in from the top right of the frame. At 00:07.000 the hand pats the top of the pig's head; the pig stays a pig and enjoys it. At 00:08.000 the hand slides down behind his ears onto his back. The hand and its light sleeve stay visible the whole time they are in the shot, exactly as in the shot.
+
+TWO PEOPLE TALK, ONE IS OFF CAMERA. The creature keeps its mouth closed while the other one speaks.
+
+Two people talk in this clip: the pig, and the man holding the camera, who is never seen except for his hand. The pig only moves his mouth for his own lines and keeps his mouth closed while the man behind the camera talks. At 00:00.000 the man behind the camera calls: <d>[English] Hey man, come here.</d> At 00:05.820 the pig begs with big eyes: <d>[English] Yeah man, I need some scratches.</d>
+
+
+=====================================================================
+CHARACTER SHEET PROMPTS (Krea 2 Turbo, 1792 x 1024, 8 steps, cfg 1)
+=====================================================================
+
+Same idea: a layout sentence that never changes, a creature description you fill, and four emotion
+heads that are as overacted as possible. Keep your real clothes in the text.
+
+HUMANOID CREATURE (your body, a creature head)
+
+A photorealistic character expression sheet on a plain light grey studio background, soft even studio lighting, sharp focus, realistic [fur] detail. The character is a humanoid [CREATURE]: a man's body with the head of [LOOKS]. His [furry] [CREATURE] neck grows out of his shirt collar. He wears [YOUR CLOTHES, e.g. a charcoal grey button-up cardigan over a black t-shirt, blue jeans and brown shoes], and has human hands. Layout: on the left a full-body front view of him standing straight; top middle a large head-and-shoulders side profile facing left; top right a large head-and-shoulders three-quarter view. Bottom row: four large head-and-shoulders portraits of the same [CREATURE], each with an extreme, overacted emotion like on an animator's expression sheet, but photorealistic. First, [EMOTION 1: laughing hysterically: the head tilted back, the mouth open as wide as possible showing the teeth and the tongue, the eyes squeezed shut into happy crescents]. Second, [EMOTION 2: sobbing and heartbroken: big shiny tears, the wet eyes squinting, the mouth open in a loud wail]. Third, [EMOTION 3: utterly disgusted: the nose scrunched up hard, the upper lip curled up, one eye squinted shut, the tongue sticking out]. Fourth, [EMOTION 4: furious and screaming: the mouth wide open with the teeth bared, the brows pulled down hard, the eyes narrowed to angry slits]. No emotion in the bottom row is mild or neutral; each one is readable from across the room. The same character in every view.
+
+Example from the video (the squirrel): [CREATURE] = European red squirrel, [LOOKS] = a real Eurasian red squirrel, russet-orange fur, a cream-white chin and throat, long pointed ear tufts, big glossy dark eyes, long whiskers, a small dark nose and orange front teeth.
+
+REAL ANIMAL (full body, four legs)
+
+A photorealistic character expression sheet of a real animal on a plain warm grey studio background, soft even studio lighting, sharp focus, realistic [skin and bristle] detail. The character is a real [CREATURE]: [LOOKS]. He always stands on all four legs like a real [CREATURE], never upright like a person. Layout: top row, three full-body views of him standing on all four legs: a front view facing the camera, a side profile facing left, and a rear view showing the [tail]. Bottom row: four large head-and-shoulders portraits of the same [CREATURE] facing the camera, each with an extreme, overacted emotion like on an animator's expression sheet, but photorealistic. First, [EMOTION 1: an eager happy grin: the snout pushed up, the mouth wide open in a big smile, the ears pricked forward, the eyes bright]. Second, [EMOTION 2: begging with huge puppy eyes: the eyes wide and glossy, the brows raised in the middle, the ears drooping]. Third, [EMOTION 3: pure bliss, as if his back is being scratched: the eyes squeezed shut, a dreamy open-mouthed smile, the head tilted]. Fourth, [EMOTION 4: awkward and puzzled: one ear up and one ear down, the head tilted, one brow raised, the eyes looking sideways]. No emotion in the bottom row is mild or neutral; each one is readable from across the room. The same [CREATURE] in every view.
+
+Example from the video (the pig): [CREATURE] = pink domestic pig, [LOOKS] = pale pink skin with fine white bristles, large upright pink ears, a round pink snout, small dark eyes, four legs with small hooves and a curly tail.
+
+Pick the four emotions from your clip: the ones you actually act. Render several seeds and keep the sheet whose bottom row reads best.

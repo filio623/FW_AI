@@ -28,7 +28,7 @@ Needs numpy and opencv-python (python.org Python 3.11 at /usr/local/bin/python3
 has both) and ffmpeg on PATH.
 
 Example:
-    /usr/local/bin/python3 scripts/build_shot004_guide.py --out-dir outputs/shot004_guide_v002 \\
+    /usr/local/bin/python3 scripts/build_shot004_guide.py --out-dir outputs/shot004/pass-a_jerry/guide_v002 \\
         --grow 6 --round 14 --post-scale 1.25
 """
 

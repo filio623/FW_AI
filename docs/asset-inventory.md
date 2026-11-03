@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-02
-**Version:** 1.23
+**Modified:** 2026-11-03
+**Version:** 1.24
 
 # Asset Inventory
 
@@ -104,7 +104,7 @@ These are committed to the repository and resolve in any checkout.
 - `assets/characters/jerry/higgsfield-candidates/run001`–`run005`: casting-run stills, assessed in `docs/jerry-character-bible_v001.md`.
 - `assets/characters/jerry/approval-review/v001/`: Jerry approval review pack.
 - `assets/characters/tom/approval-review/v001`–`v003/`: Tom review rounds, v003 current.
-- `assets/characters/jerry/source-cgi/jerry_fire-rig_v001.blend`: Blender 5.2.1 Jerry fire rig (rigged emitter body, core-glow volume, Mantaflow fire, embers, idle cycle). The fluid cache is not tracked; rebake into `outputs/jerry_fire-rig_v001/cache_fluid/`. Run log: `workflows/blender/jerry/jerry_fire-rig_log_v001.md`.
+- `assets/characters/jerry/source-cgi/jerry_fire-rig_v001.blend`: Blender 5.2.1 Jerry fire rig (rigged emitter body, core-glow volume, Mantaflow fire, embers, idle cycle). The fluid cache is not tracked; rebake into `outputs/characters/jerry/fire-rig_v001/cache_fluid/`. Run log: `workflows/blender/jerry/jerry_fire-rig_log_v001.md`.
 - `assets/characters/jerry/source-cgi/jerry_fire-rig_idle-test-r09_f0064_v001.png`: 960x540 r09 test still from that rig. Not approved.
 
 Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candidates/`) exist for both characters and are held open with `.gitkeep`, as does Tom's `source-cgi/`. Nothing is approved into `approved/` yet for either character.
@@ -152,3 +152,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.21    | 2026-11-03 | Indexed Pass B grass-fire test 3. |
 | 1.22    | 2026-11-03 | Indexed Pass B grass-fire test 4. |
 | 1.23    | 2026-11-03 | Indexed the gray-inside-mask grass-fire control. |
+| 1.24 | 2026-11-03 | Updated `outputs/` paths to the per-shot layout (`outputs/<shot>/<pass or comp>/`). |

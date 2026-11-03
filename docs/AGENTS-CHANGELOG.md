@@ -15,3 +15,4 @@ This file is a revision history, so it is exempt from the metadata-and-changelog
 | 1.4     | 2026-08-16 | Retired documents now move into `docs/archive/` mirroring their original path, instead of staying in place; clarified how that differs from a superseded frozen edition. |
 | 1.5     | 2026-10-08 | Clarified that the optional Comfy Cloud CLI is absent on this machine and that the ComfyUI skill applies to RunPod-hosted workflows too. |
 | 1.6     | 2026-11-03 | Added the ComfyUI workflow layout (working folders per shot and pass, mirrored on the Pod; frozen benchmark extracts; vendor originals) with a pointer to `workflows/comfyui/README.md`. |
+| 1.7     | 2026-11-03 | Added the `outputs/` layout: per shot and pass, comps, reference, and non-shot folders for characters, reference and tools. |

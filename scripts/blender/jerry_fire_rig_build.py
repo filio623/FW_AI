@@ -5,7 +5,7 @@ Run headless with Blender 5.2+:
     /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \
         --python scripts/blender/jerry_fire_rig_build.py -- \
         --out assets/characters/jerry/source-cgi/jerry_fire-rig_v001.blend \
-        --cache outputs/jerry_fire-rig_v001/cache_fluid
+        --cache outputs/characters/jerry/fire-rig_v001/cache_fluid
 
 The fluid cache is not baked here; run fluid_bake.py next. Design, settings
 history and assessment: workflows/blender/jerry/jerry_fire-rig_log_v001.md.
