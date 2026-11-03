@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-02
-**Version:** 2.46
+**Version:** 2.47
 
 # RunPod + ComfyUI
 
@@ -212,6 +212,8 @@ Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were 
 - Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
 
 ComfyUI version (checked 2026-11-02): the official template image `runpod/comfyui:1.3.3-comfyuiv0.30.0-cuda12.8` bakes ComfyUI 0.30.0; upstream is at 0.43.0 (2026-10-27). On every boot `start.sh` compares the volume's bundle manifest with the image's; when they differ (a new template image) it rsyncs the image's ComfyUI core over the volume's, keeping `models`, `input`, `output`, `user`, `custom_nodes` and the venv. So a ComfyUI updated by hand on the volume survives restarts until RunPod ships a new template image, which then overwrites it, possibly with an older version. Updating in place also risks the pinned custom nodes and the NAG patch and changes the seed baseline, so do it at a break between tests, with a rollback (record the commit and `pip freeze` first), or as a second install on the same volume.
+
+**2026-11-03: Pod `g0jkc58x01xpa2` running** on the `EU-RO-1` volume, an A100 80 GB PCIe at $1.79/hr, started about 19:20Z. The L4, RTX A6000, RTX 4090, RTX 5090 and RTX PRO 6000 all returned "no longer any instances available"; only the A100 started. Created with `runpodctl pod create` directly (same template, volume and ports as the up-script, no `--terminate-after`). Patches, nodes and workflow folders were intact. A100 samples are not comparable seed-for-seed with the L4 runs.
 
 **Resume here (2026-11-03):** start a Pod on the `EU-RO-1` volume with `scripts/runpod-pod-up.sh` (an L4 keeps the Pass A and Pass B comparisons on one GPU type: `GPU="NVIDIA L4" scripts/runpod-pod-up.sh`). Workflows are in folders: `shot004/pass-a_jerry/`, `shot004/pass-b_grassfire/`, `mickmumpitz/`. Next run: Pass B test 3, the prompt rewrite, from test 1's state (`JB-010` bypassed); the prompt text and the queue after it are in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B test log. The smaller Jerry guide still awaits James's approval.
 
@@ -463,3 +465,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.44    | 2026-11-02 | Verified the replacement NAG patch with a full run (benchmark run 9). |
 | 2.45    | 2026-11-02 | Recorded why the Pod runs ComfyUI 0.30.0 and how the template overwrites a hand-updated core. |
 | 2.46    | 2026-11-02 | Terminated Pod `ji7jkj0lcps26b` by hand; set the resume point to Pass B test 3. |
+| 2.47    | 2026-11-03 | Started Pod `g0jkc58x01xpa2` (A100 80 GB; no L4 or A6000 stock in `EU-RO-1`). |
