@@ -89,3 +89,7 @@ references/mickmumpitz/**
 !references/mickmumpitz/**/*.html
 references/mickmumpitz/**/*EXAMPLE-FILES*/
 references/mickmumpitz/**/*EXAMPLE_FILES*/
+
+# Higgsfield keyframes are plate-derived stills, ignored like the plate; the README and
+# registration JSON are tracked.
+assets/elements/by-shot/**/keyframes/**/*.png

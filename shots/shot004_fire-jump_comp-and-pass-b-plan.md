@@ -1,6 +1,6 @@
 **Created:** 2026-11-02
 **Modified:** 2026-11-03
-**Version:** 2.0
+**Version:** 2.1
 
 # Shot004 Fire Jump Comp And Pass B Plan
 
@@ -85,25 +85,29 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 
 Every test run, with its change, scores, look and the kept clip, is in the append-only log `shots/shot004_fire-jump_pass-b_grassfire-log.md`. This section holds only the current state and the next steps.
 
-**State after test 7 (2026-11-03).** Size and placement are close enough; the look is not. Two results define the problem:
+**State after test 10 (2026-11-03).** Size and placement are close enough; the look is not.
 
 - **Test 6** (flat gray inside the mask, prompt 2) is the best so far for interaction: the fire replaces the blades where it burns, with embers and a scorched base. Its flames are a thick, opaque, wild yellow-white mass, far from Jerry's.
 - **Test 7** (prompt 3, calmer, with Jerry's flame words) is smoother and softer but turned into one floating ribbon of flame, like a second Jerry, with no grass burning. Worse overall (James).
+- **Tests 8 and 9** (test 6 with two more seeds): the size is the same every time; the smoke and whether the blades burn change with the seed; the flames stay thick and wild. Reseeding will not give Jerry's look.
+- **Test 10** (`vace_strength` 0.8 and more negatives): almost test 6. These knobs are not where the look is.
 
-Reading: Jerry's flame words pull the model toward a creature-like flame, while the "engulf, tall flames" words make it wild. The prompt should describe only physical grass fire; the match to Jerry's look should come from a picture (keyframe or reference crop) and from the comp grade.
+Reading: Jerry's flame words pull the model toward a creature-like flame, while the "engulf, tall flames" words make it wild. The prompt should describe only physical grass fire; the fire's shape should be constrained by the inputs (mask, control); the match to Jerry's look should come from a picture and from the comp grade.
+
+**Keyframes (2026-11-03).** Four Higgsfield edits of the full plate frame by James's colleague, in `assets/elements/by-shot/shot004_fire-jump/scorch-contact/keyframes/` (README there). Each was registered back onto the plate (about 2 px error at 4K) and cut to the Pass B window, so they line up with the inputs pixel for pixel. `k2` and `k4` are the closest to the goal: soft, translucent flame tongues among the plate's own blades, blades blackening in front, embers. `k3` is calmer; `k1` redrew the blades and has one large flame wave.
 
 Fix for the dark ring, in the comp rather than the generation: take from the inpaint only what changed. A change matte (per-pixel difference from the plate window, ramped from 22 to 45 of 255, grown 6 px, blurred 6 px, times the mask) keeps the fire, the scorch and the blades in front of the fire, and drops grass the model merely redrew darker. On frames 50 and 80 it cut the darkening in the band 2–60 px inside the edge from −12.7 and −11.0 to −1.9 and −1.8 luma. The Blender comp's Pass B layer should use it.
 
-**Next tests, one change each, on the A100 against test 6 unless noted:**
+**Next tests, one change each, on the A100, first seed (1218565630), against test 10 unless noted:**
 
-1. **Seeds.** Two or three more seeds of test 6 as it stands, to learn how much of each result is the sample and how much is the change. On this GPU each seed is exact and repeatable, and each run is about 3 minutes.
-2. **Prompt 4.** Prompt 1's physical grass-fire wording without "small flame" and with no Jerry style words, on the gray control.
-3. **Part-strength edges inside the mask.** A control between test 4 (full Canny edges: grass intact, fire behind it) and test 6 (gray: grass burns, fire wild): the edges dimmed to about 30–50%, or edges only on the blades with gray in the air above. Needs a new input set from `scripts/build_shot004_grassfire_inputs.py`.
-4. **`vace_strength` 0.8 on the gray control.** Gray at 0.6 gave the model the most freedom; 0.8 may calm it while gray still lets the grass burn.
-5. **Flame reference at a low strength.** A crop of Jerry's flame texture (`outputs/shot004/pass-b_grassfire/keyframe_v001/jerry-flame-style_*.png`), not his whole body, as Reference Image 2 with `vace_ref_strength` about 0.3. At strength 0 a reference changes nothing (test 2); at full strength it may copy Jerry's shape.
-6. **NAG negatives** for the test 7 failure: add "fireball, flame creature, smooth flame ribbon, blob".
-7. **Keyframe** in the control video at frame ~50 (mask 0 there), once the Higgsfield stills arrive.
-8. **Taller window, 720p** (input set v002) for finer flames, once the look is right; **the production grass-fire render as the guide** (candidate 1) once it is restored from the NAS.
+1. **Test 11: combined mask.** Full strength on the blades, half strength on the space around them, and the blade edges on gray in the DRIVING VIDEO (`…_mask-start25-full50-blades4-field050-soft_…`, `…_control-plate-canny-gray-start25-full50_…`, built with `--inside canny-gray --field 0.5`). Compose + Match pastes with this mask, so the field comes out half plate; if that ghosts, feed the paste a solid mask (graph v002).
+2. **Test 12: keyframe `k2` as Reference Image 2** (node 3349, un-bypassed, loading `shot004_grassfire_keyframe-k2_window_912x512_v001.png`) with `vace_ref_strength` 0.4, on the better of tests 10 and 11. The VACE node encodes a reference as its own frame with its own strength, so this shows the model the look without fixing any frame of the clip.
+3. **Test 13: reference strength.** 0.7 if test 12 moved toward the keyframe but not enough; 0.2 if it copied the keyframe's flames too literally or froze.
+4. **Test 14: `k4` instead of `k2`**, at the best strength, to see how much the choice of keyframe matters.
+5. **Tests 15–16: seeds 1218565804 and 1218565905** on the best setting, before calling it.
+6. **If a reference is not enough: the keyframe inside the control.** `k2` in the DRIVING VIDEO at frames 49–52 with the mask at 0 there, so the model has to pass through it. Four frames because the model works in groups of four frames; expect a brief hold. Needs a new input set.
+7. **Comp:** grade the kept result toward the keyframe's colours, roll off its highlights, and use the change matte.
+8. Later: **taller window, 720p** (input set v002) for finer flames, once the look is right; **the production grass-fire render as the guide** (candidate 1) once it is restored from the NAS; prompt 4 (physical grass-fire wording only).
 
 The VAE is not a lever: it only encodes and decodes the frames and has no effect on the fire's look.
 
@@ -232,3 +236,4 @@ Ideas for later shots (hand-drawn paths, motion from Blender or After Effects, c
 | 1.15 | 2026-11-03 | Updated `outputs/` paths to the per-shot layout (`outputs/<shot>/<pass or comp>/`). |
 | 1.16 | 2026-11-03 | Scored Pass B test 6 (gray inside the mask). |
 | 2.0 | 2026-11-03 | Major revision; 1.16 archived to `docs/archive/shot004_fire-jump_comp-and-pass-b-plan-v1.16.md`. Moved the Pass B test table into the new append-only `shots/shot004_fire-jump_pass-b_grassfire-log.md` (tests 1–7 there), and replaced the stale next-test list with the state after test 7 and a ranked list of levers. |
+| 2.1 | 2026-11-03 | Updated Pass B state after test 10; recorded the Higgsfield keyframes; replaced the next-test list with the sequence for tests 11–16. |
