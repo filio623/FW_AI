@@ -1,6 +1,6 @@
 **Created:** 2026-08-02
 **Modified:** 2026-11-03
-**Version:** 2.49
+**Version:** 2.50
 
 # RunPod + ComfyUI
 
@@ -216,6 +216,8 @@ ComfyUI version (checked 2026-11-02): the official template image `runpod/comfyu
 **2026-11-03: Pod `g0jkc58x01xpa2` running** on the `EU-RO-1` volume, an A100 80 GB PCIe at $1.79/hr, started about 19:20Z. The L4, RTX A6000, RTX 4090, RTX 5090 and RTX PRO 6000 all returned "no longer any instances available"; only the A100 started. Created with `runpodctl pod create` directly (same template, volume and ports as the up-script, no `--terminate-after`). Patches, nodes and workflow folders were intact. A100 samples are not comparable seed-for-seed with the L4 runs.
 
 **Resume here (2026-11-03, after Pass B test 14):** Pod `g0jkc58x01xpa2` (A100 80GB, EU-RO-1) was terminated at about 22:00 UTC; balance $16.56, volume only ($0.019/hr). Start a Pod on the `EU-RO-1` volume with `scripts/runpod-pod-up.sh`; keep an A100 80GB for exact comparisons with tests 3–14 (`GPU="NVIDIA A100 80GB PCIe"`). The saved Pass B graph is in test 14's state (keyframe `k2` in the clip on frames 49–52, match mode pass-through, `k2` reference at 0.4); the repo copy in `workflows/comfyui/shot004-working/pass-b_grassfire/` matches it. Next run: Pass B test 15, the keyframe on three groups; its inputs are already in the volume's `input/`. Steps in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B tests; every run in `shots/shot004_fire-jump_pass-b_grassfire-log.md`. The smaller Jerry guide still awaits James's approval.
+
+**2026-11-03 ~23:15 UTC: Pod `bd2rmuu6fy08ks` started**, RTX 4090 24 GB, $0.89/hr, on the `EU-RO-1` volume (no A100 80GB in stock; James chose the 4090). SSH `ssh -i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes -p 16172 root@213.173.110.143`; ComfyUI <https://bd2rmuu6fy08ks-8188.proxy.runpod.net>. Because results only match on the same GPU type, test 14 is rerun here first as the 4090 baseline (test 14r), then test 15.
 
 Run 8 reproduced on the new volume (run 8r, 2026-11-02): James ran the saved graph unchanged on the L4; it finished in 667 s (run 8 took 353 s on the A40) and gave a nearby sample, not a bit-identical one (see `docs/vfx-element-benchmark.md`). The stack is verified; one-knob tests on it compare against run 8r on the same GPU type. Account balance was $4.90 at 19:24Z against $0.61/hr.
 
@@ -468,3 +470,4 @@ that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
 | 2.47    | 2026-11-03 | Started Pod `g0jkc58x01xpa2` (A100 80 GB; no L4 or A6000 stock in `EU-RO-1`). |
 | 2.48 | 2026-11-03 | Updated the resume point after Pass B test 7; pointed it at the new Pass B test log. |
 | 2.49 | 2026-11-03 | Terminated Pod `g0jkc58x01xpa2` after Pass B test 14; set the resume point to test 15. |
+| 2.50 | 2026-11-03 | Started Pod `bd2rmuu6fy08ks` (RTX 4090; no A100 in EU-RO-1). |
