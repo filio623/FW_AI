@@ -85,8 +85,22 @@ def smooth_noise(seed: int, scale: int) -> np.ndarray:
 def build(args: argparse.Namespace) -> dict:
     plate = read_window(args.frames)
     n = len(plate)
+    key, key_groups = None, []
+    if args.keyframe:
+        key = cv2.cvtColor(cv2.imread(str(args.keyframe)), cv2.COLOR_BGR2RGB)
+        if key.shape[:2] != (H, W):
+            key = cv2.resize(key, (W, H), interpolation=cv2.INTER_AREA)
+        key_groups = [tuple(int(x) for x in g.split("-")) for g in args.key_frames.split(",")]
     poly = np.zeros((H, W), np.float32)
     cv2.fillPoly(poly, [np.array(BURN_ZONE, np.int32)], 1.0)
+    if args.zone_from_key:
+        # Widen the zone to hold the keyframe's own flames, so the mask does not cut them
+        # (test 15: 38% of k2's fire lay outside the burn zone and the cut drew the outline).
+        k = key.astype(np.int16)
+        flames = ((k[..., 0] >= 170) & (k[..., 0] - k[..., 2] >= 50)).astype(np.uint8)
+        flames = cv2.morphologyEx(cv2.dilate(flames, np.ones((21, 21), np.uint8)), cv2.MORPH_CLOSE,
+                                  cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (41, 41)))
+        poly = np.maximum(poly, flames.astype(np.float32))
     # Organic zone edge: blur the polygon and push its 0.5 contour around with noise.
     zone = (cv2.GaussianBlur(poly, (0, 0), 20) + 0.3 * smooth_noise(args.seed + 1, 40)) > 0.5
     zone[:MARGIN] = zone[-MARGIN:] = False
@@ -101,21 +115,17 @@ def build(args: argparse.Namespace) -> dict:
     noise = smooth_noise(args.seed, 24)
 
     controls, masks, coverage, blade_cover = [], [], [], []
-    key, key_groups = None, []
-    if args.keyframe:
-        key = cv2.cvtColor(cv2.imread(str(args.keyframe)), cv2.COLOR_BGR2RGB)
-        if key.shape[:2] != (H, W):
-            key = cv2.resize(key, (W, H), interpolation=cv2.INTER_AREA)
-        key_groups = [tuple(int(x) for x in g.split("-")) for g in args.key_frames.split(",")]
     for t in range(n):
         if t < args.start:
             front = -1.0
+        elif args.growth == "static":
+            front = 10.0  # the whole zone from --start on; the model decides how the fire grows
         else:
             p = min(1.0, (t - args.start + 1) / max(1, args.full - args.start))
             front = p ** args.ease  # ease < 1: fast catch, slower finish
         # The front advances through dist; noise drifts slowly so the edge flickers a little.
         drift = np.roll(noise, shift=int(t * 0.7), axis=0) if t >= args.start else noise
-        hard = ((dist + args.ragged * drift * (1 - front) * 0.5) <= front) & zone.astype(bool)
+        hard = ((dist + args.ragged * drift * (1 - min(front, 1.0)) * 0.5) <= front) & zone.astype(bool)
         hard_u8 = hard.astype(np.uint8)
         if t >= args.start:
             cv2.circle(hard_u8, IGNITION, 6, 1, -1)
@@ -163,7 +173,8 @@ def build(args: argparse.Namespace) -> dict:
 
     out = args.out_dir
     out.mkdir(parents=True, exist_ok=True)
-    tag = f"start{args.start}-full{args.full}"
+    tag = f"start{args.start}-full{args.full}" if args.growth == "front" else f"start{args.start}-static"
+    tag += "-keyzone" if args.zone_from_key else ""
     stem = f"{W}x{H}_{n}f_{args.version}"
     mask_kind = "soft" if args.field >= 1.0 else f"blades{args.blade_grow}-field{round(args.field * 100):03d}-soft"
     inside_kind = args.inside if args.field >= 1.0 or args.field_fill == "inside" else f"{args.inside}-blades{args.blade_grow}"
@@ -217,6 +228,11 @@ def main() -> None:
     p.add_argument("--key-frames", default="49-52",
                    help="first-last frame (0-based) holding the keyframe; several groups separated by commas, "
                         "e.g. 33-36,41-44,49-52")
+    p.add_argument("--growth", choices=["front", "static"], default="front",
+                   help="front: the mask spreads from the ignition point until --full; static: the whole "
+                        "zone from --start on, so the model decides how the fire grows")
+    p.add_argument("--zone-from-key", action="store_true",
+                   help="widen the burn zone to hold the keyframe's own flames")
     p.add_argument("--seed", type=int, default=4)
     p.add_argument("--version", default="v001")
     r = build(p.parse_args())

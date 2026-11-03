@@ -7,6 +7,7 @@ Still frames of the grass fire at its height, used to show the Pass B model the 
 - `source/shot004_grassfire_keyframe-k<N>_higgsfield-<job>_2752x1536_v001.png`: the four Higgsfield images as delivered, renamed. Original names were `hf_20261103_<time>_<job-id>.png`; the full job IDs are in the JSON.
 - `shot004_grassfire_keyframe-k<N>_window_1824x1024_v001.png`: each image registered back onto the 4096×2160 plate and cut to the Pass B window (plate x 1838, y 488), so it lines up with the Pass B inputs pixel for pixel.
 - `shot004_grassfire_keyframe-k<N>_window_912x512_v001.png`: the same at the inpaint size. These are what the graph loads (also in the Pod's `input/`).
+- `shot004_grassfire_plate-window_f025_1824x1024_v001.png`: the clean plate window at frame 25 (Jerry's landing, before ignition), cut from `plates/FW_test_scene.mp4`. First frame for first-last-frame video models.
 - `shot004_grassfire_keyframes_registration_v001.json`: original file, Higgsfield job ID, and the similarity transform from each image to plate pixels.
 
 | Key | Higgsfield job | Read |
