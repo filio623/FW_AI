@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-02
-**Version:** 1.22
+**Version:** 1.23
 
 # Asset Inventory
 
@@ -70,7 +70,7 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 - `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`: the same comp as a Fusion node tree (settings text), built in DaVinci Resolve Studio 21.1.1 by `scripts/resolve/shot004_comp_fusion.py`. The live copy is the Fusion clip in timeline `shot004_comp_v001` of Resolve project `FW_AI_shot004_comp` (Local Database). Method and comparison: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
 - `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.drp`: export of that Resolve project (timeline plus the Fusion clip with the full node tree, checked by decoding the export). Import it from Resolve's Project Manager; media are linked by absolute path.
 
-- `assets/elements/by-shot/shot004_fire-jump/scorch-contact/`: Pass B grass-fire inpaint inputs from `scripts/build_shot004_grassfire_inputs.py` (`_v001`): `shot004_grassfire_control-plate-canny-start25-full50_912x512_81f_v001.mp4` (DRIVING VIDEO: plate outside the mask, Canny edges inside), `shot004_grassfire_mask-start25-full50-soft_912x512_81f_v001.mp4` (MASK), `shot004_grassfire_start-frame_912x512_v001.png` (start image, gitignored as plate media), and the JSON settings report. All are a 1824x1024 window of the plate at (1838, 488), scaled x0.5.
+- `assets/elements/by-shot/shot004_fire-jump/scorch-contact/`: Pass B grass-fire inpaint inputs from `scripts/build_shot004_grassfire_inputs.py` (`_v001`): `shot004_grassfire_control-plate-canny-start25-full50_912x512_81f_v001.mp4` (DRIVING VIDEO: plate outside the mask, Canny edges inside), `shot004_grassfire_mask-start25-full50-soft_912x512_81f_v001.mp4` (MASK), `shot004_grassfire_start-frame_912x512_v001.png` (start image, gitignored as plate media), and the JSON settings report; `shot004_grassfire_control-plate-gray-start25-full50_912x512_81f_v001.mp4` is the same control with flat gray instead of edges inside the mask, with its own report. All are a 1824x1024 window of the plate at (1838, 488), scaled x0.5.
 
 ### Benchmark clips
 
@@ -151,3 +151,4 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 | 1.20    | 2026-11-02 | Indexed Pass B grass-fire test 2. |
 | 1.21    | 2026-11-03 | Indexed Pass B grass-fire test 3. |
 | 1.22    | 2026-11-03 | Indexed Pass B grass-fire test 4. |
+| 1.23    | 2026-11-03 | Indexed the gray-inside-mask grass-fire control. |

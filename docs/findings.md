@@ -1,6 +1,6 @@
 **Created:** 2026-05-18
 **Modified:** 2026-11-03
-**Version:** 1.25
+**Version:** 1.26
 
 # Findings
 
@@ -106,3 +106,4 @@
 - James relaxed the 2026-10-11 "never upload the plate" rule for Higgsfield: plate stills and crops may be uploaded as references, and parts of Higgsfield-generated assets may be used in the comp. Whole plate clips stay off third-party services by default. Detail: `docs/pipeline-strategy.md`, Higgsfield.
 - On the Mick 1.3 SkyReels merge, grass-fire inpainting with only a spreading mask, Canny edges inside it and a prompt gave a modest fire behind intact blades in four tests (`vace_strength` 1.0 and 0.6, two prompts, with and without a reference image at strength 0). Lowering the strength to 0.6 enlarged the fire from about 6% to 8–9% of the window but did not make blades burn. The model has to be shown the result, not only told where. Detail: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B test log.
 - The A100 80 GB PCIe in `EU-RO-1` ran an 81-frame 512p Mick 1.3 inpaint in 191–280 s, about $0.10–0.14 a run at $1.79/hr, against 610–684 s ($0.10–0.11) on the L4.
+- Rerunning an unchanged Mick 1.3 graph on the same GPU type and install (A100, `EU-RO-1` volume) reproduced every frame exactly (maximum pixel difference 0). Same seed, graph, GPU type and software give the same clip; a different GPU or install gives a nearby but different one (run 8r).
