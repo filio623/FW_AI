@@ -142,3 +142,15 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** Test 6 again, a little tidier, with the blades slightly more present and a scorched, ember-lit base. Still thick and blown out: white in 8–14% of the mask, as in test 6, so the "opaque, blown out" negatives did not reduce it.
 - **Reading:** Within 0.6–0.8 and with these negatives the result is set by the seed and the inputs, not by these knobs.
 - **Next:** the combined mask (full strength on the blades, half on the space around them) with edges on gray.
+
+## Test 11 — 2026-11-03
+
+- **Change:** Test 10 with the combined mask and its control (James's idea): MASK `shot004_grassfire_mask-start25-full50-blades4-field050-soft_912x512_81f_v001.mp4` (full strength on the blades, 0.5 on the rest of the spread) and DRIVING VIDEO `shot004_grassfire_control-plate-canny-gray-start25-full50_912x512_81f_v001.mp4` (blade edges on gray inside the spread). Checked: only the two loaders changed. A first attempt loaded the Canny-on-black control by mistake and was stopped before it finished; it is not counted.
+- **Run:** 194 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test11-cannygray-blades4-field050-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test11-cannygray-blades4-field050-str080-nagneg2_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, earlier and larger: 6.1% of the window on frame 32 (test 10: 2.7%).
+- **Fire size and place:** 7–11% of the window, 43–78% under Jerry; 27 fire pixels outside the mask.
+- **Plate outside the mask:** Fail at the mask. The half-strength area came out as a flat, light gray veil, about 45 luma brighter than the plate (difference from the plate there 44–49, against 3.4 outside the mask), so the whole outline of the spread shows (James: the mask shows up as an artifact).
+- **Look:** The flames themselves are the softest yet: white in only 0.2–2.4% of the mask (test 10: 8–14%), more translucent, with the blades as dark lines in front. But the blades do not burn (James: no interaction), and the gray veil spoils the frame.
+- **Reading:** With a mask between 0 and 1 the VACE node keeps that share of the control as it is. The control showed flat gray there, so the model half-kept the gray, and Compose + Match then pasted that area at half strength. Whatever sits under a partial mask must be the plate, not gray, so that "half keep" means half keep the grass.
+- **Next:** test 11b: the same mask with the plate, not gray, in the half-strength area, and gray with edges only on the blades.

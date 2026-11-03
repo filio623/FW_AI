@@ -137,6 +137,10 @@ def build(args: argparse.Namespace) -> dict:
             blades = blades.astype(bool) & hard
             hard_u8 = np.where(blades, 255, np.where(hard, round(255 * args.field), 0)).astype(np.uint8)
             blade_cover.append(round(float(blades.mean()), 4))
+            if args.field_fill == "plate":
+                # A partial mask keeps that share of the control, so the half-strength area must
+                # show the plate (half keep the grass), not gray (test 11: a gray veil).
+                control = np.where(blades[..., None], fill, plate[t])
         soft = cv2.GaussianBlur(hard_u8, (0, 0), args.soft) if args.soft > 0 else hard_u8
         controls.append(control)
         masks.append(soft)
@@ -147,7 +151,8 @@ def build(args: argparse.Namespace) -> dict:
     tag = f"start{args.start}-full{args.full}"
     stem = f"{W}x{H}_{n}f_{args.version}"
     mask_kind = "soft" if args.field >= 1.0 else f"blades{args.blade_grow}-field{round(args.field * 100):03d}-soft"
-    control_path = out / f"shot004_grassfire_control-plate-{args.inside}-{tag}_{stem}.mp4"
+    inside_kind = args.inside if args.field >= 1.0 or args.field_fill == "inside" else f"{args.inside}-blades{args.blade_grow}"
+    control_path = out / f"shot004_grassfire_control-plate-{inside_kind}-{tag}_{stem}.mp4"
     mask_path = out / f"shot004_grassfire_mask-{tag}-{mask_kind}_{stem}.mp4"
     start_path = out / f"shot004_grassfire_start-frame_{W}x{H}_{args.version}.png"
     write_video(controls, control_path, "rgb24")
@@ -160,7 +165,7 @@ def build(args: argparse.Namespace) -> dict:
         "control": str(control_path), "mask": str(mask_path), "start_image": str(start_path),
         "coverage": coverage, "blade_coverage": blade_cover,
     }
-    kind = args.inside if args.field >= 1.0 else f"{args.inside}-{mask_kind}"
+    kind = args.inside if args.field >= 1.0 else f"{args.inside}-{mask_kind}" + ("-platefield" if args.field_fill == "plate" else "")
     (out / f"shot004_grassfire_inputs-{kind}-{tag}_{stem}.json").write_text(json.dumps(report, indent=1))
     return report
 
@@ -186,6 +191,9 @@ def main() -> None:
     p.add_argument("--blade-low", type=int, default=20, help="Canny thresholds that pick the blades for the mask "
                                                               "(on a 1.5 px blur; 20/60 picks about a third of the spread)")
     p.add_argument("--blade-high", type=int, default=60)
+    p.add_argument("--field-fill", choices=["inside", "plate"], default="inside",
+                   help="with --field below 1, what the DRIVING VIDEO shows in the half-strength area: the "
+                        "--inside fill (test 11, which came out as a gray veil) or the plate (only the blades get the fill)")
     p.add_argument("--seed", type=int, default=4)
     p.add_argument("--version", default="v001")
     r = build(p.parse_args())
