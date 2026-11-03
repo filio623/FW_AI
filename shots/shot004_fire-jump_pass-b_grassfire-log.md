@@ -118,3 +118,15 @@ Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_gra
 - **Look:** Very different from test 6 at the same settings. Flames are separate vertical tongues with soft edges, much less blown out (white 3–5% of the mask against 11–14%), with blades crossing in front of them. Closer to Jerry's tongues than test 6. But a thick white-lavender smoke cloud fills much of the mask from frame 32 to about 60, reading like steam, and there is less scorch and fewer embers than test 6.
 - **Reading:** The seed changes the result as much as any single knob tried so far (tests 3–7). Single runs have been compared as if the change caused the difference; from here each setting needs at least two seeds before it is judged.
 - **Next:** a third seed of test 6, then compare prompt 4 over the same seeds.
+
+## Test 9 — 2026-11-03
+
+- **Change:** Test 6 with a third seed (`seed_1` 1218565630 → 1218565905), James. Checked: only the seed changed.
+- **Run:** 190 s (A100); prompt 2.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test9-gray-prompt2-str060_seed1218565905_eu-ro-a100_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test9-gray-prompt2-str060_seed1218565905_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, the earliest and largest of the three seeds: 5.6% of the window on frame 32 (tests 6 and 8: 3.0% and 1.7%).
+- **Fire size and place:** 10–12% of the window from frame 40 to 80, the steadiest of the three; 51–77% under Jerry. 888 fire pixels outside the mask, all on frames 26–40, where the fire runs ahead of the mask while it is still small.
+- **Plate outside the mask:** Pass outside, apart from those early pixels. Ring −5.2 and +4.3 luma on frames 50 and 80.
+- **Look:** A wide, bowl-shaped sheet of opaque flame, the most blown out of the three (white 12–24% of the mask, against 11–14% for test 6 and 3–5% for test 8), with a little dark smoke at the edges. The blades are dark lines in front of the flames again rather than burning. James: less interaction with the grass, a little too wild.
+- **Reading over tests 6, 8 and 9 (same settings, three seeds):** size and coverage are consistent (about 10–13% of the window by frame 50). The look is consistently thick, opaque, wild fire. What changes with the seed is the smoke (none, a heavy cloud, a little) and whether the blades burn or stay in front. These settings will not give Jerry's look by reseeding; the next change has to constrain the fire's shape or show the model the look.
+- **Next:** see the plan, Pass B tests.

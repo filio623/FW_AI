@@ -14,6 +14,6 @@ Inputs and raw results for the Pass B grass-fire inpaint (`workflows/comfyui/sho
 ## Source and history
 
 - 2026-11-02: inputs built; tests 1–2.
-- 2026-11-03: tests 3–8 (A100, EU-RO-1). Tests 6–8 use the gray control; test 8 is test 6 with a second seed.
+- 2026-11-03: tests 3–9 (A100, EU-RO-1). Tests 6–9 use the gray control; tests 8 and 9 are test 6 with a second and third seed. `mask_vs_fire_f60.png`: the mask's extent against tests 6 and 9.
 - Scores: `shots/shot004_fire-jump_pass-b_grassfire-log.md`. Plan and next steps: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B.
 - Kept clips: `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test*`.
