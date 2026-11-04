@@ -244,3 +244,12 @@ A different method: no inpaint, no mask. The Seedance 2.0 First-Last-Frame API n
 - **Look:** As S1: soft, translucent flames among the plate's blades, blades dark in front, embers; no blown-out white.
 - **Reading:** The full frame works for the comp. The burst comes from the prompt's "within about one second", which the model read as a flash.
 - **Next:** S3: only the prompt's timing changed, to a steady spread blade by blade over about one and a half seconds, with no flare-up.
+
+## Seedance S3 — 2026-11-03
+
+- **Change:** S2 at 480p, with the prompt replaced by the timing sentence alone (the camera, look and background lines were dropped): "A small spark catches at the base of the clump in the centre. The fire then spreads steadily and gradually, blade by blade, up and outward through the grass over about one and a half seconds, with no sudden flare-up or burst, until the whole clump is burning." Checked in the clip's metadata.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-flf_seedance20_s3-full169-k2platebg-prompt-timing-480p-4s_seed42_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-flf_seedance20_s3-full169-k2platebg-prompt-timing-480p-4s_seed42_v001.workflow.json`.
+- **Ignition and spread:** Smooth, no burst, but slow. A spark at the base on frame 10 (0.42 s) smoulders to about frame 22 (0.9 s); one flame grows over frames 24–36 (1.0–1.5 s, 1–3% of the frame); the fire then widens steadily to 5–6% at 2.5 s and 9–11% at 3.5–4 s. From ignition to the whole clump burning takes about 2.5 s; the delivered comp takes about 1 s. S2 for comparison: a flash from 1.7% to 10% in four frames.
+- **Framing and background:** As S2, without the camera and background lines: no camera movement (shift under 0.02 px), away from the fire within about 2 of the plate.
+- **Look:** As S2: soft, translucent flames among the blades, blades dark in front, embers. The look comes from the last frame; the prompt's look words were not needed.
+- **Reading:** The timing sentence works: the burst is gone. "About one and a half seconds" came out at about two and a half. Either speed S3 up in the comp (about 1.7× from ignition, frames 22–72 onto shot frames 25–54), or ask for about one second.
