@@ -103,3 +103,4 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
   - Paths updated in all docs, READMEs and scripts (logs: path-only). Script roots fixed and checked; both Blender comps repointed, v002 renders identically.
   - Every move, including untracked media: `docs/archive/restructure_2026-11-04_moves.tsv`.
 
+- 2026-11-04: also removed `skills-lock.json` (the lock file of the removed Higgsfield skills); `CLAUDE.md` stays, it only imports `AGENTS.md` for Claude Code.
