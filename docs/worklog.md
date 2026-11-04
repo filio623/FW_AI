@@ -104,3 +104,4 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
   - Every move, including untracked media: `docs/archive/restructure_2026-11-04_moves.tsv`.
 
 - 2026-11-04: also removed `skills-lock.json` (the lock file of the removed Higgsfield skills); `CLAUDE.md` stays, it only imports `AGENTS.md` for Claude Code.
+- Later the same day (James): duplicate character images checked and kept (each copy is part of a provenance chain, and Git stores identical files once, so they cost local disk only; recorded in `docs/asset-inventory.md`); `docs/asset-inventory.md` cut to a source-media index (about 1,500 to 600 words; the per-file lists live in folder READMEs); new `docs/todo.md` with the deferred media backup; `memories/` archived to `docs/archive/memories/`.

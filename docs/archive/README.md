@@ -36,6 +36,7 @@ so `mcp/supermemory.md` becomes `docs/archive/mcp/supermemory.md`. Each carries 
 - `docs/vfx-element-benchmark.md`: retired 2026-11-04; split into `shots/shot004_fire-jump/pass-a_jerry_log.md` and the shot plan.
 - `docs/environment.md`: retired 2026-11-04; its current facts moved to `AGENTS.md` and `mcp/`.
 - `docs/AGENTS-CHANGELOG.md`: retired 2026-11-04; Git history records `AGENTS.md` changes from here on.
+- `memories/seeds/`: retired 2026-11-04; pre-August session snapshots from the Supermemory era.
 - `skills/comfyui-vfx/`, `skills/comfy-cloud-vfx/`, `skills/higgsfield-vfx/`: retired 2026-11-04; never loaded by the agent and out of date.
 - `prompts/handoffs/scene4_jerry-fire-video-test_handoff_v001.md`: completed first-test prompt whose original inputs are unavailable.
 

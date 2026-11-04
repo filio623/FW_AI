@@ -15,7 +15,7 @@ Working area for an AI-assisted short-film VFX pipeline. Markdown is the main fo
   - One folder per pass, `pass-<letter>_<layer>/`: `log.md` (append-only run log), `inputs/`, `workflows/` (graphs in use, mirrored on the Pod as `shot<NNN>/pass-<letter>_<layer>/`; a knob change is a run, a structural change a new `_vNNN`), `runs/` (each kept run: the clip and its extracted workflow side by side, same name), plus pass-specific folders such as `keyframes/` and `layers/`.
   - New shots start from `shots/_template/`.
 - `characters/<name>/`: one home per character: `README.md`, the frozen bible (`bible_v001.md`), `development-plan.md`, reference sets, approval reviews, candidates, CGI and training material, and the character's own `outputs/`. `characters/character-bible.md` holds the shared rules.
-- `docs/`: project-wide records: `decisions.md` (register of project-wide decisions), `findings.md` (lessons beyond one shot), `worklog.md` (one entry per session), `asset-inventory.md`, `asset-intake.md`, `pipeline-strategy.md`, `workspace-map.md`. `docs/archive/` holds retired documents; nothing there is live.
+- `docs/`: project-wide records: `decisions.md` (register of project-wide decisions), `findings.md` (lessons beyond one shot), `worklog.md` (one entry per session), `todo.md` (open project-wide items), `asset-inventory.md` (source media and what was restored from the NAS), `asset-intake.md`, `pipeline-strategy.md`, `workspace-map.md`. `docs/archive/` holds retired documents; nothing there is live.
 - `source/`: raw film material (screenplay; storyboards, audio and editorial when they arrive). `inbox/`: uploads waiting to be sorted (`docs/asset-intake.md`).
 - `library/`: research, the Mickmumpitz library, and `manifests/` of media kept off the repo. `workflows/`: creator originals and cross-shot templates. `prompts/`: reusable prompts. `scripts/`: shared tools (see its README). `mcp/`: one note per service (`runpod.md` with `runpod_log.md`, `blender.md`, `higgsfield.md`, `comfy-cloud.md`). `outputs/`: project-wide scratch only (reference studies, tool dumps).
 - **Placement rule (2026-11-04):** comp files and every layer or image a saved comp loads live in the shot folder (or `characters/`), never in an `outputs/` folder. Heavy media is gitignored everywhere; READMEs and metadata are tracked.
@@ -40,7 +40,7 @@ Read, in order: this file, the last entry of `docs/worklog.md`, the shot's `READ
 - **Retiring:** a document with no successor moves to `docs/archive/`, mirroring its path, with `[ARCHIVED]` in the title, `**Archived:**` and `**Original path:**` lines and one line on why; update every link to it. This is the only use of `docs/archive/`.
 - **Media:** always `_vNNN`, never overwritten; a new take is a new file. A superseded take moves to `_archive/` beside it and is noted in `docs/asset-inventory.md`. Never delete an approved look, a delivered element, a plate, or anything a comp has used.
 - **Cold storage:** production media lives on the NAS (`/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`); any move to or from it updates its manifest in `library/manifests/` in the same change.
-- Signpost READMEs, templates, notes beside media and `memories/seeds/` carry no header.
+- Signpost READMEs, templates and notes beside media carry no header.
 
 ## Naming
 

@@ -24,13 +24,12 @@ shots/shot004_fire-jump/
 ## Project-wide
 
 - `characters/<name>/`: bible (`bible_vNNN.md`), `development-plan.md`, reference sets, approval reviews, candidates, CGI, training material, `outputs/`. `characters/character-bible.md`: shared rules.
-- `docs/`: `decisions.md`, `findings.md`, `worklog.md`, `asset-inventory.md`, `asset-intake.md`, `pipeline-strategy.md`, this map. `docs/archive/`: retired documents and the 2026-11-04 move list.
+- `docs/`: `decisions.md`, `findings.md`, `worklog.md`, `todo.md`, `asset-inventory.md`, `asset-intake.md`, `pipeline-strategy.md`, this map. `docs/archive/`: retired documents and the 2026-11-04 move list.
 - `source/`: screenplay; storyboards, audio and editorial when they arrive. `inbox/`: uploads waiting for intake.
 - `library/`: Mickmumpitz library (`mickmumpitz/`, described in `mickmumpitz-library.md`), research, `manifests/` for media kept off the repo.
 - `workflows/`: ComfyUI conventions and creator originals; Higgsfield notes.
 - `scripts/`: shared tools (RunPod, Blender helpers, library sorter). `mcp/`: one note per service. `prompts/`: reusable prompt blocks.
 - `outputs/`: project-wide scratch only (reference studies, tool schemas).
-- `memories/seeds/`: dated session snapshots from before 2026-08-16; read-only history.
 
 ## Naming
 

@@ -44,7 +44,6 @@ shots/*/outputs/**
 characters/*/outputs/**
 !characters/*/outputs/**/
 !characters/*/outputs/**/README.md
-memories/responses/
 ComfyUI_temp_*.png
 
 # Local plate/test media. Durable metadata belongs in docs/assets notes.

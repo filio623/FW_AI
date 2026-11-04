@@ -3,119 +3,44 @@
 
 # Asset Inventory
 
-Use this file as the human-readable index for active assets. Raw uploads may sit in `inbox/` briefly, but anything used for production should be listed here or in the relevant shot note.
+Index of the film's source media: what exists, where the original lives, and what has been restored into the repo. What each restored or generated file is, is recorded in the README of the folder that holds it; this file does not repeat those lists.
 
-## Asset Roots (as of 2026-11-04)
+## Where media lives (as of 2026-11-04)
 
-- `inbox/`: incoming unsorted files.
-- `shots/<shot>/`: everything one shot uses: `plates/`, `reference/`, per-pass `inputs/`, `keyframes/`, `layers/`, `runs/`, and `comps/`. Each folder's README lists its files.
-- `characters/<name>/`: character references, review packs, candidates and CGI.
-- `source/`: screenplay (storyboards, audio and editorial when they arrive).
-- `library/manifests/`: media that lives off the repo (NAS, external drive).
+- `shots/<shot>/`: everything one shot uses (`plates/`, `reference/`, per-pass `inputs/`, `keyframes/`, `layers/`, `runs/`, `comps/`).
+- `characters/<name>/`: character references, review packs, candidates, CGI.
+- `source/`: screenplay. `inbox/`: uploads waiting to be sorted.
+- Off the repo: the NAS backup of the production drive, `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`, indexed by `library/manifests/`. Any move to or from it updates its manifest.
+- Until 2026-11-04 media lived under `assets/`; old-to-new paths: `docs/archive/restructure_2026-11-04_moves.tsv`.
 
-Until 2026-11-04 media lived under `assets/` (`assets/elements/by-shot/`, `assets/characters/`, `assets/plates/`, …); the old-to-new path list is `docs/archive/restructure_2026-11-04_moves.tsv`.
+Heavy media (video, frame sequences, plate stills, keyframes) is gitignored and exists only on this Mac and the NAS. A backup routine is an open item (`docs/todo.md`).
 
-## FW_test (historical, not present in this checkout)
+## Shot 004 source media
 
-`FW_test/` is not in this checkout and is ignored by Git. The section below is the
-2026-05-18 survey of that folder, kept because it is the only durable record of the
-Scene 4 source media and its technical metadata. Treat every path here as a
-description of material to be restored from the external production drive, not as a
-path that currently resolves.
+Production files of the delivered shot (`04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/` on the NAS unless noted). Technical data from `ffprobe`, 2026-05-18.
 
-To restore: locate the sources through `library/manifests/external-drive_inventory_v001.md`
-and promote anything needed into the shot folder that uses it (`shots/<shot>/plates/`,
-`reference/` or a pass folder) under proper `_vNNN` names, recording the promotion in this file.
+| File | Format | Status |
+|---|---|---|
+| `4 base plate.mov` | ProRes, 4096x2160, 24 fps, 87 frames, `yuv444p12le` | NAS only; exact location not recorded. The working plate is the staged `shots/shot004_fire-jump/plates/FW_test_scene.mp4`, whose relation to it is unverified. |
+| `FW_test_scene.mov` | HEVC, 4096x2160, 24 fps, 84 frames, `yuv420p10le` | Surveyed in `FW_test/Scene 4/` (absent here); an MP4 of the same scene is the working plate. |
+| `Shot4 V031-1` (`.mov` on the NAS, `.mp4` surveyed) | H.264, 1920x1080, 24 fps, 84 frames | Delivered comp. Local copy: `shots/shot004_fire-jump/reference/shot004_fire-jump_comp-houdini-delivered-v031_1920x1080_v001.mp4`. |
+| `ren_small_fire6..mov` | H.264, 1920x1080 (displays 1920x1014), 24 fps, 87 frames | Restored 2026-08-18 from `ren_small_fire6/Proxy/` to `shots/shot004_fire-jump/reference/`. EXR sequence and a 112-frame extracted alternate stay on the NAS. |
+| `ren_grassfire_cpu..mov` | H.264, 1920x1080, 24 fps, 86 frames | NAS only; wanted as the Pass B timing reference. |
+| `ren_steam..mov` | H.264, 1920x1080, 24 fps, 82 frames | NAS only. |
+| `ren_small_waterCHAR8..mov` | H.264, 1920x1080, 24 fps, 86 frames | NAS only. |
+| `ren_small_waterSplash..mov` | H.264, 1920x1080, 24 fps, 33 frames | NAS only. |
 
-Surveyed contents:
+The H.264 renders are `yuv420p` with no alpha: use them as motion, timing, scale and look references, and extract mattes separately if needed.
 
-- `FW_test/Scene 4/4 base plate.mov`: base environmental plate.
-- `FW_test/Scene 4/FW_test_scene.mov`: likely existing scene composite or reference.
-- `FW_test/Scene 4/Shot4 V031-1.mp4`: likely review/export reference.
-- `FW_test/Scene 4/ren_grassfire_cpu..mov`: grass fire render.
-- `FW_test/Scene 4/ren_small_fire6..mov`: fire character render.
-- `FW_test/Scene 4/ren_small_waterCHAR8..mov`: water character render.
-- `FW_test/Scene 4/ren_small_waterSplash..mov`: water splash render.
-- `FW_test/Scene 4/ren_steam..mov`: steam render.
+`FW_test/` (surveyed 2026-05-18, not in this checkout) held working copies of these same files under `Scene 4/`. To restore anything, locate it through `library/manifests/external-drive_inventory_v001.md`, file it in the shot folder that uses it under a `_vNNN` name, and add a row here.
 
-As of 2026-05-18 these files had not been moved into `assets/`. The original
-`FW_test/` paths remain absent; a fire source was restored on 2026-08-18 and
-a separate Scene 4 test reference was staged later (indexed below). The
-original `4 base plate.mov` has not been restored into this checkout.
+## Characters
 
-## Restored Shot004 Fire Element
+Character material is tracked in the repo under `characters/` and listed in each folder's README. Nothing is approved into a separate `approved/` set yet for either character; Jerry's approved reference set is `characters/jerry/character-bible-v001/` (frozen bible `characters/jerry/bible_v001.md`).
 
-Copied from the NAS backup of the production drive, not from `FW_test/`:
+Several files exist twice by design: the bible set and Tom's working references are copies of originals kept in the look references, review packs and training candidates, and each copy is part of a provenance record (original → review pack → bible). Git stores identical files once, so the copies cost local disk only.
 
-`/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST/04 VFX/VFX Footage/Shot_4/shot_4v031_delivery/ren_small_fire6/Proxy/ren_small_fire6..mov`
+## Screenplay
 
-- `shots/shot004_fire-jump/reference/ren_small_fire6..mov`: preserved production filename.
-- `shots/shot004_fire-jump/reference/shot004_fire-jump_ren-small-fire6_source_v001.mov`: same bytes, project-named. H.264 coded 1920x1080 with frame-cropping metadata (33 px top and bottom), so it decodes and displays as 1920x1014, the 4K DCI plate's aspect, covering the whole plate. 24 fps, 87 frames, 3.625s, `yuv420p`.
-- `shots/shot004_fire-jump/pass-a_jerry/inputs/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`: rebuilt 832x448, 24 fps, 81-frame control proxy (pad-to-fit, first 81 frames). The expired `outputs/` copy was never on the production drive.
-- `shots/shot004_fire-jump/pass-a_jerry/inputs/shot004_ren-small-fire6_trajectory-dot_832x448_81f_v001.mp4`: path-only control. Weighted luma centroid of the 832x448 proxy as a ~56px warm dot on black, 24 fps, 81 frames. Built 2026-09-03 to test Fun Control following jump timing without filling the CGI silhouette.
-- `shots/shot004_fire-jump/pass-a_jerry/inputs/shot004_ren-small-fire6_trajectory-streak_832x448_81f_v001.mp4`: stronger path control. Same centroid with a ~72px head and 10-frame fading trail.
-- `shots/shot004_fire-jump/pass-a_jerry/inputs/shot004_ren-small-fire6_control-shrunk40_832x448_81f_v001.mp4`: original fire silhouette scaled 40% around its centroid on black. Middle ground between full CGI body and path-only.
-- `shots/shot004_fire-jump/pass-a_jerry/inputs/shot004_ren-small-fire6_control-graymask-grow16_832x448_81f_v001.mp4`: the fire's red-channel mask (threshold 20), dilated 16 px, holes filled, filled with flat RGB 128 on black. VACE DRIVING VIDEO for Mick 1.3 runs 2–6 (2026-10-19): path and size without fire texture.
-- `shots/shot004_fire-jump/pass-a_jerry/inputs/shot004_ren-small-fire6_mask-grow16-soft_832x448_81f_v001.mp4`: the same mask as white on black with a 3 px Gaussian edge. MASK input for the same runs.
-
-## Shot004 VACE Test Reference
-
-- `shots/shot004_fire-jump/plates/FW_test_scene.mp4`: staged 4096x2160, 24 fps, 84-frame Scene 4 reference used for the VACE test; provenance relative to the surveyed `.mov` is unverified. This is not the original `4 base plate.mov`.
-- `shots/shot004_fire-jump/plates/shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`: 1280x672, 24 fps, first 49 frames of the staged MP4, Lanczos-scaled and H.264 CRF 18; used as the low-memory finishing/composite input on the A40 Pod. It is a test proxy, not a full-resolution delivery plate.
-- `shots/shot004_fire-jump/reference/shot004_fire-jump_comp-houdini-delivered-v031_1920x1080_v001.mp4` (production name `Shot4 V031-1.mp4`, renamed 2026-11-04): local copy of the delivered Houdini comp (H.264, 1920x1080, 24 fps, 84 frames), file-dated 2026-10-08 like the staged test plate, matching the surveyed `FW_test/Scene 4/Shot4 V031-1.mp4` metadata. Its relation to the NAS delivery proxy `Shot4 V031-1.mov` is unverified, but it shows the delivered ignition timing: the fire lands around frame 23, the grass catches at once, spreads through about frame 48, and has burned down by about frame 66.
-- `shots/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend`: first Blender comp (Blender 5.2.1 compositor), built by `shots/shot004_fire-jump/scripts/blender/shot004_comp_build.py`. Plate + ground glow + Pass B slot + Mick 1.3 run 8 (core over, Screen glow, bloom) + ridge holdout + neutral final grade. Media paths are relative to the `.blend`. Method and review: `shots/shot004_fire-jump/plan.md`.
-- `shots/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`: the same comp as a Fusion node tree (settings text), built in DaVinci Resolve Studio 21.1.1 by `shots/shot004_fire-jump/scripts/resolve/shot004_comp_fusion.py`. The live copy is the Fusion clip in timeline `shot004_comp_v001` of Resolve project `FW_AI_shot004_comp` (Local Database). Method and comparison: `shots/shot004_fire-jump/plan.md`.
-- `shots/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.drp`: export of that Resolve project (timeline plus the Fusion clip with the full node tree, checked by decoding the export). Import it from Resolve's Project Manager; media are linked by absolute path.
-
-- `shots/shot004_fire-jump/pass-b_grassfire/inputs/`: Pass B grass-fire inpaint inputs from `shots/shot004_fire-jump/scripts/build_shot004_grassfire_inputs.py` (`_v001`): `shot004_grassfire_control-plate-canny-start25-full50_912x512_81f_v001.mp4` (DRIVING VIDEO: plate outside the mask, Canny edges inside), `shot004_grassfire_mask-start25-full50-soft_912x512_81f_v001.mp4` (MASK), `shot004_grassfire_start-frame_912x512_v001.png` (start image, gitignored as plate media), and the JSON settings report; `shot004_grassfire_control-plate-gray-start25-full50_912x512_81f_v001.mp4` is the same control with flat gray instead of edges inside the mask, with its own report. All are a 1824x1024 window of the plate at (1838, 488), scaled x0.5.
-
-### Benchmark clips
-
-Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `shots/shot004_fire-jump/pass-*/runs/`. The index and the keeping rule are in `shots/shot004_fire-jump/pass-a_jerry/log.md`.
-
-- `shots/shot004_fire-jump/pass-a_jerry/runs/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`), and ten Mick 1.3 SkyReels runs (`shot004_fire-jump_mick13-skyreels_*_v001.mp4`; `graymask-promptv3-jb010-str125-lenovo_seed1218565630` is the current best, and its `…_eu-ro-l4-repro_v001` copy, run 8r, is the same graph rerun on the rebuilt `EU-RO-1` volume; `…-lenovo-nag_…_eu-ro-l4_v001`, run 9, adds NAG), and the first Pass B grass-fire inpaint, `shot004_fire-jump_grassfire-inpaint_mick13_test1_seed1218565630_v001.mp4` (a 912x512 window of the plate, not a full frame), test 2 (`…_test2-jb010_…`), test 3 (`…_test3-prompt2_…_eu-ro-a100_…`), test 4 (`…_test4-prompt2-str060_…`), test 6 (`…_test6-gray-prompt2-str060_…`), test 7 (`…_test7-gray-prompt3-str060_…`), test 8 (`…_test8-gray-prompt2-str060_seed1218565804_…`), test 9 (`…_test9-gray-prompt2-str060_seed1218565905_…`), test 10 (`…_test10-gray-prompt2-str080-nagneg2_…`), test 11 (`…_test11-cannygray-blades4-field050-str080-nagneg2_…`), test 11b (`…_test11b-cannygray-bladesonly-field050-platefield-…`), test 12 (`…_test12-gray-prompt2-str080-nagneg2-refk2-040_…`), test 13 (`…_test13-…-refk2-100_…`), test 14 (`…_test14-gray-keyk2-f049-052-passthrough-refk2-040_…`), Seedance first-last-frame S1 (`…_grassfire-flf_seedance20_s1-window-k2-480p-4s_seed42_v001.mp4`) S2 (`…_s2-full169-k2platebg-720p-4s_seed42_v001.mp4`) S3 (`…_s3-full169-k2platebg-prompt-timing-480p-4s_seed42_v001.mp4`), S4 (`…_s4-…-prompt-timing2-480p-4s_seed42_v001.mp4`), and Kling K1 (`…_grassfire-flf_kling25turbo_k1-full169-k2platebg-pro-1080p-5s_v001.mp4`); full-frame 16:9 first and last frames in `pass-b_grassfire/keyframes/`; and on the RTX 4090 test 14r (`…_test14r-…_eu-ro-4090_…`) and test 15 (`…_test15-gray-keyk2-f033-036-041-044-049-052-…_eu-ro-4090_…`). Three-group keyframe inputs (`…-keyk2-f033-036-041-044-049-052-…`) are in `pass-b_grassfire/inputs/`. Keyframe-in-control inputs (`…_control-plate-gray-keyk2-f049-052-…`, `…_mask-…-soft-keyk2-f049-052_…`) are in `pass-b_grassfire/inputs/`.
-- `shots/shot004_fire-jump/pass-b_grassfire/keyframes/`: four Higgsfield grass-fire keyframes (edits of a plate frame by James's colleague, 2026-11-03), as delivered in `source/` and registered to the Pass B window at 1824×1024 and 912×512. Gitignored like the plate; README and registration JSON tracked. The combined-mask Pass B inputs (`…_control-plate-canny-gray-…`, `…_mask-…-blades4-field050-soft_…`) are in `pass-b_grassfire/inputs/`.
-
-Media files are gitignored. The original base plate, grass fire, steam, and water passes are still only on the backup.
-
-### Technical Metadata
-
-Checked with `ffprobe` on 2026-05-18:
-
-- `4 base plate.mov`: ProRes, 4096x2160, 24 fps, 87 frames, 3.625s, `yuv444p12le`.
-- `FW_test_scene.mov`: HEVC, 4096x2160, 24 fps, 84 frames, 3.5s, `yuv420p10le`.
-- `Shot4 V031-1.mp4`: H.264, 1920x1080, 24 fps, 84 frames, 3.5s, `yuv420p`.
-- `ren_small_fire6..mov`: H.264, 1920x1080, 24 fps, 87 frames, 3.625s, `yuv420p`.
-- `ren_grassfire_cpu..mov`: H.264, 1920x1080, 24 fps, 86 frames, 3.583s, `yuv420p`.
-- `ren_steam..mov`: H.264, 1920x1080, 24 fps, 82 frames, 3.417s, `yuv420p`.
-- `ren_small_waterCHAR8..mov`: H.264, 1920x1080, 24 fps, 86 frames, 3.583s, `yuv420p`.
-- `ren_small_waterSplash..mov`: H.264, 1920x1080, 24 fps, 33 frames, 1.375s, `yuv420p`.
-
-Alpha note: the H.264 element/reference renders use `yuv420p`, so they do not contain an embedded alpha channel. Treat them as motion, timing, scale, and visual references unless matte extraction is performed separately.
-
-## Tracked Character Assets
-
-These are committed to the repository and resolve in any checkout.
-
-- `characters/jerry/character-bible-v001/references/`: the promoted Jerry bible set, 27 images under stable `JB-###` IDs, split into `primary-body/`, `motion-poses/`, `material/`, `secondary-training/`, `source-ref-only/`, and `performance-2d-ref-only/`. Indexed by `reference_gallery.md` and `selection_manifest.tsv`. This is the durable replacement for the expired `outputs/review/jerry_asset-triage_v001/` review pass.
-- `characters/jerry/look-references/external-v001/`: 14 external look references defining the current no-face Jerry body direction.
-- `characters/jerry/higgsfield-candidates/run001`–`run005`: casting-run stills, assessed in `characters/jerry/bible_v001.md`.
-- `characters/jerry/approval-review/v001/`: Jerry approval review pack.
-- `characters/tom/approval-review/v001`–`v003/`: Tom review rounds, v003 current.
-- `characters/jerry/source-cgi/jerry_fire-rig_v001.blend`: Blender 5.2.1 Jerry fire rig (rigged emitter body, core-glow volume, Mantaflow fire, embers, idle cycle). The fluid cache is not tracked; rebake into `characters/jerry/outputs/fire-rig_v001/cache_fluid/`. Run log: `characters/jerry/fire-rig/jerry_fire-rig_log_v001.md`.
-- `characters/jerry/source-cgi/jerry_fire-rig_idle-test-r09_f0064_v001.png`: 960x540 r09 test still from that rig. Not approved.
-
-Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candidates/`) exist for both characters and are held open with `.gitkeep`, as does Tom's `source-cgi/`. Nothing is approved into `approved/` yet for either character.
-
-## Active Shot Asset Logs
-
-- `shots/shot004_fire-jump/workflow-test-plan_v001.md`: current shot004 planning note.
-
-## Script
-
-- `source/screenplay/Fire and Water, A love Story 2023 (1).pdf`: current uploaded screenplay PDF. PDF version 1.4, 8 pages, title metadata `Fire and Water, A love Story 2023`.
-- `source/screenplay/fire-and-water_script_extracted.md`: searchable text extracted from the screenplay PDF with `pypdf`. Lightly normalized; check against the PDF before final script breakdown.
-
-## Notes
-
-`ffmpeg` and `ffprobe` are now installed. Use them for detailed inspection and reference-frame extraction.
+- `source/screenplay/Fire and Water, A love Story 2023 (1).pdf`: the uploaded screenplay, 8 pages.
+- `source/screenplay/fire-and-water_script_extracted.md`: searchable text extracted with `pypdf`; check against the PDF before a final breakdown.
