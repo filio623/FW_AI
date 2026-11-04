@@ -16,6 +16,17 @@ Start here when resuming this shot: this README, then the end of the relevant `l
 | Ground glow, ridge holdout | Done in the comp. | — | `comp_log.md` |
 | Comp | Blender v002 with Pass B from S3. | `s004-c-003` | `comp_log.md` |
 
+## Next session (set 2026-11-04, James)
+
+The comp `s004-c-003` is in the right direction but does not blend yet: the grass fire's style and colour do not match Jerry, Jerry looks pasted in, and the whole frame does not sit together. Work on that, in any order James picks (detail in `plan.md`, Comp, Next):
+
+1. **More fire candidates.** Comp Kling K1 (`s004-b-021`) like S3; more Seedance seeds; other first-last-frame models (Kling variants; MiniMax Hailuo or H3 if reachable). All runs so far were 480p or 720p except Kling K1 (1080p).
+2. **Full resolution.** Re-run the chosen fire at Seedance 1080p or 4K (4K maps 1:1 onto the 16:9 crop of the plate) or Kling 1080p, and rebuild the layer.
+3. **Comp work to blend Jerry and the fire.** Grade one toward the other, lower Jerry's bloom and core opacity, light wrap, shared heat shimmer, grain and defocus matching, fire light on Jerry.
+4. **Jerry himself:** the smaller guide still awaits approval; regenerating Jerry is the real fix for his CG texture.
+
+No Pod is running; first-last-frame API runs need no GPU (ComfyUI on a Pod or local, billed to the Comfy account).
+
 Next steps and methods: `plan.md`.
 
 ## Decisions

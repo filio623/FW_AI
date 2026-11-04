@@ -160,6 +160,15 @@ Rebuilding overwrites the file, so save hand edits as `_v002` first. Starting va
 
 Blender 5.2 compositor details that cost time: the comp is `scene.compositing_node_group`, a node group with an Image output (there is no Composite node); the render percentage does not scale image inputs, so render at 100%; the Mix node clamps its factor to 0–1 unless `clamp_factor` is off; mask coordinates are x = px / width and y = (height / 2 − row) / width + 0.5.
 
+### Next (as of 2026-11-04)
+
+James's review of `s004-c-003`: in the right direction; the fire's style and colour do not match Jerry, Jerry looks pasted in, and the frame does not sit together. Options, one change per comp version, each logged in `comp_log.md`:
+
+- **Fire source:** comp Kling K1 (`s004-b-021`, 1080p, natural ember-line ignition, about 2× slow: try `--map` so its frame ~24 lands on shot frame 25 and its full burn near frame 54); more Seedance seeds (the prompt barely changes a sample; the seed or duration does); other first-last-frame models through the ComfyUI partner nodes or Higgsfield (MiniMax Hailuo; MiniMax H3 needs a ComfyUI update or Comfy Cloud).
+- **Resolution:** the chosen fire at Seedance 1080p or 4K, or Kling 1080p; rebuild its layer with `scripts/build_shot004_grassfire_layer.py` into a new `pass-b_grassfire/layers/…_v00N/`, then `scripts/blender/shot004_comp_add_passb.py` from comp v001 to a new comp version.
+- **Blend:** grade the fire toward Jerry's palette or Jerry toward the fire (Jerry averages about 224/158/93, the fire about 207/137/70); lower Jerry's bloom, Screen glow and core opacity (the `CTRL` nodes); a light wrap from the fire onto Jerry's edges and from Jerry onto the grass; one heat-shimmer pass over both; match grain and defocus between Jerry, the fire and the plate; let the fire light Jerry's lower edge.
+- **Jerry:** the smaller guide (`outputs/pass-a_jerry/guide_v002/`) awaits approval; regenerating Jerry with it, with the fire keyframe or clip as a look reference, addresses his CG texture at the source.
+
 ### Fusion comp (reference only)
 
 James asked for the same comp in DaVinci Resolve Studio's Fusion page to compare the two tools. Built by `shots/shot004_fire-jump/scripts/resolve/shot004_comp_fusion.py` through Resolve's scripting interface (External scripting = Local), run with Resolve's bundled Python:

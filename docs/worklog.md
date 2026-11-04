@@ -105,3 +105,4 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 
 - 2026-11-04: also removed `skills-lock.json` (the lock file of the removed Higgsfield skills); `CLAUDE.md` stays, it only imports `AGENTS.md` for Claude Code.
 - Later the same day (James): duplicate character images checked and kept (each copy is part of a provenance chain, and Git stores identical files once, so they cost local disk only; recorded in `docs/asset-inventory.md`); `docs/asset-inventory.md` cut to a source-media index (about 1,500 to 600 words; the per-file lists live in folder READMEs); new `docs/todo.md` with the deferred media backup; `memories/` archived to `docs/archive/memories/`.
+- Session end: next session continues shot 004's comp (fire style and colour against Jerry, Jerry pasted in, overall blend). Start from `shots/shot004_fire-jump/README.md`, Next session; options in `plan.md`, Comp, Next. No Pod running.
