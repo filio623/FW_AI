@@ -1,0 +1,361 @@
+{
+ "id": "d64da39a-bb07-4d01-87bd-8afc131c496f",
+ "revision": 0,
+ "last_node_id": 12,
+ "last_link_id": 6,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadImage",
+   "pos": [
+    -1300,
+    -900
+   ],
+   "size": [
+    380,
+    330
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      1,
+      4
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "title": "First frame: clean plate, frame 25 (16:9 full frame)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "shot004_grassfire_plate-full169_f025_1920x1080_v001.png",
+    "image"
+   ],
+   "color": "#f2f2f2",
+   "bgcolor": "#dedede",
+   "shape": "box"
+  },
+  {
+   "id": 2,
+   "type": "LoadImage",
+   "pos": [
+    -1300,
+    -450
+   ],
+   "size": [
+    473.4078125,
+    330
+   ],
+   "flags": {
+    "collapsed": false
+   },
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      2,
+      5
+     ]
+    },
+    {
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "title": "Last frame: keyframe k2 on the plate background (16:9 full frame)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "LoadImage"
+   },
+   "widgets_values": [
+    "shot004_grassfire_keyframe-k2_full169-platebg_1920x1080_v001.png",
+    "image"
+   ],
+   "color": "#f2f2f2",
+   "bgcolor": "#dedede",
+   "shape": 1
+  },
+  {
+   "id": 10,
+   "type": "KlingStartEndFrameNode",
+   "pos": [
+    -1030.749860059629,
+    -1554.0076053533887
+   ],
+   "size": [
+    400,
+    296
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "start_frame",
+     "type": "IMAGE",
+     "link": 4
+    },
+    {
+     "name": "end_frame",
+     "type": "IMAGE",
+     "link": 5
+    }
+   ],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      6
+     ]
+    },
+    {
+     "name": "video_id",
+     "type": "STRING",
+     "links": null
+    },
+    {
+     "name": "duration",
+     "type": "STRING",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "KlingStartEndFrameNode"
+   },
+   "widgets_values": [
+    "A small spark catches at the base of the clump in the centre. The fire then spreads steadily and gradually, blade by blade, up and outward through the grass over about one and a half seconds, with no sudden flare-up or burst, until the whole clump is burning.",
+    "",
+    0.5,
+    "16:9",
+    "pro mode / 5s duration / kling-v2-5-turbo"
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 11,
+   "type": "SaveVideo",
+   "pos": [
+    -491.3173696362145,
+    -1439.5150870121647
+   ],
+   "size": [
+    270,
+    249.875
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0"
+   },
+   "widgets_values": [
+    "video/ComfyUI",
+    "auto",
+    "auto"
+   ]
+  },
+  {
+   "id": 3,
+   "type": "ByteDance2FirstLastFrameNode",
+   "pos": [
+    -799.3224824530821,
+    -839.757398119883
+   ],
+   "size": [
+    440.4458984375,
+    394
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "first_frame",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 1
+    },
+    {
+     "name": "last_frame",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0",
+    "Node name for S&R": "ByteDance2FirstLastFrameNode"
+   },
+   "widgets_values": [
+    "Seedance 2.0",
+    "Static locked-off camera on a tripod: no camera movement, no zoom, no reframing. A small spark catches at the base of the dry grass clump in the centre. Within a quarter of a second it becomes a small flame, and the fire then spreads steadily up and outward through the grass, blade by blade, so that the whole clump is burning about one second after the spark, with no sudden flare-up or burst. The fire then keeps burning steadily with natural flicker. The ground, the background and the framing stay exactly the same; only the fire and the burning blades change.",
+    "480p",
+    "adaptive",
+    4,
+    false,
+    42,
+    "fixed",
+    false,
+    "",
+    ""
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 4,
+   "type": "SaveVideo",
+   "pos": [
+    -300,
+    -900
+   ],
+   "size": [
+    270,
+    249.875
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 3
+    }
+   ],
+   "outputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.30.0"
+   },
+   "widgets_values": [
+    "video/shot004_grassfire-flf",
+    "auto",
+    "auto"
+   ]
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   3,
+   0,
+   "IMAGE"
+  ],
+  [
+   2,
+   2,
+   0,
+   3,
+   1,
+   "IMAGE"
+  ],
+  [
+   3,
+   3,
+   0,
+   4,
+   0,
+   "VIDEO"
+  ],
+  [
+   4,
+   1,
+   0,
+   10,
+   0,
+   "IMAGE"
+  ],
+  [
+   5,
+   2,
+   0,
+   10,
+   1,
+   "IMAGE"
+  ],
+  [
+   6,
+   10,
+   0,
+   11,
+   0,
+   "VIDEO"
+  ]
+ ],
+ "groups": [],
+ "config": {},
+ "extra": {
+  "frontendVersion": "1.47.11",
+  "ds": {
+   "scale": 0.8302367998568719,
+   "offset": [
+    1176.5512397020718,
+    1643.3676854568243
+   ]
+  },
+  "VHS_latentpreview": false,
+  "VHS_latentpreviewrate": 0,
+  "VHS_MetadataImage": true,
+  "VHS_KeepIntermediate": true
+ },
+ "version": 0.4
+}

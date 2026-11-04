@@ -6,6 +6,7 @@ Project automation. Python is standard-library-first; the media builders need `/
 
 - `build_shot004_guide.py`: Pass A gray-in-mask guide and mask from the Houdini fire proxy.
 - `build_shot004_grassfire_inputs.py`: Pass B grass-fire control, mask and start frame (`--inside canny|gray`).
+- `build_shot004_grassfire_layer.py`: turns a full-frame fire clip (first-last-frame video) into the Pass B layer on the plate: registration, retime, fire light as a gain, fire matte.
 - `shot004_comp_geometry.py`: plate placement and mask geometry shared by the Blender and Fusion comp builders.
 
 ## Characters and library
@@ -25,6 +26,7 @@ Project automation. Python is standard-library-first; the media builders need `/
 Run with `/Applications/Blender.app/Contents/MacOS/Blender -b …` (usage at the top of each file).
 
 - `blender/shot004_comp_build.py`: builds the shot 004 Blender comp.
+- `blender/shot004_comp_add_passb.py`: adds a Pass B layer (from `build_shot004_grassfire_layer.py`) to an existing shot 004 comp and saves it as a new file.
 - `blender/comp_tap.py`: renders one compositor node's output, for checking a node tree.
 - `blender/jerry_fire_rig_build.py`, `blender/fluid_bake.py`, `blender/render_frames.py`: Jerry fire rig build, Mantaflow rebake, and Metal render.
 - `blender/mcp_call.py`: calls the Blender MCP server from a shell.

@@ -253,3 +253,25 @@ A different method: no inpaint, no mask. The Seedance 2.0 First-Last-Frame API n
 - **Framing and background:** As S2, without the camera and background lines: no camera movement (shift under 0.02 px), away from the fire within about 2 of the plate.
 - **Look:** As S2: soft, translucent flames among the blades, blades dark in front, embers. The look comes from the last frame; the prompt's look words were not needed.
 - **Reading:** The timing sentence works: the burst is gone. "About one and a half seconds" came out at about two and a half. Either speed S3 up in the comp (about 1.7× from ignition, frames 22–72 onto shot frames 25–54), or ask for about one second.
+
+## Seedance S4 — 2026-11-03
+
+- **Change:** S3 with the full prompt back (camera lock, background lines) and the timing asked as "the whole clump is burning about one second after the spark", spark becoming a flame within a quarter of a second. Same frames, 480p, 4 s, seed 42.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-flf_seedance20_s4-full169-k2platebg-prompt-timing2-480p-4s_seed42_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-flf_seedance20_s4-full169-k2platebg-prompt-timing2-480p-4s_seed42_v001.workflow.json`.
+- **Result:** Almost the same clip as S3 (PSNR 31–43 dB against S3 on frames 0–96; the fire share follows S3's curve to within a few tenths of a percent). The prompt change did not change the timing.
+- **Reading:** With the same first frame, last frame, seed and resolution, Seedance returns nearly the same sample whatever the timing words. S2 against S3 changed resolution (720p to 480p) as well as the prompt, so S2's burst was most likely its sample, not its wording. To change the timing: another seed, a different duration, or retiming in the comp.
+
+## Kling K1 — 2026-11-03
+
+- **Change:** Same first and last frames into the Kling Start-End Frame API node (James), to compare: `kling-v2-5-turbo`, pro mode, 5 s, 16:9, cfg 0.5, S3's prompt. Output 1920×1080, 122 frames.
+- **Kept:** `benchmark/shot004_fire-jump_grassfire-flf_kling25turbo_k1-full169-k2platebg-pro-1080p-5s_v001.mp4` and `shot004-benchmark/shot004_fire-jump_grassfire-flf_kling25turbo_k1-full169-k2platebg-pro-1080p-5s_v001.workflow.json`.
+- **Ignition and spread:** Natural and slow. A spark at the base at 0.5 s, a line of embers catching along the base of the clump at 1.0–1.5 s, small flames along the base by 1.75–2 s, flames climbing the blades at 2.5 s and the clump burning by 3 s (fire 0.8% of the frame at 1.5 s, 5.6% at 2.5 s, 9–11% from 3 s).
+- **Framing and background:** As Seedance: no camera movement (under 0.02 px), away from the fire within about 2 of the plate.
+- **Look:** Close to Seedance and `k2`; the flames are taller and a little more solid. The ember line catching along the base is the most convincing ignition so far. Native 1080p, about twice Seedance 480p's detail.
+- **Reading:** A real alternative to Seedance, at higher resolution. Too slow as it stands; it needs about 2× in the comp, or a shorter clip.
+
+## Comp check: S3 in the Blender comp — 2026-11-03
+
+- **What:** S3 turned into a Pass B layer by the new `scripts/build_shot004_grassfire_layer.py` (registered onto the plate, median error 1.3 px; the fire light kept as a gain on the plate so the ground keeps the plate's detail; the fire itself taken by a change matte inside a zone around the clump), retimed so S3 frames 20–72 fall on shot frames 25–54 (about 1.8×) and frames 72–96 on shot frames 54–80, and added to the Pass B slot of Blender Comp v001 by `scripts/blender/shot004_comp_add_passb.py`. Saved as a new file in `outputs/shot004/comp/blender/passb_s3/` (v001 unchanged); preview `shot004_fire-jump_comp-blender_run8-passb-s3_preview_v001.mp4`, sheet `passb_s3_preview_sheet.png`.
+- **Result:** It works as a layer. The fire starts under Jerry on his landing (frame 26), rises behind him and spreads through the clump by about frame 54, then burns to the end; the ground around it warms with the fire light and keeps its texture; there is no mask outline and no dark ring.
+- **Open:** It is soft (480p scaled 4.4× to the plate). One early flame shoots up behind Jerry fast (frames 30–36), from the 1.8× retime. Jerry is still run 8 (the orb, too large).
