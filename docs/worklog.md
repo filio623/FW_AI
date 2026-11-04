@@ -1,6 +1,6 @@
 **Created:** 2026-11-03
-**Modified:** 2026-11-03
-**Version:** 1.1
+**Modified:** 2026-11-04
+**Version:** 1.2
 
 # Worklog
 
@@ -78,3 +78,10 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 - Received four Higgsfield keyframes from James's colleague; registered them to the plate and the Pass B window (`assets/elements/by-shot/shot004_fire-jump/scorch-contact/keyframes/`).
 - Grass input builder gained the combined mask, edges on gray, and keyframe groups (`scripts/build_shot004_grassfire_inputs.py`).
 - Pod terminated; next is test 15, the keyframe on three groups (`mcp/runpod.md`, resume point).
+
+## 2026-11-03, evening (to about 00:50 UTC on 2026-11-04)
+
+- RTX 4090 Pod (no A100 in stock). Pass B tests 14r and 15 (`shots/shot004_fire-jump_pass-b_grassfire-log.md`): keyframes inside the inpaint fixed the look but the growth stayed mask-shaped; James: not a success.
+- Switched Pass B to first-last-frame video through ComfyUI API nodes: the clean plate at frame 25 to keyframe `k2`. Seedance S1 (window), S2 (full frame, `k2` on the plate background: framing and regrade fixed), S3–S4 (timing; S4 ≈ S3, prompt timing words barely change a sample), Kling K1 (1080p, the most natural ignition, slow).
+- First comp check: S3 as a Pass B layer in the Blender comp (`outputs/shot004/comp/blender/passb_s3/`), built by the new `scripts/build_shot004_grassfire_layer.py` and `scripts/blender/shot004_comp_add_passb.py`. Works as a layer; soft at 480p; Jerry's texture does not match the fire (James).
+- Pod terminated; resume point in `mcp/runpod.md`.
