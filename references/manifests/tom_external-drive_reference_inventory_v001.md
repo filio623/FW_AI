@@ -1,6 +1,5 @@
 **Created:** 2026-05-21
-**Modified:** 2026-05-21
-**Version:** 1.0
+**Updated:** 2026-05-21
 
 # Tom External Drive Reference Inventory v001
 
@@ -83,11 +82,3 @@ Initial review categories:
 2. Copy only chosen review candidates into `assets/characters/tom/approval-review/v001/`.
 3. Assign stable `TB-###` IDs and create `approval_manifest.tsv`.
 4. Review with Robbie before creating `assets/characters/tom/character-bible-v001/`.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-21 | Initial Tom External Drive Reference Inventory v001. |

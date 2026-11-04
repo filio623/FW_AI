@@ -1,474 +1,61 @@
 **Created:** 2026-08-02
-**Modified:** 2026-11-03
-**Version:** 2.51
+**Updated:** 2026-11-04
 
 # RunPod + ComfyUI
 
-Date reconstructed: 2026-08-02
+RunPod hosts the GPU Pod that runs ComfyUI for Shot 004 Pass A/B generation work (Mickmumpitz 1.3 VACE, Wan 2.1/2.2, SkyReels, NAG). Full session-by-session history, custom-node install notes, VACE model checksums, and the 2026-10-08 OOM recovery are in `mcp/runpod_log.md`.
 
-## What Was Found
+## Account And Region
 
-The repository had no previous RunPod-specific notes, scripts, Pod IDs, templates,
-or credentials. The existing reusable starting point is the API-format workflow:
-
-`workflows/comfyui/shot004_jerry-wan22-funcontrol-element_v001.json`
-
-It expects:
-
-- `wan2.2_ti2v_5B_fp16.safetensors`
-- `wan2.2_vae.safetensors`
-- `umt5_xxl_fp8_e4m3fn_scaled.safetensors`
-- `jerry_JB-001_upright-compact-idle.png`
-- `shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
-
-The Jerry reference is tracked in the repository. The control video is restored
-locally at `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`
-and still needs to be uploaded to a Pod. Large models stay on the network volume.
-
-## Installed Local Integration
-
-- Official RunPod Codex plugin: `runpod@runpod`
-- Official RunPod documentation MCP: `https://docs.runpod.io/mcp`
-- RunPod CLI: `runpodctl`
-- Flash CLI: `flash` (primarily for browser login and future Serverless work)
-- Authenticated RunPod MCP launcher: `scripts/runpod-mcp.sh`
-- Auth wrapper for terminal commands: `scripts/runpod-with-auth.sh`
-- Remote ComfyUI API helper: `scripts/runpod-comfy-api.sh`
-
-Restart Codex after MCP or plugin configuration changes so the new tools load.
+- Network volumes require at least $5 account credit before creation.
+- Network-volume support varies by data center; confirm with `runpodctl datacenter list` before provisioning — a volume is pinned to its data center.
+- `EU-RO-1` (Romania) is the current region: it has the most GPU types of any data center (16, including RTX A6000 48 GB at $0.59/hr, L4, RTX 4090/5090, A100, RTX PRO 6000) and supports RunPod's S3-compatible volume API, so files move without a Pod.
+- Old volume `avw5iclb48` (`fw-ai-comfyui-vace`, `CA-MTL-1`): unused; `CA-MTL-1` went down 2026-10-31 and has stayed down since.
 
 ## Authentication
-
-Recommended human setup:
 
 ```bash
 flash login
 scripts/runpod-with-auth.sh runpodctl user
 ```
 
-`flash login` stores the key in `~/.runpod/config.toml`. The project wrappers
-read it at runtime, so the key does not need to be copied into Git, Codex config,
-or shell history. Alternatively, set `RUNPOD_API_KEY` in the ignored `.env` file.
+`flash login` stores the key in `~/.runpod/config.toml`; project wrappers (`scripts/runpod-with-auth.sh`, `scripts/runpod-comfy-api.sh`, `scripts/runpod-mcp.sh`) read it at runtime, so it never needs to go into Git, Codex config, or shell history. Alternatively set `RUNPOD_API_KEY` in the ignored `.env` file. Never commit `.env`, `~/.runpod/config.toml`, or an API key.
 
-Never commit `.env`, `~/.runpod/config.toml`, or an API key.
+## Current Setup
 
-## Account And Region Constraints
+Volume `dqlwnz6nq8` (`fw-ai-comfyui-eu-ro`, 100 GB) in `EU-RO-1`, mounted at `/workspace`, built 2026-11-02 by `scripts/runpod/setup_mick13_volume.sh` after the `CA-MTL-1` outage. Official RunPod ComfyUI template image `runpod/comfyui:1.3.3-comfyuiv0.30.0-cuda12.8` bakes ComfyUI 0.30.0 (upstream is 0.43.0 as of 2026-10-27). On every boot `start.sh` compares the volume's bundle manifest with the image's and, when they differ, rsyncs the image's ComfyUI core over the volume's, keeping `models`, `input`, `output`, `user`, `custom_nodes`, and the venv — so a hand-updated ComfyUI survives restarts until the next new template image overwrites it. ComfyUI lives at `/workspace/runpod-slim/ComfyUI` (venv `.venv-cu128`, Python 3.12, torch 2.10.0+cu128).
 
-Two constraints learned during the 2026-08-02 setup session. Both cost time to
-discover, so check them before planning a Pod.
+Installed by the template: ComfyUI-Manager, ComfyUI-KJNodes `78cd992`, Civicomfy, ComfyUI-RunpodDirect. Installed by `setup_mick13_volume.sh` (`bash setup_mick13_volume.sh patch` reapplies only the two patches below):
 
-- **Network volumes require at least $5 in account credit.** A first attempt at
-  volume creation was blocked by a $2.14 balance. Top up before provisioning
-  storage, not after.
-- **Network-volume support varies by data center and date.** The 2026-08-02
-  setup could not use Montreal, but `CA-MTL-1` supported the replacement volume
-  created on 2026-10-07. Confirm support with `runpodctl datacenter list`
-  before provisioning; a volume is pinned to its data center.
+- Nodes at pinned commits: VideoHelperSuite (latest), Mickmumpitz-Nodes `270afbd`, WanVaceAdvanced `049213c`, RES4LYF `56e4475`, rgthree `d7297b4`, GGUF `6ea2651`, plus PyWavelets, gguf, protobuf.
+- Two patches: the Mickmumpitz `ControlCrossfadeIterationFix` `start_frames=None` fix (`nodes/control_crossfade.py`, still needed — the upstream bug is unfixed at `270afbd`), and a `WanVideoNAG` fix in `nodes/model_optimization_nodes.py`, marked `FW_AI patch 2026-11-02`: `patch()` now runs each text-embedding layer through `forward_comfy_cast_weights`, ComfyUI's own casting path, in the model's `manual_cast_dtype` (FP16 here). This replaced the 2026-10-19 NAG patch, which crashed on ComfyUI 0.30.0; the new one is verified (benchmark run 9, 684 s on an L4).
+- Models: VACE × SkyReels V3 R2V FP8 merge (checksum verified), UMT5 FP8 encoder (size verified), Kijai's BF16 Wan VAE as `wan_2.1_vae.safetensors`, FusionX and Lenovo LoRAs (checksums verified). Checksums and sources are in the log.
+- Inputs in `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. Current Pass A graph: `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json` (saved in the run 8 state — see the log for what run 8 is).
+- `/workspace/restart_comfyui.sh`: the only way to relaunch ComfyUI after a node install — `start.sh` does not relaunch it and ComfyUI-Manager's `/manager/reboot` returns 404. It sources `/etc/rp_environment`, activates `.venv-cu128`, and runs `main.py` with the template's arguments; launch with `setsid nohup … > /workspace/comfyui_restart.log`. Stop the old process by PID, not `pkill -f "main.py …"` over SSH — that pattern also matches the SSH shell's own command line and kills it.
 
-## Recommended ComfyUI Shape
-
-Use an interactive GPU Pod while developing workflows. Use RunPod's official
-prebuilt ComfyUI template, a 24 GB NVIDIA RTX A5000 for the initial Wan 2.2 5B
-workflow, and a network volume mounted at `/workspace` so models, custom nodes,
-workflows, and outputs survive Pod replacement. If the A5000 proves too slow or
-tight for a specific graph, terminate it and attach the same network volume to a
-faster GPU in the same data center rather than rebuilding the environment.
-
-Expose only these ports by default:
-
-- `8188/http`: ComfyUI
-- `22/tcp`: SSH
-
-The official template also supports FileBrowser on `8080` and JupyterLab on
-`8888`. Do not expose FileBrowser with the template's documented default
-credentials. Enable JupyterLab only when needed and set a strong
-`JUPYTER_PASSWORD` outside Git.
-
-Add a short `--terminate-after` cost guard to every development Pod. Do not share
-the ComfyUI proxy URL; see `The Proxy Is Behind Cloudflare` below for what that
-filtering does and does not protect. Use Secure Cloud for unreleased plates and
-project assets.
-
-Discover the current official template and GPU availability at deployment time:
-
-```bash
-scripts/runpod-with-auth.sh runpodctl template search comfyui
-scripts/runpod-with-auth.sh runpodctl gpu list
-scripts/runpod-with-auth.sh runpodctl datacenter list
-```
-
-Official setup reference:
-https://docs.runpod.io/tutorials/pods/comfyui
-
-## Connect Codex To RunPod
-
-The RunPod MCP manages infrastructure such as Pods, GPUs, storage, templates,
-billing, and lifecycle. The ComfyUI HTTP API manages workflows running inside a
-Pod; these are two separate control surfaces.
-
-Install the authenticated local MCP entry:
-
-```bash
-python3 scripts/update-codex-runpod-mcp.py
-```
-
-Restart Codex, then verify the RunPod MCP by listing Pods. For direct ComfyUI
-workflow access, add the Pod ID to the ignored `.env` file:
-
-```bash
-RUNPOD_POD_ID=your_pod_id
-RUNPOD_COMFYUI_PORT=8188
-```
-
-Then:
-
-```bash
-scripts/runpod-comfy-api.sh status
-scripts/runpod-comfy-api.sh upload assets/characters/jerry/character-bible-v001/references/primary-body/JB-001_upright-compact-idle.png
-scripts/runpod-comfy-api.sh submit workflows/comfyui/shot004_jerry-wan22-funcontrol-element_v001.json
-```
-
-Do not submit the Shot 004 workflow until its three model files, Jerry input, and
-control-video input are present and `/object_info` confirms every node type.
-
-## Session Checklist
-
-1. Authenticate and verify `runpodctl user`.
-2. Confirm an SSH key is registered before Pod creation.
-3. Create or select a persistent network volume and compatible data center.
-4. Create the official ComfyUI Pod with ports and a termination guard.
-5. Poll `/system_stats` through the external proxy until it answers.
-6. Verify workflow node types through `/object_info`.
-7. Install/download the required models into the appropriate ComfyUI model folders.
-8. Upload the Jerry reference and restored control video.
-9. Submit the workflow and poll its history.
-10. Download outputs, record the run, and terminate the Pod when finished.
+Expose only `8188/http` (ComfyUI) and `22/tcp` (SSH) by default; do not share the proxy URL (see Cloudflare note below).
 
 ## Starting And Stopping
-
-Two helper scripts wrap the whole cycle. Everything valuable lives on the network
-volume, so terminating a Pod loses nothing and is the normal way to stop working.
 
 ```bash
 scripts/runpod-pod-up.sh      # create, wait for ComfyUI, record RUNPOD_POD_ID in .env
 scripts/runpod-pod-down.sh    # terminate and clear the id; the volume is untouched
 ```
 
-As of 2026-11-02 the up-script defaults are an RTX A6000 in `EU-RO-1` with network
-volume `dqlwnz6nq8` and a two-hour termination guard. Check GPU availability
-before launch and override `GPU` when the A6000 is out of stock; never create a
-replacement Pod without attaching the persistent volume that holds ComfyUI.
+Defaults (as of 2026-11-02): RTX A6000 in `EU-RO-1`, volume `dqlwnz6nq8`, two-hour termination guard. Override with `GPU="NVIDIA RTX A6000" DC=US-TX-1 VOLUME= scripts/runpod-pod-up.sh` or `HOURS=4 scripts/runpod-pod-up.sh` when the default GPU is out of stock; explicit `VOLUME=` disables the default mount for an intentionally disposable Pod — do not use it when resuming shot004. Everything valuable lives on the volume, so terminating loses nothing and is the normal way to stop working.
 
-The termination guard is not reliable. Pod `amsu1bpsrdzgfr` was created with
-`--terminate-after 2026-10-19T17:42:03Z` and was still `RUNNING` at 18:14Z, and
-`runpodctl pod get` shows no stored termination time. Every earlier Pod was
-terminated by hand before its guard, so the guard has never been seen to fire.
-Always run `scripts/runpod-pod-down.sh` at the end of a session.
+**The `--terminate-after` guard is not reliable.** Pod `amsu1bpsrdzgfr` was created with `--terminate-after 2026-10-19T17:42:03Z` and was still `RUNNING` at 18:14Z, with `runpodctl pod get` showing no stored termination time; the guard has never been seen to fire. Always run `scripts/runpod-pod-down.sh` by hand at the end of a session. Do not use `runpodctl pod stop` either — the container disk holds about 16 MB, so a stopped Pod preserves nothing worth paying for.
 
-`runpod-pod-up.sh` accepts overrides for when the default GPU is out of stock:
-
-```bash
-HOURS=4 scripts/runpod-pod-up.sh
-GPU="NVIDIA RTX A6000" DC=US-TX-1 VOLUME= scripts/runpod-pod-up.sh
-```
-
-Explicit `VOLUME=` disables the default mount for an intentionally disposable
-Pod; do not use that override when resuming shot004.
-
-Do not use `runpodctl pod stop`. The container disk holds about 16 MB — ComfyUI and
-every model live on the network volume — so a stopped Pod preserves nothing worth
-paying for.
-
-Observed cold start on 2026-08-16: about four minutes from `pod create` to ComfyUI
-answering. The "up to 30 minutes" figure in RunPod's tutorial applies to a first-ever
-deploy that has to install ComfyUI; the volume already has it.
+Sample results only match within the same GPU type (seed-for-seed): compare a new GPU's output against a baseline rerun on that same GPU, never across GPU types.
 
 ## The Proxy Is Behind Cloudflare
 
-`https://<POD_ID>-8188.proxy.runpod.net` rejects default `curl` and Python
-user-agents with `error code: 1010`. This is browser-signature filtering, not
-authentication, so an API key does not help. Browsers work normally.
+`https://<POD_ID>-8188.proxy.runpod.net` rejects default `curl`/Python user agents with `error code: 1010` — browser-signature filtering, not authentication, so an API key does not help; browsers work normally. `scripts/runpod-comfy-api.sh` sends a browser user agent for this reason; any new tooling that talks to the proxy must do the same. Treat this as bot filtering, not access control — a browser with the URL still reaches ComfyUI, so the URL stays sensitive and should not be shared. `scripts/runpod-comfy-api.sh submit` also sends `COMFY_API_KEY` from `.env` as `extra_data.api_key_comfy_org`, which comfy.org partner nodes (Kling, Wan 2.7, Runway) need on the Pod; without it they fail with `Please login first`.
 
-`scripts/runpod-comfy-api.sh` sends a browser `User-Agent` for this reason. Any new
-tooling that talks to the proxy must do the same.
+## Codex MCP Connection
 
-Treat this as bot filtering, not access control. A browser with the URL still
-reaches ComfyUI, so the URL is still sensitive and should not be shared.
+Codex runs the RunPod MCP through `scripts/runpod-mcp.sh` (entry `mcp_servers.runpod` in `~/.codex/config.toml`). Restart Codex after any MCP or plugin config change, then verify by listing Pods. For direct ComfyUI workflow access — a separate control surface from Pod/infrastructure control — set `RUNPOD_POD_ID` and `RUNPOD_COMFYUI_PORT=8188` in `.env` and use `scripts/runpod-comfy-api.sh status|upload|submit`.
 
-`scripts/runpod-comfy-api.sh submit` also sends `COMFY_API_KEY` from `.env` as
-`extra_data.api_key_comfy_org`, which comfy.org partner nodes (Kling, Wan 2.7,
-Runway) need on the Pod. Without it they fail with `Please login first`.
+## State (as of 2026-11-04)
 
-## Current Resume Point
-
-**2026-11-02: new volume `dqlwnz6nq8` in `EU-RO-1`.** With `CA-MTL-1` down, James approved rebuilding elsewhere. `EU-RO-1` was chosen because it hosts the most GPU types of any data center (16, including RTX A6000 48 GB at $0.59/hr, L4, RTX 4090/5090, A100, RTX PRO 6000) and supports Runpod's S3-compatible volume API, so files can be moved without a Pod; it is in Romania. Volume `fw-ai-comfyui-eu-ro`, 100 GB. Data on `avw5iclb48` cannot be copied out while `CA-MTL-1` is down (moving data needs a running Pod on each side, and `CA-MTL-1` has no S3 API), but nothing on it is irreplaceable, so the new volume was rebuilt from scratch.
-
-Setup Pod `ji7jkj0lcps26b` (L4 24 GB, $0.59/hr; the RTX 2000 Ada and A6000 were unavailable) ran 19:05Z on 2026-11-02 to 00:14Z on 2026-11-03 (about 5 h 9 min, roughly $3.04 at $0.59/hr) and was terminated by hand with `scripts/runpod-pod-down.sh`. No Pod is running; the two volumes cost about $0.019/hr together. Balance after the top-up: $21.89. The template installed ComfyUI 0.30.0 into `/workspace/runpod-slim/ComfyUI` (venv `.venv-cu128`, Python 3.12, torch 2.10.0+cu128) with ComfyUI-Manager, ComfyUI-KJNodes `78cd992`, Civicomfy, and ComfyUI-RunpodDirect. `scripts/runpod/setup_mick13_volume.sh`, run on the Pod, then installed everything else in about 15 minutes:
-
-- Nodes at pinned commits: VideoHelperSuite (latest), Mickmumpitz-Nodes `270afbd`, WanVaceAdvanced `049213c`, RES4LYF `56e4475`, rgthree `d7297b4`, GGUF `6ea2651`, plus PyWavelets, gguf, protobuf. All import; `/object_info` has every node type in the run 8 graph and the `res_2s` sampler and `beta57` scheduler.
-- Both patches reapplied by the script; the Mickmumpitz `start_frames=None` bug is still upstream at `270afbd`. The first NAG run (2026-11-02, L4) showed the 2026-10-19 NAG patch does not work on ComfyUI 0.30.0: its deep copy of the text embedding raised `CUDA error: invalid argument` under dynamic VRAM (comfy-aimdo), then ComfyUI died with `free(): double free detected` in `comfy_aimdo/host_buffer.py`. The script now applies a replacement, marked `FW_AI patch 2026-11-02`: `patch()` runs each text-embedding layer through `forward_comfy_cast_weights`, ComfyUI's own casting path, in the model's `manual_cast_dtype` (FP16 here). A standalone test on the Pod loaded the merge (FP8 weights) and patched all 40 blocks without error, and the full NAG run (benchmark run 9, 684 s on the L4) completed, so the patch is verified. `bash setup_mick13_volume.sh patch` reapplies only the patches.
-- Models: the merge (checksum verified), UMT5 FP8 encoder (size verified), Kijai's BF16 Wan VAE as `wan_2.1_vae.safetensors`, FusionX and Lenovo LoRAs (checksums verified). The merge downloaded at about 30 MB/s.
-- `/workspace/restart_comfyui.sh` recreated by the script.
-- Inputs uploaded to `input/`: the grow16 guide and mask, `JB-001`, `JB-010`. The run 8 graph extract is saved as `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`.
-
-ComfyUI version (checked 2026-11-02): the official template image `runpod/comfyui:1.3.3-comfyuiv0.30.0-cuda12.8` bakes ComfyUI 0.30.0; upstream is at 0.43.0 (2026-10-27). On every boot `start.sh` compares the volume's bundle manifest with the image's; when they differ (a new template image) it rsyncs the image's ComfyUI core over the volume's, keeping `models`, `input`, `output`, `user`, `custom_nodes` and the venv. So a ComfyUI updated by hand on the volume survives restarts until RunPod ships a new template image, which then overwrites it, possibly with an older version. Updating in place also risks the pinned custom nodes and the NAG patch and changes the seed baseline, so do it at a break between tests, with a rollback (record the commit and `pip freeze` first), or as a second install on the same volume.
-
-**2026-11-03: Pod `g0jkc58x01xpa2` running** on the `EU-RO-1` volume, an A100 80 GB PCIe at $1.79/hr, started about 19:20Z. The L4, RTX A6000, RTX 4090, RTX 5090 and RTX PRO 6000 all returned "no longer any instances available"; only the A100 started. Created with `runpodctl pod create` directly (same template, volume and ports as the up-script, no `--terminate-after`). Patches, nodes and workflow folders were intact. A100 samples are not comparable seed-for-seed with the L4 runs.
-
-**Resume here (2026-11-04, after Seedance S4 and Kling K1):** Pod `bd2rmuu6fy08ks` (RTX 4090) was terminated at about 00:50 UTC on 2026-11-04; balance $15.06, volume only ($0.019/hr). Pass B moved to first-last-frame video through ComfyUI API nodes (Seedance 2.0, Kling), which bill the Comfy account and do not need the GPU; the graph is `shot004/pass-b_grassfire/shot004_fire-jump_grassfire-flf_seedance20_v001.json` (Seedance and Kling branches), and the repo copy matches. The inpaint graph still holds James's first Seedance nodes (3614, 3615); remove them before the next inpaint run or each run also queues a paid Seedance call. Next: comp Kling K1 like S3 (`scripts/build_shot004_grassfire_layer.py`, `scripts/blender/shot004_comp_add_passb.py`), choose the generator, make the final at full resolution; steps in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`. A GPU Pod is only needed again for Jerry (Pass A) or SkyReels inpaint tests. The smaller Jerry guide still awaits James's approval.
-
-**2026-11-03 ~23:15 UTC: Pod `bd2rmuu6fy08ks` started**, RTX 4090 24 GB, $0.89/hr, on the `EU-RO-1` volume (no A100 80GB in stock; James chose the 4090). SSH `ssh -i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes -p 16172 root@213.173.110.143`; ComfyUI <https://bd2rmuu6fy08ks-8188.proxy.runpod.net>. Because results only match on the same GPU type, test 14 is rerun here first as the 4090 baseline (test 14r), then test 15.
-
-Run 8 reproduced on the new volume (run 8r, 2026-11-02): James ran the saved graph unchanged on the L4; it finished in 667 s (run 8 took 353 s on the A40) and gave a nearby sample, not a bit-identical one (see `docs/vfx-element-benchmark.md`). The stack is verified; one-knob tests on it compare against run 8r on the same GPU type. Account balance was $4.90 at 19:24Z against $0.61/hr.
-
-**2026-11-01: `CA-MTL-1` is down.** RunPod's status page has had "CA-MTL-1 DC is Unavailable" open since 2026-10-31 20:30 UTC. `gpu list` shows no GPU type in `CA-MTL-1`, and `scripts/runpod-pod-up.sh` fails with "no longer any instances available" (nothing is charged). Volume `avw5iclb48` still lists in the account, but no Pod anywhere can attach it until the data center returns. If the outage lasts days, the fallback is a new volume in another data center, rebuilt from this file's model, node, and patch notes plus the repo's workflows and inputs, at roughly 25 GB of downloads.
-
-**2026-11-02 ~16:40 UTC: still down.** The status-page incident "CA-MTL-1 and EU-SE-1 DC is Unavailable" has had no update since it opened on 2026-10-31 20:30 UTC. `gpu list --include-unavailable` lists no GPU type in `CA-MTL-1`; volume `avw5iclb48` still lists there. No Pod was started. At 17:58 UTC it was still down; the incident's first update (17:34 UTC) said only that work continues. James chose to wait rather than rebuild the volume in another data center (A100 SXM 80 GB had Low stock in US-KS-2 and US-MD-1 at $1.79/hr).
-
-No Pod is running. `jnfjz83llx199h` (A40, `CA-MTL-1`) ran 00:08–00:51Z on 2026-10-20, about 43 min or $0.43, and was terminated by hand. Before it, `amsu1bpsrdzgfr` ran 15:42–20:01Z on 2026-10-19 (about $2.55). `RUNPOD_POD_ID` is cleared in `.env`. Network volume `avw5iclb48` (`fw-ai-comfyui-vace`, 100 GB). The `--terminate-after` guard is not reliable; shut every Pod down by hand. A40 stock in `CA-MTL-1` can drop to `none`; `scripts/runpod-with-auth.sh runpodctl gpu list --include-unavailable` shows per-data-center stock, and the only GPU free there during the outage was an H100 SXM at $3.99/hr Secure. SSH works with `-i ~/.ssh/id_ed25519_runpod -o IdentitiesOnly=yes`; the `~/.runpod/ssh/runpodctl-ssh-key` path that `runpodctl pod get` prints does not exist on this Mac. A new Pod has a new host key; pass `-o StrictHostKeyChecking=accept-new`.
-
-The shot 004 Mick 1.3 graph is `user/default/workflows/shot004_fire-jump_mick13-skyreels_v001.json`, last saved by the user with the gray-in-mask inputs, prompt v3, and the restored seed wire. Running Mick 1.3 here needed three fixes:
-
-- `WanVideoNAG` (KJNodes `78cd992`, unchanged upstream as of 2026-10-19) fails with `mat1 and mat2 must have the same dtype, but got Half and Float8_e4m3fn` on the FP8 merge. Its `patch()` runs `diffusion_model.text_embedding` on 16-bit conditioning before ComfyUI wraps the FP8 weights for casting. Patched on the volume (marked `FW_AI patch 2026-10-19` in `nodes/model_optimization_nodes.py`): when the text-embedding weights are FP8, `patch()` runs a temporary 16-bit deep copy instead. That is only correct for plain FP8; the merge has 1,327 `F8_E4M3` tensors and no scale keys. `git -C custom_nodes/ComfyUI-KJNodes checkout nodes/model_optimization_nodes.py` reverts it. Until a run with NAG un-bypassed succeeds, treat the patch as unverified. (Superseded on the `EU-RO-1` volume by the 2026-11-02 patch above; the deep copy crashed there.)
-- `ControlCrossfadeIterationFix` (Mickmumpitz nodes) crashes with `'NoneType' object has no attribute 'shape'` whenever the image mode is `Reference Only`, or `Auto-Detect` with more than one reference, because the router passes `start_frames=None` and iteration 0 reads `start_frames.shape`. Patched on the volume (marked `FW_AI patch 2026-10-19` at the top of `apply_crossfade` in `nodes/control_crossfade.py`): `None` becomes an empty batch, so iteration 0 injects nothing. `git -C custom_nodes/ComfyUI-Mickmumpitz-Nodes checkout nodes/control_crossfade.py` reverts it; a pull of that pack will conflict or drop it.
-- Mick's 1.3 file is missing the wire from `MultiChannelSlicer`'s `seed` output to the Sampler subgraph's `KSampler` `seed`; versions 1.0 and 1.1 have it. Without it every chunk uses the KSampler's fixed `1218564478` and `IterSeedBatch` does nothing. The user reconnected it in the shot 004 graph on 2026-10-19, so `seed_1` on the main canvas now sets the seed for chunk 1. `-1` in a later `seed_N` reuses the last valid seed.
-
-Mick's driving video must be a guide signal (pose, depth, canny, tracking), not the RGB of the element. Fed the Houdini fire RGB, run `6bac1820` traced it within ~1% of frame size. Gray-in-mask inputs are in `input/`: `shot004_ren-small-fire6_control-graymask-grow16_832x448_81f_v001.mp4` and `shot004_ren-small-fire6_mask-grow16-soft_832x448_81f_v001.mp4`.
-
-Still on the volume: VACE latents `shot004_vace_latent_00001_.latent` through `00003_.latent`, Pass A review clips `FW_fire_comp_proxy_00003_.mp4` through `00006_.mp4`, the rejected proxy `FW_fire_comp_proxy_00001_.mp4`, `seedance_test_00001_.mp4`, Kling Omni Edit tests `output/video/ComfyUI_00005_.mp4` (seed 436) and `ComfyUI_00006_.mp4` (seed 602), Wan 2.7 Video Edit runs `output/video/shot004_wan27-videoedit_00001_.mp4` through `00004_.mp4` (`00002_` is the paid fallback), and Mick 1.3 SkyReels runs `output/shot004_mick13-skyreels_00001.mp4` through `00008.mp4` (`00008` is the current best). Local copies of the scored clips, plus extracted graphs, are indexed in `docs/vfx-element-benchmark.md`.
-
-Stock VACE knobs and Wan 2.7 tuning are closed. The current best is Mick 1.3 SkyReels run 8 (`shot004_mick13-skyreels_00008.mp4`): gray-in-mask inputs, `JB-001` + `JB-010`, prompt v3 with `l3n0v0`, Lenovo on, `vace_strength` 1.25, `seed_1` 1218565630, NAG bypassed, 512p. The saved graph `shot004_fire-jump_mick13-skyreels_v001` is in that state. Next session follows benchmark step 8c: NAG with a negative prompt (the first real test of the KJNodes patch), then 720p, then a comp check over the plate. The older `mickmumpitz/260608_MICKMUMPITZ_AI-VFX_1-3_ADV_runpod.json` and the Pass A canvas `shot004_fire-vace14b_sample-latent_v001_pass_A.json` (silhouette state, live `KlingOmniProEditVideoNode`; bypass it before any run) are superseded for this work. A Blender Jerry fire rig exists and is not the shot 004 motion driver; see `docs/pipeline-strategy.md`.
-
-### Custom Nodes Added 2026-10-18
-
-Installed into `custom_nodes/` on the volume for Mickmumpitz 1.3 ADV, by `git clone` from the default branch:
-
-- `ComfyUI-WanVaceAdvanced` (`drozbay`, commit `049213c`, 2026-10-01; registry latest 1.5.1, Mick's graph saved with 1.1.0). Provides `WanVacePhantomSimpleV2`.
-- `RES4LYF` (`ClownsharkBatwing`, commit `56e4475`, 2026-10-01). Provides the `res_2s` sampler and `beta57` scheduler for the stock `KSampler`.
-- `rgthree-comfy` (`rgthree`, commit `d7297b4`, 2026-10-06). Provides Mick's `Label (rgthree)` nodes; without it the frontend reports a missing node pack. No Python requirements.
-- `ComfyUI-GGUF` (`city96`, commit `6ea2651`, 2026-01-12). Provides `UnetLoaderGGUF` for the low-VRAM model path; installed `gguf` and `protobuf` into the venv.
-
-Not installed: `comfyui-easy-use`. Its requirements (diffusers, accelerate, onnxruntime, peft, and others) are heavy, and Mick 1.3 uses it only for two `easy cleanGpuUsed` VRAM-cleanup pass-throughs, which are bypassed instead.
-
-For WanVaceAdvanced and RES4LYF, every requirement was already in the venv except `PyWavelets`, installed with `.venv-cu128/bin/python -m pip install PyWavelets`. `opencv-python` was skipped on purpose because the venv already imports `cv2` 5.0.0, and a second OpenCV build can conflict. All four packs import without errors.
-
-Restarting ComfyUI after a node install: `start.sh` does not relaunch ComfyUI after it exits, and ComfyUI-Manager's `/manager/reboot` returns 404. Use `/workspace/restart_comfyui.sh` (on the volume), which sources `/etc/rp_environment`, activates `.venv-cu128`, and runs `main.py` with the template's arguments; launch it with `setsid nohup … > /workspace/comfyui_restart.log`. Stop the old process by PID, not with `pkill -f "main.py …"` over SSH: that pattern also matches the SSH shell's own command line and kills it.
-
-Start the next session at `docs/vfx-element-benchmark.md`. Bring a Pod up with `scripts/runpod-pod-up.sh` when needed. The volume stays attached by that script's default.
-
-### VACE Model Files
-
-- `models/unet/wan2.1_vace_14B_fp16.safetensors`: official Comfy-Org complete
-  14B VACE diffusion model, 34,675,323,640 bytes. SHA-256:
-  `f202a5c59b8a91ada1862c46a038214f1f7f216c61ec8350d25f69b919da4307`.
-- `models/unet/Wan2_1-VACE_module_14B_bf16.safetensors`: Kijai's 6.1 GB
-  VACE **module only**, preserved under its original name. It is not a
-  substitute for the complete model in a `UNETLoader`.
-- `models/vae/wan_2.1_vae.safetensors`: Kijai BF16 Wan 2.1 VAE, loaded by
-  `VAELoader`.
-- `models/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors`: official
-  Comfy-Org scaled FP8 UMT5 encoder, 6,735,906,897 bytes.
-- `models/diffusion_models/wan-14B_vace_skyreels_v3_R2V_e4m3fn_v1.safetensors`:
-  VACE × SkyReels V3 R2V merge, FP8, from
-  `Inner-Reflections/VACE_Skyreels_V3_R2V_Merge`, 17,344,681,528 bytes.
-  SHA-256 `59511532de0baa48d719ea49f857ada5672d384e5d92e70ea59848ece025d23d`
-  (matches the Hugging Face LFS id). Downloaded 2026-10-18 with `hf download`
-  in about 20 minutes, unauthenticated.
-- `models/loras/Wan2.1_T2V_14B_FusionX_LoRA.safetensors`: FusionX LoRA from
-  `vrgamedevgirl84/Wan14BT2VFusioniX` (`FusionX_LoRa/`), 316,822,496 bytes.
-  SHA-256 `c653087fa7c9163abdd1a4c627bfc483966c6d78a4426667d1185f860951c30e`
-  (matches the Hugging Face LFS id). Downloaded 2026-10-18.
-- `models/loras/wan/Lenovo.safetensors`: Lenovo UltraReal v1.0 Wan, a
-  realism LoRA for Wan 14B text-to-video from Civitai (model version
-  2066914), 306,846,851 bytes. SHA-256
-  `64002d78edc3cea47d440c4d7bd7bb9de9c8a67177fe10607632cd6281144631`
-  (matches Civitai). Trigger word `l3n0v0`. Downloaded 2026-10-18 without a
-  Civitai token. Mick 1.3 ships with this node bypassed.
-
-The first encoder load logged missing CLIP weights and selected `SD1ClipModel`
-despite the submitted `CLIPLoader(type=wan)`. ComfyUI cached that bad loader
-result; replacing the file alone did not clear the cache, and `CLIPTextEncode`
-still failed with `Cannot copy out of meta tensor; no data!`.
-A fresh Wan text-encode succeeded, then a Pod restart cleared the stale cache.
-After restart, a minimal `CLIPLoader(type=wan, device=default)` →
-`CLIPTextEncode` run and a separate
-`UNETLoader(weight_dtype=fp8_e4m3fn)` run both completed successfully.
-The full 1280×672, 49-frame VACE video graph has **not** been rendered or
-verified end to end; do not equate these loader checks with a finished shot.
-
-### 2026-10-08 VACE Decode OOM
-
-The first 1280×672, 49-frame, 26-step VACE attempt finished sampling,
-then the Pod's 50 GB RAM cgroup recorded an OOM kill at `VAEDecode`. The
-ComfyUI process exited without a saved video; the Pod stayed running but its
-HTTP proxy returned 502. Restarting the Pod restored ComfyUI.
-
-`/Users/jamesfilios/Downloads/FW_Test_Workflow_Vace_Ready.json` now uses
-`VAEDecodeTiled` with `tile_size=512`, `overlap=64`,
-`temporal_size=16`, and `temporal_overlap=4`. A separate 49-frame
-1280×672 synthetic-latent decode completed, produced 49 preview frames,
-and used 2.39 GB peak container RAM without an OOM. This validates the
-decode path only, not the entire graph with the sampler, cached models,
-and control inputs in memory. Reload this updated JSON into the canvas
-before retrying; an already-open browser workflow retains the old node.
-
-### 2026-10-08 Two-Stage VACE Recovery
-
-A second 26-step run also completed sampling and then OOM-killed ComfyUI
-at the 50 GB container limit. Both sampler results were lost. The older
-server-saved all-in-one workflows still contain untiled `VAEDecode`, although
-the submitted retry graph is unavailable after the crash. Do not queue
-either old all-in-one graph. Even a finishing-only synthetic-latent run
-with the staged 4096x2160, 84-frame Scene 4 reference and 4K composite
-OOM-killed this Pod. Tiled VAE decode alone does not make the old chain safe.
-
-Use these separate, importable canvas workflows instead:
-
-1. `workflows/comfyui/shot004_fire-vace14b_sample-latent_v001.json` ends at
-   `SaveLatent` after `TrimVideoLatent`, with no VAE decode. Queue it once and
-   confirm `ComfyUI/output/shot004_vace_latent_*.latent` exists before moving on.
-2. `workflows/comfyui/shot004_fire-vace14b_decode-latent_v001.json` reads
-   the saved output via `LoadLatent`'s `[output]` path annotation. Its default
-   is `shot004_vace_latent_00001_.latent [output]`; select/edit the actual
-   generated filename if the counter differs. It uses tiled Wan VAE decode
-   (512/64 spatial, 16/4 temporal), 1280x672 scales and mask, and the
-   49-frame proxy staged in `ComfyUI/input/`:
-   `shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`. The durable
-   local source is under `assets/elements/by-shot/shot004_fire-jump/plates/`.
-   Output prefix is `FW_fire_comp_proxy`; this is not a 4K delivery.
-
-Both JSON files are also saved on the persistent volume at
-`ComfyUI/user/default/workflows/FW/` for selection in the ComfyUI workflow
-browser. Import one at a time; an already-open old graph is not replaced.
-
-A synthetic latent was saved and loaded directly from `[output]`. Running the
-complete finishing canvas against it created a 49-frame 1280x672, 24 fps MP4
-with 7,819,919,360 bytes peak container RAM and zero OOM events. This verifies
-the finishing workflow on test data; it did not prove a full VACE result.
-Do final-resolution assembly/upscaling in a streaming compositor rather than
-reloading the 4K plate and 84 frames into this 50 GB ComfyUI container.
-
-The user then completed the real 26-step sampler and saved
-`ComfyUI/output/shot004_vace_latent_00001_.latent`. Decoding and compositing
-that latent through the proxy workflow produced
-`ComfyUI/output/FW_fire_comp_proxy_00001_.mp4` (49 frames, 1280x672,
-24 fps) without OOM. The preview shows orange fire/glow but visible
-green/magenta artifacts; see the shot004 workflow test plan for the run log.
-Keep the saved latent for non-destructive finishing experiments.
-
-Use a GPU in `CA-MTL-1` to attach this network volume. Refresh Pod status and
-GPU prices before launch; historical `US-IL-1` volume IDs below were retired.
-
-### Historical Note
-
-The state below was recorded on 2026-08-03 and is kept for context.
-
-- No Pod is currently running, so current compute spend is zero.
-- Persistent network volume `fw-ai-comfyui` (`ccv3wj09mn`) now exists in
-  `US-IL-1`: 100 GB mounted at `/workspace`, approximately $7/month.
-- A dedicated local RunPod Ed25519 key is registered with the account.
-- The official Codex plugin and both RunPod MCP entries are installed; restart
-  Codex after provisioning so the tools appear in a new session.
-- Official `ComfyUI - CUDA 12.8` template: `cw3nka7d08`.
-- Template image: `runpod/comfyui:cuda12.8`.
-- Persistent ComfyUI path: `/workspace/runpod-slim/ComfyUI`.
-- Recommended starter GPU: Secure Cloud `NVIDIA RTX A5000`, 24 GB VRAM, at
-  $0.27/hour when checked. The current Shot 004 Wan 2.2 5B workflow fits this
-  class of GPU.
-- The Illinois A5000 pool was marked low stock, but two launch attempts were
-  rejected with `SUPPLY_CONSTRAINT`. No Pod was created and no compute charge
-  resulted from those attempts.
-- An earlier two-minute allocation used to inspect host RAM was stopped and
-  deleted. Its persistent network volume was not deleted.
-
-The launch command below is historical: volume `ccv3wj09mn` was deleted.
-Do not reuse it. For the current volume and Pod, see `Current Resume Point`.
-
-```bash
-scripts/runpod-with-auth.sh runpodctl gpu list
-date -u -v+2H +%Y-%m-%dT%H:%M:%SZ
-scripts/runpod-with-auth.sh runpodctl pod create \
-  --name fw-ai-comfyui-dev \
-  --template-id cw3nka7d08 \
-  --gpu-id "NVIDIA RTX A5000" \
-  --cloud-type SECURE \
-  --data-center-ids US-IL-1 \
-  --network-volume-id ccv3wj09mn \
-  --volume-mount-path /workspace \
-  --container-disk-in-gb 50 \
-  --ports "8188/http,22/tcp" \
-  --terminate-after REPLACE_WITH_TIMESTAMP
-```
-
-After creation, save the returned Pod ID in the ignored `.env`, poll
-`scripts/runpod-comfy-api.sh status`, verify SSH and `nvidia-smi`, and confirm
-that `/workspace/runpod-slim/ComfyUI` lives on the network volume.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-08-02 | Initial RunPod + ComfyUI. |
-| 1.1     | 2026-08-16 | Recorded the $5 credit minimum for network volumes and the data-center volume-support constraint, merged from Supermemory before its retirement. |
-| 1.2     | 2026-08-16 | Recorded the first working Pod and installed Shot 004 model set, the up/down helper scripts, the Cloudflare proxy user-agent requirement, the RTX 4090 substitution for the unavailable A5000, and the VRAM upgrade path. |
-| 1.3     | 2026-08-18 | Recorded the restored local shot004 control video; a Pod run still needs that file uploaded. |
-| 1.4     | 2026-08-30 | Recorded the official Fun Control 14B models, LoRAs, wan_2.1 VAE, and sample inputs on the volume; the 2026-08-29 RTX 6000 Ada substitution when the Illinois 4090 was out of stock; ~48 GB used of 100 GB; and that the tutorial graph has not been queued. |
-| 1.5     | 2026-09-07 | Fun Control learning closed; listed Jerry still and fire path-control inputs on the volume; next chapter VACE / Mickmumpitz. |
-| 1.6     | 2026-09-07 | Pod `ijzpkfsy5sqmt6` up: Illinois RTX 4090, official template, volume `ccv3wj09mn`; Mickmumpitz merge download started. |
-| 1.7     | 2026-09-08 | Terminated `ijzpkfsy5sqmt6`; relaunched `v3chqyqw2kowkx` on Illinois 4090 with the same volume (~78 GB used). |
-| 1.8     | 2026-09-08 | Pod `1a2lj3lfp7wnju` up; Superhero and Office Flood example inputs uploaded to `input/mick/`. |
-| 1.9     | 2026-09-08 | Terminated `1a2lj3lfp7wnju`; volume keeps merge, nodes, and `input/mick/` examples. |
-| 2.0     | 2026-10-07 | Deleted old IL volume; created new CA-MTL-1 volume (avw5iclb48) for VACE 14B workflow. |
-| 2.1     | 2026-10-08 | Corrected the current VACE Pod/model inventory, documented the stale encoder cache and verified loader-only recovery, and flagged the retired Illinois launch command. |
-| 2.2     | 2026-10-08 | Diagnosed the 50 GB RAM OOM at post-sampling VAE decode, recorded the tiled workflow correction and the separate full-size decode smoke result. |
-| 2.3     | 2026-10-08 | Recorded the second OOM and 4K composite OOM, introduced split latent/sample workflows and a 49-frame proxy finishing path verified below 8 GB container RAM. |
-| 2.4     | 2026-10-08 | Recorded successful real VACE latent save and separate proxy composite; flagged visible color artifacts and preserved the latent for finishing iterations. |
-| 2.5     | 2026-10-08 | Recorded safe A40 Pod termination, preserved CA-MTL-1 network volume and VACE artifacts, and the guided workflow-review resume point. |
-| 2.6     | 2026-10-08 | Aligned Pod-up defaults and launch guidance with the surviving CA-MTL-1 VACE volume, preventing an unattached replacement Pod. |
-| 2.7     | 2026-10-09 | Recorded resumed A40 Pod `03vbr9yofvf2z4` on the CA-MTL-1 VACE volume and the decode-only finding that the color artifacts are in the saved latent. |
-| 2.8     | 2026-10-09 | Terminated A40 Pod `03vbr9yofvf2z4` and cleared the Pod ID. The CA-MTL-1 VACE volume remains. |
-| 2.9     | 2026-10-09 | Replaced the stale running-Pod terminate instruction after `03vbr9yofvf2z4` was already shut down. |
-| 2.10    | 2026-10-10 | Recorded resumed A40 Pod `l6ifya67dcq486` on the CA-MTL-1 VACE volume and the Seedance test file that survived the previous termination. |
-| 2.11    | 2026-10-10 | Terminated A40 Pod `l6ifya67dcq486`. Recorded the second VACE latent and the agreed Pass A resume point. |
-| 2.12    | 2026-10-11 | Recorded resumed A40 Pod `2q273z4gzxff6n` on the CA-MTL-1 VACE volume. |
-| 2.13    | 2026-10-11 | Terminated A40 Pod `2q273z4gzxff6n`. Recorded Pass A latent `00003` and the strength-0.5 resume point. |
-| 2.14    | 2026-10-13 | Recorded resumed A40 Pod `qgdedf20w84gnp` on the CA-MTL-1 VACE volume. |
-| 2.15    | 2026-10-13 | Terminated A40 Pod `qgdedf20w84gnp` after verifying `KlingMotionControl` human-upper-body rejection. |
-| 2.16    | 2026-10-13 | Terminated A40 Pod `7imyoqxk5n7w7o` after the Kling Omni Edit tests. |
-| 2.17    | 2026-10-17 | Recorded resumed A40 Pod `c0u0flqd84rlen` after CA-MTL-1 A40 stock returned. |
-| 2.18    | 2026-10-17 | Corrected the resume point: strength 0.5 and silhouette runs are scored, and the next test is not another local VACE knob. |
-| 2.19    | 2026-10-17 | Terminated A40 Pod `c0u0flqd84rlen` and cleared the Pod ID. Next session starts at the benchmark; Wan 2.7 does not need the GPU. |
-| 2.20    | 2026-10-17 | Pod `qblvqx3v4pjho8` up; Wan 2.7 Video Edit scored on it; `submit` now passes the comfy.org key; recorded that the SkyReels merge is not on the current volume. |
-| 2.21    | 2026-10-17 | Terminated A40 Pod `qblvqx3v4pjho8` and cleared the Pod ID. |
-| 2.22    | 2026-10-17 | Pod `ep5rr963ctx22t` up for a hands-on Wan 2.7 Video Edit session. |
-| 2.23    | 2026-10-17 | Recorded Wan 2.7 run 2 on the volume and moved the resume point to sharpness tests on the candidate. |
-| 2.24    | 2026-10-17 | Terminated A40 Pod `ep5rr963ctx22t` and cleared the Pod ID. |
-| 2.25    | 2026-10-18 | Pointed the resume point at Stage 1 of the benchmark's staged queue. |
-| 2.26    | 2026-10-18 | Pod `iqe2i06yi7w9uy` up; downloaded and verified the VACE × SkyReels V3 R2V FP8 merge; recorded the working SSH key and the Pass A canvas state with its live Kling node. |
-| 2.27    | 2026-10-18 | Replaced Pod `iqe2i06yi7w9uy` with `aafjaefo4nupf4` for a fresh 2-hour guard. |
-| 2.28    | 2026-10-18 | Terminated A40 Pod `aafjaefo4nupf4` and cleared the Pod ID. Recorded Wan 2.7 runs 3–4 on the volume, the end of Wan 2.7 tuning, and the missing Mickmumpitz 1.3 prerequisites. |
-| 2.29    | 2026-10-18 | Pod `p5u3i5lk87mrlk` up. Installed ComfyUI-WanVaceAdvanced, RES4LYF, PyWavelets, and the FusionX LoRA for Mickmumpitz 1.3; saved the 1.3 workflow on the volume; documented the manual ComfyUI restart. |
-| 2.30    | 2026-10-18 | Installed rgthree-comfy and ComfyUI-GGUF; saved a RunPod-fixed copy of Mick 1.3 on the volume; recorded why `comfyui-easy-use` is skipped. |
-| 2.31    | 2026-10-18 | Added the Lenovo UltraReal Wan LoRA to the volume. |
-| 2.32    | 2026-10-18 | Terminated A40 Pod `p5u3i5lk87mrlk` before any run; recorded the Mick 1.3 run settings for the next session. |
-| 2.33    | 2026-10-19 | Pod `amsu1bpsrdzgfr` up after waiting out A40 stock-outs in `CA-MTL-1`; confirmed the custom nodes and models persist across Pods. |
-| 2.34    | 2026-10-19 | Recorded that the termination guard did not fire, the NAG FP8 failure, the Mick crossfade patch, and the gray-in-mask inputs. |
-| 2.35    | 2026-10-19 | Terminated A40 Pod `amsu1bpsrdzgfr` after Mick 1.3 SkyReels runs 1–6; recorded the missing seed wire, the outputs on the volume, and the next one-knob tests. |
-| 2.36    | 2026-10-19 | Pod `jnfjz83llx199h` up (00:08Z on 10-20); patched KJNodes `WanVideoNAG` for plain-FP8 text-embedding weights (unverified until a NAG run). |
-| 2.37    | 2026-10-19 | Terminated A40 Pod `jnfjz83llx199h` after Mick 1.3 runs 7–8; set the resume point to benchmark step 8c (NAG, 720p, comp check). |
-| 2.38    | 2026-11-01 | Recorded the `CA-MTL-1` outage blocking volume `avw5iclb48` and the rebuild fallback. |
-| 2.39    | 2026-11-02 | Recorded that `CA-MTL-1` was still down on 2026-11-02; no Pod started. |
-| 2.40    | 2026-11-02 | Recorded the 17:58 UTC check and James's decision to wait out the outage. |
-| 2.41    | 2026-11-02 | Built new volume `dqlwnz6nq8` in `EU-RO-1` with `scripts/runpod/setup_mick13_volume.sh`; pointed the up-script defaults at it. |
-| 2.42    | 2026-11-02 | Recorded run 8r: run 8 reproduced on the new volume (L4, 667 s). |
-| 2.43    | 2026-11-02 | Recorded the NAG crash on the new volume and the replacement NAG patch. |
-| 2.44    | 2026-11-02 | Verified the replacement NAG patch with a full run (benchmark run 9). |
-| 2.45    | 2026-11-02 | Recorded why the Pod runs ComfyUI 0.30.0 and how the template overwrites a hand-updated core. |
-| 2.46    | 2026-11-02 | Terminated Pod `ji7jkj0lcps26b` by hand; set the resume point to Pass B test 3. |
-| 2.47    | 2026-11-03 | Started Pod `g0jkc58x01xpa2` (A100 80 GB; no L4 or A6000 stock in `EU-RO-1`). |
-| 2.48 | 2026-11-03 | Updated the resume point after Pass B test 7; pointed it at the new Pass B test log. |
-| 2.49 | 2026-11-03 | Terminated Pod `g0jkc58x01xpa2` after Pass B test 14; set the resume point to test 15. |
-| 2.50 | 2026-11-03 | Started Pod `bd2rmuu6fy08ks` (RTX 4090; no A100 in EU-RO-1). |
-| 2.51 | 2026-11-03 | Terminated Pod `bd2rmuu6fy08ks` after Seedance S4 and Kling K1; set the resume point. |
+No Pod is running; balance $15.06, volume-only cost about $0.019/hr. Pod `bd2rmuu6fy08ks` (RTX 4090) was terminated by hand about 00:50 UTC after the Seedance S4 and Kling K1 Pass B tests. Pass B moved to first-last-frame video through ComfyUI API nodes (Seedance 2.0, Kling), which bill the Comfy account and do not need the GPU — the graph is `shot004/pass-b_grassfire/shot004_fire-jump_grassfire-flf_seedance20_v001.json` (Seedance and Kling branches), and the repo copy matches. The inpaint graph still holds James's first Seedance nodes (3614, 3615); remove them before the next inpaint run or each run also queues a paid Seedance call. Next: comp Kling K1 like S3 (`scripts/build_shot004_grassfire_layer.py`, `scripts/blender/shot004_comp_add_passb.py`), choose the generator, make the final at full resolution — steps in `shots/shot004_fire-jump/plan.md`. A GPU Pod is only needed again for Jerry (Pass A) or SkyReels inpaint tests; the smaller Jerry guide still awaits James's approval.

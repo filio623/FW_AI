@@ -1,6 +1,5 @@
 **Created:** 2026-11-03
-**Modified:** 2026-11-04
-**Version:** 1.2
+**Updated:** 2026-11-04
 
 # Worklog
 
@@ -32,7 +31,7 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 ## 2026-10-17
 
 - Set up the Blender MCP bridge and built the first Jerry fire rig (`workflows/blender/jerry/jerry_fire-rig_log_v001.md`).
-- Started the shot 004 Pass A element benchmark (`docs/vfx-element-benchmark.md`); scored Wan 2.7 Video Edit runs.
+- Started the shot 004 Pass A element benchmark (`docs/archive/docs/vfx-element-benchmark.md`); scored Wan 2.7 Video Edit runs.
 - Updated environment, findings, asset inventory, the MCP index and the Higgsfield skills.
 
 ## 2026-10-18
@@ -48,7 +47,7 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 
 ## 2026-11-01
 
-- First comp preview of run 8 over the plate; recorded James's review notes (`shots/shot004_fire-jump_comp-and-pass-b-plan.md`).
+- First comp preview of run 8 over the plate; recorded James's review notes (`shots/shot004_fire-jump/plan.md`).
 - Recorded the CA-MTL-1 outage, which stranded the old volume.
 
 ## 2026-11-02
@@ -61,7 +60,7 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 
 ## 2026-11-03
 
-- A100 Pod on the EU-RO-1 volume. Pass B tests 3–7 (`shots/shot004_fire-jump_pass-b_grassfire-log.md`): prompt rewrite, `vace_strength` 0.6, an exact-rerun check, gray inside the mask (best interaction, too wild), and a calmer prompt (a floating flame ribbon, worse).
+- A100 Pod on the EU-RO-1 volume. Pass B tests 3–7 (`shots/shot004_fire-jump/pass-b_grassfire_log.md`): prompt rewrite, `vace_strength` 0.6, an exact-rerun check, gray inside the mask (best interaction, too wild), and a calmer prompt (a floating flame ribbon, worse).
 - Allowed plate stills and crops as Higgsfield references (`docs/findings.md`); built keyframe inputs for James's colleague.
 - Documented the ComfyUI workflow layout and naming (`workflows/comfyui/README.md`).
 - Made the GitHub repo private. Moved the Mickmumpitz library into `references/mickmumpitz/`. Reorganized `outputs/` by shot and pass.
@@ -69,7 +68,7 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 
 ## 2026-11-03, afternoon
 
-- Pass B tests 8–14 on the A100 (`shots/shot004_fire-jump_pass-b_grassfire-log.md`):
+- Pass B tests 8–14 on the A100 (`shots/shot004_fire-jump/pass-b_grassfire_log.md`):
   - Tests 8–9: two more seeds of test 6. The size is the same; smoke and interaction change with the seed.
   - Test 10: `vace_strength` 0.8 with extra negatives. About the same.
   - Tests 11 and 11b: James's combined mask (blades at full strength, the rest at half). A gray veil, then pale tubes on the thin blade strips; branch stopped.
@@ -81,7 +80,20 @@ What was done when, one entry per working day, newest at the bottom. Each entry 
 
 ## 2026-11-03, evening (to about 00:50 UTC on 2026-11-04)
 
-- RTX 4090 Pod (no A100 in stock). Pass B tests 14r and 15 (`shots/shot004_fire-jump_pass-b_grassfire-log.md`): keyframes inside the inpaint fixed the look but the growth stayed mask-shaped; James: not a success.
+- RTX 4090 Pod (no A100 in stock). Pass B tests 14r and 15 (`shots/shot004_fire-jump/pass-b_grassfire_log.md`): keyframes inside the inpaint fixed the look but the growth stayed mask-shaped; James: not a success.
 - Switched Pass B to first-last-frame video through ComfyUI API nodes: the clean plate at frame 25 to keyframe `k2`. Seedance S1 (window), S2 (full frame, `k2` on the plate background: framing and regrade fixed), S3–S4 (timing; S4 ≈ S3, prompt timing words barely change a sample), Kling K1 (1080p, the most natural ignition, slow).
 - First comp check: S3 as a Pass B layer in the Blender comp (`outputs/shot004/comp/blender/passb_s3/`), built by the new `scripts/build_shot004_grassfire_layer.py` and `scripts/blender/shot004_comp_add_passb.py`. Works as a layer; soft at 480p; Jerry's texture does not match the fire (James).
 - Pod terminated; resume point in `mcp/runpod.md`.
+
+## 2026-11-04
+
+- Housekeeping and a new record-keeping system, approved by James (`docs/decisions.md`, 2026-11-04 entries):
+  - `AGENTS.md` rewritten from about 2,000 to about 1,000 words: shorter document rules (living docs carry Created/Updated only; Git keeps history), records (run IDs, what goes where, timestamps), placement rule, working rules, tool paths.
+  - One folder per shot: `shots/shot004_fire-jump/` with `README.md`, `plan.md` (cut from 5,600 to about 3,000 words), `pass-a_jerry_log.md` (new, from the benchmark doc, runs `s004-a-001`–`023`), `pass-b_grassfire_log.md` (moved; run ID map `s004-b-001`–`022` appended), `comp_log.md` (`s004-c-001`–`003`). Templates in `shots/_template/`.
+  - `mcp/runpod.md` cut to current setup and state; its history moved to the append-only `mcp/runpod_log.md`.
+  - New `docs/decisions.md` register.
+  - Version lines and changelog tables removed from 29 living docs (about 2,500 words).
+  - Retired to `docs/archive/`: `docs/vfx-element-benchmark.md`, `docs/environment.md`, `docs/AGENTS-CHANGELOG.md`, `docs/production-roadmap.md`, `docs/comfyui-vfx-workflow-strategy.md`, the three project skills. Removed: the eight Higgsfield companion skills and four unused Comfy Cloud/Codex MCP scripts. Comfy Cloud parked.
+  - Comp v002 (`assets/…/comps/shot004_fire-jump_comp-blender_run8-passb-s3_v002.blend`) and its layer (`assets/…/scorch-contact/layers/shot004_fire-jump_grassfire-layer-s3_v001/`) moved into `assets/`; renders identically. The delivered comp copy renamed `shot004_fire-jump_comp-houdini-delivered-v031_1920x1080_v001.mp4`.
+  - Unused `outputs/` folders (Fusion renders, first previews, early Pass A tests) archived to `outputs/_archive/2026-11-04/`.
+  - Paths of moved docs were updated inside the append-only logs too (path-only edits, no content changes), so their links still resolve.

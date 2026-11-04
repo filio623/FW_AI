@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-11
-**Version:** 1.3
+**Updated:** 2026-11-04
 
 # Higgsfield MCP
 
@@ -9,7 +8,7 @@
 Verified 2026-10-11:
 
 - CLI: `@higgsfield/cli` 1.1.26, installed with `npm i -g @higgsfield/cli` and authenticated with `higgsfield auth login`. Workspace `94c8514f-0185-440f-a5ad-6f6fec32541d` ("Private") selected with `higgsfield workspace set`. Account `jamesfilios@gmail.com`, plan `plus` (trial), 110 credits.
-- Companion skills: `npx skills add higgsfield-ai/skills` installs eight `higgsfield-*` skills under `.agents/skills/`.
+- Companion skills: `npx skills add higgsfield-ai/skills` installs eight `higgsfield-*` skills under `.agents/skills/`. Removed from the repo on 2026-11-04 because they were unused and loaded into every session; reinstall (likely newer versions) when Higgsfield work resumes.
 - **The trial account cannot generate through the CLI/API.** `higgsfield generate create` returns `{"error_type":"only_mcp_usage_on_trial_is_available"}` and charges nothing. Read-only calls still work: `model list/get`, `workflow list/get`, `generate cost`, `upload create/list`, `account status`.
 - The web app also asks for an upgrade before Seedance 2.5 Edit runs.
 - `generate cost` reads a prompt from stdin when `--prompt` is omitted, so run it with `</dev/null` in scripts. It auto-uploads local media paths; pass upload IDs to price without re-uploading.
@@ -43,14 +42,3 @@ A useful Higgsfield MCP should support:
 - A literal prompt can return a `preset_recommendation`; pass `declined_preset_id` to generate as written.
 - `jobs_wait` long-polls up to 15s per call. `job_status` takes `jobId`; `raw_data: true` gave no failure reason for a failed `kling_video_edit` job.
 - Failed jobs are refunded automatically (see `transactions`).
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Higgsfield MCP. |
-| 1.1     | 2026-10-08 | Corrected the host-specific Higgsfield CLI availability claim; the skill does not install or authenticate the CLI. |
-| 1.2     | 2026-10-11 | Recorded the installed CLI 1.1.26, trial account, the trial CLI/API generation block, and the official MCP endpoint and OMP config. |
-| 1.3     | 2026-10-11 | Replaced the next step with verified MCP behavior: upload reuse, cost preflight, preset prompts, polling, and automatic refunds. |

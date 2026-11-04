@@ -1,6 +1,5 @@
 **Created:** 2026-10-17
-**Modified:** 2026-10-17
-**Version:** 1.2
+**Updated:** 2026-10-17
 
 # Blender MCP
 
@@ -91,13 +90,3 @@ Seen while building `jerry_fire-rig_v001.blend` (`workflows/blender/jerry/jerry_
 - A request that times out may still be queued inside a stalled Blender and run later, including its `save_mainfile`. Force-quit a hung session instead of waiting, so stale edits cannot overwrite the file.
 - Heavy work (fluid bakes, renders) is safer headless: `Blender -b FILE --python script.py`. Edit the same `.blend` headless too, then reopen it in the UI to inspect. Keep the UI viewport in Solid shading.
 - Set a bone-parented object's `matrix_world` with the armature in `pose_position = "REST"`. In an animated pose, the inverse of the current pose gets baked into the child's local transform.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-10-17 | Initial Blender MCP: official Blender Lab server and add-on 1.0.3, OMP stdio config, upgrade path, and smoke-test results. |
-| 1.1     | 2026-10-17 | Added interactive-session pitfalls: bridge timeouts while Blender was backgrounded, the rendered-viewport freeze, stale queued requests, and the headless workflow. |
-| 1.2     | 2026-10-17 | Indexed the `scripts/blender/` headless tools and the `mcp_call.py` client. |

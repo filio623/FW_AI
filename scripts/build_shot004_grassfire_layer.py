@@ -21,7 +21,7 @@ and opencv with OpenEXR (/usr/local/bin/python3).
 
     OPENCV_IO_ENABLE_OPENEXR=1 /usr/local/bin/python3 scripts/build_shot004_grassfire_layer.py \
         --clip outputs/shot004/pass-b_grassfire/seedance-flf_v001/sd03_full169-platebg-timing-480p.mp4 \
-        --out-dir outputs/shot004/pass-b_grassfire/layer_s3_v001 --map 20:25,72:54,96:80
+        --out-dir assets/elements/by-shot/shot004_fire-jump/scorch-contact/layers/shot004_fire-jump_grassfire-layer-s3_v001 --map 20:25,72:54,96:80
 """
 
 from __future__ import annotations

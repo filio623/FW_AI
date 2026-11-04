@@ -1,6 +1,5 @@
 **Created:** 2026-05-21
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Updated:** 2026-08-16
 
 # Tom Character Bible v001
 
@@ -136,12 +135,3 @@ Avoid scaled-up Jerry, cute small flame, mascot, humanoid limbs, armor, demon, s
 3. Promote approved references only after review.
 4. Run first controlled Tom generation tests using approved source roles.
 5. Update this file with approved IDs and tested prompt language.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-21 | Initial Tom Character Bible v001. |
-| 1.1     | 2026-08-16 | Noted that shared style rules and relationships live in `docs/character-bible.md`. |

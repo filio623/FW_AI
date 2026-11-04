@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-18
-**Version:** 1.1
+**Updated:** 2026-08-18
 
 # External Drive Inventory
 
@@ -192,12 +191,3 @@ For Jerry casting, start from:
 - `07 Animation/Story boards/` panels that show Jerry's design, poses, or emotional beats.
 
 These should provide a practical first character-bible source set without importing the entire archive.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial External Drive Inventory. |
-| 1.1     | 2026-08-18 | Recorded the current NAS restore copy at `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`. |

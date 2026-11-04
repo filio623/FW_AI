@@ -6,7 +6,7 @@ Recommended naming:
 
 `shot004_fire-jump_wan27_v001.md`
 
-Use `skills/higgsfield-vfx/references/run-log-template.md` for meaningful generations.
+Log meaningful generations in the shot's pass log, with a run ID (`shots/_template/pass_log.md`).
 
 ## Active Tests
 

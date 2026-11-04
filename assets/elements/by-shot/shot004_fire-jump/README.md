@@ -6,7 +6,7 @@ Curated elements for shot 004, the Jerry fire jump. Large media here is gitignor
 
 - `fire/`: the delivered Houdini fire element and the control proxies built from it (below).
 - `plates/`: the staged plate and its proxy.
-- `benchmark/`: scored Pass A (Jerry) and Pass B (grass fire) clips. Scores: `docs/vfx-element-benchmark.md` and the Pass B test log `shots/shot004_fire-jump_pass-b_grassfire-log.md`.
+- `benchmark/`: scored Pass A (Jerry) and Pass B (grass fire) clips. Scores: `shots/shot004_fire-jump/pass-a_jerry_log.md` and the Pass B test log `shots/shot004_fire-jump/pass-b_grassfire_log.md`.
 - `scorch-contact/`: Pass B grass-fire inputs (control, mask, start frame).
 - `comps/`: Blender and Fusion comp files and the delivered comp for comparison.
 

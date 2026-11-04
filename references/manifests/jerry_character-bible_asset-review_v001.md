@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Updated:** 2026-08-16
 
 # Jerry Character Bible Asset Review
 
@@ -171,12 +170,3 @@ Those stills should become the first reviewed candidates for:
 - `assets/storyboards/jerry/`
 
 Do that only after explicitly deciding to copy/curate selected material into `assets/`.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Jerry Character Bible Asset Review. |
-| 1.1     | 2026-08-16 | Recorded that the `outputs/review/` artifacts expired and pointed current work at the promoted `character-bible-v001/references/` set. |

@@ -1,6 +1,5 @@
 **Created:** 2026-10-17
-**Modified:** 2026-10-17
-**Version:** 1.2
+**Updated:** 2026-10-17
 
 # Jerry Blender Fire Rig Log
 
@@ -10,7 +9,7 @@ Date started: 2026-10-17
 
 Build Jerry in Blender as an animatable character with real simulated fire, matching the body references in `docs/jerry-character-bible_v001.md` (`JB-001`, `JB-002`, `JB-010`, material `JB-012`). The body is face-free; the face stays a separate layer.
 
-This is a character-build test, not a shot 004 generation input. The scored motion driver remains `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4` until `docs/vfx-element-benchmark.md` records a replacement.
+This is a character-build test, not a shot 004 generation input. The scored motion driver remains `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4` until `docs/archive/docs/vfx-element-benchmark.md` records a replacement.
 
 ## Asset
 
@@ -97,13 +96,3 @@ Preview: `outputs/jerry_fire-rig_v001/renders/jerry_fire-rig_v001_idle_r09.mp4` 
 ## Working Method
 
 Edit and render headless against the `.blend`. The interactive Blender UI froze when Cycles rendered-viewport shading was switched on with this fire domain, and the MCP bridge stopped responding while Blender sat behind other windows. See `mcp/blender.md`.
-
----
-
-## Changelog
-
-| Version | Date | Description |
-|---------|------|-------------|
-| 1.0 | 2026-10-17 | Initial Jerry Blender fire rig log. |
-| 1.1 | 2026-10-17 | Marked the rig as a character test, not the shot 004 motion driver. |
-| 1.2 | 2026-10-17 | Added the promoted build, bake, and render scripts, rebuild commands, and the rebuild verification. |

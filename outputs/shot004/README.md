@@ -11,6 +11,6 @@ Generated work for shot 004, the Jerry fire jump. Pass folders match `workflows/
 
 ## Source and history
 
-- Plan: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`. Pass B test log: `shots/shot004_fire-jump_pass-b_grassfire-log.md`.
-- Pass A scores: `docs/vfx-element-benchmark.md`.
+- Plan: `shots/shot004_fire-jump/plan.md`. Pass B test log: `shots/shot004_fire-jump/pass-b_grassfire_log.md`.
+- Pass A scores: `shots/shot004_fire-jump/pass-a_jerry_log.md`.
 - Kept clips: `assets/elements/by-shot/shot004_fire-jump/benchmark/`.

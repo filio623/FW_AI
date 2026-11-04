@@ -93,3 +93,8 @@ references/mickmumpitz/**/*EXAMPLE_FILES*/
 # Higgsfield keyframes are plate-derived stills, ignored like the plate; the README and
 # registration JSON are tracked.
 assets/elements/by-shot/**/keyframes/**/*.png
+
+# Generated comp layers (frame sequences): media local, README and reports tracked.
+assets/elements/by-shot/**/layers/**/*.jpg
+assets/elements/by-shot/**/layers/**/*.png
+assets/elements/by-shot/**/layers/**/*.exr

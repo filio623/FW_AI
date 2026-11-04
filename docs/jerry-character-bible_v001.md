@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 1.2
+**Updated:** 2026-08-16
 
 # Jerry Character Bible v001
 
@@ -231,13 +230,3 @@ Generation note:
 ## Final-Look Prompt Seed
 
 Create a production-ready no-face Jerry base-body reference for an animated short film. Jerry is a small living flame character with no embedded facial features: no eyes, no mouth, no brows, no nose, no smile, no face, no facial marks. Express personality only through body shape, posture, glow, and flame motion. Compact rounded lower body, soft teardrop silhouette, warm yellow-white inner core, amber/orange flame body, subtle ember-red rim, transparent wispy flame edges, contained but lively flicker, cute vulnerable brave body language. Full body visible with negative space around the flame, isolated on pure black background, high-resolution real fire material, no logs, no grass, no dirt, no scene, no text, no logo.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Jerry Character Bible v001. |
-| 1.1     | 2026-08-16 | Repointed Current Source References from the expired `outputs/review/` pass to the promoted `assets/characters/jerry/character-bible-v001/references/` set. |
-| 1.2     | 2026-08-16 | Noted that shared style rules and relationships live in `docs/character-bible.md`. |

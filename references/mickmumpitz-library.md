@@ -1,6 +1,5 @@
 **Created:** 2026-10-19
-**Modified:** 2026-11-03
-**Version:** 2.0
+**Updated:** 2026-11-03
 
 # Mickmumpitz Workflow Library
 
@@ -78,7 +77,7 @@ Add `--apply` to move the files and rewrite `INDEX.md`. Files are matched by exa
 
 These are leads from the workflow file names and the models they load; their contents have not been reviewed yet.
 
-- **AI VFX pipeline 1.0–1.3** (`_n0ir5V5tX4`): the current shot004 Pass A workflow. See `docs/vfx-element-benchmark.md`.
+- **AI VFX pipeline 1.0–1.3** (`_n0ir5V5tX4`): the current shot004 Pass A workflow. See `shots/shot004_fire-jump/pass-a_jerry_log.md`.
 - **Creature on a Path** (`OhKoh0CsVFo`, July 2025): Wan VACE drives a creature from a reference image along a trajectory. The motion guide is red squares on the path, optionally with a DWPose skeleton, plus an animated inpainting mask. It runs on the older Kijai WanVideoWrapper stack (Wan 2.1 T2V 14B fp8, a separate VACE module, the CausVid LoRA, 8 steps), none of which is on the RunPod volume. It comes with an After Effects trajectory exporter (`.js`), a Blender bone tracer (`.py`) and an HTML coordinate converter. Reviewed 2026-11-01. It is not a replacement for the shot 004 Mick 1.3 SkyReels setup, whose gray-blob guide carries shape and size as well as path. Ideas James wants to explore later:
   - Drawing the path by hand (spline in ComfyUI or an online spline tool) for shots with no CG motion source.
   - Importing motion from Blender (bone tracer) or After Effects to build a gray-blob guide for any blocked-out shot.
@@ -90,14 +89,3 @@ These are leads from the workflow file names and the models they load; their con
 - **Time2Move** (`pUb58eAZ3pc`): stick-puppet motion control for video generation.
 - **RTX upscaling** (`NpNagmQI4yg` and `_patreon-only/…installing-rtx-nodes…`): finishing.
 - **AI Renderer 2.0, the 3D Movie Pipeline, and MiniMax rendering** (`0WkixvqnPXw`, `7J7hi-Hxpac`, `Q2oVBVQNQ_U`): rendering rough Blender or Houdini layouts into finished frames.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-10-19 | Initial Mickmumpitz Workflow Library. |
-| 1.1     | 2026-10-19 | Recorded the 30 folders pruned as obsolete; added Creature on a Path, Time2Move and Mask & Track to the candidates and dropped AI Compositing V01. |
-| 1.2     | 2026-11-01 | Reviewed Creature on a Path and recorded James's ideas for later: hand-drawn paths, Blender and After Effects motion import, Blender compositing, and inpainting. |
-| 2.0     | 2026-11-03 | Major revision; 1.2 archived to `docs/archive/mickmumpitz-library-v1.2.md`. Moved the library into the repo at `references/mickmumpitz/` (James), with Git tracking the workflows, guides and index and keeping example packs and media local; the repo was made private. |

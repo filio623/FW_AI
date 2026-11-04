@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.2
+**Updated:** 2026-10-08
 
 # Jerry Character Development Plan
 
@@ -172,11 +171,11 @@ Current practical recommendation:
 
 - Review the existing five Higgsfield casting runs and assembled Jerry reference set before generating more; no body anchor is approved yet.
 - If more candidates are needed, log settings and output paths in `workflows/higgsfield/jerry/jerry_higgsfield-casting-log_v001.md` and keep them under `assets/characters/jerry/higgsfield-candidates/`.
-- Use an authenticated Higgsfield UI or CLI environment as appropriate; the CLI is not installed on this checkout (see `docs/environment.md`).
+- Use the Higgsfield MCP tools (the trial blocks CLI generation; see `mcp/higgsfield.md`).
 
 ## Tool Availability
 
-Tooling is machine-specific. `docs/environment.md` records the current CLI status; the `higgsfield-vfx` skill contains task guidance but does not imply that the CLI or an MCP server is installed. Confirm authentication and model availability before any paid generation.
+Tooling is machine-specific: `mcp/higgsfield.md` records the current Higgsfield status. Confirm authentication and model availability before any paid generation.
 
 ## First Deliverable
 
@@ -189,13 +188,3 @@ The first Jerry milestone is:
 - One short motion-reference test after approval.
 
 Do not start LoRA training until this milestone is complete.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Jerry Character Development Plan. |
-| 1.1     | 2026-08-16 | Removed Supermemory references after its retirement; project memory now lives in the repository. |
-| 1.2     | 2026-10-08 | Replaced session-specific MCP/CLI claims with current tool prerequisites and made review of existing unapproved Jerry candidates the next casting step. |

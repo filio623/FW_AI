@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-08-16
-**Version:** 2.0
+**Updated:** 2026-08-16
 
 # Character Bible
 
@@ -151,12 +150,3 @@ Nothing is approved into an `approved/` folder for any character yet.
 - What is the final separate facial-animation style for Jerry, Sally, Tom, and Wind?
 - How stylized should the characters be relative to realistic plates?
 - Are the current CGI renders meant to define final proportions, or only motion and placement?
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Character Bible. |
-| 2.0     | 2026-08-16 | Archived v1.0 and restructured as the shared-rules document and character index: Jerry and Tom now point at their frozen editions, Sally and Wind keep full specs here, and the approved-reference list was corrected against what exists. |

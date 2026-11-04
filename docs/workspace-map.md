@@ -1,85 +1,41 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-03
-**Version:** 1.6
+**Updated:** 2026-11-04
 
 # Workspace Map
 
-This repo is the shared working area for the AI short-film VFX pipeline.
+The folder tree in more detail than `AGENTS.md`. Every working folder also has its own `README.md`.
 
 ## Directories
 
-- `assets/`: source and curated production assets.
-  - `assets/inbox/`: unsorted uploads waiting for intake.
-  - `assets/scripts/`: screenplay PDF and script breakdown notes.
-  - `assets/storyboards/`: storyboard images, panels, and animatics.
-  - `assets/plates/`: source plates, shot-organized plates, proxies, stills, and mattes.
-  - `assets/elements/`: generated or rendered fire, water, smoke, steam, splash, scorch, contact, and matte elements.
-  - `assets/characters/`: character reference, approved stills, action sheets, and training candidates.
-    - `assets/characters/jerry/character-bible-v001/`: current assembled Jerry reference set for generation and review.
-  - `assets/references/`: visual, motion, and style references.
-  - `assets/audio/`: music, dialogue, sound effects, and temp audio.
-  - `assets/editorial/`: EDL/XML files, reference exports, and edit-facing material.
-- `docs/`: durable decisions, setup notes, findings, and pipeline strategy. `docs/worklog.md` records what was done when, one entry per session. Every working folder has a `README.md` saying what it holds and why (`AGENTS.md`).
-  - `docs/archive/`: immutable records. Major-revision snapshots sit flat with a `-vNNN` suffix; retired documents sit under a subfolder mirroring their original path. Nothing here is live.
-- `FW_test/`: historical survey path, absent in this checkout. See `docs/asset-inventory.md` for restored files and external-drive manifests.
-- `mcp/`: MCP setup notes and server plans.
-- `outputs/`: generated renders, composites, thumbnails, and review artifacts, organized as `outputs/<shot>/<pass, comp or reference>/<task>/`, plus `outputs/characters/`, `outputs/reference/` and `outputs/tools/` (see `AGENTS.md`, Generated Outputs).
-- `prompts/`: reusable prompt blocks, character language, and handoff prompts.
-- `references/`: external docs, copied snippets, model notes, and research summaries.
-  - `references/mickmumpitz/`: the Mickmumpitz workflow library, organized per YouTube video; Git tracks the workflows and guides, the example packs stay local. Described in `references/mickmumpitz-library.md`.
-- `scripts/`: project automation that is not specific to a single skill.
-- `shots/`: shot-by-shot plans, run logs, and compositing notes.
-- `skills/`: project-local Codex skills for repeatable workflows.
-- `workflows/`: ComfyUI and Higgsfield workflow templates, commands, and saved experiments.
+- `assets/`: source and curated production media (heavy media gitignored).
+  - `inbox/`: unsorted uploads waiting for intake (`docs/asset-intake.md`).
+  - `scripts/`: screenplay PDF and script breakdown notes.
+  - `storyboards/`: storyboard images, panels and animatics.
+  - `plates/`: source plates by shot (the shot 004 working plate sits under `elements/by-shot/shot004_fire-jump/plates/`).
+  - `elements/by-shot/<shot>/`: everything a shot's comp uses: `plates/`, element folders (`fire/`, `scorch-contact/` with inputs, `keyframes/` and `layers/`), `benchmark/` (every kept run clip), `comps/` (comp project files).
+  - `characters/`: character references, approved stills, action sheets, training candidates; `characters/jerry/character-bible-v001/` is Jerry's assembled reference set.
+  - `references/`, `audio/`, `editorial/`: visual references, sound, and edit-facing material.
+- `docs/`: project-wide records: `decisions.md`, `findings.md`, `worklog.md`, `asset-inventory.md`, `asset-intake.md`, `pipeline-strategy.md`, character bibles and development plans. `docs/archive/`: retired documents and older snapshots, mirroring their original paths; nothing there is live.
+- `shots/`: one folder per shot (README, plan, pass logs, comp log); `_template/` for new shots; the frozen first shot 004 test plan.
+- `workflows/`: `comfyui/` (working graphs by shot and pass, one extract per kept run, creator originals), `higgsfield/` and `blender/` run docs.
+- `mcp/`: one note per service; RunPod has a living `runpod.md` and an append-only `runpod_log.md`.
+- `references/`: research, the Mickmumpitz library (`references/mickmumpitz/`, described in `mickmumpitz-library.md`), and `manifests/` for media kept off the repo.
+- `prompts/`: reusable prompt blocks and character language.
+- `scripts/`: automation; `scripts/README.md` lists each script.
+- `outputs/`: renders, previews, review sheets and scratch, `outputs/<shot>/<pass or comp>/<task>/`, plus `characters/`, `reference/`, `tools/` and `_archive/<date>/`. Gitignored except READMEs.
+- `memories/seeds/`: dated session snapshots from before 2026-08-16; read-only history.
 
 ## Naming
 
-Use shot-first names when a file belongs to a shot:
-
-`shot004_fire-jump_plate-analysis_v001.md`
-
-For media assets:
-
-`shot004_fire-jump_plate_main_v001.mov`
-
-Use tool-first names for reusable templates:
-
-`comfyui_wan-alpha-fire-element_v001.json`
-
-Use subject-first names for reusable character or reference assets:
-
-`jerry_fire_approved-look_front_v001.png`
-
-## Versioning And Archiving
-
-Media always carries a `_vNNN` suffix and is never overwritten. Most Markdown documents keep a stable filename and carry their version in a metadata block inside the file; only frozen editions such as character bibles and shot test plans keep `_vNNN` in the name.
-
-Superseded media moves to an `_archive/` subfolder beside the asset it replaced and is recorded in `docs/asset-inventory.md`. Superseded document versions and retired documents both go to `docs/archive/`. Superseded frozen editions are the exception and stay at their original paths, because approved work resolves them directly. Nothing approved, delivered, or referenced by a comp is ever deleted.
-
-See the `Document Lifecycle & Versioning` and `Archiving Strategy` sections of `AGENTS.md` for the full rules.
+- Shot files: `shot004_fire-jump_plate-analysis_v001.md`, `shot004_fire-jump_plate_main_v001.mov`.
+- Reusable templates: tool-first, `comfyui_wan-alpha-fire-element_v001.json`.
+- Character and reference media: subject-first, `jerry_fire_approved-look_front_v001.png`.
+- Kept generation runs: the run ID after the method, `shot004_fire-jump_grassfire-flf_s004-b-023_seedance20-1080p_v001.mp4` (from 2026-11-04; earlier runs map to IDs in each pass log).
 
 ## Intake Flow
 
 1. Put new uploads in `assets/inbox/`.
 2. Classify and name curated copies using `docs/asset-intake.md`.
-3. Move or copy curated assets into the correct `assets/` subfolder.
-4. Link shot-specific assets from `shots/`.
-5. Record useful metadata in `docs/asset-inventory.md`.
-
-## Core Production Principle
-
-Keep the original plate untouched. Generate separable elements and interaction passes whenever possible, then composite them over the plate.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Workspace Map. |
-| 1.1     | 2026-08-16 | Documented the document archive, media `_archive/` convention, and versioning split between media and Markdown. |
-| 1.2     | 2026-08-16 | Recorded that `docs/archive/` also holds retired documents under mirrored paths, and that superseded frozen editions stay put. |
-| 1.3     | 2026-10-08 | Clarified that the original `FW_test/` directory is absent from this checkout. |
-| 1.4     | 2026-10-19 | Added the off-repo Mickmumpitz workflow library under `references/`. |
-| 1.5     | 2026-11-03 | Moved the Mickmumpitz library into `references/mickmumpitz/` and recorded the `outputs/` layout. |
-| 1.6 | 2026-11-03 | Added `docs/worklog.md`, the per-pass test logs and the folder README rule. |
+3. Move or copy curated assets into the correct `assets/` subfolder, with a README line.
+4. Link shot assets from the shot's README.
+5. Record them in `docs/asset-inventory.md`.

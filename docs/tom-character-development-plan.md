@@ -1,6 +1,5 @@
 **Created:** 2026-05-21
-**Modified:** 2026-08-16
-**Version:** 1.1
+**Updated:** 2026-08-16
 
 # Tom Character Development Plan
 
@@ -173,12 +172,3 @@ The first Tom milestone is:
 - A review pack plan with categories and stable IDs.
 - 6 to 12 source-derived or generated candidate stills for Robbie review.
 - No final approved Tom bible until review decisions are recorded.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-21 | Initial Tom Character Development Plan. |
-| 1.1     | 2026-08-16 | Removed Supermemory references after its retirement; project memory now lives in the repository. |

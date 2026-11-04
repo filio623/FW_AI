@@ -8,6 +8,7 @@ Generated renders, comps, review sheets and scratch files. Git ignores everythin
 - `characters/`: character work that is not tied to one shot, such as the Jerry fire rig.
 - `reference/`: extracted third-party examples studied for a technique.
 - `tools/`: service schemas and upload logs.
+- `_archive/<date>/`: folders no longer in use, kept rather than deleted, mirroring their original path (`_archive/README.md`).
 
 New work goes in `outputs/<shot>/<pass>/<task>[_vNNN]/`, `outputs/<shot>/comp/<tool>/`, `outputs/<shot>/reference/`, `outputs/characters/<name>/<task>/`, `outputs/reference/<topic>/` or `outputs/tools/<service>/`. Give every new folder a README.
 

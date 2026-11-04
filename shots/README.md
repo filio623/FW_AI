@@ -1,24 +1,9 @@
 # Shots
 
-Shot-specific plans, logs, review notes, and compositing decisions.
+One folder per shot, `shots/<shotNNN>_<slug>/`, holding the shot's README (state, decisions, where the files are), `plan.md`, one append-only log per pass and `comp_log.md`. New shots start from a copy of `_template/`. Media lives under `assets/`, renders under `outputs/`.
 
-Use one Markdown file per simple shot or one folder per complex shot.
+## Shots
 
-## Simple Shot
-
-- `shot004_fire-jump_workflow-test-plan_v001.md`: shot brief, run log, review notes.
-- `shot004_fire-jump_comp-and-pass-b-plan.md`: comp tool, layer stack, Pass B grass ignition (state and next steps), files to fetch, order of work.
-- `shot004_fire-jump_pass-b_grassfire-log.md`: append-only log of every Pass B grass-fire test, with change, scores, look and kept clip. Pass A (Jerry) runs are logged in `docs/vfx-element-benchmark.md`.
-
-## Complex Shot Folder
-
-```text
-shots/shot004_fire-jump/
-├── shot.md
-├── asset-log.md
-├── generation-log.md
-├── comp-notes.md
-└── reviews.md
-```
-
-Source media should live under `assets/`; this folder is for decisions, logs, and shot notes.
+- `shot004_fire-jump/`: Jerry's fire jump into the grass. Pass A (Jerry element), Pass B (grass fire), Blender comp.
+- `shot004_fire-jump_workflow-test-plan_v001.md`: the first shot 004 test plan and run log (2026-10), a frozen edition kept at its path.
+- `_template/`: `README.md`, `plan.md`, `pass_log.md`, `comp_log.md`.

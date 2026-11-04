@@ -11,4 +11,4 @@ Files from the OfficeFlood example in the Mickmumpitz AI-VFX example pack (`refe
 
 ## Source and history
 
-- The recipe and what it changed in our Pass B plan: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
+- The recipe and what it changed in our Pass B plan: `shots/shot004_fire-jump/plan.md`.

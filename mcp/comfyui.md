@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-10-08
-**Version:** 1.1
+**Updated:** 2026-10-08
 
 # ComfyUI MCP
 
@@ -21,12 +20,3 @@ Use MCP when it is actually configured. For the current RunPod-hosted workflow, 
 ## Project Workflow Storage
 
 Keep durable project copies in `workflows/comfyui/`, even when a workflow is also saved to the ComfyUI user library.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial ComfyUI MCP. |
-| 1.1     | 2026-10-08 | Removed the session-specific claim that local ComfyUI MCP is available and pointed current work to RunPod/API access. |

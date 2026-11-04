@@ -1,6 +1,5 @@
 **Created:** 2026-05-19
-**Modified:** 2026-10-08
-**Version:** 1.2
+**Updated:** 2026-10-08
 
 # Shot004 Jerry Wan2.2 FunControl Element v001
 
@@ -91,13 +90,3 @@ Review notes:
 - Install/test ControlNet models for canny/depth/scribble control.
 - Install/test IPAdapter or equivalent reference conditioning for stronger Jerry identity.
 - Test ComfyUI API video nodes such as Wan 2.7 Video Edit or Kling 3.0 Omni Video-to-Video as cloud comparison branches, while treating them as preview/reference unless they can produce clean separable elements.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-19 | Initial Shot004 Jerry Wan2.2 FunControl Element v001. |
-| 1.1     | 2026-08-18 | Repointed the motion source and control proxy at the restored files under `assets/elements/by-shot/shot004_fire-jump/fire/`. |
-| 1.2     | 2026-10-08 | Marked this frozen local 5B run as historical rather than the active shot004 queue; preserved its original result and follow-up ideas. |

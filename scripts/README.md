@@ -16,10 +16,12 @@ Project automation. Python is standard-library-first; the media builders need `/
 
 ## Services
 
-- RunPod: `runpod-pod-up.sh` (create a Pod on the EU-RO-1 volume and record its ID), `runpod-pod-down.sh` (terminate it; always run by hand), `runpod-with-auth.sh` (run a RunPod CLI command with `.env` auth), `runpod-comfy-api.sh` (upload and submit to the Pod's ComfyUI), `runpod-mcp.sh`. Details: `mcp/runpod.md`.
+- RunPod: `runpod-pod-up.sh` (create a Pod on the EU-RO-1 volume and record its ID), `runpod-pod-down.sh` (terminate it; always run by hand), `runpod-with-auth.sh` (run a RunPod CLI command with `.env` auth), `runpod-comfy-api.sh` (upload and submit to the Pod's ComfyUI). Details: `mcp/runpod.md`.
 - `runpod/setup_mick13_volume.sh`: rebuilds the Mick 1.3 + VACE × SkyReels stack on a fresh network volume (`all|nodes|patch|models`).
-- Comfy Cloud: `comfy-cloud-api.py` (`user`, `system-stats`, `submit`), `comfy-cloud-cli.sh`, `comfy-cloud-mcp.sh`. Details: `mcp/comfy-cloud.md`.
-- `update-codex-comfy-cloud-mcp.py`, `update-codex-runpod-mcp.py`: write the Codex MCP config entries.
+- Comfy Cloud (parked): `comfy-cloud-api.py` (`user`, `system-stats`, `submit`). Details: `mcp/comfy-cloud.md`.
+- `runpod-mcp.sh`: launches the RunPod MCP for Codex (`~/.codex/config.toml`).
+
+Removed 2026-11-04 (unused): `comfy-cloud-cli.sh`, `comfy-cloud-mcp.sh`, `update-codex-comfy-cloud-mcp.py`, `update-codex-runpod-mcp.py`; they are in Git history.
 
 ## Blender and Resolve
 

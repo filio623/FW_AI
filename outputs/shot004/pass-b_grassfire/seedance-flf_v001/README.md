@@ -1,6 +1,6 @@
 # Seedance first-last-frame runs
 
-Raw outputs of the Seedance 2.0 First-Last-Frame API node for Pass B, and review sheets. Logged as S1, S2, … in `shots/shot004_fire-jump_pass-b_grassfire-log.md`; kept clips in `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_grassfire-flf_seedance20_*`.
+Raw outputs of the Seedance 2.0 First-Last-Frame API node for Pass B, and review sheets. Logged as S1, S2, … in `shots/shot004_fire-jump/pass-b_grassfire_log.md`; kept clips in `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_grassfire-flf_seedance20_*`.
 
 ## Contents
 

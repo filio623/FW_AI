@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-03
-**Version:** 1.39
+**Updated:** 2026-11-03
 
 # Asset Inventory
 
@@ -65,16 +64,16 @@ Copied from the NAS backup of the production drive, not from `FW_test/`:
 
 - `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`: staged 4096x2160, 24 fps, 84-frame Scene 4 reference used for the VACE test; provenance relative to the surveyed `.mov` is unverified. This is not the original `4 base plate.mov`.
 - `assets/elements/by-shot/shot004_fire-jump/plates/shot004_fw-test-scene_plate-proxy_1280x672_49f_v001.mp4`: 1280x672, 24 fps, first 49 frames of the staged MP4, Lanczos-scaled and H.264 CRF 18; used as the low-memory finishing/composite input on the A40 Pod. It is a test proxy, not a full-resolution delivery plate.
-- `assets/elements/by-shot/shot004_fire-jump/comps/Shot4 V031-1.mp4`: local copy of the delivered Houdini comp (H.264, 1920x1080, 24 fps, 84 frames), file-dated 2026-10-08 like the staged test plate, matching the surveyed `FW_test/Scene 4/Shot4 V031-1.mp4` metadata. Its relation to the NAS delivery proxy `Shot4 V031-1.mov` is unverified, but it shows the delivered ignition timing: the fire lands around frame 23, the grass catches at once, spreads through about frame 48, and has burned down by about frame 66.
-- `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend`: first Blender comp (Blender 5.2.1 compositor), built by `scripts/blender/shot004_comp_build.py`. Plate + ground glow + Pass B slot + Mick 1.3 run 8 (core over, Screen glow, bloom) + ridge holdout + neutral final grade. Media paths are relative to the `.blend`. Method and review: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
-- `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`: the same comp as a Fusion node tree (settings text), built in DaVinci Resolve Studio 21.1.1 by `scripts/resolve/shot004_comp_fusion.py`. The live copy is the Fusion clip in timeline `shot004_comp_v001` of Resolve project `FW_AI_shot004_comp` (Local Database). Method and comparison: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
+- `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-houdini-delivered-v031_1920x1080_v001.mp4` (production name `Shot4 V031-1.mp4`, renamed 2026-11-04): local copy of the delivered Houdini comp (H.264, 1920x1080, 24 fps, 84 frames), file-dated 2026-10-08 like the staged test plate, matching the surveyed `FW_test/Scene 4/Shot4 V031-1.mp4` metadata. Its relation to the NAS delivery proxy `Shot4 V031-1.mov` is unverified, but it shows the delivered ignition timing: the fire lands around frame 23, the grass catches at once, spreads through about frame 48, and has burned down by about frame 66.
+- `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend`: first Blender comp (Blender 5.2.1 compositor), built by `scripts/blender/shot004_comp_build.py`. Plate + ground glow + Pass B slot + Mick 1.3 run 8 (core over, Screen glow, bloom) + ridge holdout + neutral final grade. Media paths are relative to the `.blend`. Method and review: `shots/shot004_fire-jump/plan.md`.
+- `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`: the same comp as a Fusion node tree (settings text), built in DaVinci Resolve Studio 21.1.1 by `scripts/resolve/shot004_comp_fusion.py`. The live copy is the Fusion clip in timeline `shot004_comp_v001` of Resolve project `FW_AI_shot004_comp` (Local Database). Method and comparison: `shots/shot004_fire-jump/plan.md`.
 - `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.drp`: export of that Resolve project (timeline plus the Fusion clip with the full node tree, checked by decoding the export). Import it from Resolve's Project Manager; media are linked by absolute path.
 
 - `assets/elements/by-shot/shot004_fire-jump/scorch-contact/`: Pass B grass-fire inpaint inputs from `scripts/build_shot004_grassfire_inputs.py` (`_v001`): `shot004_grassfire_control-plate-canny-start25-full50_912x512_81f_v001.mp4` (DRIVING VIDEO: plate outside the mask, Canny edges inside), `shot004_grassfire_mask-start25-full50-soft_912x512_81f_v001.mp4` (MASK), `shot004_grassfire_start-frame_912x512_v001.png` (start image, gitignored as plate media), and the JSON settings report; `shot004_grassfire_control-plate-gray-start25-full50_912x512_81f_v001.mp4` is the same control with flat gray instead of edges inside the mask, with its own report. All are a 1824x1024 window of the plate at (1838, 488), scaled x0.5.
 
 ### Benchmark clips
 
-Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `workflows/comfyui/shot004-benchmark/`. The index and the keeping rule are in `docs/vfx-element-benchmark.md`.
+Scored test outputs, not approved elements. Mp4s are gitignored. Extracted graphs are in `workflows/comfyui/shot004-benchmark/`. The index and the keeping rule are in `shots/shot004_fire-jump/pass-a_jerry_log.md`.
 
 - `assets/elements/by-shot/shot004_fire-jump/benchmark/`: local copies of the rejected VACE proxy, the Pass A strength `1` / `0.5` / silhouette clips, two Kling Omni Edit clips, the October 11 17-frame clip, the ComfyUI Seedance 2.0 reference test, four Wan 2.7 Video Edit runs (seed 42; seed 2126129005, the paid fallback element; seed 508 with prompt v2 and `JB-010`; seed 2126129005 with `JB-010`), and ten Mick 1.3 SkyReels runs (`shot004_fire-jump_mick13-skyreels_*_v001.mp4`; `graymask-promptv3-jb010-str125-lenovo_seed1218565630` is the current best, and its `…_eu-ro-l4-repro_v001` copy, run 8r, is the same graph rerun on the rebuilt `EU-RO-1` volume; `…-lenovo-nag_…_eu-ro-l4_v001`, run 9, adds NAG), and the first Pass B grass-fire inpaint, `shot004_fire-jump_grassfire-inpaint_mick13_test1_seed1218565630_v001.mp4` (a 912x512 window of the plate, not a full frame), test 2 (`…_test2-jb010_…`), test 3 (`…_test3-prompt2_…_eu-ro-a100_…`), test 4 (`…_test4-prompt2-str060_…`), test 6 (`…_test6-gray-prompt2-str060_…`), test 7 (`…_test7-gray-prompt3-str060_…`), test 8 (`…_test8-gray-prompt2-str060_seed1218565804_…`), test 9 (`…_test9-gray-prompt2-str060_seed1218565905_…`), test 10 (`…_test10-gray-prompt2-str080-nagneg2_…`), test 11 (`…_test11-cannygray-blades4-field050-str080-nagneg2_…`), test 11b (`…_test11b-cannygray-bladesonly-field050-platefield-…`), test 12 (`…_test12-gray-prompt2-str080-nagneg2-refk2-040_…`), test 13 (`…_test13-…-refk2-100_…`), test 14 (`…_test14-gray-keyk2-f049-052-passthrough-refk2-040_…`), Seedance first-last-frame S1 (`…_grassfire-flf_seedance20_s1-window-k2-480p-4s_seed42_v001.mp4`) S2 (`…_s2-full169-k2platebg-720p-4s_seed42_v001.mp4`) S3 (`…_s3-full169-k2platebg-prompt-timing-480p-4s_seed42_v001.mp4`), S4 (`…_s4-…-prompt-timing2-480p-4s_seed42_v001.mp4`), and Kling K1 (`…_grassfire-flf_kling25turbo_k1-full169-k2platebg-pro-1080p-5s_v001.mp4`); full-frame 16:9 first and last frames in `scorch-contact/keyframes/`; and on the RTX 4090 test 14r (`…_test14r-…_eu-ro-4090_…`) and test 15 (`…_test15-gray-keyk2-f033-036-041-044-049-052-…_eu-ro-4090_…`). Three-group keyframe inputs (`…-keyk2-f033-036-041-044-049-052-…`) are in `scorch-contact/`. Keyframe-in-control inputs (`…_control-plate-gray-keyk2-f049-052-…`, `…_mask-…-soft-keyk2-f049-052_…`) are in `scorch-contact/`.
 - `assets/elements/by-shot/shot004_fire-jump/scorch-contact/keyframes/`: four Higgsfield grass-fire keyframes (edits of a plate frame by James's colleague, 2026-11-03), as delivered in `source/` and registered to the Pass B window at 1824×1024 and 912×512. Gitignored like the plate; README and registration JSON tracked. The combined-mask Pass B inputs (`…_control-plate-canny-gray-…`, `…_mask-…-blades4-field050-soft_…`) are in `scorch-contact/`.
@@ -122,50 +121,3 @@ Empty scaffold folders (`approved/`, `actions/`, `expressions/`, `training-candi
 ## Notes
 
 `ffmpeg` and `ffprobe` are now installed. Use them for detailed inspection and reference-frame extraction.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Asset Inventory. |
-| 1.1     | 2026-08-16 | Marked the `FW_test` survey as historical and not present in this checkout, and indexed the tracked Jerry and Tom character assets. |
-| 1.2     | 2026-08-18 | Restored the shot004 small-fire motion source from `/Volumes/FW_Backup` and rebuilt the 832x448 control proxy into `assets/elements/by-shot/shot004_fire-jump/fire/`. |
-| 1.3     | 2026-09-03 | Added the shot004 fire trajectory-dot control proxy for path-only Fun Control tests. |
-| 1.4     | 2026-09-03 | Added streak and 40%-shrunk fire control proxies after the tiny dot proved too weak. |
-| 1.5     | 2026-10-08 | Indexed the staged Scene 4 reference and 49-frame proxy used for low-memory VACE finishing; clarified which original plates remain off-repo. |
-| 1.6     | 2026-10-17 | Indexed the Jerry Blender fire rig `.blend` and its r09 test still in `source-cgi/`. |
-| 1.7     | 2026-10-17 | Indexed the local shot004 benchmark clips copied off the RunPod volume. |
-| 1.8     | 2026-10-17 | Indexed the two Wan 2.7 Video Edit benchmark clips. |
-| 1.9     | 2026-10-18 | Indexed Wan 2.7 runs 3 and 4 and marked seed 2126129005 as the paid fallback. |
-| 1.10    | 2026-10-19 | Indexed the gray-in-mask driving and mask clips and the six Mick 1.3 SkyReels benchmark clips. |
-| 1.11    | 2026-10-19 | Indexed Mick 1.3 SkyReels runs 7 and 8; run 8 is the current best. |
-| 1.12    | 2026-11-01 | Recorded that the fire source `.mov` decodes as 1920x1014 through frame-cropping metadata and covers the whole plate. |
-| 1.13    | 2026-11-02 | Indexed the local copy of the delivered comp `Shot4 V031-1.mp4` and its ignition timing, and the first Blender comp `.blend`. |
-| 1.14    | 2026-11-02 | Indexed the Fusion version of the shot004 comp and its Resolve project. |
-| 1.15    | 2026-11-02 | Indexed the Resolve project export `.drp` of the Fusion comp. |
-| 1.16    | 2026-11-02 | Indexed run 8r, the reproduction of Mick 1.3 run 8 on the new `EU-RO-1` volume. |
-| 1.17    | 2026-11-02 | Indexed run 9 (NAG) from the `EU-RO-1` volume. |
-| 1.18    | 2026-11-02 | Indexed the Pass B grass-fire inpaint inputs. |
-| 1.19    | 2026-11-02 | Indexed Pass B grass-fire test 1. |
-| 1.20    | 2026-11-02 | Indexed Pass B grass-fire test 2. |
-| 1.21    | 2026-11-03 | Indexed Pass B grass-fire test 3. |
-| 1.22    | 2026-11-03 | Indexed Pass B grass-fire test 4. |
-| 1.23    | 2026-11-03 | Indexed the gray-inside-mask grass-fire control. |
-| 1.24 | 2026-11-03 | Updated `outputs/` paths to the per-shot layout (`outputs/<shot>/<pass or comp>/`). |
-| 1.25 | 2026-11-03 | Indexed Pass B grass-fire test 6. |
-| 1.26 | 2026-11-03 | Indexed Pass B grass-fire test 7. |
-| 1.27 | 2026-11-03 | Indexed Pass B grass-fire test 8. |
-| 1.28 | 2026-11-03 | Indexed Pass B grass-fire test 9. |
-| 1.29 | 2026-11-03 | Indexed Pass B grass-fire test 10. |
-| 1.30 | 2026-11-03 | Indexed the Pass B combined-mask inputs and the four Higgsfield grass-fire keyframes. |
-| 1.31 | 2026-11-03 | Indexed Pass B test 11 and the plate-field control for test 11b. |
-| 1.32 | 2026-11-03 | Indexed Pass B test 11b. |
-| 1.33 | 2026-11-03 | Indexed Pass B test 12 and the keyframe-in-control inputs. |
-| 1.34 | 2026-11-03 | Indexed Pass B tests 13 and 14 and the three-group keyframe inputs. |
-| 1.35 | 2026-11-03 | Indexed Pass B tests 14r and 15. |
-| 1.36 | 2026-11-03 | Indexed Seedance S1 and the full-frame first/last frames. |
-| 1.37 | 2026-11-03 | Indexed Seedance S2. |
-| 1.38 | 2026-11-03 | Indexed Seedance S3. |
-| 1.39 | 2026-11-03 | Indexed Seedance S4 and Kling K1. |

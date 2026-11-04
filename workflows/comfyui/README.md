@@ -29,7 +29,7 @@ The Pod's ComfyUI workflow browser (`/workspace/runpod-slim/ComfyUI/user/default
 ## Inputs And Notes
 
 - Inputs a graph loads (guides, masks, control videos, start frames) live in `assets/elements/by-shot/<shot>/<category>/` under `_vNNN` names, built by a script in `scripts/` that also writes a JSON report of its settings. They are uploaded to the Pod's `input/` under the same names.
-- Method and plan go in the shot's plan in `shots/`. Each run's settings and scores go in the pass's test log: `docs/vfx-element-benchmark.md` for Pass A, `shots/<shot>_<slug>_pass-<letter>_<layer>-log.md` for later passes (e.g. `shots/shot004_fire-jump_pass-b_grassfire-log.md`). Not in sidecar files. Older graphs may still have a sidecar `.md`.
+- Method and plan go in the shot's plan in `shots/`. Each run's settings and scores go in the pass log in the shot folder, `shots/<shot>_<slug>/pass-<letter>_<layer>_log.md` (e.g. `shots/shot004_fire-jump/pass-b_grassfire_log.md`), under its run ID. Not in sidecar files. Older graphs may still have a sidecar `.md`.
 
 ## Earlier Graphs
 

@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-03
-**Version:** 1.3
+**Updated:** 2026-11-03
 
 # Pipeline Strategy
 
@@ -51,7 +50,7 @@ Under evaluation, not adopted. A Jerry fire rig exists at `assets/characters/jer
 
 Its job, if the pose and dash tests pass, would be rigged simulated elements rendered to multilayer EXR for compositing. It is not the shot 004 motion driver. That driver stays the Houdini fire proxy until a scored benchmark row replaces it.
 
-Separately, Blender is the first compositing tool (decided 2026-11-02). The agent builds comps as Blender compositor node trees by script, renders and checks them, and hands over a `.blend` for James to adjust. Shot 004's plan is `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
+Separately, Blender is the first compositing tool (decided 2026-11-02). The agent builds comps as Blender compositor node trees by script, renders and checks them, and hands over a `.blend` for James to adjust. Shot 004's plan is `shots/shot004_fire-jump/plan.md`.
 
 ### Compositing App
 
@@ -70,14 +69,3 @@ Use After Effects, Nuke, Fusion, or Resolve for final assembly. For agent-built 
 - Pure text-to-video as the default final-shot method.
 - Baked outputs when a shot needs revisions by layer.
 - Training LoRAs before the visual target and dataset requirements are clear.
-
----
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Pipeline Strategy. |
-| 1.1     | 2026-10-17 | Added Blender as an unevaluated CG track and kept it off the shot 004 motion driver. |
-| 1.2     | 2026-11-02 | Recorded Blender as the first, agent-built compositing tool, with Fusion and Resolve Studio for color work. |
-| 1.3     | 2026-11-03 | Recorded James's plate-use rule for Higgsfield: plate stills and crops as references are allowed, and parts of Higgsfield assets may be comped. |

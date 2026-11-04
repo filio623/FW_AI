@@ -25,4 +25,4 @@ All four regrade the whole frame warmer than the plate (outside the fire about +
 ## Source and history
 
 - 2026-11-03: received from James (Desktop `higgs/`), moved here, registered to the plate with SIFT and a similarity transform (median error about 2 px at 4K).
-- How they are used: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B tests; runs in `shots/shot004_fire-jump_pass-b_grassfire-log.md`.
+- How they are used: `shots/shot004_fire-jump/plan.md`, Pass B tests; runs in `shots/shot004_fire-jump/pass-b_grassfire_log.md`.

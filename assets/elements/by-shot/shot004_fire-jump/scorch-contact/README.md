@@ -13,6 +13,7 @@ Inputs for the grass-fire inpaint workflow `workflows/comfyui/shot004-working/pa
 - `shot004_grassfire_start-frame_912x512_v001.png`: start frame (gitignored).
 - `shot004_grassfire_control-plate-gray-keyk2-f049-052-start25-full50_912x512_81f_v001.mp4`, `shot004_grassfire_mask-start25-full50-soft-keyk2-f049-052_912x512_81f_v001.mp4`: the gray control and solid mask with keyframe `k2` on frames 49–52 (plate outside the spread) and the mask at 0 there (`--keyframe`). Test 14.
 - `…_control-plate-gray-keyk2-f033-036-041-044-049-052-…`, `…_mask-…-soft-keyk2-f033-036-041-044-049-052_…`: the same with `k2` on three groups along the spread, each limited to the part that has caught (`--key-frames 33-36,41-44,49-52`). Test 15.
+- `layers/`: Pass B layers ready for the comp (README there).
 - `keyframes/`: Higgsfield stills of the fire at its height, registered to the window (README there).
 - `shot004_grassfire_inputs-*.json`: build reports. Their `outputs/` paths are the pre-2026-11-03 locations.
 
@@ -22,4 +23,4 @@ Window: 1824x1024 at plate (1838, 488), scaled to 912x512.
 
 - 2026-11-02: Canny inputs built.
 - 2026-11-03: gray inputs built; combined-mask inputs built (`--inside canny-gray --field 0.5`); Higgsfield keyframes added.
-- Tests and scores: `shots/shot004_fire-jump_pass-b_grassfire-log.md`.
+- Tests and scores: `shots/shot004_fire-jump/pass-b_grassfire_log.md`.

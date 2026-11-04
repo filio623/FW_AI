@@ -1,6 +1,5 @@
 **Created:** 2026-05-18
-**Modified:** 2026-11-02
-**Version:** 1.19
+**Updated:** 2026-11-02
 
 # Shot004 Fire Jump Workflow Test Plan
 
@@ -16,7 +15,7 @@
   - `FW_test/Scene 4/ren_steam..mov`
 - Current VACE test reference: `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`; the 49-frame 1280x672 proxy is indexed in `docs/asset-inventory.md`.
 - Restored fire motion source: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov`.
-- Status (2026-11-02): Pass A has a working local setup. Mick 1.3 with the VACE × SkyReels merge passes path, black and face on two seeds; run 8 is the current best. It is too large and reads slightly translucent over the plate. Comp and Pass B plan: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`. Pass A queue and scores: `docs/vfx-element-benchmark.md`.
+- Status (2026-11-02): Pass A has a working local setup. Mick 1.3 with the VACE × SkyReels merge passes path, black and face on two seeds; run 8 is the current best. It is too large and reads slightly translucent over the plate. Comp and Pass B plan: `shots/shot004_fire-jump/plan.md`. Pass A queue and scores: `docs/archive/docs/vfx-element-benchmark.md`.
 
 ## Creative Intent
 
@@ -315,32 +314,6 @@ The test workflow is successful if:
 
 ## Current Test Status
 
-Working queue and scores: `docs/vfx-element-benchmark.md`. Do not keep a second queue here.
+Working queue and scores: `shots/shot004_fire-jump/plan.md` and `shots/shot004_fire-jump/pass-a_jerry_log.md` (before 2026-11-04: `docs/archive/docs/vfx-element-benchmark.md`). Do not keep a second queue here.
 
-As of 2026-11-02: stock `WanVaceToVideo`, Kling, and Wan 2.7 tuning are closed (Wan 2.7 seed-2126129005 run 2 is a paid fallback). Mickmumpitz 1.3 with the VACE × SkyReels merge and gray-in-mask inputs passes Pass A path, black and face on two seeds; run 8 is the current best. The remaining Pass A GPU tests are benchmark step 8c: smaller guide, NAG, 720p. RunPod `CA-MTL-1`, which holds our volume, has been down since 2026-10-31. A first local comp preview of run 8 was reviewed on 2026-11-01. The comp, ridge holdout, ground glow and AI-first Pass B grass ignition are planned in `shots/shot004_fire-jump_comp-and-pass-b-plan.md`.
-
-
-## Changelog
-
-| Version | Date       | Description |
-|---------|------------|-------------|
-| 1.0     | 2026-05-18 | Initial Shot004 Fire Jump Workflow Test Plan. |
-| 1.1     | 2026-08-18 | Recorded the restored fire source and rebuilt 832x448 control proxy under `assets/elements/by-shot/shot004_fire-jump/fire/`. |
-| 1.2     | 2026-10-08 | Recorded the VACE sampler completion, post-sampling decode OOM, and validated tiled-decode mitigation without claiming a finished render. |
-| 1.3     | 2026-10-08 | Recorded the second post-sampler OOM, the separate 4K composite OOM, split latent workflows, and successful 1280x672 finishing smoke. |
-| 1.4     | 2026-10-08 | Logged the first successful split VACE latent and proxy composite, with technical output and visual-review limitations. |
-| 1.5     | 2026-10-08 | Recorded the user's rejection of the proxy result and the specific next-session walkthrough before further generation. |
-| 1.6     | 2026-10-08 | Clarified unrestored historical input paths, identified the staged test media, and updated shot status from planning to guided review. |
-| 1.7     | 2026-10-09 | Diagnosed green/magenta as sample conditioning, not composite or tiled VAE decode; recorded the raw latent frames and the next conditioning change. |
-| 1.8     | 2026-10-11 | Logged Branch D Higgsfield run 001: Kling Omni Edit failed (refunded), Seedance 2.5 video_edit result with measured path drift. |
-| 1.9     | 2026-10-13 | Logged Pass A VACE Run 001 (`00003_.latent`), `KlingMotionControl` human-upper-body rejection, and the structured Phase 1–3 VFX testing roadmap. |
-| 1.10    | 2026-10-13 | Pointed the Pass A roadmap at `docs/vfx-element-benchmark.md` as the working score sheet. |
-| 1.11    | 2026-10-17 | Replaced the open strength/silhouette queue with the closed VACE result and pointed current work at the benchmark. |
-| 1.12    | 2026-10-17 | Logged the Wan 2.7 Video Edit run: path and black pass, look fails. |
-| 1.13    | 2026-10-17 | Logged Wan 2.7 run 2 (seed 2126129005) as the first Pass A candidate. |
-| 1.14    | 2026-10-18 | Logged Wan 2.7 runs 3 and 4 and the stop on Wan 2.7 tuning. |
-| 1.15    | 2026-10-19 | Logged Mick 1.3 SkyReels runs 1–6 and the first local setup to pass path, black, and face on two seeds. |
-| 1.16    | 2026-10-19 | Logged Mick 1.3 runs 7 and 8 and the next-session order. |
-| 1.17    | 2026-11-01 | Logged the local comp preview of run 8 over the plate. |
-| 1.18    | 2026-11-01 | Recorded James's review notes: translucency, the ridge holdout, and grass ignition and growth. |
-| 1.19    | 2026-11-02 | Replaced the stale status lines with the current Pass A state and a pointer to the comp and Pass B plan. |
+As of 2026-11-02: stock `WanVaceToVideo`, Kling, and Wan 2.7 tuning are closed (Wan 2.7 seed-2126129005 run 2 is a paid fallback). Mickmumpitz 1.3 with the VACE × SkyReels merge and gray-in-mask inputs passes Pass A path, black and face on two seeds; run 8 is the current best. The remaining Pass A GPU tests are benchmark step 8c: smaller guide, NAG, 720p. RunPod `CA-MTL-1`, which holds our volume, has been down since 2026-10-31. A first local comp preview of run 8 was reviewed on 2026-11-01. The comp, ridge holdout, ground glow and AI-first Pass B grass ignition are planned in `shots/shot004_fire-jump/plan.md`.

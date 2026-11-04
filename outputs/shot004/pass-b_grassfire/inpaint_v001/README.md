@@ -21,5 +21,5 @@ Inputs and raw results for the Pass B grass-fire inpaint (`workflows/comfyui/sho
 - 2026-11-03: test 11 (combined mask; gray veil). `candidates-combo-plate/`: the fix, plate under the half-strength area (`preview_combo-plate.png`), uploaded for test 11b.
 - 2026-11-03: combined-mask candidates built and uploaded to the Pod. Test 10: `vace_strength` 0.8 with extra negatives.
 - 2026-11-03: tests 3–9 (A100, EU-RO-1). Tests 6–9 use the gray control; tests 8 and 9 are test 6 with a second and third seed. `mask_vs_fire_f60.png`: the mask's extent against tests 6 and 9.
-- Scores: `shots/shot004_fire-jump_pass-b_grassfire-log.md`. Plan and next steps: `shots/shot004_fire-jump_comp-and-pass-b-plan.md`, Pass B.
+- Scores: `shots/shot004_fire-jump/pass-b_grassfire_log.md`. Plan and next steps: `shots/shot004_fire-jump/plan.md`, Pass B.
 - Kept clips: `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_grassfire-inpaint_mick13_test*`.
