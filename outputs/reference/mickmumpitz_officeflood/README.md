@@ -1,6 +1,6 @@
 # Mickmumpitz OfficeFlood example
 
-Files from the OfficeFlood example in the Mickmumpitz AI-VFX example pack (`references/mickmumpitz/`), extracted on 2026-11-02 to study how Mick inpaints a growing element into a plate.
+Files from the OfficeFlood example in the Mickmumpitz AI-VFX example pack (`library/mickmumpitz/`), extracted on 2026-11-02 to study how Mick inpaints a growing element into a plate.
 
 ## Contents
 

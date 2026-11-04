@@ -3,18 +3,18 @@
 
 # Shot004 Fire Jump Plan
 
-How shot 004 is built: the layers, the current method for each, and what comes next. Shot index and decisions: `README.md`. Every generation run is in the pass logs (`pass-a_jerry_log.md`, `pass-b_grassfire_log.md`); comp versions in `comp_log.md`. This plan holds only current methods; stopped methods are summarised with their run IDs.
+How shot 004 is built: the layers, the current method for each, and what comes next. Shot index and decisions: `README.md`. Every generation run is in the pass logs (`pass-a_jerry/log.md`, `pass-b_grassfire/log.md`); comp versions in `comp_log.md`. This plan holds only current methods; stopped methods are summarised with their run IDs.
 
 ## Inputs
 
 | Layer | File | Status |
 |---|---|---|
-| Plate | `assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4` (4096×2160, 24 fps, 84 frames, 10-bit) | Staged test plate; its provenance relative to the original `4 base plate.mov` is unverified. |
-| Jerry (Pass A) | `assets/elements/by-shot/shot004_fire-jump/benchmark/shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_v001.mp4` (run 8, 912×512, 24 fps, 81 frames) | Current best. Too large (see below). |
-| Houdini fire (reference) | `assets/elements/by-shot/shot004_fire-jump/fire/shot004_fire-jump_ren-small-fire6_source_v001.mov` (decodes 1920×1014, covers the whole plate) | Motion source for Pass A. |
+| Plate | `shots/shot004_fire-jump/plates/FW_test_scene.mp4` (4096×2160, 24 fps, 84 frames, 10-bit) | Staged test plate; its provenance relative to the original `4 base plate.mov` is unverified. |
+| Jerry (Pass A) | `shots/shot004_fire-jump/pass-a_jerry/runs/shot004_fire-jump_mick13-skyreels_graymask-promptv3-jb010-str125-lenovo_seed1218565630_v001.mp4` (run 8, 912×512, 24 fps, 81 frames) | Current best. Too large (see below). |
+| Houdini fire (reference) | `shots/shot004_fire-jump/reference/shot004_fire-jump_ren-small-fire6_source_v001.mov` (decodes 1920×1014, covers the whole plate) | Motion source for Pass A. |
 | Grass fire (reference only) | `ren_grassfire_cpu..mov` on the NAS backup | Not restored. |
-| Delivered comp (reference) | `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-houdini-delivered-v031_1920x1080_v001.mp4` (1920×1080, 24 fps, 84 frames) | Local copy, file-dated 2026-10-08; its relation to the NAS `Shot4 V031-1.mov` is unverified. Ignition timing below. |
-| Comp (Blender) | `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8-passb-s3_v002.blend` | v002, 2026-11-04 (`comp_log.md`, `s004-c-003`); v001 without Pass B beside it. |
+| Delivered comp (reference) | `shots/shot004_fire-jump/reference/shot004_fire-jump_comp-houdini-delivered-v031_1920x1080_v001.mp4` (1920×1080, 24 fps, 84 frames) | Local copy, file-dated 2026-10-08; its relation to the NAS `Shot4 V031-1.mov` is unverified. Ignition timing below. |
+| Comp (Blender) | `shots/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8-passb-s3_v002.blend` | v002, 2026-11-04 (`comp_log.md`, `s004-c-003`); v001 without Pass B beside it. |
 
 Placing a Mick 1.3 512p clip on the plate scaled to 1920×1014: scale ×2.0192 to 1842×1034, crop 10 px off the top, place at x +39.
 
@@ -43,13 +43,13 @@ references, `vace_strength` 1.25, Lenovo LoRA, NAG on with face negatives,
 seed `1218565630`, 512p, on the rebuilt `EU-RO-1` volume (L4). It passes
 all three checks (trajectory, look, black) and reproduces the look of
 run 8/8r closely, with slightly fewer face-like dark patches in the
-Blender comp. Full history: `shots/shot004_fire-jump/pass-a_jerry_log.md`
+Blender comp. Full history: `shots/shot004_fire-jump/pass-a_jerry/log.md`
 (`s004-a-001` through `s004-a-023`).
 
 Not yet approved: James has not signed off on run 9's look as final.
 Jerry is 20–50% larger than the Houdini fire at 512p; a smaller,
 rounded guide (6 px growth, rounded top, post-landing growth damped to
-1.25×, built by `scripts/build_shot004_guide.py`) exists as a candidate
+1.25×, built by `shots/shot004_fire-jump/scripts/build_shot004_guide.py`) exists as a candidate
 fix and is awaiting approval and a rerun. 720p has been deferred behind
 that approval, since resolution changes count as a new sample needing
 its own replication, and a kept 512p clip's embedded workflow/prompt
@@ -78,7 +78,7 @@ sample that also needs its own replication.
 
 #### Frozen inputs that still apply
 
-- Motion: `assets/elements/by-shot/shot004_fire-jump/fire/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`. Do not swap for a prettier jump; the Blender Jerry rig is a separate character test, not this driver, until a scored row replaces the Houdini clip.
+- Motion: `shots/shot004_fire-jump/pass-a_jerry/inputs/shot004_ren-small-fire6_control_832x448_81f_v001.mp4`. Do not swap for a prettier jump; the Blender Jerry rig is a separate character test, not this driver, until a scored row replaces the Houdini clip.
 - Look: `JB-001_upright-compact-idle.png` on the volume `input/`. `JB-010` only as a second reference, not a swap; the Blender r09 still is not approved.
 - Plate: kept out of Pass A entirely (`FW_test_scene` and the 49-frame proxy are not inputs here).
 - Short tests use the first 17 frames (`4n+1`); a 4-second cloud test may use the already-made 96-frame padded clip.
@@ -124,15 +124,15 @@ What it must do: ignition starts where and when Jerry lands and spreads through 
 
 #### State (as of 2026-11-04)
 
-- **Method: first-last-frame video, comped as a layer.** A video model is given the clean plate at frame 25 (Jerry's landing, before ignition) as the first frame and a keyframe of the clump burning as the last frame, and invents the ignition and spread itself. Inputs (16:9 crop of the plate, x 128–3968, so the fire ends inside the picture): `scorch-contact/keyframes/shot004_grassfire_plate-full169_f025_1920x1080_v001.png` and `…_keyframe-k2_full169-platebg_1920x1080_v001.png` (`k2` around its flames, the plate outside, so the model does not regrade the frame). Graph: `workflows/comfyui/shot004-working/pass-b_grassfire/shot004_fire-jump_grassfire-flf_seedance20_v001.json` (Seedance 2.0 and Kling branches; ComfyUI partner API nodes, billed to the Comfy account, no GPU needed).
-- **Comp:** `scripts/build_shot004_grassfire_layer.py` registers the clip onto the plate, retimes it (`--map`), keeps the fire light as a gain on the plate (the plate keeps its own texture) and takes the fire itself by a change matte inside a zone; `scripts/blender/shot004_comp_add_passb.py` puts it in the comp's Pass B slot. First result `s004-c-003`: works as a layer; soft at 480p.
+- **Method: first-last-frame video, comped as a layer.** A video model is given the clean plate at frame 25 (Jerry's landing, before ignition) as the first frame and a keyframe of the clump burning as the last frame, and invents the ignition and spread itself. Inputs (16:9 crop of the plate, x 128–3968, so the fire ends inside the picture): `pass-b_grassfire/keyframes/shot004_grassfire_plate-full169_f025_1920x1080_v001.png` and `…_keyframe-k2_full169-platebg_1920x1080_v001.png` (`k2` around its flames, the plate outside, so the model does not regrade the frame). Graph: `shots/shot004_fire-jump/pass-b_grassfire/workflows/shot004_fire-jump_grassfire-flf_seedance20_v001.json` (Seedance 2.0 and Kling branches; ComfyUI partner API nodes, billed to the Comfy account, no GPU needed).
+- **Comp:** `shots/shot004_fire-jump/scripts/build_shot004_grassfire_layer.py` registers the clip onto the plate, retimes it (`--map`), keeps the fire light as a gain on the plate (the plate keeps its own texture) and takes the fire itself by a change matte inside a zone; `shots/shot004_fire-jump/scripts/blender/shot004_comp_add_passb.py` puts it in the comp's Pass B slot. First result `s004-c-003`: works as a layer; soft at 480p.
 - **Runs so far:** Seedance S1–S4 (`s004-b-018`–`020`, `022`): natural ignition and soft translucent flames; S2 fixed framing and regrade; with the same frames and seed, prompt timing words barely change the sample (S4 ≈ S3). Kling K1 (`s004-b-021`): 1080p, the most natural ignition (an ember line along the base), about 2× too slow.
 - **Next:** comp Kling K1 like S3 and compare; pick generator and timing; one final run at full resolution (Seedance 1080p or 4K, which maps 1:1 onto the 16:9 crop, or Kling 1080p); retime in the comp. To change Seedance timing, change seed or duration, not the prompt.
-- **Keyframes:** four Higgsfield edits of a plate frame by James's colleague (`scorch-contact/keyframes/`, README there); `k2` and `k4` are the closest to the goal.
+- **Keyframes:** four Higgsfield edits of a plate frame by James's colleague (`pass-b_grassfire/keyframes/`, README there); `k2` and `k4` are the closest to the goal.
 
 #### Closed branches
 
-- **Inpaint in the Mick 1.3 SkyReels graph** (`s004-b-001`–`017`, 2026-11-02 to 2026-11-03), stopped 2026-11-03 (James): Canny or gray inside a growing mask, strengths, references and keyframes inside the control. The fire always took the mask's shape (blob, dome, veil, glowing block). Inputs, candidates and setup: `pass-b_grassfire_log.md`, Setup reference.
+- **Inpaint in the Mick 1.3 SkyReels graph** (`s004-b-001`–`017`, 2026-11-02 to 2026-11-03), stopped 2026-11-03 (James): Canny or gray inside a growing mask, strengths, references and keyframes inside the control. The fire always took the mask's shape (blob, dome, veil, glowing block). Inputs, candidates and setup: `pass-b_grassfire/log.md`, Setup reference.
 - **Production grass-fire render as a guide** (`ren_grassfire_cpu`): parked until it is restored from the NAS.
 - **MiniMax H3 inpaint:** parked; needs a ComfyUI update (the Pod runs 0.30.0) or Comfy Cloud.
 
@@ -140,11 +140,11 @@ What it must do: ignition starts where and when Jerry lands and spreads through 
 
 ### Blender comp (tool in use)
 
-`assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend`, built by `scripts/blender/shot004_comp_build.py` (Blender 5.2.1). Rebuild with:
+`shots/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend`, built by `shots/shot004_fire-jump/scripts/blender/shot004_comp_build.py` (Blender 5.2.1). Rebuild with:
 
 ```sh
 /Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup \
-  --python scripts/blender/shot004_comp_build.py -- assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend
+  --python shots/shot004_fire-jump/scripts/blender/shot004_comp_build.py -- shots/shot004_fire-jump/comps/shot004_fire-jump_comp-blender_run8_v001.blend
 ```
 
 Rebuilding overwrites the file, so save hand edits as `_v002` first. Starting values are in the script's `LOOK` table; every tunable node is labelled `CTRL …`. 4096×2160 at 100%, frames 1–81 (Jerry's length; the plate has 84). Frame 1 is plate frame 0 and run 8 frame 0. Renders at about 2 s per frame on the M2 Pro GPU. To inspect one node, `scripts/blender/comp_tap.py` renders its output to EXR without saving the `.blend`.
@@ -162,17 +162,17 @@ Blender 5.2 compositor details that cost time: the comp is `scene.compositing_no
 
 ### Fusion comp (reference only)
 
-James asked for the same comp in DaVinci Resolve Studio's Fusion page to compare the two tools. Built by `scripts/resolve/shot004_comp_fusion.py` through Resolve's scripting interface (External scripting = Local), run with Resolve's bundled Python:
+James asked for the same comp in DaVinci Resolve Studio's Fusion page to compare the two tools. Built by `shots/shot004_fire-jump/scripts/resolve/shot004_comp_fusion.py` through Resolve's scripting interface (External scripting = Local), run with Resolve's bundled Python:
 
 ```sh
 "/Applications/DaVinci Resolve/DaVinci Resolve.app/Contents/Applications/ResolvePython" \
-  scripts/resolve/shot004_comp_fusion.py \
-  --setting assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting \
+  shots/shot004_fire-jump/scripts/resolve/shot004_comp_fusion.py \
+  --setting shots/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting \
   [--render-preview DIR --frames 0-80]
 ```
 
-- **Where it lives:** Resolve project `FW_AI_shot004_comp` (Local Database; it was "New Project 4"), project and timeline at 4096×2160, 24 fps. Timeline `shot004_comp_v001` has the plate on V1 and run 8 on V2, turned into one Fusion clip, so MediaIn1 is the plate and MediaIn2 is Jerry. The node tree is also saved as `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`, which can be pasted into any comp; after pasting, wire MediaIn2 → `Jerry_Place`, MediaIn1 → `Glow_PlateXLight` (Background) and `Glow_Add` (Background), and `Final_Grade` → MediaOut1.
-- **Project file in the repo:** `assets/elements/by-shot/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.drp`, a Resolve project export (File → Import Project in Resolve's Project Manager). It holds the timeline and the Fusion clip with the full node tree; the media are linked by absolute path, so relink if the repo moves.
+- **Where it lives:** Resolve project `FW_AI_shot004_comp` (Local Database; it was "New Project 4"), project and timeline at 4096×2160, 24 fps. Timeline `shot004_comp_v001` has the plate on V1 and run 8 on V2, turned into one Fusion clip, so MediaIn1 is the plate and MediaIn2 is Jerry. The node tree is also saved as `shots/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.setting`, which can be pasted into any comp; after pasting, wire MediaIn2 → `Jerry_Place`, MediaIn1 → `Glow_PlateXLight` (Background) and `Glow_Add` (Background), and `Final_Grade` → MediaOut1.
+- **Project file in the repo:** `shots/shot004_fire-jump/comps/shot004_fire-jump_comp-fusion_run8_v001.drp`, a Resolve project export (File → Import Project in Resolve's Project Manager). It holds the timeline and the Fusion clip with the full node tree; the media are linked by absolute path, so relink if the repo moves.
 - **Rerunning the script rebuilds the comp** and deletes every tool except the MediaIns and MediaOut, so hand edits are lost. Before tuning by hand, copy the Fusion clip or the timeline in Resolve.
 - **Nodes:** four underlays group the layers (`Layer_Jerry_Element`, `Layer_Ground_Glow`, `Layer_Jerry_Comp`, `Layer_Ridge_Holdout`). Tools are named for their job (`Jerry_Place`, `Jerry_DarkFill`, `Jerry_CoreKey`, `Glow_GroundMask`, `PassB_Slot`, `Ridge_Mask`, `Final_Grade`, and so on), and the two masks are Polyline masks whose points can be dragged in the viewer.
 
@@ -182,7 +182,7 @@ From the local delivered comp copy: the fire lands around frame 23, the grass ca
 
 ## Files to fetch from the NAS
 
-James will copy these when he is at the NAS. Put them in `assets/inbox/`; they are classified and renamed from there. NAS restore prefix: `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST/`.
+James will copy these when he is at the NAS. Put them in `inbox/`; they are classified and renamed from there. NAS restore prefix: `/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST/`.
 
 | Priority | NAS path (under the prefix) | Use |
 |---|---|---|
@@ -197,4 +197,4 @@ James will copy these when he is at the NAS. Put them in `assets/inbox/`; they a
 - Try MiniMax H3 for the grass fire (candidate 4), probably on Comfy Cloud first.
 - A fire-style LoRA (James, 2026-11-02): one trained look for every AI fire in the film, Jerry and grass alike. Train it on fire material (flame close-ups, approved renders, matching real fire), not on whole Jerry bodies, so it carries the look without pulling every fire into his teardrop shape; a Jerry character LoRA stays a separate option (benchmark Stage 4). A LoRA only works on the base model it was trained for, so decide between the Wan 2.1 14B family and MiniMax H3 first, and approve the target look first.
 
-Ideas for later shotsotion from Blender or After Effects, compositing in Blender, inpainting) are in `references/mickmumpitz-library.md` under Creature on a Path.
+Ideas for later shotsotion from Blender or After Effects, compositing in Blender, inpainting) are in `library/mickmumpitz-library.md` under Creature on a Path.

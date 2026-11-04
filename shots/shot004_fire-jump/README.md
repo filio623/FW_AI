@@ -3,16 +3,16 @@
 
 # Shot 004: Fire Jump
 
-Jerry, a faceless fire character, jumps along the Houdini fire's path and lands in a grass clump, which catches fire. The plate is a locked-off 4096×2160, 24 fps, 84-frame shot (`assets/elements/by-shot/shot004_fire-jump/plates/FW_test_scene.mp4`). The delivered Houdini comp is the reference for timing: the fire lands around frame 23 and the grass catches and spreads through about frame 48.
+Jerry, a faceless fire character, jumps along the Houdini fire's path and lands in a grass clump, which catches fire. The plate is a locked-off 4096×2160, 24 fps, 84-frame shot (`shots/shot004_fire-jump/plates/FW_test_scene.mp4`). The delivered Houdini comp is the reference for timing: the fire lands around frame 23 and the grass catches and spreads through about frame 48.
 
-Start here when resuming this shot: this README, then the end of the relevant log.
+Start here when resuming this shot: this README, then the end of the relevant `log.md`.
 
 ## State (as of 2026-11-04)
 
 | Layer | Status | Current best | Log |
 |---|---|---|---|
-| Pass A: Jerry element | Candidate, not approved. Too large; the smaller guide awaits James's approval. Texture does not match the new fire. | run 9 (`s004-a-023`) | `pass-a_jerry_log.md` |
-| Pass B: grass fire | Method found: first-last-frame video comped as a layer. Choosing between Seedance and Kling, then a full-resolution final. | Seedance S3 (`s004-b-020`), Kling K1 (`s004-b-021`) | `pass-b_grassfire_log.md` |
+| Pass A: Jerry element | Candidate, not approved. Too large; the smaller guide awaits James's approval. Texture does not match the new fire. | run 9 (`s004-a-023`) | `pass-a_jerry/log.md` |
+| Pass B: grass fire | Method found: first-last-frame video comped as a layer. Choosing between Seedance and Kling, then a full-resolution final. | Seedance S3 (`s004-b-020`), Kling K1 (`s004-b-021`) | `pass-b_grassfire/log.md` |
 | Ground glow, ridge holdout | Done in the comp. | — | `comp_log.md` |
 | Comp | Blender v002 with Pass B from S3. | `s004-c-003` | `comp_log.md` |
 
@@ -29,13 +29,15 @@ Shot-level decisions, oldest first. Project-wide decisions are in `docs/decision
 - **2026-11-03 (James):** plate stills and crops may go to Higgsfield and other services as references; whole plate clips stay off third-party services by default.
 - **2026-11-03:** Pass B inpaint in the SkyReels graph stopped after `s004-b-017`; the fire always took the mask's shape.
 - **2026-11-03 (James):** Pass B switches to first-last-frame video through the ComfyUI partner nodes (Seedance 2.0, Kling).
-- **2026-11-04 (James):** comp files and every layer a saved comp loads live in `assets/`; `outputs/` holds renders and previews only.
+- **2026-11-04 (James):** comp files and every layer a saved comp loads live in the shot folder; `outputs/` holds renders and previews only.
+- **2026-11-04 (James):** shot-first layout: everything for this shot moved into this folder (`docs/decisions.md`).
 
 ## Where things are
 
-- **Plan and methods:** `plan.md`. **Logs:** `pass-a_jerry_log.md`, `pass-b_grassfire_log.md`, `comp_log.md` (one entry per run or comp, each with a run ID).
-- **First workflow test plan (frozen, 2026-10):** `../shot004_fire-jump_workflow-test-plan_v001.md`.
-- **Assets:** `assets/elements/by-shot/shot004_fire-jump/` (`plates/`, `fire/`, `scorch-contact/` with Pass B inputs, keyframes and layers, `benchmark/` with every kept run clip, `comps/`). Each folder has a README.
-- **Graphs:** `workflows/comfyui/shot004-working/` (graphs in use, by pass) and `workflows/comfyui/shot004-benchmark/` (one extract per kept run, named like its clip).
-- **Renders and previews:** `outputs/shot004/` (not in Git; READMEs are).
-- **Scripts:** `scripts/build_shot004_guide.py` (Pass A guide), `scripts/build_shot004_grassfire_inputs.py` (inpaint inputs), `scripts/build_shot004_grassfire_layer.py` (Pass B layer), `scripts/blender/shot004_comp_build.py` and `shot004_comp_add_passb.py` (comp).
+Everything for this shot is in this folder; each subfolder has a README.
+
+- `plan.md`: methods and next steps. `comp_log.md`: comp versions (`s004-c-…`).
+- `pass-a_jerry/`, `pass-b_grassfire/`: each with `log.md` (every run, by run ID), `inputs/`, `workflows/` (graphs in use, mirrored on the Pod), `runs/` (kept clips and their extracted workflows); Pass B also `keyframes/` and `layers/`.
+- `plates/` (working plate), `reference/` (Houdini fire, delivered comp), `comps/` (comp files), `scripts/` (shot-only scripts), `outputs/` (renders and previews; not in Git except READMEs).
+- `workflow-test-plan_v001.md`: the first shot 004 test plan and run log (2026-10, frozen).
+- Project-wide material this shot uses: Jerry in `characters/jerry/`; the Pod in `mcp/runpod.md`.

@@ -7,14 +7,19 @@ Working area for an AI-assisted short-film VFX pipeline. Markdown is the main fo
 
 ## Where Things Live
 
-- `shots/<shotNNN>_<slug>/`: one folder per shot. `README.md` (brief, `## State (as of …)`, dated shot decisions, where the files are), `plan.md` (current methods and next steps), one append-only log per pass (`pass-a_jerry_log.md`) and `comp_log.md`. New shots start from `shots/_template/`.
-- `docs/`: project-wide records. `decisions.md` (register of project-wide decisions), `findings.md` (lessons that apply beyond one shot), `worklog.md` (one entry per session), `asset-inventory.md`, `pipeline-strategy.md`, `workspace-map.md`, character bibles. `docs/archive/` holds retired documents; nothing there is live.
-- `assets/`: curated media, staged in `assets/inbox/` first. Shot media under `assets/elements/by-shot/<shot>/` (`plates/`, element folders, `benchmark/` for every kept run clip, `comps/`); characters under `assets/characters/`. Heavy media is gitignored; READMEs and metadata are tracked.
-- `workflows/comfyui/`: graphs in use in `shot<NNN>-working/pass-<letter>_<layer>/` (mirrored on the Pod as `shot<NNN>/pass-<letter>_<layer>/`), one extract per kept run in `shot<NNN>-benchmark/` named like its clip, creator originals in their own folder. A knob change is a run; a structural change is a new `_vNNN`. Details: `workflows/comfyui/README.md`.
-- `outputs/`: renders, previews, review sheets and scratch, laid out `outputs/<shot>/<pass or comp>/<task>/`. Gitignored except READMEs; unused folders move to `outputs/_archive/<date>/`.
-- `mcp/`: one note per service (`runpod.md` with its `runpod_log.md`, `blender.md`, `higgsfield.md`, `comfy-cloud.md`). `scripts/`: automation (see its README). `references/`: research, the Mickmumpitz library, and manifests of off-repo media. `prompts/`: reusable prompts.
-- **Placement rule (2026-11-04):** comp project files (`.blend`, `.setting`, `.drp`) and every layer or image a saved comp loads live in `assets/`, with `_vNNN` names. `outputs/` never holds anything a saved file depends on.
-- Every working folder has a short `README.md`: what it holds, why, where it came from, and a dated history line for each addition. Vendor folders and `docs/archive/` are exempt.
+**Rule (2026-11-04):** anything used by one shot lives in that shot's folder; anything that defines the film (characters, style, screenplay, library) or is used by more than one shot lives project-wide. When a shot's file starts being used by a second shot, move it to the project-wide area and leave a pointer.
+
+- `shots/<shotNNN>_<slug>/`: everything for one shot.
+  - `README.md` (brief, `## State (as of …)`, dated shot decisions, where the files are), `plan.md` (current methods and next steps), `comp_log.md`.
+  - `plates/`, `reference/` (what the shot is measured against), `comps/` (comp files, `_vNNN`), `scripts/` (shot-only scripts), `outputs/` (renders, previews, scratch; unused folders move to `outputs/_archive/<date>/`).
+  - One folder per pass, `pass-<letter>_<layer>/`: `log.md` (append-only run log), `inputs/`, `workflows/` (graphs in use, mirrored on the Pod as `shot<NNN>/pass-<letter>_<layer>/`; a knob change is a run, a structural change a new `_vNNN`), `runs/` (each kept run: the clip and its extracted workflow side by side, same name), plus pass-specific folders such as `keyframes/` and `layers/`.
+  - New shots start from `shots/_template/`.
+- `characters/<name>/`: one home per character: `README.md`, the frozen bible (`bible_v001.md`), `development-plan.md`, reference sets, approval reviews, candidates, CGI and training material, and the character's own `outputs/`. `characters/character-bible.md` holds the shared rules.
+- `docs/`: project-wide records: `decisions.md` (register of project-wide decisions), `findings.md` (lessons beyond one shot), `worklog.md` (one entry per session), `asset-inventory.md`, `asset-intake.md`, `pipeline-strategy.md`, `workspace-map.md`. `docs/archive/` holds retired documents; nothing there is live.
+- `source/`: raw film material (screenplay; storyboards, audio and editorial when they arrive). `inbox/`: uploads waiting to be sorted (`docs/asset-intake.md`).
+- `library/`: research, the Mickmumpitz library, and `manifests/` of media kept off the repo. `workflows/`: creator originals and cross-shot templates. `prompts/`: reusable prompts. `scripts/`: shared tools (see its README). `mcp/`: one note per service (`runpod.md` with `runpod_log.md`, `blender.md`, `higgsfield.md`, `comfy-cloud.md`). `outputs/`: project-wide scratch only (reference studies, tool dumps).
+- **Placement rule (2026-11-04):** comp files and every layer or image a saved comp loads live in the shot folder (or `characters/`), never in an `outputs/` folder. Heavy media is gitignored everywhere; READMEs and metadata are tracked.
+- Every working folder has a short `README.md`: what it holds, why, where it came from, and a dated history line for each addition. A folder is created when its first file arrives, never as an empty scaffold. Vendor folders and `docs/archive/` are exempt.
 
 ## Resuming Work
 
@@ -23,7 +28,7 @@ Read, in order: this file, the last entry of `docs/worklog.md`, the shot's `READ
 ## Records
 
 - **Run IDs.** Every generation run gets `s<shot>-<pass>-<NNN>`: shot number, pass letter (`a` Jerry element, `b` grass fire, `c` comp; new passes take the next letter and are listed in the shot README), a sequence per pass, never reused. The ID heads the log entry and goes into the names of the kept clip, its workflow extract, and anything built from it, so `grep` finds the record from any file.
-- **Log entry fields:** Change (one change, or baseline), Tool (model, graph path, GPU, key settings), Inputs, Kept (paths or "not kept"), Result, Verdict (and who), Next. Template: `shots/_template/pass_log.md`.
+- **Log entry fields:** Change (one change, or baseline), Tool (model, graph path, GPU, key settings), Inputs, Kept (paths or "not kept"), Result, Verdict (and who), Next. Template: `shots/_template/pass-x_layer/log.md`.
 - **What goes where:** a run → its pass log; a comp version or check → `comp_log.md`; a shot decision → the shot README; a project-wide decision → `docs/decisions.md`; a lesson that applies beyond the shot → `docs/findings.md`, citing run IDs; a Pod or infrastructure event → `mcp/runpod_log.md`; each session → `docs/worklog.md`.
 - **Timestamps.** Decisions dated inline: `**Decision (2026-11-04, James):** …`. Status sections carry the date in the heading: `## State (as of 2026-11-04)`. Log headings are dated; runs and Pod events also get a UTC time when known. Facts that do not go stale (settings, paths, how something works) stay undated.
 
@@ -34,8 +39,8 @@ Read, in order: this file, the last entry of `docs/worklog.md`, the shot's `READ
 - **Frozen edition:** a `_vNNN` file that approved work is checked against. It never moves; a new edition is a new file, and the old one gets `**Superseded by:** <path>`.
 - **Retiring:** a document with no successor moves to `docs/archive/`, mirroring its path, with `[ARCHIVED]` in the title, `**Archived:**` and `**Original path:**` lines and one line on why; update every link to it. This is the only use of `docs/archive/`.
 - **Media:** always `_vNNN`, never overwritten; a new take is a new file. A superseded take moves to `_archive/` beside it and is noted in `docs/asset-inventory.md`. Never delete an approved look, a delivered element, a plate, or anything a comp has used.
-- **Cold storage:** production media lives on the NAS (`/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`); any move to or from it updates its manifest in `references/manifests/` in the same change.
-- Signpost READMEs, templates, `assets/**` notes and `memories/seeds/` carry no header.
+- **Cold storage:** production media lives on the NAS (`/Volumes/FW_Backup/Robs-Mac-Studio.local/Volumes/Rob's 4tb FAST`); any move to or from it updates its manifest in `library/manifests/` in the same change.
+- Signpost READMEs, templates, notes beside media and `memories/seeds/` carry no header.
 
 ## Naming
 

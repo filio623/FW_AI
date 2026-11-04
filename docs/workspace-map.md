@@ -5,24 +5,31 @@
 
 The folder tree in more detail than `AGENTS.md`. Every working folder also has its own `README.md`.
 
-## Directories
+## Shot-first rule (2026-11-04)
 
-- `assets/`: source and curated production media (heavy media gitignored).
-  - `inbox/`: unsorted uploads waiting for intake (`docs/asset-intake.md`).
-  - `scripts/`: screenplay PDF and script breakdown notes.
-  - `storyboards/`: storyboard images, panels and animatics.
-  - `plates/`: source plates by shot (the shot 004 working plate sits under `elements/by-shot/shot004_fire-jump/plates/`).
-  - `elements/by-shot/<shot>/`: everything a shot's comp uses: `plates/`, element folders (`fire/`, `scorch-contact/` with inputs, `keyframes/` and `layers/`), `benchmark/` (every kept run clip), `comps/` (comp project files).
-  - `characters/`: character references, approved stills, action sheets, training candidates; `characters/jerry/character-bible-v001/` is Jerry's assembled reference set.
-  - `references/`, `audio/`, `editorial/`: visual references, sound, and edit-facing material.
-- `docs/`: project-wide records: `decisions.md`, `findings.md`, `worklog.md`, `asset-inventory.md`, `asset-intake.md`, `pipeline-strategy.md`, character bibles and development plans. `docs/archive/`: retired documents and older snapshots, mirroring their original paths; nothing there is live.
-- `shots/`: one folder per shot (README, plan, pass logs, comp log); `_template/` for new shots; the frozen first shot 004 test plan.
-- `workflows/`: `comfyui/` (working graphs by shot and pass, one extract per kept run, creator originals), `higgsfield/` and `blender/` run docs.
-- `mcp/`: one note per service; RunPod has a living `runpod.md` and an append-only `runpod_log.md`.
-- `references/`: research, the Mickmumpitz library (`references/mickmumpitz/`, described in `mickmumpitz-library.md`), and `manifests/` for media kept off the repo.
-- `prompts/`: reusable prompt blocks and character language.
-- `scripts/`: automation; `scripts/README.md` lists each script.
-- `outputs/`: renders, previews, review sheets and scratch, `outputs/<shot>/<pass or comp>/<task>/`, plus `characters/`, `reference/`, `tools/` and `_archive/<date>/`. Gitignored except READMEs.
+Anything used by one shot lives in that shot's folder; anything that defines the film or is used by more than one shot lives project-wide. When a shot's file starts being used elsewhere, move it project-wide and leave a pointer.
+
+## Shot folder
+
+```
+shots/shot004_fire-jump/
+  README.md  plan.md  comp_log.md  workflow-test-plan_v001.md (frozen)
+  plates/  reference/  comps/  scripts/  outputs/
+  pass-a_jerry/      log.md  inputs/  workflows/ (early/)  runs/
+  pass-b_grassfire/  log.md  inputs/  keyframes/  layers/  workflows/  runs/
+```
+
+`runs/` holds each kept run's clip and extracted workflow side by side. `outputs/` (renders, previews, review sheets, scratch, `_archive/<date>/`) is gitignored except READMEs. Heavy media everywhere is gitignored; READMEs, logs and small metadata are tracked.
+
+## Project-wide
+
+- `characters/<name>/`: bible (`bible_vNNN.md`), `development-plan.md`, reference sets, approval reviews, candidates, CGI, training material, `outputs/`. `characters/character-bible.md`: shared rules.
+- `docs/`: `decisions.md`, `findings.md`, `worklog.md`, `asset-inventory.md`, `asset-intake.md`, `pipeline-strategy.md`, this map. `docs/archive/`: retired documents and the 2026-11-04 move list.
+- `source/`: screenplay; storyboards, audio and editorial when they arrive. `inbox/`: uploads waiting for intake.
+- `library/`: Mickmumpitz library (`mickmumpitz/`, described in `mickmumpitz-library.md`), research, `manifests/` for media kept off the repo.
+- `workflows/`: ComfyUI conventions and creator originals; Higgsfield notes.
+- `scripts/`: shared tools (RunPod, Blender helpers, library sorter). `mcp/`: one note per service. `prompts/`: reusable prompt blocks.
+- `outputs/`: project-wide scratch only (reference studies, tool schemas).
 - `memories/seeds/`: dated session snapshots from before 2026-08-16; read-only history.
 
 ## Naming
@@ -34,8 +41,7 @@ The folder tree in more detail than `AGENTS.md`. Every working folder also has i
 
 ## Intake Flow
 
-1. Put new uploads in `assets/inbox/`.
+1. Put new uploads in `inbox/`.
 2. Classify and name curated copies using `docs/asset-intake.md`.
-3. Move or copy curated assets into the correct `assets/` subfolder, with a README line.
-4. Link shot assets from the shot's README.
-5. Record them in `docs/asset-inventory.md`.
+3. File them in the shot folder or project-wide area that uses them, with a README line.
+4. Record source media in `docs/asset-inventory.md`.

@@ -1,0 +1,333 @@
+**Created:** 2026-11-03
+**Updated:** 2026-11-04
+
+# Shot004 Pass B Grass-Fire Test Log
+
+Every Pass B (grass ignition) test run, newest at the bottom. This is an append-only log: add a new entry for each run and never edit an old one. The plan, the current state and the ranked next steps are in `shots/shot004_fire-jump/plan.md`, Pass B. Entries for tests 1–6 were moved here from that plan's test table on 2026-11-03, unchanged in substance.
+
+## How a test is run and kept
+
+- James builds and runs the graph on the Pod. Before each run the agent diffs the saved or queued graph against the previous test, so each test changes one thing.
+- Each kept run has three records: the clip in `shots/shot004_fire-jump/pass-a_jerry/runs/`, the graph extracted from it in `shots/shot004_fire-jump/pass-*/runs/` (same name, `.workflow.json`), and an entry here. Raw outputs and comparison sheets are in `shots/shot004_fire-jump/outputs/pass-b_grassfire/inpaint_v001/` (`testN.mp4`, `testN.png`, `testN_vs_testM.png`).
+- Compare tests only on the same GPU type. On one GPU type and install, a rerun of the same graph and seed is pixel-identical (test 5), so an A/B there is exact. A different GPU gives a nearby but different sample.
+
+## Measures
+
+- **Fire size and place:** fire pixels (bright, red-dominant) as a share of the 912×512 window and of the mask; the share of the fire that run 9's Jerry would cover once comped; fire pixels outside the mask.
+- **Plate outside the mask:** mean change outside the mask, and the dark ring: mean luma change against the plate in the band 2–60 px inside the mask edge.
+- **Look:** read by eye against Jerry (soft, translucent, peach-white heart, orange and gold tongues) and against real grass fire (blades burning, scorch, embers, smoke).
+- Tests 1–6 were measured in one analysis session. From test 7 on the scripts were rebuilt after that session was lost. The fire threshold is now red ≥ 180 and red − blue ≥ 60, which gives sizes within about 0.5 points of the earlier numbers. Ring values use a slightly different band, so compare test 7 ring numbers only with the test 4 and 6 numbers given in its entry.
+
+## Fixed setup
+
+Graph: `shots/shot004_fire-jump/pass-b_grassfire/workflows/shot004_fire-jump_grassfire-inpaint_mick13_v001.json`; inputs in `shots/shot004_fire-jump/pass-b_grassfire/inputs/`. Seed 1218565630, 512p, 81 frames, mask from frame 25 to full by frame 50. Settings before test 1 are in the plan, Candidate 2 setup.
+
+## Prompts
+
+- **Prompt 1** (tests 1–2): "l3n0v0, Dry grass at the base of the clump catches fire where a small flame touches the ground. The fire spreads quickly outward and upward through the grass, orange and yellow flames climbing each blade, blades curling and blackening as they burn, thin grey smoke rising, glowing embers drifting up. Realistic outdoor grass fire in natural daylight, filmed with a real camera."
+- **Prompt 2** (tests 3–6): "l3n0v0, A fire suddenly ignites at the base of the grass clump and within a second engulfs the whole clump of dry grass. Tall flames climb up every blade and rise high above the tips, with grey smoke curling upward and glowing embers drifting in the air. The flames are soft and translucent, with a bright peach-white glow at the heart and orange and gold flame tongues licking upward, thin dark smoke wisps and tiny sparks. Grass blades blacken and curl as they burn. Realistic outdoor fire in natural daylight, filmed with a real camera."
+- **Prompt 3** (test 7): "l3n0v0, A fire catches at the base of the grass clump and over the next second spreads along the dry blades. Low, flickering flames run up the individual blades; each blade glows orange as it burns, then blackens and curls. The flames are soft and translucent, with a peach-white glow at the heart and thin orange and gold tongues, light wisps of dark smoke and a few tiny sparks. A natural, realistic grass fire, filmed with a real camera in natural daylight."
+
+## Test 1 — 2026-11-02
+
+- **Change:** New graph: inputs v001, settings above
+- **Run:** 610 s (L4); prompt 1.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test1_seed1218565630_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test1_seed1218565630_v001.workflow.json`.
+- **Ignition:** Pass. A spark at Jerry's landing contact on frame 26, spreading from frame 28
+- **Fire size and place:** Fail. A Jerry-sized fire at the base of the clump: at most 7.5% of the window and 11–14% of the mask; the rest of the mask was redrawn as grass. 56–100% of the fire sits where Jerry is, so he would hide most of it
+- **Plate outside the mask:** Pass outside, fail at the edge. Outside: ~2/255, the re-encode level; 7 fire pixels in 81 frames. Inside, the redrawn grass is darker than the plate (luma −8 to −13 from 2 to 60 px inside the edge on frame 80), so the mask outline shows as a dark ring (James); Compose + Match did not correct it
+- **Look:** Mixed. Flames weave through the blades, with blades in front and a scorched base, and the window blends into the plate with no visible seam. But the flames are saturated, hard-edged and sticker-like, with no smoke and no spread up the blades, and their colour does not match Jerry
+- **Next:** prompt rewrite (below)
+
+## Test 2 — 2026-11-02
+
+- **Change:** Test 1 plus `JB-010` as Reference Image 2 (James), `vace_ref_strength` still 0
+- **Run:** 647 s (L4); prompt 1.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test2-jb010_seed1218565630_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test2-jb010_seed1218565630_v001.workflow.json`.
+- **Ignition:** Pass, same as test 1
+- **Fire size and place:** Fail, ≈ test 1: 1.7–6.8% of the window, 59–84% of it under Jerry. A different sample after ignition (PSNR 19–25 dB against test 1, 43 dB or more before frame 25), not a style change
+- **Plate outside the mask:** Pass outside; the same dark ring
+- **Look:** Same sticker-like flames; a bluish-white smoke puff at the base late in the shot
+- **Next:** With `vace_ref_strength` 0 an added reference only reshuffles the sample. To pass style it needs a strength above 0, which risks Jerry's shape. Back to test 1's state for the prompt rewrite
+
+## Test 3 — 2026-11-03
+
+- **Change:** Test 1 with the prompt rewrite (whole clump engulfed, tall flames, smoke, Jerry's flame words); `JB-010` bypassed. On an A100, so not seed-for-seed comparable with tests 1–2
+- **Run:** 280 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test3-prompt2_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test3-prompt2_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass
+- **Fire size and place:** Fail, a little better: 0.9–6.4% of the window, 11–13% of the mask; wider, two-lobed flames, so less of it under Jerry (42–76%). Climbs higher early (top row 90 vs 123 on frame 40) but not by the end. 107 fire pixels outside the mask
+- **Plate outside the mask:** Pass outside; the dark ring is unchanged (−10.6 and −12.8 luma inside the edge on frames 50 and 80)
+- **Look:** Brighter, whiter flames, close to Jerry's average colour (fire pixels RGB 239/177/95 against Jerry's 224/158/93), but hard-edged and cut-out, not soft and translucent like Jerry. The blades stay intact thin dark lines in front of the flames: the fire sits behind the grass instead of the grass burning (James)
+- **Next:** loosen the edges inside the mask
+
+## Test 4 — 2026-11-03
+
+- **Change:** Test 3 with `vace_strength` 1.0 → 0.6 (same A100)
+- **Run:** 191 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test4-prompt2-str060_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test4-prompt2-str060_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass
+- **Fire size and place:** Fail, better: from frame 50 the fire is 8–9% of the window and 15–17% of the mask (test 3: 6% and 11–12%), still 54–77% under Jerry. A different sample (PSNR 13–15 dB against test 3). Inside the mask the grass follows the plate's edges less (edge agreement 0.24–0.28 against 0.33–0.36)
+- **Plate outside the mask:** Pass outside; the dark ring is unchanged (−11.8 and −12.7 luma)
+- **Look:** Fuller flames, but still cut-out, and the blades are still dark lines in front of them. James: not much different
+- **Next:** gray inside the mask, or a keyframe in the control video
+
+## Test 5 (repeat) — 2026-11-03
+
+- **Change:** Meant as gray inside the mask, but the DRIVING VIDEO loader still pointed at the Canny control, so the graph was test 4's exactly
+- **Run:** 190 s (A100); prompt 2.
+- **Kept:** not kept.
+- **Ignition:** —
+- **Fire size and place:** Every frame pixel-identical to test 4 (max difference 0)
+- **Plate outside the mask:** —
+- **Look:** —
+- **Next:** Not kept. It shows that on one GPU type and install a rerun reproduces exactly, so one-knob A/B on the A100 is exact. Rerun as test 6 with the gray control
+
+## Test 6 — 2026-11-03
+
+- **Change:** Test 4 with flat gray instead of Canny edges inside the mask (same A100)
+- **Run:** 190 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test6-gray-prompt2-str060_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test6-gray-prompt2-str060_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass
+- **Fire size and place:** Fail on look, not size: 3–10% of the window, 9–19% of the mask, about as large as test 4, and less of it under Jerry mid-shot (47–49% on frames 50–66). 157 fire pixels outside the mask
+- **Plate outside the mask:** Pass outside; the dark ring stays (−11.7 and −10.7 luma)
+- **Look:** The interaction James wanted: the fire replaces the blades where it burns instead of sitting behind intact ones, with embers falling and a scorched, glowing base. But the flames are a thick, opaque, blown-out yellow-white mass with a hard orange outline, wild and far from Jerry's soft, translucent fire (James: too thick and wild)
+- **Next:** calmer prompt on the gray control; then the keyframe
+
+## Test 7 — 2026-11-03
+
+- **Change:** Test 6 with prompt 3 (James): drops "engulfs the whole clump" and "tall flames … rise high above the tips", asks for low flickering flames running up individual blades, keeps Jerry's flame words. Checked: only the prompt changed.
+- **Run:** 192 s (A100); prompt 3.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test7-gray-prompt3-str060_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test7-gray-prompt3-str060_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, later and smaller: 1.3% of the window on frame 32 (test 6: 3.0%).
+- **Fire size and place:** Mixed. One peak at frame 50 (13.5% of the window, 25% of the mask, the largest of any test), then it shrinks to 5.7% by frame 80 (test 6: 10.0% and 7.4%). Under Jerry 40–100% (frame 50: 40%). 40 fire pixels outside the mask over 81 frames (test 6: 133). Inside the mask the output follows the plate's grass edges more (edge agreement 0.43–0.53 against 0.23–0.43 in test 6), so more of the grass is left as it was.
+- **Plate outside the mask:** Pass outside; the dark ring stays (−15.0 and −11.9 luma on frames 50 and 80, against −15.8 and −14.8 for test 6 by the same measure).
+- **Look:** Calmer and smoother: blown-out white inside the mask fell from 11–14% to about 5%, and the flame has a soft gradient from a yellow-white heart to orange edges. But it is no longer a grass fire. It is one smooth ribbon of flame floating above the grass, close to a second Jerry, with no blades burning, no scorch at the base and no embers. The interaction from test 6 is gone.
+- **Reading:** Jerry's flame words ("soft and translucent, peach-white glow at the heart, orange and gold tongues"), once the "engulf" and "tall flames" words are gone, pull the model toward the l3n0v0 creature-like flame sheet. The words that make it a grass fire make it wild (test 6). A prompt cannot do both, so the style should come from a picture (the keyframe) or the comp grade, and the prompt should only describe physical grass fire.
+- **Next:** prompt 4 on the gray control: prompt 1's physical grass-fire wording without "small flame", no Jerry style words. Then the keyframe.
+
+## Test 8 — 2026-11-03
+
+- **Change:** Test 6 with a new seed (`seed_1` in Iter Seed Batch, node 3462: 1218565630 → 1218565804), James. Prompt 2 restored. Checked: only the seed changed. The first of the seed checks in the plan.
+- **Run:** 192 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test8-gray-prompt2-str060_seed1218565804_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test8-gray-prompt2-str060_seed1218565804_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, but it starts as a large white smoke puff (frames 32–50) with the flame inside it.
+- **Fire size and place:** Larger and earlier than test 6: 9.8% of the window on frame 40 (test 6: 4.4%), 13.0% on frame 50, 9.3% on frame 80; 15–25% of the mask from frame 40. More of it under Jerry (62–91% from frame 50). No fire pixels outside the mask (test 6: 133).
+- **Plate outside the mask:** Pass outside. The ring measure reads +13.1 on frame 50 because the smoke inside the mask is brighter than the plate, and −8.4 on frame 80 (test 6: −15.8 and −14.8).
+- **Look:** Very different from test 6 at the same settings. Flames are separate vertical tongues with soft edges, much less blown out (white 3–5% of the mask against 11–14%), with blades crossing in front of them. Closer to Jerry's tongues than test 6. But a thick white-lavender smoke cloud fills much of the mask from frame 32 to about 60, reading like steam, and there is less scorch and fewer embers than test 6.
+- **Reading:** The seed changes the result as much as any single knob tried so far (tests 3–7). Single runs have been compared as if the change caused the difference; from here each setting needs at least two seeds before it is judged.
+- **Next:** a third seed of test 6, then compare prompt 4 over the same seeds.
+
+## Test 9 — 2026-11-03
+
+- **Change:** Test 6 with a third seed (`seed_1` 1218565630 → 1218565905), James. Checked: only the seed changed.
+- **Run:** 190 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test9-gray-prompt2-str060_seed1218565905_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test9-gray-prompt2-str060_seed1218565905_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, the earliest and largest of the three seeds: 5.6% of the window on frame 32 (tests 6 and 8: 3.0% and 1.7%).
+- **Fire size and place:** 10–12% of the window from frame 40 to 80, the steadiest of the three; 51–77% under Jerry. 888 fire pixels outside the mask, all on frames 26–40, where the fire runs ahead of the mask while it is still small.
+- **Plate outside the mask:** Pass outside, apart from those early pixels. Ring −5.2 and +4.3 luma on frames 50 and 80.
+- **Look:** A wide, bowl-shaped sheet of opaque flame, the most blown out of the three (white 12–24% of the mask, against 11–14% for test 6 and 3–5% for test 8), with a little dark smoke at the edges. The blades are dark lines in front of the flames again rather than burning. James: less interaction with the grass, a little too wild.
+- **Reading over tests 6, 8 and 9 (same settings, three seeds):** size and coverage are consistent (about 10–13% of the window by frame 50). The look is consistently thick, opaque, wild fire. What changes with the seed is the smoke (none, a heavy cloud, a little) and whether the blades burn or stay in front. These settings will not give Jerry's look by reseeding; the next change has to constrain the fire's shape or show the model the look.
+- **Next:** see the plan, Pass B tests.
+
+## Test 10 — 2026-11-03
+
+- **Change:** Test 6 (first seed, 1218565630) with two changes, James: `vace_strength` 0.6 → 0.8, and "opaque, blown out, fireball, smoke cloud" added to the end of the NAG negative prompt (node 3262). The two cannot be separated in this run.
+- **Run:** 191 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test10-gray-prompt2-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test10-gray-prompt2-str080-nagneg2_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, as test 6.
+- **Fire size and place:** Nearly test 6: the same sample and composition, slightly smaller (8.5% of the window on frames 50–66 against 8.5–10.0%); 47–63% under Jerry; 42 fire pixels outside the mask (test 6: 133). Inside the mask the output follows the plate's blade edges a little more (edge agreement 0.29–0.34 against 0.23–0.27).
+- **Plate outside the mask:** Pass outside; the ring is unchanged (−15.3 and −16.1 luma, same measure as tests 7–9).
+- **Look:** Test 6 again, a little tidier, with the blades slightly more present and a scorched, ember-lit base. Still thick and blown out: white in 8–14% of the mask, as in test 6, so the "opaque, blown out" negatives did not reduce it.
+- **Reading:** Within 0.6–0.8 and with these negatives the result is set by the seed and the inputs, not by these knobs.
+- **Next:** the combined mask (full strength on the blades, half on the space around them) with edges on gray.
+
+## Test 11 — 2026-11-03
+
+- **Change:** Test 10 with the combined mask and its control (James's idea): MASK `shot004_grassfire_mask-start25-full50-blades4-field050-soft_912x512_81f_v001.mp4` (full strength on the blades, 0.5 on the rest of the spread) and DRIVING VIDEO `shot004_grassfire_control-plate-canny-gray-start25-full50_912x512_81f_v001.mp4` (blade edges on gray inside the spread). Checked: only the two loaders changed. A first attempt loaded the Canny-on-black control by mistake and was stopped before it finished; it is not counted.
+- **Run:** 194 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test11-cannygray-blades4-field050-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test11-cannygray-blades4-field050-str080-nagneg2_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, earlier and larger: 6.1% of the window on frame 32 (test 10: 2.7%).
+- **Fire size and place:** 7–11% of the window, 43–78% under Jerry; 27 fire pixels outside the mask.
+- **Plate outside the mask:** Fail at the mask. The half-strength area came out as a flat, light gray veil, about 45 luma brighter than the plate (difference from the plate there 44–49, against 3.4 outside the mask), so the whole outline of the spread shows (James: the mask shows up as an artifact).
+- **Look:** The flames themselves are the softest yet: white in only 0.2–2.4% of the mask (test 10: 8–14%), more translucent, with the blades as dark lines in front. But the blades do not burn (James: no interaction), and the gray veil spoils the frame.
+- **Reading:** With a mask between 0 and 1 the VACE node keeps that share of the control as it is. The control showed flat gray there, so the model half-kept the gray, and Compose + Match then pasted that area at half strength. Whatever sits under a partial mask must be the plate, not gray, so that "half keep" means half keep the grass.
+- **Next:** test 11b: the same mask with the plate, not gray, in the half-strength area, and gray with edges only on the blades.
+
+## Test 11b — 2026-11-03
+
+- **Change:** Test 11 with the plate, not gray, in the half-strength area: DRIVING VIDEO `shot004_grassfire_control-plate-canny-gray-blades4-start25-full50_912x512_81f_v001.mp4` (gray with edges only on the full-strength blade strips, plate everywhere else; `--field-fill plate`). Same mask. Checked: only the DRIVING VIDEO changed.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test11b-cannygray-bladesonly-field050-platefield-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test11b-cannygray-bladesonly-field050-platefield-str080-nagneg2_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Weak and late: 0.3% of the window on frame 32, 2.6% on frame 40.
+- **Fire size and place:** Small: about 3% of the window from frame 50 (test 10: 7–8.5%), 40–56% under Jerry. 63 fire pixels outside the mask.
+- **Plate outside the mask:** The veil is gone: the half-strength area stays within about 4 luma of the plate (difference 7.5–7.9). New artifact on the blade strips: the model redrew the gray strips and their white edges as pale blue-gray tubes over the blades, about 16–19 luma brighter than the plate (James: still mask artifacts).
+- **Look:** The flames that do appear run along the blades in thin tongues, the closest yet to fire climbing individual blades. But they are small, and the tubes spoil the frame.
+- **Reading:** Under the full-strength strips the model copied the control's pattern instead of drawing fire. The strips are about 9 px wide, close to the model's 8 px working grid, and with half of the spread on "keep" the model leans toward copying. Thin, fine-grained masks do not work with this model; masks need to be regions at least a few grid cells wide. Stop the combined-mask branch here.
+- **Next:** test 12, the keyframe as a reference, on test 10's setup.
+
+## Test 12 — 2026-11-03
+
+- **Change:** Test 10 with keyframe `k2` as Reference Image 2 (node 3349 un-bypassed, loading `shot004_grassfire_keyframe-k2_window_912x512_v001.png`) and `vace_ref_strength` 0 → 0.4. Checked: those are the only changes, plus the image batch node that now carries the second reference.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test12-gray-prompt2-str080-nagneg2-refk2-040_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test12-gray-prompt2-str080-nagneg2-refk2-040_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, as test 10.
+- **Fire size and place:** As test 10: 3–9% of the window. Before ignition the frames are nearly identical (PSNR 44–46 dB against test 10); after it, a nearby sample with the same layout (PSNR about 17 dB).
+- **Plate outside the mask:** As test 10.
+- **Look:** About the same as test 10 (James: not much difference). Slightly warmer fire (mean fire colour 240/189/92 against 241/185/83) and slightly less blown out (white 6–13% of the mask against 7–14%). Still thick, opaque flames with a hard orange edge, far from `k2` (soft peach tongues, mean 207/137/70, no blown-out white).
+- **Reading:** At 0.4 the reference barely reaches the result. Either a stronger reference or putting the keyframe in the clip itself.
+- **Next:** test 13 (`vace_ref_strength` 1.0) and test 14 (`k2` inside the DRIVING VIDEO at frames 49–52, mask 0 there, match mode pass-through).
+
+## Test 13 — 2026-11-03
+
+- **Change:** Test 12 with `vace_ref_strength` 0.4 → 1.0. Checked: only that changed.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test13-gray-prompt2-str080-nagneg2-refk2-100_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test13-gray-prompt2-str080-nagneg2-refk2-100_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Result:** Almost test 12: 2.6–9.4% of the window, white in 7–13% of the mask (test 12: 6–13%). James: did not change very much.
+- **Reading:** Even at full strength the reference does not carry the keyframe's look into this graph. A reference image is not the lever here.
+
+## Test 14 — 2026-11-03
+
+- **Change:** Test 12 with keyframe `k2` inside the clip: DRIVING VIDEO `shot004_grassfire_control-plate-gray-keyk2-f049-052-start25-full50_912x512_81f_v001.mp4` and MASK `shot004_grassfire_mask-start25-full50-soft-keyk2-f049-052_912x512_81f_v001.mp4` (on frames 49–52, `k2` inside the spread and the plate outside, mask 0), and match mode Compose + Match → Disabled (pass-through), which the keyframe needs. `vace_ref_strength` 0.4 as in test 12. Checked: those three changes only.
+- **Run:** about 190 s (A100); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test14-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-a100_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test14-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-a100_v001.workflow.json`.
+- **Ignition:** Pass, but frames 30–48 are a "poof" (James): the whole growing mask fills with a flat, glowing peach dome in the keyframe's colour, edged with sparks, shaped exactly like the mask.
+- **Keyframe:** Kept: frames 49–52 are within about 11 of the control inside the spread (about 66 before and after). They hold still (change between frames 0.6–1.5 against about 7 elsewhere), with a jump into and out of the hold (about 19 and 18).
+- **Fire size and place:** 14–15% of the window on frames 40–48 (the dome), 9–10.5% from frame 50.
+- **Plate outside the mask:** Pass-through regenerates the whole frame: outside the mask it differs from the plate by 9–11 (Compose + Match: about 3.4). The comp's change matte only takes what changed, but that threshold will need checking against this level.
+- **Look:** From frame 53 on, the best so far and the closest to `k2` and Jerry: soft, translucent peach flame tongues among the plate's blades, blades dark and burning at the tips in front, embers at the base, and no blown-out white anywhere (0% of the mask, against 7–13% in tests 12–13). The fire moves about half as much as in test 12 (frame-to-frame change about 6.5 against 12), and its outline still follows the mask's shape.
+- **Reading:** Putting the keyframe in the clip is the first change that moved the look. The poof comes from the model filling the whole mask with the keyframe's colour while it waits for frame 49; it has nothing to tell it how the fire grows before then.
+- **Next:** test 15: the same keyframe on three groups along the spread (frames 33–36, 41–44, 49–52), each limited to the part of the spread that has caught by then, so the growth is shown too.
+
+## Test 14r — 2026-11-03
+
+- **Change:** None: test 14 rerun unchanged on an RTX 4090 (Pod `bd2rmuu6fy08ks`; no A100 80GB in `EU-RO-1`), as the baseline for later 4090 tests. Checked: the graph is identical to test 14.
+- **Run:** 293 s on the 4090, including the first model load (test 15 after it: 226 s).
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test14r-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test14r-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.workflow.json`.
+- **Result:** A nearby sample of test 14, as expected on another GPU (PSNR 42 dB before ignition, 18–32 dB after). Same behaviour: a glowing dome filling the mask on frames 30–48 (a bright glow over 24–31% of the mask), the keyframe held on 49–52, then soft peach tongues among the blades with no blown-out white. 9–14% of the window.
+
+## Test 15 — 2026-11-03
+
+- **Change:** Test 14r with `k2` on three groups along the spread: DRIVING VIDEO `shot004_grassfire_control-plate-gray-keyk2-f033-036-041-044-049-052-start25-full50_912x512_81f_v001.mp4` and MASK `shot004_grassfire_mask-start25-full50-soft-keyk2-f033-036-041-044-049-052_912x512_81f_v001.mp4`; each group shows `k2` only where the spread has reached. Checked: only the two loaders changed.
+- **Run:** 226 s (RTX 4090); prompt 2.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test15-gray-keyk2-f033-036-041-044-049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-inpaint_mick13_test15-gray-keyk2-f033-036-041-044-049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.workflow.json`.
+- **Ignition:** Pass, and the poof is gone: the fire grows in `k2`'s look from a small patch on frame 30 (0.9% of the window, 3.4–3.6% on frames 34–38, 8.3–8.6% on 42–46, about 10% from 50). The bright glow covers 5–14% of the mask on frames 30–46, against 24–31% in test 14r.
+- **Fire size and place:** About 10% of the window from frame 50, like test 14r.
+- **Plate outside the mask:** As test 14r (pass-through).
+- **Look:** `k2`'s look all the way through: soft peach flame, blades dark in front with glowing tips, embers, no blown-out white. Two problems. The fire's outline is the mask's outline: a glowing block with a flat top and soft edges, because `k2`'s flames reach well past the spread (38% of `k2`'s fire lies outside it, and 39–43% for the other keyframes; `keyframes_vs_spread_f52.png`) and are cut by it. And the fire moves less: frame-to-frame change inside the spread is 4–9 against 9–12 for test 14r, with holds on each group and a jump out of each (13–24).
+- **Reading:** Keyframe groups along the spread fix the growth. The silhouette now comes from the cut, so the keyframe and the spread have to agree: either the spread grows to cover the keyframe's fire, or the keyframe is made with the fire limited to the clump.
+- **Next:** James to choose: a bigger spread that covers `k2`'s fire (a fire about 2.5 times the current size, reaching the window's edges), or keyframes regenerated with the fire limited to the clump.
+
+## Review of tests 14r and 15 — 2026-11-03
+
+- James: test 15 starts with an unnatural glowing, growing effect; neither 14r nor 15 is a success. The growth reads as a glow spreading with the mask front, not as grass catching.
+
+## Seedance S1 — 2026-11-03
+
+A different method: no inpaint, no mask. The Seedance 2.0 First-Last-Frame API node (ComfyUI partner node, added by James to the Pass B workflow on the Pod) makes the whole clip from a first frame and a last frame; the fire is then comped from it with the change matte. Seedance runs are numbered S1, S2, … in this log.
+
+- **Inputs:** first frame the Start Image loader (`shot004_grassfire_start-frame_912x512_v001.png`, the plate window at frame 0); last frame Reference Image 2 (`shot004_grassfire_keyframe-k2_window_912x512_v001.png`).
+- **Settings:** Seedance 2.0, 480p (864×496 out), ratio adaptive, 4 s (97 frames at 24 fps), audio off, watermark off, seed 42 fixed. Prompt (James added the `l3n0v0` trigger, which means nothing to Seedance): "l3n0v0, Static locked-off camera on a tripod: no camera movement, no zoom, no reframing. Close-up of a dry grass clump on sandy soil in daylight. A small spark catches at the base of the clump in the centre, and within about one second the fire spreads up and through the grass blades until the whole clump is burning. Soft, translucent peach and orange flame tongues climb the individual blades; the blades blacken, curl and glow at their tips; small embers drift upward; thin wisps of smoke. The fire then keeps burning steadily, flickering naturally. Realistic fire, natural motion, shallow depth of field. The ground, the background grass and the framing stay exactly the same; only the fire and the burning blades change."
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s1-window-k2-480p-4s_seed42_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s1-window-k2-480p-4s_seed42_v001.workflow.json`.
+- **Ignition and spread:** Natural. A small flame appears at the base of the clump on frame 12 (0.5 s), climbs the blades by frame 18, and the clump is burning by frames 24–36 (1.0–1.5 s), the pace of the delivered comp. Fire 1.8% of the window on frame 12, 12% on 24, 18–23% from 36.
+- **Look:** The best so far (James: looks pretty good). Soft, translucent peach and orange tongues among the plate's own blades, blades dark in front with glowing tips, embers at the base, a little smoke; no blown-out white at all. Moves naturally throughout (frame-to-frame change 4–10).
+- **Problems:** (1) The fire reaches the window's top and sides by 2 s, because `k2`'s fire does, so it would be cut at the window's edge in the full comp (James). (2) The whole frame warms as the fire grows: far from the fire the frame is 23–31 luma brighter than the plate from 1.5 s on, following `k2`'s overall warmer grade; the change matte would pick this up. (3) 480p.
+- **Next:** S2 from the full frame (16:9 crop of the plate, x 128–3968), so the fire ends inside the plate's own frame, with the last frame `k2` on the plate's own background outside the fire area so the frame does not regrade; 720p; `l3n0v0` removed.
+
+## Seedance S2 — 2026-11-03
+
+- **Change:** S1 moved to its own graph (`shot004_fire-jump_grassfire-flf_seedance20_v001.json`) with the full frame: first frame `shot004_grassfire_plate-full169_f025_1920x1080_v001.png` (clean plate at frame 25, 16:9 crop x 128–3968), last frame `shot004_grassfire_keyframe-k2_full169-platebg_1920x1080_v001.png` (`k2` around the flames, the plate outside them); 720p; `l3n0v0` removed from the prompt. Checked: the run used those settings.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s2-full169-k2platebg-720p-4s_seed42_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s2-full169-k2platebg-720p-4s_seed42_v001.workflow.json`.
+- **Framing and background:** Fixed. The fire ends inside the picture (apart from flames leaving the top of the camera frame), the camera does not move (phase correlation shift under 0.02 px from frame 0 to 96), and away from the fire the frame stays within about 2.5 of the plate all the way through (S1: 23–38). The plate-background last frame stopped the regrade.
+- **Ignition and spread:** Too fast (James: growing a little fast). A spark at the base on frame 8 (0.33 s) smoulders to frame 14, then the clump flares from 1.7% to 10% of the frame in four frames (16–20, 0.17 s), pulls back to 5.5–6.5% (frames 24–36) and builds to 9–11% by 2–4 s. The delivered comp spreads over about a second (frames 23–48).
+- **Look:** As S1: soft, translucent flames among the plate's blades, blades dark in front, embers; no blown-out white.
+- **Reading:** The full frame works for the comp. The burst comes from the prompt's "within about one second", which the model read as a flash.
+- **Next:** S3: only the prompt's timing changed, to a steady spread blade by blade over about one and a half seconds, with no flare-up.
+
+## Seedance S3 — 2026-11-03
+
+- **Change:** S2 at 480p, with the prompt replaced by the timing sentence alone (the camera, look and background lines were dropped): "A small spark catches at the base of the clump in the centre. The fire then spreads steadily and gradually, blade by blade, up and outward through the grass over about one and a half seconds, with no sudden flare-up or burst, until the whole clump is burning." Checked in the clip's metadata.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s3-full169-k2platebg-prompt-timing-480p-4s_seed42_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s3-full169-k2platebg-prompt-timing-480p-4s_seed42_v001.workflow.json`.
+- **Ignition and spread:** Smooth, no burst, but slow. A spark at the base on frame 10 (0.42 s) smoulders to about frame 22 (0.9 s); one flame grows over frames 24–36 (1.0–1.5 s, 1–3% of the frame); the fire then widens steadily to 5–6% at 2.5 s and 9–11% at 3.5–4 s. From ignition to the whole clump burning takes about 2.5 s; the delivered comp takes about 1 s. S2 for comparison: a flash from 1.7% to 10% in four frames.
+- **Framing and background:** As S2, without the camera and background lines: no camera movement (shift under 0.02 px), away from the fire within about 2 of the plate.
+- **Look:** As S2: soft, translucent flames among the blades, blades dark in front, embers. The look comes from the last frame; the prompt's look words were not needed.
+- **Reading:** The timing sentence works: the burst is gone. "About one and a half seconds" came out at about two and a half. Either speed S3 up in the comp (about 1.7× from ignition, frames 22–72 onto shot frames 25–54), or ask for about one second.
+
+## Seedance S4 — 2026-11-03
+
+- **Change:** S3 with the full prompt back (camera lock, background lines) and the timing asked as "the whole clump is burning about one second after the spark", spark becoming a flame within a quarter of a second. Same frames, 480p, 4 s, seed 42.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s4-full169-k2platebg-prompt-timing2-480p-4s_seed42_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_seedance20_s4-full169-k2platebg-prompt-timing2-480p-4s_seed42_v001.workflow.json`.
+- **Result:** Almost the same clip as S3 (PSNR 31–43 dB against S3 on frames 0–96; the fire share follows S3's curve to within a few tenths of a percent). The prompt change did not change the timing.
+- **Reading:** With the same first frame, last frame, seed and resolution, Seedance returns nearly the same sample whatever the timing words. S2 against S3 changed resolution (720p to 480p) as well as the prompt, so S2's burst was most likely its sample, not its wording. To change the timing: another seed, a different duration, or retiming in the comp.
+
+## Kling K1 — 2026-11-03
+
+- **Change:** Same first and last frames into the Kling Start-End Frame API node (James), to compare: `kling-v2-5-turbo`, pro mode, 5 s, 16:9, cfg 0.5, S3's prompt. Output 1920×1080, 122 frames.
+- **Kept:** `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_kling25turbo_k1-full169-k2platebg-pro-1080p-5s_v001.mp4` and `pass-b_grassfire/runs/shot004_fire-jump_grassfire-flf_kling25turbo_k1-full169-k2platebg-pro-1080p-5s_v001.workflow.json`.
+- **Ignition and spread:** Natural and slow. A spark at the base at 0.5 s, a line of embers catching along the base of the clump at 1.0–1.5 s, small flames along the base by 1.75–2 s, flames climbing the blades at 2.5 s and the clump burning by 3 s (fire 0.8% of the frame at 1.5 s, 5.6% at 2.5 s, 9–11% from 3 s).
+- **Framing and background:** As Seedance: no camera movement (under 0.02 px), away from the fire within about 2 of the plate.
+- **Look:** Close to Seedance and `k2`; the flames are taller and a little more solid. The ember line catching along the base is the most convincing ignition so far. Native 1080p, about twice Seedance 480p's detail.
+- **Reading:** A real alternative to Seedance, at higher resolution. Too slow as it stands; it needs about 2× in the comp, or a shorter clip.
+
+## Comp check: S3 in the Blender comp — 2026-11-03
+
+- **What:** S3 turned into a Pass B layer by the new `shots/shot004_fire-jump/scripts/build_shot004_grassfire_layer.py` (registered onto the plate, median error 1.3 px; the fire light kept as a gain on the plate so the ground keeps the plate's detail; the fire itself taken by a change matte inside a zone around the clump), retimed so S3 frames 20–72 fall on shot frames 25–54 (about 1.8×) and frames 72–96 on shot frames 54–80, and added to the Pass B slot of Blender Comp v001 by `shots/shot004_fire-jump/scripts/blender/shot004_comp_add_passb.py`. Saved as a new file in `shots/shot004_fire-jump/outputs/comp/blender/passb_s3/` (v001 unchanged); preview `shot004_fire-jump_comp-blender_run8-passb-s3_preview_v001.mp4`, sheet `passb_s3_preview_sheet.png`.
+- **Result:** It works as a layer. The fire starts under Jerry on his landing (frame 26), rises behind him and spreads through the clump by about frame 54, then burns to the end; the ground around it warms with the fire light and keeps its texture; there is no mask outline and no dark ring.
+- **Open:** It is soft (480p scaled 4.4× to the plate). One early flame shoots up behind Jerry fast (frames 30–36), from the 1.8× retime. Jerry is still run 8 (the orb, too large).
+
+## Run ID map — 2026-11-04
+
+Run IDs were introduced on 2026-11-04 (`AGENTS.md`, Records). Entries above use their old names; from here on every entry is headed by its ID. Clips are in `shots/shot004_fire-jump/pass-a_jerry/runs/`, workflow extracts with the same name in `shots/shot004_fire-jump/pass-*/runs/`; `…` stands for `shot004_fire-jump_grassfire-inpaint_mick13` (tests) or `shot004_fire-jump_grassfire-flf` (S, K). The comp check after S3 is `s004-c-003` in `comp_log.md`.
+
+| ID | Date | Old name | Kept clip |
+|---|---|---|---|
+| s004-b-001 | 2026-11-02 | test 1 | `shot004_fire-jump_grassfire-inpaint_mick13_test1_seed1218565630_v001.mp4` |
+| s004-b-002 | 2026-11-02 | test 2 | `…_test2-jb010_seed1218565630_v001.mp4` |
+| s004-b-003 | 2026-11-03 | test 3 | `…_test3-prompt2_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-004 | 2026-11-03 | test 4 | `…_test4-prompt2-str060_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-005 | 2026-11-03 | test 5 (repeat of test 4) | not kept |
+| s004-b-006 | 2026-11-03 | test 6 | `…_test6-gray-prompt2-str060_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-007 | 2026-11-03 | test 7 | `…_test7-gray-prompt3-str060_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-008 | 2026-11-03 | test 8 | `…_test8-gray-prompt2-str060_seed1218565804_eu-ro-a100_v001.mp4` |
+| s004-b-009 | 2026-11-03 | test 9 | `…_test9-gray-prompt2-str060_seed1218565905_eu-ro-a100_v001.mp4` |
+| s004-b-010 | 2026-11-03 | test 10 | `…_test10-gray-prompt2-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-011 | 2026-11-03 | test 11 | `…_test11-cannygray-blades4-field050-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-012 | 2026-11-03 | test 11b | `…_test11b-cannygray-bladesonly-field050-platefield-str080-nagneg2_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-013 | 2026-11-03 | test 12 | `…_test12-gray-prompt2-str080-nagneg2-refk2-040_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-014 | 2026-11-03 | test 13 | `…_test13-gray-prompt2-str080-nagneg2-refk2-100_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-015 | 2026-11-03 | test 14 | `…_test14-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-a100_v001.mp4` |
+| s004-b-016 | 2026-11-03 | test 14r | `…_test14r-gray-keyk2-f049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.mp4` |
+| s004-b-017 | 2026-11-03 | test 15 | `…_test15-gray-keyk2-f033-036-041-044-049-052-passthrough-refk2-040_seed1218565630_eu-ro-4090_v001.mp4` |
+| s004-b-018 | 2026-11-03 | Seedance S1 | `shot004_fire-jump_grassfire-flf_seedance20_s1-window-k2-480p-4s_seed42_v001.mp4` |
+| s004-b-019 | 2026-11-03 | Seedance S2 | `…_seedance20_s2-full169-k2platebg-720p-4s_seed42_v001.mp4` |
+| s004-b-020 | 2026-11-04 (00:04 UTC) | Seedance S3 | `…_seedance20_s3-full169-k2platebg-prompt-timing-480p-4s_seed42_v001.mp4` |
+| s004-b-021 | 2026-11-04 (00:06 UTC) | Kling K1 | `shot004_fire-jump_grassfire-flf_kling25turbo_k1-full169-k2platebg-pro-1080p-5s_v001.mp4` |
+| s004-b-022 | 2026-11-04 (00:12 UTC) | Seedance S4 | `…_seedance20_s4-full169-k2platebg-prompt-timing2-480p-4s_seed42_v001.mp4` |
+
+## Setup reference, moved from the plan — 2026-11-04
+
+The inpaint method's candidates and its original setup, moved here verbatim from the shot plan when the plan was cut to current methods. The inpaint method (tests 1–15, `s004-b-001` to `s004-b-017`) is stopped; the current method is first-last-frame video (`s004-b-018` on).
+
+### Candidates as listed on 2026-11-02
+
+Candidates, cheapest and most controllable first:
+
+1. **AI enhancement of the production grass-fire render.** Feed `ren_grassfire_cpu` as the VACE driving video with flame references and a photographic-flame prompt, on black. Pass A run 1 showed that an RGB driving video is traced almost exactly. That was a failure for Jerry, but here it keeps the production timing and shape while the model replaces the texture. Output is an element on black for Screen or Add, like Jerry. Needs the render restored from the NAS.
+2. **Inpainting on the clean plate.** Mick 1.3's native mode: DRIVING VIDEO = the clean plate, MASK = the grass region, animated to start at the landing spot on the landing frame and spread outward, prompt for dry grass catching fire, match mode "Compose + Match", which keeps the plate outside the mask and fixes the colour seam. Use the clean plate, never the plate with Jerry comped in, or the model redraws Jerry and bakes him into the grass layer. Can also scorch and blacken the grass, which an element on black cannot. Caution: the first stock-VACE plate test (2026-10-08) failed with colour artefacts and a growing static mask; Mick's animated-mask setup is different but expect iteration.
+3. **Loose flame and smoke elements** from Wan-Alpha (text-to-video with real alpha), comped by hand as extra detail. Parked in the benchmark until 1 or 2 is scored.
+4. **MiniMax H3 inpainting** (found 2026-11-02). H3 is the open-weight video model Mickmumpitz built his 2026-10-28 short film on; his Performance Capture 2.2 and AI renderer graphs also use it. It generates 5–15 s in one pass at a native 1344×768 and inpaints video through a mask with its Fun ControlNet Union patch (ComfyUI 0.35+, Union 2.0 0.38+; the `EU-RO-1` Pod runs 0.30.0). Its minimum length is 5 s (124 frames), so the 84-frame shot would be padded and trimmed. Local commercial use needs a paid MiniMax license through Comfy; Comfy Cloud generations include commercial rights, and Comfy Cloud already has the H3 nodes and models, so the first H3 test can run there with the same plate crop and mask as candidate 2.
+
+### Candidate 2 setup, test 1 (2026-11-02)
+
+Inputs from `shots/shot004_fire-jump/scripts/build_shot004_grassfire_inputs.py`, saved in `shots/shot004_fire-jump/pass-b_grassfire/inputs/` (`_v001`, with a JSON report of the settings):
+
+- **Window.** A 1824×1024 window of the 4096×2160 plate, top-left at plate (1838, 488), scaled ×0.5 to 912×512. Inpainting this window instead of the whole frame keeps twice the detail: the result goes back on the plate at ×2, where a full-frame 512p run would need ×4.3. It holds the grass clump and Jerry from the landing on.
+- **Mask** (`…_mask-start25-full50-soft_…`). Empty to frame 24. From frame 25, when Jerry touches down, it spreads from his landing contact (window pixel 490, 450) through a burn zone, the grass clump and the air above it, and covers it by frame 50, then holds to the end. It climbs faster than it spreads sideways, its front and outline are irregular, and it stays 24 px inside the window, so flames never meet the window's edge where the inpaint joins the untouched plate. About 53% of the window at full spread. Timing, spread curve, climb and raggedness are settings.
+- **DRIVING VIDEO** (`…_control-plate-canny-start25-full50_…`). The plate outside the mask; inside it, the plate's Canny edges on black. This is Mickmumpitz's recipe from his OfficeFlood example (`MICKMUMPITZ_AIVFX_EXAMPLE-FILES.zip`, `010_OfficeFlood`): the blade edges keep the grass's structure while the model draws fire into it.
+- **Start image** (`…_start-frame_…`): the window's frame 0, the plate before any fire. Not committed: plate stills are ignored like the plate.
+
+Graph: `shots/shot004_fire-jump/pass-b_grassfire/workflows/shot004_fire-jump_grassfire-inpaint_mick13_v001.json`, on the Pod as `shot004/pass-b_grassfire/`. It is the Jerry graph (run 9 state) with these changes: the three inputs above; Reference Image 2 (`JB-010`) bypassed; image mode `Start + Reference` and match mode `Compose + Match`; `vace_strength` 1.0 and `vace_ref_strength` 0, as in the OfficeFlood run; a grass-fire prompt with `l3n0v0`; the NAG negatives swapped from face words to "cartoon, CGI, animation, fireball, glowing orb, character, face, text, watermark"; output prefix `shot004_grassfire`. Seed, steps, sampler, LoRAs, 512p and 81 frames are unchanged. Because this is the first run of a new graph, it is a baseline, not a one-knob test.
+
+### Dark-ring fix (2026-11-02)
+
+Fix for the dark ring, in the comp rather than the generation: take from the inpaint only what changed. A change matte (per-pixel difference from the plate window, ramped from 22 to 45 of 255, grown 6 px, blurred 6 px, times the mask) keeps the fire, the scorch and the blades in front of the fire, and drops grass the model merely redrew darker. On frames 50 and 80 it cut the darkening in the band 2–60 px inside the edge from −12.7 and −11.0 to −1.9 and −1.8 luma. The Blender comp's Pass B layer should use it.

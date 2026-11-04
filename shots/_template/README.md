@@ -11,7 +11,7 @@ Start here when resuming this shot: this README, then the end of the relevant lo
 
 | Layer | Status | Current best | Log |
 |---|---|---|---|
-| Pass A: <layer> | | `sNNN-a-…` | `pass-a_<layer>_log.md` |
+| Pass A: <layer> | | `sNNN-a-…` | `pass-a_<layer>/log.md` |
 | Comp | | `sNNN-c-…` | `comp_log.md` |
 
 Next steps and methods: `plan.md`.
@@ -22,5 +22,5 @@ Next steps and methods: `plan.md`.
 
 ## Where things are
 
-- **Plan:** `plan.md`. **Logs:** `pass-a_<layer>_log.md`, `comp_log.md`.
-- **Assets:** `assets/elements/by-shot/shotNNN_<slug>/`. **Graphs:** `workflows/comfyui/shotNNN-working/`, `shotNNN-benchmark/`. **Renders:** `outputs/shotNNN/`.
+- `plan.md`, `comp_log.md`; `pass-a_<layer>/` (`log.md`, `inputs/`, `workflows/`, `runs/`); `plates/`, `reference/`, `comps/`, `scripts/`, `outputs/`. Create each folder when its first file arrives, with a README.
+- Project-wide material this shot uses: characters in `characters/<name>/`.

@@ -7,7 +7,7 @@
 
 - **Comfy Cloud MCP** (`https://cloud.comfy.org/mcp`): returns a 403, MCP not available for this account (since 2026-05-27). Its launcher script was removed on 2026-11-04.
 - **Comfy Cloud API:** the account key returns `{"status":"active"}` from `/api/user`. `scripts/comfy-cloud-api.py user | system-stats | submit <api-workflow.json>` uses it.
-- **What we use instead:** the partner API nodes (Seedance, Kling, …) inside the Pod's ComfyUI, billed to the same Comfy account (`shots/shot004_fire-jump/pass-b_grassfire_log.md`).
+- **What we use instead:** the partner API nodes (Seedance, Kling, …) inside the Pod's ComfyUI, billed to the same Comfy account (`shots/shot004_fire-jump/pass-b_grassfire/log.md`).
 - The official `comfy-cli` is not installed; its wrapper script was removed on 2026-11-04.
 
 ## API

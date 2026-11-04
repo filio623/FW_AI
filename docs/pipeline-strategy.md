@@ -46,7 +46,7 @@ Plate use (James, 2026-11-03; replaces the 2026-10-11 rule "never upload the pla
 
 ### Blender
 
-Under evaluation, not adopted. A Jerry fire rig exists at `assets/characters/jerry/source-cgi/jerry_fire-rig_v001.blend`. Setup is in `mcp/blender.md`. The run log is `workflows/blender/jerry/jerry_fire-rig_log_v001.md`. r09 is not an approved look.
+Under evaluation, not adopted. A Jerry fire rig exists at `characters/jerry/source-cgi/jerry_fire-rig_v001.blend`. Setup is in `mcp/blender.md`. The run log is `characters/jerry/fire-rig/jerry_fire-rig_log_v001.md`. r09 is not an approved look.
 
 Its job, if the pose and dash tests pass, would be rigged simulated elements rendered to multilayer EXR for compositing. It is not the shot 004 motion driver. That driver stays the Houdini fire proxy until a scored benchmark row replaces it.
 

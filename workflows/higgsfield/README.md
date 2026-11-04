@@ -1,13 +1,9 @@
 # Higgsfield Workflows
 
-Store Higgsfield generation commands, run logs, model comparisons, cost notes, and output URLs here.
+Higgsfield notes not tied to one shot. Generations for a shot are logged in that shot's pass log under a run ID; character casting lives with the character.
 
-Recommended naming:
+- `robot-bunny-benchmark.md`: a cross-model comparison on a neutral subject.
 
-`shot004_fire-jump_wan27_v001.md`
+## Source and history
 
-Log meaningful generations in the shot's pass log, with a run ID (`shots/_template/pass_log.md`).
-
-## Active Tests
-
-- `scene4/scene4_jerry-fire-video-test_log_v001.md`: first planned Higgsfield test for generating Jerry's fire motion over the Scene 4 base footage.
+- 2026-11-04: the Scene 4 fire-video test moved to `shots/shot004_fire-jump/pass-a_jerry/workflows/early/higgsfield-scene4/`, the Jerry casting log to `characters/jerry/higgsfield-casting/`.

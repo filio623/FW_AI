@@ -64,7 +64,7 @@ Keep the add-on and server on the same release.
 
 - `fluid_bake.py`: frees and rebakes every Mantaflow domain in a `.blend` (or `--domain NAME`), then saves it.
 - `render_frames.py`: renders frames or `A-B` ranges with Cycles on Metal to `OUTDIR/f####.png`, with `--samples` and `--percent`.
-- `jerry_fire_rig_build.py`: rebuilds the Jerry fire rig; see `workflows/blender/jerry/jerry_fire-rig_log_v001.md`.
+- `jerry_fire_rig_build.py`: rebuilds the Jerry fire rig; see `characters/jerry/fire-rig/jerry_fire-rig_log_v001.md`.
 
 ## Tools
 
@@ -83,7 +83,7 @@ A smoke test against a headless bridge, using the MCP Python client over stdio, 
 
 ## Interactive Session Pitfalls (2026-10-17)
 
-Seen while building `jerry_fire-rig_v001.blend` (`workflows/blender/jerry/jerry_fire-rig_log_v001.md`):
+Seen while building `jerry_fire-rig_v001.blend` (`characters/jerry/fire-rig/jerry_fire-rig_log_v001.md`):
 
 - With Blender behind other windows, `execute_blender_code` timed out with `Blender connection timed out at localhost:9876`. The port stayed open and Blender sat at 0% CPU. Suspected cause, unconfirmed: macOS App Nap throttling the add-on's timer.
 - Switching the viewport to Cycles rendered shading with a baked fire domain froze the UI at 0% CPU. It was force-quit.

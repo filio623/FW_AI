@@ -31,12 +31,19 @@ node_modules/
 # Mantaflow writes its 24 MB noise tile to the working directory on upres bakes/renders
 waveletNoiseTile.bin
 
-# Generated review/output artifacts. Only the folder READMEs are tracked, so every
-# outputs/ folder keeps its context even though its media is ephemeral.
+# Generated review/output artifacts (project-wide outputs/, each shot's outputs/ and each
+# character's outputs/). Only the folder READMEs are tracked, so every folder keeps its
+# context even though its media is ephemeral.
 outputs/**
 !outputs/**/
 !outputs/README.md
 !outputs/**/README.md
+shots/*/outputs/**
+!shots/*/outputs/**/
+!shots/*/outputs/**/README.md
+characters/*/outputs/**
+!characters/*/outputs/**/
+!characters/*/outputs/**/README.md
 memories/responses/
 ComfyUI_temp_*.png
 
@@ -44,8 +51,8 @@ ComfyUI_temp_*.png
 FW_test/
 
 # Inbox is a staging area; keep only its README tracked.
-assets/inbox/*
-!assets/inbox/README.md
+inbox/*
+!inbox/README.md
 
 # Large production media should live in the workspace, not source control.
 *.mov
@@ -73,28 +80,28 @@ assets/inbox/*
 *.7z
 
 # Stills cut from the plate are plate media; the mp4 inputs beside them are already ignored.
-assets/elements/by-shot/**/*_start-frame_*.png
+shots/*/**/*_start-frame_*.png
 
-# Mickmumpitz library (references/mickmumpitz/): track the workflows, guides, index and
+# Mickmumpitz library (library/mickmumpitz/): track the workflows, guides, index and
 # helper scripts; keep example packs, media and extracted example folders local only.
-references/mickmumpitz/**
-!references/mickmumpitz/**/
-!references/mickmumpitz/**/*.json
-!references/mickmumpitz/**/*.md
-!references/mickmumpitz/**/*.txt
-!references/mickmumpitz/**/*.tsv
-!references/mickmumpitz/**/*.py
-!references/mickmumpitz/**/*.js
-!references/mickmumpitz/**/*.bat
-!references/mickmumpitz/**/*.html
-references/mickmumpitz/**/*EXAMPLE-FILES*/
-references/mickmumpitz/**/*EXAMPLE_FILES*/
+library/mickmumpitz/**
+!library/mickmumpitz/**/
+!library/mickmumpitz/**/*.json
+!library/mickmumpitz/**/*.md
+!library/mickmumpitz/**/*.txt
+!library/mickmumpitz/**/*.tsv
+!library/mickmumpitz/**/*.py
+!library/mickmumpitz/**/*.js
+!library/mickmumpitz/**/*.bat
+!library/mickmumpitz/**/*.html
+library/mickmumpitz/**/*EXAMPLE-FILES*/
+library/mickmumpitz/**/*EXAMPLE_FILES*/
 
 # Higgsfield keyframes are plate-derived stills, ignored like the plate; the README and
 # registration JSON are tracked.
-assets/elements/by-shot/**/keyframes/**/*.png
+shots/*/**/keyframes/**/*.png
 
 # Generated comp layers (frame sequences): media local, README and reports tracked.
-assets/elements/by-shot/**/layers/**/*.jpg
-assets/elements/by-shot/**/layers/**/*.png
-assets/elements/by-shot/**/layers/**/*.exr
+shots/*/**/layers/**/*.jpg
+shots/*/**/layers/**/*.png
+shots/*/**/layers/**/*.exr
